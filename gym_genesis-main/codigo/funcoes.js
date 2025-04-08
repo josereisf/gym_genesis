@@ -15,4 +15,12 @@ async function salvarUsuario(
     return funcionou;
 };
 
-module.exports = {salvarUsuario};
+async function listarUsuarios() {
+  const [rows] = await conexao.query("SELECT * FROM usuario");
+  return rows;
+}
+
+module.exports = {
+  salvarUsuario,
+  listarUsuarios,
+};

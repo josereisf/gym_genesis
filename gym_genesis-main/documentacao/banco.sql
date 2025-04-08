@@ -20,6 +20,9 @@ USE `mydb` ;
 -- -----------------------------------------------------
 -- Table `mydb`.`usuario`
 -- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table `mydb`.`usuario`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
   `idusuario` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(70) NOT NULL,
@@ -27,15 +30,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
   `email` VARCHAR(100) NOT NULL,
   `cpf` VARCHAR(15) NOT NULL,
   `data_de_nascimento` DATE NOT NULL,
-  `telefone` INT(11) NULL DEFAULT NULL,
-  `foto_de_perfil` VARCHAR(45) NULL DEFAULT NULL,
-  `numero_matricula` INT(11) NOT NULL,
+  `telefone` VARCHAR(20) NULL DEFAULT NULL,  -- Corrigido
+  `foto_de_perfil` VARCHAR(100) NULL DEFAULT NULL,
+  `numero_matricula` VARCHAR(20) NOT NULL,  -- Corrigido
   `tipo_usuario` INT(11) NOT NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------
@@ -121,3 +125,40 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- DROP DATABASE mydb;
+
+-- Inserindo um usuário
+INSERT INTO `mydb`.`usuario` 
+(`nome`, `senha`, `email`, `cpf`, `data_de_nascimento`, `telefone`, `foto_de_perfil`, `numero_matricula`, `tipo_usuario`) 
+VALUES 
+('João Silva', 'senha123', 'joao.silva@email.com', '123.456.789-00', '1990-05-20', 11999998888, 'joao.jpg', 2025001, 1);
+
+-- Pegando o ID do usuário inserido (pode ser necessário se for fazer por script)
+-- Supondo que seja o ID 1
+
+-- Inserindo uma assinatura para o usuário
+INSERT INTO `mydb`.`assinatura` 
+(`data_inicio`, `data_fim`, `usuario_idusuario`) 
+VALUES 
+('2025-04-01', '2025-07-01', 1);
+
+-- Supondo que o id da assinatura seja 1
+
+-- Inserindo um plano associado à assinatura
+INSERT INTO `mydb`.`plano` 
+(`tipo`, `duracao`, `assinatura_idassinatura`) 
+VALUES 
+('Mensal', '3 meses', 1);
+
+-- Inserindo uma avaliação física para o usuário
+INSERT INTO `mydb`.`avaliacao_fisica` 
+(`peso`, `altura`, `imc`, `percentual_gordura`, `data_avaliacao`, `usuario_idusuario`) 
+VALUES 
+(75.500, 1.75, 24.6, 15.50, '2025-04-01', 1);
+
+-- Inserindo um treino para o usuário
+INSERT INTO `mydb`.`treino` 
+(`tipo`, `horario`, `descricao`, `usuario_idusuario`) 
+VALUES 
+('Musculação', '08:30:00', 'Treino de membros superiores: peito, bíceps e costas.', 1);

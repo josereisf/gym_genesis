@@ -6,13 +6,13 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./codigo:/app/codigo
+      - ./codigo:/app
     environment:
       - NODE_ENV=development
 
   db:
     image: mariadb:10.5
-    container_name: "mariadb-server"
+    container_name: "db"
     restart: always
     volumes:
       - ./documentacao/banco.sql:/docker-entrypoint-initdb.d/banco.sql
