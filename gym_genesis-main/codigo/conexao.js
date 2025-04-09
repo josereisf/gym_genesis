@@ -4,7 +4,7 @@ const conexao = mysql.createPool({
     host: 'db',
     user: 'root',
     password:'123',
-    database:'mydb',
+    database:'gym_genesis',
     port: 3306
 });
 
