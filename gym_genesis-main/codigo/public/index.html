@@ -113,53 +113,13 @@ td:hover {
 
   </style>
 </head>
-<h1>Usuários Cadastrados</h1>
-<table id="tabelaUsuarios">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>CPF</th>
-      <th>Data de Nascimento</th>
-      <th>Telefone</th>
-      <th>Matrícula</th>
-      <th>Tipo</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+<select id="selectTabelas">
+  <option value="">Selecione uma tabela</option>
+</select>
 
-<script>
-  // Carrega todos os usuários cadastrados do backend
-  fetch("/usuarios")
-    .then(response => response.json())
-    .then(usuarios => {
-      const tbody = document.querySelector("#tabelaUsuarios tbody");
+<div id="resultado"></div>
 
-      if (!Array.isArray(usuarios)) {
-        console.error("Resposta não é uma lista de usuários:", usuarios);
-        return;
-      }
+<script src="script.js"></script>
 
-      usuarios.forEach(u => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${u.idusuario}</td>
-          <td>${u.nome}</td>
-          <td>${u.email}</td>
-          <td>${u.cpf}</td>
-          <td>${new Date(u.data_de_nascimento).toLocaleDateString("pt-BR")}</td>
-          <td>${u.telefone ?? "-"}</td>
-          <td>${u.numero_matricula}</td>
-          <td>${u.tipo_usuario}</td>
-        `;
-        tbody.appendChild(row);
-      });
-    })
-    .catch(error => {
-      console.error("Erro ao carregar usuários:", error);
-    });
-</script>
 </body>
 </html>

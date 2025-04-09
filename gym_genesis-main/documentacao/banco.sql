@@ -54,6 +54,14 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`usuario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- Inserts for the `usuario` table
+INSERT INTO `gym_genesis`.`usuario` 
+(`nome`, `senha`, `email`, `cpf`, `data_de_nascimento`, `telefone`, `foto_de_perfil`, `numero_matricula`, `tipo_usuario`)
+VALUES 
+('Maria Oliveira', 'senhaForte123', 'maria.oliveira@email.com', '98765432100', '1992-03-15', '11987654322', 'maria.jpg', 'MAT2025002', 2),
+('Carlos Pereira', 'senhaSegura456', 'carlos.pereira@email.com', '12312312399', '1985-07-10', '11987654323', 'carlos.jpg', 'MAT2025003', 1),
+('Ana Souza', 'senha123', 'ana.souza@email.com', '32132132188', '1998-11-25', '11987654324', 'ana.jpg', 'MAT2025004', 3);
+
 
 -- -----------------------------------------------------
 -- Table `gym_genesis`.`assinatura`
