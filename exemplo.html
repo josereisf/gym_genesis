@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Função Assíncrona</title>
+</head>
+<body>
+  <h1>Buscar Aluno</h1>
+  <button onclick="buscarAluno()">Buscar dados</button>
+
+  <p id="resultado">Clique no botão para buscar os dados...</p>
+
+  <script>
+    // Função que simula uma busca demorada (como se fosse um banco de dados)
+    function simularBusca() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({ nome: "Maria da Silva", serie: "3º ano", status: "Presente" });
+        }, 2000); // demora 2 segundos para responder
+      });
+    }
+
+    // Função assíncrona que usa await para esperar a resposta
+    async function buscarAluno() {
+      document.getElementById("resultado").innerText = "Buscando dados...";
+      
+      const dados = await simularBusca();
+
+      document.getElementById("resultado").innerText =
+        `Nome: ${dados.nome}, Série: ${dados.serie}, Status: ${dados.status}`;
+    }
+  </script>
+</body>
+</html>
