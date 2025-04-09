@@ -54,13 +54,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`usuario` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- Inserts for the `usuario` table
-INSERT INTO `gym_genesis`.`usuario` 
-(`nome`, `senha`, `email`, `cpf`, `data_de_nascimento`, `telefone`, `foto_de_perfil`, `numero_matricula`, `tipo_usuario`)
-VALUES 
-('Maria Oliveira', 'senhaForte123', 'maria.oliveira@email.com', '98765432100', '1992-03-15', '11987654322', 'maria.jpg', 'MAT2025002', 2),
-('Carlos Pereira', 'senhaSegura456', 'carlos.pereira@email.com', '12312312399', '1985-07-10', '11987654323', 'carlos.jpg', 'MAT2025003', 1),
-('Ana Souza', 'senha123', 'ana.souza@email.com', '32132132188', '1998-11-25', '11987654324', 'ana.jpg', 'MAT2025004', 3);
 
 
 -- -----------------------------------------------------
@@ -576,156 +569,262 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
--- DROP DATABASE IF EXISTS `gym_genesis`;
+  -- DROP DATABASE IF EXISTS `gym_genesis`;
 
--- Inserção na tabela alimento
-INSERT INTO `gym_genesis`.`alimento` 
-(`idalimento`, `nome`, `calorias`, `carboidratos`, `proteinas`, `gorduras`, `porcao`, `categoria`)
+-- Inserindo um alimento
+INSERT INTO `gym_genesis`.`alimento` (
+  `idalimento`, `nome`, `calorias`, `carboidratos`, `proteinas`, `gorduras`, `porcao`, `categoria`
+) VALUES (
+  1, 'Banana', 89.00, 22.84, 1.09, 0.33, '100g', 'Fruta'
+);
+
+-- Inserindo um usuário
+INSERT INTO `gym_genesis`.`usuario` (
+  `nome`, `senha`, `email`, `cpf`, `data_de_nascimento`, `telefone`, `foto_de_perfil`, `numero_matricula`, `tipo_usuario`
+) VALUES (
+  'João da Silva', 'senhaSegura123', 'joao.silva@example.com', '123.456.789-00', '1990-05-15', '(11) 91234-5678', 'joao.jpg', 'MAT20250001', 1
+),
+(
+  'Maria Santos', 'senhaSegura456', 'maria.santos@example.com', '987.654.321-00', '1995-08-20', '(21) 98765-4321', 'maria.jpg', 'MAT20250002', 2);
+-- Inserindo assinaturas para usuários existentes
+INSERT INTO `gym_genesis`.`assinatura` (
+  `data_inicio`, `data_fim`, `usuario_idusuario`
+) VALUES (
+  '2025-04-01', '2025-10-01', 1
+);
+
+INSERT INTO `gym_genesis`.`assinatura` (
+  `data_inicio`, `data_fim`, `usuario_idusuario`
+) VALUES (
+  '2025-03-15', '2025-09-15', 2
+);
+-- Inserindo horários de funcionamento
+INSERT INTO `gym_genesis`.`horario` (
+  `dia_semana`, `hora_inicio`, `hora_fim`
+) VALUES (
+  'Segunda', '06:00:00', '22:00:00'
+);
+
+INSERT INTO `gym_genesis`.`horario` (
+  `dia_semana`, `hora_inicio`, `hora_fim`
+) VALUES (
+  'Sábado', '08:00:00', '14:00:00'
+);
+-- Inserindo aulas agendadas
+INSERT INTO `gym_genesis`.`aula_agendada` (
+  `horario_idhorario`, `data_aula`, `usuario_idusuario`
+) VALUES (
+  1, '2025-04-10', 1
+);
+
+INSERT INTO `gym_genesis`.`aula_agendada` (
+  `horario_idhorario`, `data_aula`, `usuario_idusuario`
+) VALUES (
+  2, '2025-04-11', 2
+);
+-- Inserindo avaliações físicas
+INSERT INTO `gym_genesis`.`avaliacao_fisica` (
+  `peso`, `altura`, `imc`, `percentual_gordura`, `data_avaliacao`, `usuario_idusuario`
+) VALUES (
+  72.500, 1.75, 23.67, 15.5, '2025-04-01', 1
+);
+
+INSERT INTO `gym_genesis`.`avaliacao_fisica` (
+  `peso`, `altura`, `imc`, `percentual_gordura`, `data_avaliacao`, `usuario_idusuario`
+) VALUES (
+  85.200, 1.82, 25.71, 18.3, '2025-04-02', 2
+);
+-- Inserindo cargos
+INSERT INTO `gym_genesis`.`cargo` (
+  `idcargo`, `nome`, `descricao`
+) VALUES (
+  1, 'Instrutor de Musculação', 'Responsável por orientar os alunos na sala de musculação.'
+);
+
+INSERT INTO `gym_genesis`.`cargo` (
+  `idcargo`, `nome`, `descricao`
+) VALUES (
+  2, 'Nutricionista', 'Responsável por elaborar dietas e planos alimentares personalizados.'
+);
+-- Inserindo funcionários
+INSERT INTO `gym_genesis`.`funcionario` (
+  `nome`, `email`, `telefone`, `data_contratacao`, `salario`, `cargo_id`
+) VALUES (
+  'Carlos Andrade', 'carlos.andrade@gymgenesis.com', '(11) 99888-1234', '2024-01-10', 3200.00, 1
+);
+
+INSERT INTO `gym_genesis`.`funcionario` (
+  `nome`, `email`, `telefone`, `data_contratacao`, `salario`, `cargo_id`
+) VALUES (
+  'Mariana Souza', 'mariana.souza@gymgenesis.com', '(11) 98765-4321', '2023-11-05', 4000.00, 2
+);
+-- Inserindo avaliadores
+INSERT INTO `gym_genesis`.`avaliador` (
+  `funcionario_id`, `especialidade`
+) VALUES (
+  1, 'Avaliação Física e Treinamento Funcional'
+);
+
+INSERT INTO `gym_genesis`.`avaliador` (
+  `funcionario_id`, `especialidade`
+) VALUES (
+  2, 'Nutrição Esportiva'
+);
+-- Inserindo categorias de produtos
+INSERT INTO `gym_genesis`.`categoria_produto` (
+  `nome`, `descricao`
+) VALUES (
+  'Suplementos', 'Produtos voltados para complementar a alimentação e melhorar o desempenho físico.'
+);
+
+INSERT INTO `gym_genesis`.`categoria_produto` (
+  `nome`, `descricao`
+) VALUES (
+  'Vestuário Fitness', 'Roupas e acessórios para a prática de atividades físicas.'
+);
+-- Inserindo cupons de desconto
+INSERT INTO `gym_genesis`.`cupom_desconto` (
+  `codigo`, `percentual_desconto`, `valor_desconto`, `data_validade`, `quantidade_uso`, `tipo`
+) VALUES (
+  'WELCOME10', 10.00, NULL, '2025-06-30', 100, 'percentual'
+);
+
+INSERT INTO `gym_genesis`.`cupom_desconto` (
+  `codigo`, `percentual_desconto`, `valor_desconto`, `data_validade`, `quantidade_uso`, `tipo`
+) VALUES (
+  'FRETE20', NULL, 20.00, '2025-05-15', 50, 'fixo'
+);
+-- Inserindo dietas para usuários
+INSERT INTO `gym_genesis`.`dieta` (
+  `descricao`, `data_inicio`, `data_fim`, `usuario_idusuario`
+) VALUES (
+  'Dieta rica em proteínas para ganho de massa muscular.', '2025-04-01', '2025-05-15', 1
+);
+
+INSERT INTO `gym_genesis`.`dieta` (
+  `descricao`, `data_inicio`, `data_fim`, `usuario_idusuario`
+) VALUES (
+  'Dieta com baixo teor calórico para redução de peso.', '2025-04-05', '2025-06-05', 2
+);
+INSERT INTO `gym_genesis`.`refeicao` (
+  `idrefeicao`, `dieta_id`, `tipo`, `horario`
+) VALUES
+  (1, 1, 'Café da manhã', '07:30:00'),
+  (2, 1, 'Almoço', '12:30:00');
+INSERT INTO `gym_genesis`.`dieta_alimento` (
+  `iddieta_alimentar`, `refeicao_id`, `alimento_id`, `quantidade`, `observacao`
+) VALUES
+  (1, 1, 1, 2.00, 'Consumir com aveia'),
+  (2, 2, 2, 1.00, 'Preferir grelhado, sem óleo');
+INSERT INTO `gym_genesis`.`endereco` (
+  `idendereco`, `usuario_id`, `funcionario_id`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`
+) VALUES
+  (1, 1, NULL, '12345-678', 'Rua das Palmeiras', '45', 'Apto 101', 'Centro', 'São Paulo', 'SP'),
+  (2, NULL, 1, '98765-432', 'Av. Brasil', '1200', NULL, 'Bela Vista', 'Rio de Janeiro', 'RJ');
+INSERT INTO `gym_genesis`.`endereco_entrega` (
+  `usuario_idusuario`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`
+) VALUES
+  (2, '54321-000', 'Rua do Comércio', '88', 'Casa dos fundos', 'Jardim América', 'Curitiba', 'PR'),
+  (3, '11223-445', 'Av. Independência', '777', NULL, 'Boa Vista', 'Porto Alegre', 'RS');
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA exercicio
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`exercicio` (`nome`, `grupo_muscular`, `descricao`, `video_url`)
 VALUES 
-(1, 'Banana', 89.00, 22.84, 1.09, 0.33, '1 unidade média (118g)', 'Frutas');
+  ('Agachamento Livre', 'Pernas', 'Trabalha quadríceps, glúteos e posteriores', 'https://youtube.com/example1'),
+  ('Supino Reto', 'Peitoral', 'Exercício para desenvolver o peitoral maior', 'https://youtube.com/example2');
 
--- Inserção na tabela usuario
-INSERT INTO `gym_genesis`.`usuario` 
-(`nome`, `senha`, `email`, `cpf`, `data_de_nascimento`, `telefone`, `foto_de_perfil`, `numero_matricula`, `tipo_usuario`)
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA forum
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`forum` (`titulo`, `mensagem`, `data_criacao`, `usuario_idusuario`)
+VALUES
+  ('Dúvida sobre treino de pernas', 'Alguém pode indicar um bom treino para pernas?', NOW(), 1),
+  ('Qual suplemento vocês usam?', 'Queria saber quais suplementos mais indicados para iniciantes.', NOW(), 2);
+
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA treino
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`treino` (`tipo`, `horario`, `descricao`, `usuario_idusuario`)
+VALUES
+  ('Hipertrofia', '08:00:00', 'Treino focado em aumento de massa muscular', 1),
+  ('Cardio', '18:00:00', 'Corrida + bicicleta ergométrica', 2);
+
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA historico_treino
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`historico_treino` (`usuario_id`, `treino_id`, `data_execucao`, `observacoes`)
+VALUES
+  (1, 1, NOW(), 'Desempenho ótimo, sem dores'),
+  (2, 2, NOW(), 'Cansaço no final do treino');
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA pedido
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`pedido` (`usuario_idusuario`, `data_pedido`, `status`)
 VALUES 
-('João da Silva', 'senhaSegura123', 'joao.silva@email.com', '12345678900', '1990-05-20', '11987654321', 'joao.jpg', 'MAT2025001', 1);
+  (1, NOW(), 'processando'),
+  (2, NOW(), 'enviado');
 
--- Inserção na tabela assinatura
-INSERT INTO `gym_genesis`.`assinatura` 
-(`data_inicio`, `data_fim`, `usuario_idusuario`)
-VALUES 
-('2025-04-01', '2025-10-01', 1);
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA produto
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`produto` (`nome`, `descricao`, `preco`, `quantidade_estoque`, `imagem`)
+VALUES
+  ('Whey Protein 1kg', 'Suplemento proteico para ganho de massa muscular', 89.90, 50, 'https://example.com/whey.jpg'),
+  ('Creatina 300g', 'Aumenta a performance nos treinos de força', 69.90, 30, 'https://example.com/creatina.jpg');
 
--- Inserção na tabela horario
-INSERT INTO `gym_genesis`.`horario` 
-(`dia_semana`, `hora_inicio`, `hora_fim`)
-VALUES 
-('Quarta', '18:30:00', '19:30:00');
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA item_pedido
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`item_pedido` (`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
+VALUES
+  (1, 1, 2, 89.90),
+  (2, 2, 1, 69.90);
 
--- Inserção na tabela aula_agendada
-INSERT INTO `gym_genesis`.`aula_agendada` 
-(`horario_idhorario`, `data_aula`, `usuario_idusuario`)
-VALUES 
-(1, '2025-04-10', 1);
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA meta_usuario
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`meta_usuario` (`idmeta`, `usuario_id`, `descricao`, `data_inicio`, `data_limite`, `status`)
+VALUES
+  (1, 1, 'Perder 5kg em 2 meses', '2025-04-01', '2025-06-01', 'ativa'),
+  (2, 2, 'Aumentar massa muscular em 3kg', '2025-04-05', '2025-07-05', 'ativa');
 
--- Inserção na tabela avaliacao_fisica
-INSERT INTO `gym_genesis`.`avaliacao_fisica` 
-(`peso`, `altura`, `imc`, `percentual_gordura`, `data_avaliacao`, `usuario_idusuario`)
-VALUES 
-(75.500, 1.78, 23.82, 18.5, '2025-04-08', 1);
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA pagamento
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`pagamento` (`usuario_idusuario`, `valor`, `data_pagamento`, `metodo`, `status`)
+VALUES
+  (1, 199.90, NOW(), 'cartao', 'sucesso'),
+  (2, 149.90, NOW(), 'pix', 'sucesso');
 
--- Inserção na tabela cargo
-INSERT INTO `gym_genesis`.`cargo` 
-(`idcargo`, `nome`, `descricao`)
-VALUES 
-(1, 'Personal Trainer', 'Responsável por prescrever exercícios e acompanhar os alunos');
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA pagamento_detalhe
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`pagamento_detalhe` (`pagamento_idpagamento`, `tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`)
+VALUES
+  (1, 'cartao', 'Visa', '1234', NULL, NULL),
+  (2, 'pix', NULL, NULL, 'pix-123456789abc', NULL);
 
--- Inserção na tabela funcionario
-INSERT INTO `gym_genesis`.`funcionario` 
-(`nome`, `email`, `telefone`, `data_contratacao`, `salario`, `cargo_id`)
-VALUES 
-('Carla Mendes', 'carla.mendes@gym.com', '11999887766', '2024-11-15', 3500.00, 1);
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA plano
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`plano` (`tipo`, `duracao`, `assinatura_idassinatura`)
+VALUES
+  ('Mensal', '30 dias', 1),
+  ('Anual', '365 dias', 2);
 
--- Inserção na tabela avaliador
-INSERT INTO `gym_genesis`.`avaliador` 
-(`funcionario_id`, `especialidade`)
-VALUES 
-(1, 'Avaliação Física e Reabilitação');
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA resposta_forum
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`resposta_forum` (`mensagem`, `data_resposta`, `usuario_idusuario`, `forum_idtopico`)
+VALUES
+  ('Concordo com a sugestão! Já usei esse treino e é ótimo.', NOW(), 1, 1),
+  ('Acho que seria bom alternar com exercícios de cardio.', NOW(), 2, 1);
 
-INSERT INTO `gym_genesis`.`categoria_produto` (`nome`, `descricao`)
-VALUES ('Suplementos', 'Produtos para suplementação alimentar e esportiva.');
-INSERT INTO `gym_genesis`.`cupom_desconto` 
-(`codigo`, `percentual_desconto`, `valor_desconto`, `data_validade`, `quantidade_uso`, `tipo`)
-VALUES 
-('WELCOME10', 10.00, NULL, '2025-12-31', 100, 'percentual');
-INSERT INTO `gym_genesis`.`dieta` 
-(`descricao`, `data_inicio`, `data_fim`, `usuario_idusuario`)
-VALUES 
-('Dieta para ganho de massa muscular', '2025-04-01', '2025-06-30', 1);
-INSERT INTO `gym_genesis`.`refeicao` 
-(`idrefeicao`, `dieta_id`, `tipo`, `horario`)
-VALUES 
-(1, 1, 'Almoço', '12:30:00');
-INSERT INTO `gym_genesis`.`dieta_alimento` 
-(`iddieta_alimentar`, `refeicao_id`, `alimento_id`, `quantidade`, `observacao`)
-VALUES 
-(1, 1, 1, 150.00, 'Frango grelhado sem pele');
-INSERT INTO `gym_genesis`.`endereco` 
-(`idendereco`, `usuario_id`, `funcionario_id`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`)
-VALUES 
-(1, 1, NULL, '01001-000', 'Rua das Palmeiras', '123', 'Apto 101', 'Centro', 'São Paulo', 'SP');
-INSERT INTO `gym_genesis`.`endereco_entrega` 
-(`usuario_idusuario`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`)
-VALUES 
-(1, '01001-000', 'Rua das Palmeiras', '123', 'Apto 101', 'Centro', 'São Paulo', 'SP');
-INSERT INTO `gym_genesis`.`exercicio` 
-(`nome`, `grupo_muscular`, `descricao`, `video_url`)
-VALUES 
-('Agachamento Livre', 'Pernas', 'Exercício básico para quadríceps, glúteos e posteriores.', 'https://youtu.be/some_video');
-
--- Inserções para tabelas base (sem dependências diretas)
-INSERT INTO `produto` (`idproduto`, `nome`, `descricao`, `preco`, `quantidade_estoque`, `imagem`) 
-VALUES (1, 'Whey Protein', 'Suplemento de proteína', 99.90, 10, 'whey.jpg');
-
-INSERT INTO `assinatura` (`idassinatura`, `data_inicio`, `data_fim`, `status`, `usuario_idusuario`)
-VALUES (1, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), 'ativa', 1);
-
-INSERT INTO `exercicio` (`idexercicio`, `nome`, `descricao`, `grupo_muscular`, `imagem`)
-VALUES (1, 'Supino reto', 'Supino com barra no banco', 'Peitoral', 'supino.jpg');
-
-
--- Inserção em `forum`
-INSERT INTO `forum` (`idtopico`, `titulo`, `mensagem`, `data_criacao`, `usuario_idusuario`)
-VALUES (1, 'Dúvidas sobre alimentação', 'Qual a melhor dieta para ganhar massa?', NOW(), 1);
-
-
--- Inserção em `resposta_forum`
-INSERT INTO `resposta_forum` (`idresposta`, `mensagem`, `data_resposta`, `usuario_idusuario`, `forum_idtopico`)
-VALUES (1, 'Dieta rica em proteínas e carboidratos complexos!', NOW(), 1, 1);
-
-
--- Inserção em `treino`
-INSERT INTO `treino` (`idtreino`, `tipo`, `horario`, `descricao`, `usuario_idusuario`)
-VALUES (1, 'Hipertrofia', '08:00:00', 'Treino para ganho de massa muscular', 1);
-
-
--- Inserção em `treino_exercicio`
-INSERT INTO `treino_exercicio` (`idtreino2`, `treino_id`, `exercicio_id`, `series`, `repeticoes`, `carga`, `intervalo_segundos`)
-VALUES (1, 1, 1, 4, 10, 40.0, 60);
-
-
--- Inserção em `historico_treino`
-INSERT INTO `historico_treino` (`idhistorico`, `usuario_id`, `treino_id`, `data_execucao`, `observacoes`)
-VALUES (1, 1, 1, NOW(), 'Bom desempenho');
-
-
--- Inserção em `meta_usuario`
-INSERT INTO `meta_usuario` (`idmeta`, `usuario_id`, `descricao`, `data_inicio`, `data_limite`, `status`)
-VALUES (1, 1, 'Ganhar 5kg de massa muscular', '2025-04-01', '2025-06-01', 'ativa');
-
-
--- Inserção em `pagamento`
-INSERT INTO `pagamento` (`idpagamento`, `usuario_idusuario`, `valor`, `data_pagamento`, `metodo`, `status`)
-VALUES (1, 1, 120.00, NOW(), 'cartao', 'sucesso');
-
-
--- Inserção em `pagamento_detalhe`
-INSERT INTO `pagamento_detalhe` (`idpagaemento2`, `pagamento_idpagamento`, `tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`)
-VALUES (1, 1, 'cartao', 'Visa', '1234', NULL, NULL);
-
-
--- Inserção em `plano`
-INSERT INTO `plano` (`idplano`, `tipo`, `duracao`, `assinatura_idassinatura`)
-VALUES (1, 'Mensal', '30 dias', 1);
-
-
--- Inserção em `pedido`
-INSERT INTO `pedido` (`idpedido`, `usuario_idusuario`, `data_pedido`, `status`)
-VALUES (1, 1, NOW(), 'processando');
-
-
--- Inserção em `item_pedido`
-INSERT INTO `item_pedido` (`iditem`, `pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
-VALUES (1, 1, 1, 2, 99.90);
-
-
+-- -----------------------------------------------------
+-- INSERTS PARA TABELA treino_exercicio
+-- -----------------------------------------------------
+INSERT INTO `gym_genesis`.`treino_exercicio` (`idtreino2`, `treino_id`, `exercicio_id`, `series`, `repeticoes`, `carga`, `intervalo_segundos`)
+VALUES
+  (1, 1, 1, 4, 12, 30.00, 60),
+  (2, 1, 2, 3, 10, 25.00, 45);
