@@ -1,4 +1,5 @@
 const conexao = require('./conexao');
+const bcrypt = require('bcrypt');
 
 async function salvarUsuario(
   nome,
@@ -11,6 +12,14 @@ async function salvarUsuario(
   num_matricula,
   tipo
 ) {
+  saltQuant = 3;
+  bcrypt.hash(senha, saltQuant, function (err, senhahash){
+    if (err) {
+      console.error(err);
+      return;
+    };
+    return senhahash;
+  });
   const sql = `
     INSERT INTO usuario (
       nome,
@@ -27,7 +36,7 @@ async function salvarUsuario(
 
   const [resultado] = await conexao.execute(sql, [
     nome,
-    senha,
+    senhahash,
     email,
     cpf,
     data_nasc,
