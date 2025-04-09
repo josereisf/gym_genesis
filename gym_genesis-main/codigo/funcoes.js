@@ -8,18 +8,13 @@ async function salvarUsuario(
   cpf,
   data_nasc,
   telefone = null,
-  foto_perfil = null, // valor padrão se não for passado
+  foto_perfil = null,
   num_matricula,
   tipo
 ) {
-  saltQuant = 3;
-  bcrypt.hash(senha, saltQuant, function (err, senhahash){
-    if (err) {
-      console.error(err);
-      return;
-    };
-    return senhahash;
-  });
+  const saltRounds = 3;
+  const senhahash = await bcrypt.hash(senha, saltRounds); // aguarda o hash ser gerado
+
   const sql = `
     INSERT INTO usuario (
       nome,
@@ -48,6 +43,7 @@ async function salvarUsuario(
 
   return resultado;
 }
+
 
 
 async function listarUsuarios() {
