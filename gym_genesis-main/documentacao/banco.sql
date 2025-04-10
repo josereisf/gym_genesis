@@ -569,14 +569,14 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-  -- DROP DATABASE IF EXISTS `gym_genesis`;
+  --  DROP DATABASE IF EXISTS `gym_genesis`;
 
 -- Inserindo um alimento
-INSERT INTO `gym_genesis`.`alimento` (
-  `idalimento`, `nome`, `calorias`, `carboidratos`, `proteinas`, `gorduras`, `porcao`, `categoria`
-) VALUES (
-  1, 'Banana', 89.00, 22.84, 1.09, 0.33, '100g', 'Fruta'
-);
+INSERT INTO `alimento` (`idalimento`, `nome`, `calorias`, `proteinas`, `carboidratos`, `gorduras`)
+VALUES 
+  (1, 'Ovo cozido', 68, 6.0, 0.5, 5.0),
+  (2, 'Arroz integral', 111, 2.6, 23.0, 0.9);
+
 
 -- Inserindo um usuário
 INSERT INTO `gym_genesis`.`usuario` (
@@ -724,8 +724,8 @@ INSERT INTO `gym_genesis`.`endereco` (
 INSERT INTO `gym_genesis`.`endereco_entrega` (
   `usuario_idusuario`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`
 ) VALUES
-  (2, '54321-000', 'Rua do Comércio', '88', 'Casa dos fundos', 'Jardim América', 'Curitiba', 'PR'),
-  (3, '11223-445', 'Av. Independência', '777', NULL, 'Boa Vista', 'Porto Alegre', 'RS');
+  (1, '54321-000', 'Rua do Comércio', '88', 'Casa dos fundos', 'Jardim América', 'Curitiba', 'PR'),
+  (2, '11223-445', 'Av. Independência', '777', NULL, 'Boa Vista', 'Porto Alegre', 'RS');
 -- -----------------------------------------------------
 -- INSERTS PARA TABELA exercicio
 -- -----------------------------------------------------
