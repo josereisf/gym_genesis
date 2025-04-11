@@ -1,59 +1,100 @@
-# FRIV Games & Wiki 🎮📚  
+### ✅ Tabelas principais e suas finalidades
 
-**Bem-vindo ao FRIV Games & Wiki!**  
+| Tabela               | Finalidade                                                  |
+|----------------------|-------------------------------------------------------------|
+| **usuario**          | Guarda dados dos usuários (clientes)                        |
+| **funcionario**      | Dados dos funcionários da academia                          |
+| **endereco**         | Endereços vinculados a usuários ou funcionários             |
+| **cargo**            | Cargos dos funcionários (ex: treinador, recepcionista)      |
+| **assinatura**       | Registra planos/assinaturas dos usuários                    |
+| **avaliacao_fisica** | Dados físicos e avaliações de saúde                         |
+| **horario**          | Faixas de horário para aulas ou atendimentos                |
+| **aula_agendada**    | Marcações de aulas com horário e usuário                    |
+| **treino**           | Treinos atribuídos aos usuários                             |
+| **exercicio**        | Exercícios cadastrados com grupo muscular, vídeo, etc       |
+| **historico_treino** | Histórico de execuções de treinos                           |
+| **dieta**            | Dietas associadas a usuários                                |
+| **refeicao**         | Refeições dentro de uma dieta                               |
+| **alimento**         | Cadastro nutricional dos alimentos                          |
+| **dieta_alimento**   | Relação entre alimentos e refeições em dietas               |
+| **categoria_produto**| Classificações para produtos vendidos                       |
+| **produto**          | Produtos da loja (ainda incompleto no script)              |
+| **pedido**           | Pedidos feitos pelos usuários na loja                       |
+| **cupom_desconto**   | Cupons aplicáveis em compras                                |
+| **forum**            | Tópicos de fórum para interação entre usuários              |
 
-Uma plataforma feita por gamers, para gamers! Nosso objetivo é criar um espaço interativo onde jogadores possam avaliar, discutir e descobrir novos jogos online.  
 
----
+# 🧭 Fluxo do Banco de Dados - Sistema Academia
 
-## 📌 Funcionalidades Principais  
-
-### 🎭 **Sistema de Usuários**  
-- Registro e login via **email/senha** ou **OAuth (Google/GitHub)**  
-- Perfis personalizados com **avatar, bio e histórico de avaliações**  
-- Configuração de conta (alteração de senha, preferências, etc.)  
-
-### 💬 **Fórum de Discussão**  
-- Criar tópicos e responder comentários  
-- Sistema de **curtidas/upvotes** nos comentários  
-- Moderação ativa para manter o ambiente seguro  
-
-### ⭐ **Avaliação de Jogos**  
-- Cada jogo tem sua **página exclusiva** com:  
-  - Média de notas  
-  - Comentários e avaliações dos usuários  
-  - Botão para **avaliar e comentar**  
-- **Ranking dinâmico** com base nas avaliações  
-
-### 🎮 **Biblioteca de Jogos**  
-- Lista completa de jogos disponíveis  
-- Filtros avançados (**nota, popularidade, gênero, etc.**)  
-- **Recomendações personalizadas** baseadas no gosto do usuário  
-
-### 🔧 **Dashboard Administrativo**  
-- Gerenciamento de usuários (**banimento, permissões**)  
-- Adição, edição e remoção de jogos  
-- Moderação de avaliações e comentários  
+O banco de dados está organizado para cobrir as principais funcionalidades de uma academia moderna, envolvendo **cadastro de usuários e funcionários, treinos, dietas, loja, agendamentos e fórum de interação**.
 
 ---
 
-## 🚀 Funcionalidades Extras  
+## 🧑‍💼 Cadastro de Usuários e Funcionários
 
-- 🏆 **Sistema de Conquistas**: Ganhe badges ao interagir com a comunidade  
-- ❤️ **Favoritos & Listas**: Salve jogos para jogar depois  
-- 🌙 **Modo Noturno**: Alternância entre tema claro e escuro  
-- 📊 **Histórico de Jogos**: Veja estatísticas e tempo gasto nos jogos  
-- 👥 **Sistema de Amigos**: Siga outros usuários e veja suas avaliações  
+- A tabela `usuario` armazena os dados dos **clientes da academia**.
+- A tabela `funcionario` armazena os **colaboradores**, que são ligados a um `cargo` (ex: treinador, nutricionista) através da tabela `cargo`.
+- A tabela `endereco` pode ser relacionada tanto a um `usuario` quanto a um `funcionario` para armazenar os dados de localização de ambos.
 
 ---
 
-## 💡 Sobre o Projeto  
+## 📝 Assinaturas e Avaliações
 
-O FRIV Games & Wiki nasceu da paixão por jogos e da necessidade de um espaço onde jogadores pudessem **avaliar, compartilhar experiências e descobrir novos games**. Com o tempo, a plataforma cresceu e se tornou um ponto de encontro para a comunidade gamer, conectando jogadores e até desenvolvedores indie em busca de reconhecimento.  
+- A tabela `assinatura` está ligada a `usuario`, indicando o **plano ativo do cliente**.
+- A tabela `avaliacao_fisica` armazena os **dados físicos e de saúde** de cada cliente, referenciando também a tabela `usuario`.
 
-Se você ama jogos e quer fazer parte dessa comunidade, **junte-se a nós!**  
+---
 
-📌 **Contribua**: Este é um projeto open-source! Qualquer ajuda é bem-vinda.  
-📌 **Sugestões?** Entre em contato ou abra uma issue!  
+## 🕒 Aulas e Agendamentos
 
-🎮 **Play, Review & Connect!** 🚀
+- `horario` define as faixas de tempo disponíveis.
+- `aula_agendada` conecta um `usuario` a um `horario`, possivelmente também com um `funcionario` (ex: instrutor) para indicar o **agendamento de uma aula ou atendimento personalizado**.
+
+---
+
+## 🏋️ Treinos e Exercícios
+
+- A tabela `treino` é ligada a um `usuario` e representa um conjunto de atividades físicas.
+- Cada treino pode conter vários `exercicio` cadastrados, e a **execução real** do treino pelo usuário é registrada na tabela `historico_treino`.
+
+---
+
+## 🥗 Dietas e Nutrição
+
+- Cada `usuario` pode ter uma `dieta`, que por sua vez contém várias `refeicao`.
+- As refeições contêm itens da tabela `alimento` através da tabela intermediária `dieta_alimento`, permitindo associar múltiplos alimentos a cada refeição com quantidades específicas.
+
+---
+
+## 🛒 Loja e Vendas
+
+- Produtos são cadastrados em `produto`, e classificados por `categoria_produto`.
+- `pedido` registra compras feitas por `usuario`, podendo aplicar um `cupom_desconto`.
+- Esses dados serão importantes para **controle de estoque e vendas**.
+
+---
+
+## 💬 Fórum
+
+- A tabela `forum` permite que usuários criem tópicos de discussão, incentivando a **interação entre os membros da academia**.
+
+---
+
+## 🔗 Relações Resumidas
+
+| Origem               | Destino                | Relação/Explicação                                         |
+|----------------------|------------------------|-------------------------------------------------------------|
+| `usuario`            | `endereco`             | Um usuário tem um endereço                                 |
+| `usuario`            | `assinatura`           | Um usuário possui uma assinatura                           |
+| `usuario`            | `avaliacao_fisica`     | Um usuário tem uma ou mais avaliações                      |
+| `usuario`            | `treino`               | Treinos são atribuídos a usuários                          |
+| `usuario`            | `dieta`                | Cada usuário pode ter uma dieta                            |
+| `usuario`            | `pedido`               | Pedidos de produtos são feitos por usuários                |
+| `usuario`            | `aula_agendada`        | Agendamento de aulas por usuários                          |
+| `funcionario`        | `cargo`                | Cada funcionário ocupa um cargo                            |
+| `refeicao`           | `dieta`                | Várias refeições pertencem a uma dieta                     |
+| `dieta_alimento`     | `refeicao` + `alimento`| Associa alimentos a refeições com porções                  |
+| `pedido`             | `produto`              | Cada pedido contém produtos                                |
+| `pedido`             | `cupom_desconto`       | Pode haver cupons aplicados ao pedido                      |
+
+---
