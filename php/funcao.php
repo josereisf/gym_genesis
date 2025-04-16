@@ -6,7 +6,7 @@ function conectar()
   $servidor = "db";
   $user = "root";
   $password = "123";
-  $banco = "shopee";
+  $banco = "gym_genesis";
 
   return mysqli_connect($servidor, $user, $password, $banco);
 }

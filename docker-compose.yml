@@ -3,7 +3,7 @@ version: '3.8'
 services:
   php:
     build: .
-    container_name: "apache_php"
+    container_name: "php"
     image: php:8.1.16-apache
     volumes:
       - ./:/var/www/html/
@@ -12,10 +12,10 @@ services:
 
   db:
     image: mariadb:10.5
-    container_name: "mariadb-server"
+    container_name: "db"
     restart: always
     volumes: 
-      - ./documentation/bd/script_banco.sql:/docker-entrypoint-initdb.d/script_banco.sql
+      - ./db/banco.sql:/docker-entrypoint-initdb.d/banco.sql
     environment:
       - MARIADB_USER=root
       - MARIADB_ROOT_PASSWORD=123
