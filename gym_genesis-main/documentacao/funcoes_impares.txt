@@ -1,11 +1,14 @@
 #✅ FEITO ✅#
 
+cadastrarUsuario($conexao, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
 
 
 
 #🚧 EM ANDAMENTO 🚧#
 
+editarUsuario($conexao, $idusuario, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
 
+deletarUsuario($conexao, $idusuario)
 
 #❌ PENDENTE ❌#
 
@@ -22,14 +25,11 @@ loginUsuario($conexao, $email, $senha)
 deletarCupomDesconto($conexao, $idcupom)
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)
-editarUsuario($conexao, $idusuario, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
-cadastrarUsuario($conexao, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
 deletarAssinatura($conexao, $idassinatura)
 editarEndereco($conexao, $idendereco, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
 deletarEndereco($conexao, $idendereco)
 listarProdutos($conexao, $idproduto)
 editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
-deletarUsuario($conexao, $idusuario)
 deletarPagamento($conexao, $idpagamento)
 recuperacaoSenha($conexao, $email)
 cadastrarTreino($conexao, $tipo, $horario, $descricao, $usuario_idusuario)
@@ -67,10 +67,3 @@ editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuari
 editarPagamento($conexao, $idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status)
 editarDietaAlimento($conexao, $iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao)
 
-✅ deletarFuncionario($conexao, $idfuncionario) // FEITO
-🚧 EM ANDAMENTO
-❌ editarCargo(...) // PENDENTE
-
-1 - deletarFuncionario(...) // FEITO
-3 - editarPlano(...)        // EM ANDAMENTO
-5 - editarCargo(...)        // PENDENTE
