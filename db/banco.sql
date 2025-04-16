@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema gym_genesis
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema gym_genesis
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `gym_genesis` DEFAULT CHARACTER SET utf8 ;
+USE `gym_genesis` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`alimento`
+-- Table `gym_genesis`.`alimento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`alimento` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`alimento` (
   `idalimento` INT(11) NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
   `calorias` DECIMAL(6,2) NOT NULL,
@@ -35,9 +35,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuario`
+-- Table `gym_genesis`.`usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`usuario` (
   `idusuario` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(70) NOT NULL,
   `senha` VARCHAR(200) NOT NULL,
@@ -56,9 +56,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`assinatura`
+-- Table `gym_genesis`.`assinatura`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`assinatura` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`assinatura` (
   `idassinatura` INT(11) NOT NULL AUTO_INCREMENT,
   `data_inicio` DATE NOT NULL,
   `data_fim` DATE NOT NULL,
@@ -67,15 +67,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`assinatura` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `assinatura_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`))
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`horario`
+-- Table `gym_genesis`.`horario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`horario` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`horario` (
   `idhorario` INT(11) NOT NULL AUTO_INCREMENT,
   `dia_semana` ENUM('Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo') NOT NULL,
   `hora_inicio` TIME NOT NULL,
@@ -86,9 +86,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`aula_agendada`
+-- Table `gym_genesis`.`aula_agendada`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`aula_agendada` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`aula_agendada` (
   `idaula` INT(11) NOT NULL AUTO_INCREMENT,
   `horario_idhorario` INT(11) NOT NULL,
   `data_aula` DATE NOT NULL,
@@ -98,10 +98,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`aula_agendada` (
   INDEX `fk_aula_agendada_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `aula_agendada_ibfk_2`
     FOREIGN KEY (`horario_idhorario`)
-    REFERENCES `mydb`.`horario` (`idhorario`),
+    REFERENCES `gym_genesis`.`horario` (`idhorario`),
   CONSTRAINT `fk_aula_agendada_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`)
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -109,9 +109,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`avaliacao_fisica`
+-- Table `gym_genesis`.`avaliacao_fisica`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`avaliacao_fisica` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`avaliacao_fisica` (
   `idavaliacao` INT(11) NOT NULL AUTO_INCREMENT,
   `peso` DECIMAL(5,3) NOT NULL,
   `altura` DECIMAL(5,2) NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`avaliacao_fisica` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `avaliacao_fisica_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`)
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -131,9 +131,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`cargo`
+-- Table `gym_genesis`.`cargo`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`cargo` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`cargo` (
   `idcargo` INT(11) NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
   `descricao` TEXT NULL DEFAULT NULL,
@@ -143,9 +143,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`categoria_produto`
+-- Table `gym_genesis`.`categoria_produto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`categoria_produto` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`categoria_produto` (
   `idcategoria` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `descricao` TEXT NULL DEFAULT NULL,
@@ -155,9 +155,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`cupom_desconto`
+-- Table `gym_genesis`.`cupom_desconto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`cupom_desconto` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`cupom_desconto` (
   `idcupom` INT(11) NOT NULL AUTO_INCREMENT,
   `codigo` VARCHAR(50) NOT NULL,
   `percentual_desconto` DECIMAL(5,2) NULL DEFAULT NULL,
@@ -172,9 +172,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`dieta`
+-- Table `gym_genesis`.`dieta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`dieta` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`dieta` (
   `iddieta` INT(11) NOT NULL AUTO_INCREMENT,
   `descricao` TEXT NOT NULL,
   `data_inicio` DATE NOT NULL,
@@ -184,15 +184,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`dieta` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `dieta_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`))
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`refeicao`
+-- Table `gym_genesis`.`refeicao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`refeicao` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`refeicao` (
   `idrefeicao` INT(11) NOT NULL,
   `dieta_id` INT(11) NOT NULL,
   `tipo` ENUM('Café da manhã', 'Lanche da manhã', 'Almoço', 'Lanche da tarde', 'Jantar', 'Ceia') NOT NULL,
@@ -201,15 +201,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`refeicao` (
   INDEX `dieta_id` (`dieta_id` ASC) VISIBLE,
   CONSTRAINT `refeicao_ibfk_1`
     FOREIGN KEY (`dieta_id`)
-    REFERENCES `mydb`.`dieta` (`iddieta`))
+    REFERENCES `gym_genesis`.`dieta` (`iddieta`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`dieta_alimento`
+-- Table `gym_genesis`.`dieta_alimento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`dieta_alimento` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`dieta_alimento` (
   `iddieta_alimentar` INT(11) NOT NULL,
   `refeicao_id` INT(11) NOT NULL,
   `alimento_id` INT(11) NOT NULL,
@@ -220,18 +220,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`dieta_alimento` (
   INDEX `alimento_id` (`alimento_id` ASC) VISIBLE,
   CONSTRAINT `dieta_alimento_ibfk_1`
     FOREIGN KEY (`refeicao_id`)
-    REFERENCES `mydb`.`refeicao` (`idrefeicao`),
+    REFERENCES `gym_genesis`.`refeicao` (`idrefeicao`),
   CONSTRAINT `dieta_alimento_ibfk_2`
     FOREIGN KEY (`alimento_id`)
-    REFERENCES `mydb`.`alimento` (`idalimento`))
+    REFERENCES `gym_genesis`.`alimento` (`idalimento`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`funcionario`
+-- Table `gym_genesis`.`funcionario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`funcionario` (
   `idfuncionario` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
@@ -244,15 +244,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`funcionario` (
   INDEX `cargo_id` (`cargo_id` ASC) VISIBLE,
   CONSTRAINT `funcionario_ibfk_1`
     FOREIGN KEY (`cargo_id`)
-    REFERENCES `mydb`.`cargo` (`idcargo`))
+    REFERENCES `gym_genesis`.`cargo` (`idcargo`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`endereco`
+-- Table `gym_genesis`.`endereco`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`endereco` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`endereco` (
   `idendereco` INT(11) NOT NULL,
   `usuario_id` INT(11) NULL DEFAULT NULL,
   `funcionario_id` INT(11) NULL DEFAULT NULL,
@@ -268,18 +268,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`endereco` (
   INDEX `funcionario_id` (`funcionario_id` ASC) VISIBLE,
   CONSTRAINT `endereco_ibfk_1`
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `mydb`.`usuario` (`idusuario`),
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`),
   CONSTRAINT `endereco_ibfk_2`
     FOREIGN KEY (`funcionario_id`)
-    REFERENCES `mydb`.`funcionario` (`idfuncionario`))
+    REFERENCES `gym_genesis`.`funcionario` (`idfuncionario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`exercicio`
+-- Table `gym_genesis`.`exercicio`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`exercicio` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`exercicio` (
   `idexercicio` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `grupo_muscular` VARCHAR(100) NOT NULL,
@@ -291,9 +291,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`forum`
+-- Table `gym_genesis`.`forum`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`forum` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`forum` (
   `idtopico` INT(11) NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(100) NOT NULL,
   `descricao` TEXT NOT NULL,
@@ -303,15 +303,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`forum` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `forum_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`))
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`treino`
+-- Table `gym_genesis`.`treino`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`treino` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino` (
   `idtreino` INT(11) NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(45) NOT NULL,
   `horario` TIME NOT NULL,
@@ -321,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`treino` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `treino_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`)
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -329,9 +329,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`historico_treino`
+-- Table `gym_genesis`.`historico_treino`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`historico_treino` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`historico_treino` (
   `idhistorico` INT(11) NOT NULL AUTO_INCREMENT,
   `usuario_id` INT(11) NOT NULL,
   `treino_id` INT(11) NOT NULL,
@@ -342,18 +342,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`historico_treino` (
   INDEX `treino_id` (`treino_id` ASC) VISIBLE,
   CONSTRAINT `historico_treino_ibfk_1`
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `mydb`.`usuario` (`idusuario`),
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`),
   CONSTRAINT `historico_treino_ibfk_2`
     FOREIGN KEY (`treino_id`)
-    REFERENCES `mydb`.`treino` (`idtreino`))
+    REFERENCES `gym_genesis`.`treino` (`idtreino`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`pedido`
+-- Table `gym_genesis`.`pedido`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`pedido` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`pedido` (
   `idpedido` INT(11) NOT NULL AUTO_INCREMENT,
   `usuario_idusuario` INT(11) NOT NULL,
   `data_pedido` DATETIME NOT NULL,
@@ -362,15 +362,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`pedido` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `pedido_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`))
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`produto`
+-- Table `gym_genesis`.`produto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`produto` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`produto` (
   `idproduto` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `descricao` TEXT NOT NULL,
@@ -383,9 +383,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`item_pedido`
+-- Table `gym_genesis`.`item_pedido`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`item_pedido` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`item_pedido` (
   `iditem` INT(11) NOT NULL AUTO_INCREMENT,
   `pedido_idpedido` INT(11) NOT NULL,
   `produto_idproduto` INT(11) NOT NULL,
@@ -395,18 +395,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`item_pedido` (
   INDEX `produto_idproduto` (`produto_idproduto` ASC) VISIBLE,
   CONSTRAINT `item_pedido_ibfk_1`
     FOREIGN KEY (`pedido_idpedido`)
-    REFERENCES `mydb`.`pedido` (`idpedido`),
+    REFERENCES `gym_genesis`.`pedido` (`idpedido`),
   CONSTRAINT `item_pedido_ibfk_2`
     FOREIGN KEY (`produto_idproduto`)
-    REFERENCES `mydb`.`produto` (`idproduto`))
+    REFERENCES `gym_genesis`.`produto` (`idproduto`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`meta_usuario`
+-- Table `gym_genesis`.`meta_usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`meta_usuario` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`meta_usuario` (
   `idmeta` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
   `descricao` TEXT NOT NULL,
@@ -417,15 +417,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`meta_usuario` (
   INDEX `usuario_id` (`usuario_id` ASC) VISIBLE,
   CONSTRAINT `meta_usuario_ibfk_1`
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `mydb`.`usuario` (`idusuario`))
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`pagamento`
+-- Table `gym_genesis`.`pagamento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`pagamento` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento` (
   `idpagamento` INT(11) NOT NULL AUTO_INCREMENT,
   `usuario_idusuario` INT(11) NOT NULL,
   `valor` DECIMAL(10,2) NOT NULL,
@@ -436,15 +436,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`pagamento` (
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `pagamento_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`))
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`pagamento_detalhe`
+-- Table `gym_genesis`.`pagamento_detalhe`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`pagamento_detalhe` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento_detalhe` (
   `idpagaemento2` INT(11) NOT NULL AUTO_INCREMENT,
   `pagamento_idpagamento` INT(11) NOT NULL,
   `tipo` ENUM('cartao', 'pix', 'boleto') NOT NULL,
@@ -456,15 +456,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`pagamento_detalhe` (
   INDEX `pagamento_idpagamento` (`pagamento_idpagamento` ASC) VISIBLE,
   CONSTRAINT `pagamento_detalhe_ibfk_1`
     FOREIGN KEY (`pagamento_idpagamento`)
-    REFERENCES `mydb`.`pagamento` (`idpagamento`))
+    REFERENCES `gym_genesis`.`pagamento` (`idpagamento`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`plano`
+-- Table `gym_genesis`.`plano`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`plano` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`plano` (
   `idplano` INT(11) NOT NULL AUTO_INCREMENT,
   `tipo` VARCHAR(45) NULL DEFAULT NULL,
   `duracao` VARCHAR(45) NULL DEFAULT NULL,
@@ -473,15 +473,15 @@ CREATE TABLE IF NOT EXISTS `mydb`.`plano` (
   INDEX `assinatura_idassinatura` (`assinatura_idassinatura` ASC) VISIBLE,
   CONSTRAINT `plano_ibfk_1`
     FOREIGN KEY (`assinatura_idassinatura`)
-    REFERENCES `mydb`.`assinatura` (`idassinatura`))
+    REFERENCES `gym_genesis`.`assinatura` (`idassinatura`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`resposta_forum`
+-- Table `gym_genesis`.`resposta_forum`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`resposta_forum` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`resposta_forum` (
   `idresposta` INT(11) NOT NULL AUTO_INCREMENT,
   `mensagem` TEXT NOT NULL,
   `data_resposta` DATETIME NOT NULL,
@@ -492,18 +492,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`resposta_forum` (
   INDEX `forum_idtopico` (`forum_idtopico` ASC) VISIBLE,
   CONSTRAINT `resposta_forum_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`),
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`),
   CONSTRAINT `resposta_forum_ibfk_2`
     FOREIGN KEY (`forum_idtopico`)
-    REFERENCES `mydb`.`forum` (`idtopico`))
+    REFERENCES `gym_genesis`.`forum` (`idtopico`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`treino_exercicio`
+-- Table `gym_genesis`.`treino_exercicio`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`treino_exercicio` (
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino_exercicio` (
   `idtreino2` INT(11) NOT NULL,
   `treino_id` INT(11) NOT NULL,
   `exercicio_id` INT(11) NOT NULL,
@@ -516,10 +516,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`treino_exercicio` (
   INDEX `exercicio_id` (`exercicio_id` ASC) VISIBLE,
   CONSTRAINT `treino_exercicio_ibfk_1`
     FOREIGN KEY (`treino_id`)
-    REFERENCES `mydb`.`treino` (`idtreino`),
+    REFERENCES `gym_genesis`.`treino` (`idtreino`),
   CONSTRAINT `treino_exercicio_ibfk_2`
     FOREIGN KEY (`exercicio_id`)
-    REFERENCES `mydb`.`exercicio` (`idexercicio`))
+    REFERENCES `gym_genesis`.`exercicio` (`idexercicio`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
