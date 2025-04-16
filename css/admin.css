@@ -1,0 +1,300 @@
+/* Estilos gerais */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: #fff;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar .logo {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #34495e;
+}
+
+.sidebar .nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.sidebar .nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 5px 0;
+  transition: background-color 0.3s;
+}
+
+.sidebar .nav a:hover {
+  background-color: #34495e;
+}
+
+.sidebar .nav a i {
+  margin-right: 10px;
+}
+
+/* Botão de toggle do sidebar */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: #2c3e50;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Conteúdo principal */
+.main-content {
+  margin-left: 250px;
+  flex: 1;
+  transition: margin-left 0.3s ease;
+}
+
+.container-admin {
+  padding: 20px;
+}
+
+.content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  text-align: center;
+  color: #666;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #2c3e50;
+  color: #fff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+
+/* Estilização da tabela */
+table {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: #ffffff;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Cabeçalho da tabela */
+thead {
+  background: linear-gradient(135deg, #007BFF, #0056b3);
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+th {
+  padding: 18px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilização das células */
+td {
+  padding: 15px;
+  border-bottom: 1px solid #e9ecef;
+  color: #495057;
+  font-size: 0.95em;
+}
+
+/* Efeito zebra nas linhas */
+tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+/* Efeito hover nas linhas */
+tbody tr:hover {
+  background: #e9f5ff;
+  transform: scale(1.02);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Ajuste para colunas específicas */
+td img {
+  width: 60px;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+td a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+td a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Botões ou ações dentro da tabela */
+td button {
+  background: #007BFF;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+td button:hover {
+  background: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  table {
+      width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+  }
+
+  th, td {
+      padding: 12px;
+  }
+
+  td img {
+      width: 50px;
+  }
+
+  /* Ocultar colunas menos importantes em dispositivos móveis */
+  td:nth-child(3),
+  th:nth-child(3) {
+      display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  th, td {
+      padding: 10px;
+      font-size: 0.85em;
+  }
+
+  td img {
+      width: 40px;
+  }
+
+  /* Ocultar mais colunas em telas muito pequenas */
+  td:nth-child(4),
+  th:nth-child(4) {
+      display: none;
+  }
+}
+
+/* Estilos para o contêiner de cards */
+.container {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  /* 3 colunas de largura igual */
+  gap: 20px !important;
+  /* Espaçamento entre os cards */
+  margin: 20px !important;
+  /* Margem para o contêiner */
+  padding: 10px !important;
+}
+
+/* Estilos para cada card */
+/* Cards de estatísticas */
+.card-estatistica {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-estatistica:hover {
+  transform: scale(1.03);
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+.card-text {
+  font-size: 16px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.text-success { color: #28a745; }  /* Verde para o mais caro */
+.text-danger { color: #dc3545; }    /* Vermelho para o mais barato */
+.text-info { color: #17a2b8; }      /* Azul para a média */
+

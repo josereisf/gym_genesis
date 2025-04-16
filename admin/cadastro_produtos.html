@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos</title>
+    <link rel="stylesheet" href="../css/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+</head>
+<body>
+    <form action="../php/cadastro_produtos.php" method="post" class="was-validated p-4 rounded shadow bg-light" enctype="multipart/form-data" novalidate>
+
+        <!-- Nome do Produto -->
+        <div class="mb-3">
+          <label for="validationNome" class="form-label fw-bold">Nome do Produto</label>
+          <input type="text" class="form-control" id="validationNome" name="nome" placeholder="Digite o nome do produto" required>
+          <div class="invalid-feedback">Por favor, insira um nome válido.</div>
+        </div>
+
+        <!-- Preço -->
+        <div class="mb-3">
+          <label for="validationPreco" class="form-label fw-bold">Preço (R$)</label>
+          <input type="number" class="form-control" id="validationPreco" name="preco" step="0.01" min="0" placeholder="Exemplo: 99.90" required>
+          <div class="invalid-feedback">Insira um preço válido.</div>
+        </div>
+
+        <!-- Descrição -->
+        <div class="mb-3">
+          <label for="validationDescricao" class="form-label fw-bold">Descrição</label>
+          <textarea class="form-control" id="validationDescricao" name="descricao" placeholder="Descreva o produto em detalhes" rows="3" required></textarea>
+          <div class="invalid-feedback">A descrição é obrigatória.</div>
+        </div>
+
+        <!-- Link do Produto -->
+        <div class="mb-3">
+          <label for="validationLink" class="form-label fw-bold">Link do Produto</label>
+          <input type="url" class="form-control" id="validationLink" name="link" placeholder="https://exemplo.com/produto" required>
+          <div class="invalid-feedback">Insira um link válido.</div>
+        </div>
+
+        <!-- Upload de Imagem -->
+        <div class="mb-3">
+          <label for="validationImagem" class="form-label fw-bold">Imagem do Produto</label>
+          <input type="file" class="form-control" id="validationImagem" name="imagem" accept="image/*" required>
+          <div class="invalid-feedback">Por favor, envie uma imagem válida.</div>
+        </div>
+
+
+        <!-- Botão de Envio -->
+        <div class="d-grid">
+          <button class="btn btn-success btn-lg" type="submit">
+            <i class="bi bi-check-circle"></i> Cadastrar Produto
+          </button>
+        </div>
+
+      </form>
+
+
+<script src="../js/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastrear Cliques</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .track-click {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .track-click:hover {
+            background-color: #2980b9;
+        }
+
+        .stats-container {
+            margin-top: 30px;
+        }
+
+        .stats-container h2 {
+            color: #2c3e50;
+        }
+
+        #mostClicked {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        #chartContainer {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+    </style>
+    <!-- Incluindo Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Rastrear Cliques nos Produtos</h1>
+
+    <div class="buttons-container">
+        <button class="track-click" data-item="Produto 1">Produto 1 (<span id="count-Produto 1">0</span> cliques)</button>
+        <button class="track-click" data-item="Produto 2">Produto 2 (<span id="count-Produto 2">0</span> cliques)</button>
+        <button class="track-click" data-item="Produto 3">Produto 3 (<span id="count-Produto 3">0</span> cliques)</button>
+    </div>
+
+    <div class="stats-container">
+        <h2>Item mais clicado: <span id="mostClicked">Nenhum</span></h2>
+    </div>
+
+    <div id="chartContainer">
+        <canvas id="clickChart"></canvas>
+    </div>
+
+    <script>
+        // Verifica se já existe um contador salvo no localStorage
+        let clickCounts = JSON.parse(localStorage.getItem("clickCounts")) || {
+            "Produto 1": 0,
+            "Produto 2": 0,
+            "Produto 3": 0
+        };
+
+        // Função para rastrear cliques
+        function trackClick(event) {
+            let item = event.target.dataset.item;
+
+            // Atualiza o contador
+            clickCounts[item] = (clickCounts[item] || 0) + 1;
+
+            // Salva no localStorage
+            localStorage.setItem("clickCounts", JSON.stringify(clickCounts));
+
+            // Atualiza a exibição dos cliques e o gráfico
+            updateClickCounts();
+            updateMostClicked();
+            updateChart();
+        }
+
+        // Atualiza os contadores na página
+        function updateClickCounts() {
+            for (let item in clickCounts) {
+                let countSpan = document.getElementById(`count-${item}`);
+                if (countSpan) {
+                    countSpan.innerText = clickCounts[item];
+                }
+            }
+        }
+
+        // Atualiza o item mais clicado
+        function updateMostClicked() {
+            let mostClickedItem = Object.entries(clickCounts)
+                .sort((a, b) => b[1] - a[1])[0]; // Pega o mais clicado
+
+            document.getElementById("mostClicked").innerText = mostClickedItem ? mostClickedItem[0] : "Nenhum";
+        }
+
+        // Configuração do gráfico
+        let clickChart;
+        function createChart() {
+            const ctx = document.getElementById('clickChart').getContext('2d');
+            clickChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(clickCounts),
+                    datasets: [{
+                        label: 'Cliques por Produto',
+                        data: Object.values(clickCounts),
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.6)',
+                            'rgba(46, 204, 113, 0.6)',
+                            'rgba(231, 76, 60, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(231, 76, 60, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Atualiza o gráfico
+        function updateChart() {
+            if (clickChart) {
+                clickChart.data.labels = Object.keys(clickCounts);
+                clickChart.data.datasets[0].data = Object.values(clickCounts);
+                clickChart.update();
+            }
+        }
+
+        // Adiciona evento de clique em todos os botões
+        document.querySelectorAll(".track-click").forEach(button => {
+            button.addEventListener("click", trackClick);
+        });
+
+        // Inicializa a página
+        updateClickCounts();
+        updateMostClicked();
+        createChart();
+    </script>
+</body>
+</html>
