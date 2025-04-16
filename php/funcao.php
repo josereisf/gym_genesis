@@ -17,7 +17,29 @@ function desconectar($conexao)
 
   mysqli_close($conexao);
 }
-
+function cadatrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo){
+  $conexao = conectar();
+  $sql = 'INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+  
+  mysqli_stmt_bind_param($comando, 'ssssssssi', $nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo);
+  
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarUsuario($idusuario, $nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo){
+  $conexao = conectar();
+  $sql = 'UPDATE usuario SET nome=?, senha=?, email=?, cpf=?, data_de_nascimento=?, telefone=?, foto_de_perfil=?, numero_matricula=?, tipo_usuario=? WHERE idusuario=?';
+  $comando = mysqli_prepare($conexao ,$sql);
+  mysqli_stmt_bind_param($comando, 'ssssssssii', $nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo, $idusuario);
+  
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 
 function listarProdutos(){
   $conexao = conectar();
