@@ -1,14 +1,14 @@
 #✅ FEITO ✅#
 
 cadastrarUsuario($conexao, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
+editarUsuario($conexao, $idusuario, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
+deletarUsuario($conexao, $idusuario)
+loginUsuario($conexao, $email, $senha)
 
 
 
 #🚧 EM ANDAMENTO 🚧#
 
-editarUsuario($conexao, $idusuario, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
-
-deletarUsuario($conexao, $idusuario)
 
 #❌ PENDENTE ❌#
 

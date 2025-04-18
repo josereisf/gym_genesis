@@ -17,19 +17,20 @@ function desconectar($conexao)
 
   mysqli_close($conexao);
 }
-function cadatrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo){
+function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo){
   $conexao = conectar();
+  $senhahash = password_hash($senha, PASSWORD_DEFAULT);
   $sql = 'INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
   
-  mysqli_stmt_bind_param($comando, 'ssssssssi', $nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo);
+  mysqli_stmt_bind_param($comando, 'ssssssssi', $nome, $senhahash, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo);
   
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
 }
-function editarUsuario($idusuario, $nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo){
+function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo, $idusuario){
   $conexao = conectar();
   $sql = 'UPDATE usuario SET nome=?, senha=?, email=?, cpf=?, data_de_nascimento=?, telefone=?, foto_de_perfil=?, numero_matricula=?, tipo_usuario=? WHERE idusuario=?';
   $comando = mysqli_prepare($conexao ,$sql);
@@ -40,7 +41,35 @@ function editarUsuario($idusuario, $nome, $senha, $email, $cpf, $data_nasc, $tel
   desconectar($conexao);
   return $funcionou;
 }
+function deletarUsuario($idusuario){
+  $conexao = conectar();
+  $sql = "DELETE FROM usuario WHERE idusuario = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  
+  mysqli_stmt_bind_param($comando, 'i', $idusuario);
 
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function loginUsuario($email, $senha){
+  $conexao = conectar();
+  $sql = "SELECT senha FROM usuario WHERE email = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 's', $email);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_bind_result($comando, $senhahash);
+  mysqli_stmt_fetch($comando);
+  $tf = password_verify($senha, $senhahash);
+  if ($senhahash && password_verify($senha, $senhahash)){
+    $resul = 1;
+  }
+  else{
+    $resul = 0;
+  }
+  return $resul;
+}
 function listarProdutos(){
   $conexao = conectar();
   $sql = "SELECT * FROM `produtos` ORDER BY RAND() limit 4";
