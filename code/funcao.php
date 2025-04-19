@@ -70,6 +70,25 @@ function loginUsuario($email, $senha){
   }
   return $resul;
 }
+function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo){
+  $conexao = conectar();
+  if ($tipo == 1){
+    $tipoid = "usuario_id";
+  }
+  else{
+    $tipoid = "funcionario_id";
+  }
+  $sql = 'INSERT INTO endereco ('.$tipoid.', cep, rua, numero, complemento, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+  
+  mysqli_stmt_bind_param($comando, 'isssssss', $id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
+  
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+
+}
 function listarProdutos(){
   $conexao = conectar();
   $sql = "SELECT * FROM `produtos` ORDER BY RAND() limit 4";

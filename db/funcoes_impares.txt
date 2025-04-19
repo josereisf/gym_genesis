@@ -8,6 +8,7 @@ loginUsuario($conexao, $email, $senha)
 
 
 #🚧 EM ANDAMENTO 🚧#
+cadastrarEndereco($conexao, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
 
 
 #❌ PENDENTE ❌#
@@ -21,7 +22,6 @@ deletarHorario($conexao, $idhorario)
 listarCupomDesconto($conexao, $idcupom)
 editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
 deletarTreinoExercicio($conexao, $idtreino2)
-loginUsuario($conexao, $email, $senha)
 deletarCupomDesconto($conexao, $idcupom)
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)
@@ -59,7 +59,6 @@ listarHistoricoTreino($conexao, $idhistorico)
 aplicarDesconto($conexao, $idproduto, $idcupom)
 editarHistoricoTreino($conexao, $idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes)
 editarForum($conexao, $idtopico, $titulo, $descricao, $data_criacao, $usuario_idusuario)
-cadastrarEndereco($conexao, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
 editarCupomDesconto($conexao, $idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
 listarPagamentos($conexao, $idpagamento)
 listarPlanos($conexao, $idplano)

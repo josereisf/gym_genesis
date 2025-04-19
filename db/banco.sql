@@ -253,7 +253,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`endereco`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`endereco` (
-  `idendereco` INT(11) NOT NULL,
+  `idendereco` INT(11) NOT NULL AUTO_INCREMENT,
   `usuario_id` INT(11) NULL DEFAULT NULL,
   `funcionario_id` INT(11) NULL DEFAULT NULL,
   `cep` VARCHAR(10) NULL DEFAULT NULL,
