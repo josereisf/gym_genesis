@@ -21,7 +21,7 @@ USE `gym_genesis` ;
 -- Table `gym_genesis`.`alimento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`alimento` (
-  `idalimento` INT(11) NOT NULL,
+  `idalimento` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `calorias` DECIMAL(6,2) NOT NULL,
   `carboidratos` DECIMAL(6,2) NULL DEFAULT NULL,
@@ -134,7 +134,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`cargo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`cargo` (
-  `idcargo` INT(11) NOT NULL,
+  `idcargo` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `descricao` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`idcargo`))
@@ -193,7 +193,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`refeicao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`refeicao` (
-  `idrefeicao` INT(11) NOT NULL,
+  `idrefeicao` INT(11) NOT NULL AUTO_INCREMENT,
   `dieta_id` INT(11) NOT NULL,
   `tipo` ENUM('Café da manhã', 'Lanche da manhã', 'Almoço', 'Lanche da tarde', 'Jantar', 'Ceia') NOT NULL,
   `horario` TIME NULL DEFAULT NULL,
@@ -210,7 +210,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`dieta_alimento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`dieta_alimento` (
-  `iddieta_alimentar` INT(11) NOT NULL,
+  `iddieta_alimentar` INT(11) NOT NULL AUTO_INCREMENT,
   `refeicao_id` INT(11) NOT NULL,
   `alimento_id` INT(11) NOT NULL,
   `quantidade` DECIMAL(6,2) NOT NULL,
@@ -407,7 +407,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`meta_usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`meta_usuario` (
-  `idmeta` INT(11) NOT NULL,
+  `idmeta` INT(11) NOT NULL AUTO_INCREMENT,
   `usuario_id` INT(11) NOT NULL,
   `descricao` TEXT NOT NULL,
   `data_inicio` DATE NOT NULL,
@@ -504,7 +504,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`treino_exercicio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino_exercicio` (
-  `idtreino2` INT(11) NOT NULL,
+  `idtreino2` INT(11) NOT NULL AUTO_INCREMENT,
   `treino_id` INT(11) NOT NULL,
   `exercicio_id` INT(11) NOT NULL,
   `series` INT(11) NOT NULL,
