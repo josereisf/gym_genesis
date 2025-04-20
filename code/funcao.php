@@ -17,35 +17,38 @@ function desconectar($conexao)
 
   mysqli_close($conexao);
 }
-function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo){
+function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo)
+{
   $conexao = conectar();
   $senhahash = password_hash($senha, PASSWORD_DEFAULT);
   $sql = 'INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
-  
+
   mysqli_stmt_bind_param($comando, 'ssssssssi', $nome, $senhahash, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo);
-  
+
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
 }
-function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo, $idusuario){
+function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo, $idusuario)
+{
   $conexao = conectar();
   $sql = 'UPDATE usuario SET nome=?, senha=?, email=?, cpf=?, data_de_nascimento=?, telefone=?, foto_de_perfil=?, numero_matricula=?, tipo_usuario=? WHERE idusuario=?';
-  $comando = mysqli_prepare($conexao ,$sql);
+  $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'ssssssssii', $nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo, $idusuario);
-  
+
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
 }
-function deletarUsuario($idusuario){
+function deletarUsuario($idusuario)
+{
   $conexao = conectar();
   $sql = "DELETE FROM usuario WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
-  
+
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
@@ -53,7 +56,8 @@ function deletarUsuario($idusuario){
   desconectar($conexao);
   return $funcionou;
 }
-function loginUsuario($email, $senha){
+function loginUsuario($email, $senha)
+{
   $conexao = conectar();
   $sql = "SELECT senha FROM usuario WHERE email = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -62,34 +66,136 @@ function loginUsuario($email, $senha){
   mysqli_stmt_bind_result($comando, $senhahash);
   mysqli_stmt_fetch($comando);
   $tf = password_verify($senha, $senhahash);
-  if ($senhahash && password_verify($senha, $senhahash)){
+  if ($senhahash && password_verify($senha, $senhahash)) {
     $resul = 1;
-  }
-  else{
+  } else {
     $resul = 0;
   }
   return $resul;
 }
-function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo){
+function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
+{
   $conexao = conectar();
-  if ($tipo == 1){
+  if ($tipo == 1) {
     $tipoid = "usuario_id";
-  }
-  else{
+  } else {
     $tipoid = "funcionario_id";
   }
-  $sql = 'INSERT INTO endereco ('.$tipoid.', cep, rua, numero, complemento, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  $sql = 'INSERT INTO endereco (' . $tipoid . ', cep, rua, numero, complemento, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
-  
+
   mysqli_stmt_bind_param($comando, 'isssssss', $id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
-  
+
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
-
 }
-function listarProdutos(){
+function editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id)
+{
+  $conexao = conectar();
+  if ($tipo == 1) {
+    $tipoid = "usuario_id";
+  } else {
+    $tipoid = "funcionario_id";
+  }
+  $sql = 'UPDATE endereco SET cep=?, rua=?, numero=?, complemento=?, bairro=?, cidade=?, estado=? WHERE ' . $tipoid . '=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sssssssi', $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $id);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletarEndereco($id, $tipo)
+{
+  $conexao = conectar();
+  if ($tipo == 1) {
+    $tipoid = "usuario_id";
+  } else {
+    $tipoid = "funcionario_id";
+  }
+  $sql = "DELETE FROM endereco WHERE " . $tipoid . "= ?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $id);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarEnderecos($id, $tipo)
+{
+  $conexao = conectar();
+  if ($id == null and $tipo == null) {
+    $sql = 'SELECT * FROM endereco';
+    $comando = mysqli_prepare($conexao, $sql);
+  } else {
+    if ($tipo == 1) {
+      $tipoid = "usuario_id";
+    } else {
+      $tipoid = "funcionario_id";
+    }
+    if ($id == null) {
+      $sql = 'SELECT * FROM endereco WHERE ' . $tipoid . ' IS NOT NULL';
+      $comando = mysqli_prepare($conexao, $sql);
+    } else {
+      $sql = 'SELECT * FROM endereco WHERE ' . $tipoid . ' =?';
+      $comando = mysqli_prepare($conexao, $sql);
+      mysqli_stmt_bind_param($comando, 'i', $id);
+    }
+  }
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
+
+    $lista_enderecos = [];
+    while ($endereco = mysqli_fetch_assoc($resultados)) {
+      $lista_enderecos[] = $endereco;
+    }
+    mysqli_stmt_close($comando);
+
+    return $lista_enderecos;
+}
+function listarFuncionarios($idfuncionario)
+{
+  $conexao = conectar();
+  if ($idfuncionario != null) {
+    $sql = 'SELECT * FROM funcionario WHERE idfuncionario=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
+  } else {
+    $sql = 'SELECT * FROM funcionario';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_funcionarios = [];
+  while ($funcionario = mysqli_fetch_assoc($resultados)) {
+    $lista_funcionarios[] = $funcionario;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_funcionarios;
+}
+function deletarFuncionario($idfuncionario)
+{
+  $conexao = conectar();
+  $sql = "DELETE FROM funcionario WHERE idfuncionario = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarProdutos()
+{
   $conexao = conectar();
   $sql = "SELECT * FROM `produtos` ORDER BY RAND() limit 4";
   $comando = mysqli_prepare($conexao, $sql);
@@ -266,35 +372,35 @@ function formularioProdutos()
 
 function estatisticaProdutos()
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    // Consulta para contar o total de produtos
-    $sqlTotal = "SELECT COUNT(*) as total FROM `produtos`";
-    $comando = mysqli_prepare($conexao, $sqlTotal);
-    mysqli_stmt_execute($comando);
-    $resultadoTotal = mysqli_stmt_get_result($comando);
-    $totalProdutos = $resultadoTotal->fetch_assoc()['total']; // Correção aqui
+  // Consulta para contar o total de produtos
+  $sqlTotal = "SELECT COUNT(*) as total FROM `produtos`";
+  $comando = mysqli_prepare($conexao, $sqlTotal);
+  mysqli_stmt_execute($comando);
+  $resultadoTotal = mysqli_stmt_get_result($comando);
+  $totalProdutos = $resultadoTotal->fetch_assoc()['total']; // Correção aqui
 
-    // Consulta para encontrar o produto mais caro
-    $sqlMaxPreco = "SELECT nome, preco FROM `produtos` ORDER BY preco DESC LIMIT 1";
-    $stmt = mysqli_prepare($conexao, $sqlMaxPreco);
-    mysqli_stmt_execute($stmt);
-    $resultado = mysqli_stmt_get_result($stmt);
-    $produtoMaisCaro = $resultado->fetch_assoc();
+  // Consulta para encontrar o produto mais caro
+  $sqlMaxPreco = "SELECT nome, preco FROM `produtos` ORDER BY preco DESC LIMIT 1";
+  $stmt = mysqli_prepare($conexao, $sqlMaxPreco);
+  mysqli_stmt_execute($stmt);
+  $resultado = mysqli_stmt_get_result($stmt);
+  $produtoMaisCaro = $resultado->fetch_assoc();
 
 
-    // Consulta para encontrar o produto mais barato
-    $sqlMinPreco = "SELECT nome, preco FROM `produtos` ORDER BY preco ASC LIMIT 1";
-    $resultadoMinPreco = mysqli_query($conexao, $sqlMinPreco);
-    $produtoMaisBarato = mysqli_fetch_assoc($resultadoMinPreco);
+  // Consulta para encontrar o produto mais barato
+  $sqlMinPreco = "SELECT nome, preco FROM `produtos` ORDER BY preco ASC LIMIT 1";
+  $resultadoMinPreco = mysqli_query($conexao, $sqlMinPreco);
+  $produtoMaisBarato = mysqli_fetch_assoc($resultadoMinPreco);
 
-    // Consulta para calcular a média de preços
-    $sqlMediaPreco = "SELECT AVG(preco) as media_preco FROM `produtos`";
-    $resultadoMediaPreco = mysqli_query($conexao, $sqlMediaPreco);
-    $mediaPreco = mysqli_fetch_assoc($resultadoMediaPreco)['media_preco'];
+  // Consulta para calcular a média de preços
+  $sqlMediaPreco = "SELECT AVG(preco) as media_preco FROM `produtos`";
+  $resultadoMediaPreco = mysqli_query($conexao, $sqlMediaPreco);
+  $mediaPreco = mysqli_fetch_assoc($resultadoMediaPreco)['media_preco'];
 
-    // Exibindo os resultados
-    echo "<div class='container-admin'>
+  // Exibindo os resultados
+  echo "<div class='container-admin'>
               <div class='content'>
                 <h1>Estatísticas de Produtos</h1>
                 <div class='card-estatistica'>
@@ -327,9 +433,9 @@ function estatisticaProdutos()
           </div>
       </div>";
 
-    desconectar($conexao);
+  desconectar($conexao);
 
-    return $totalProdutos;
+  return $totalProdutos;
 }
 
 
@@ -599,7 +705,7 @@ function listarProdutosPorCategoria($categoria): void
     echo "</div></div>";
   } else if ($categoria == null) {
     echo "";
-  }else{
+  } else {
     echo "<p>Nenhum produto encontrado para a categoria: $categoria</p>";
   }
 

@@ -1,23 +1,32 @@
+# 🧑‍🦽CASO ESPECIAL 🧑‍🦽#
+
+deletarUsuario($conexao, $idusuario)
+deletarFuncionario($conexao, $idfuncionario) 
+
+
+
+
 #✅ FEITO ✅#
 
 cadastrarUsuario($conexao, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
 editarUsuario($conexao, $idusuario, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
-deletarUsuario($conexao, $idusuario)
 loginUsuario($conexao, $email, $senha)
+cadastrarEndereco($conexao, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
+editarEndereco($conexao, $idendereco, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
+deletarEndereco($conexao, $idendereco)
+listarFuncionario($idfuncionario)
+listarEndereco($conexao, $idendereco)
 
 
 
 #🚧 EM ANDAMENTO 🚧#
-cadastrarEndereco($conexao, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
 
 
 #❌ PENDENTE ❌#
 
-deletarFuncionario($conexao, $idfuncionario) 
 editarPlano($conexao, $idplano, $tipo, $duracao, $assinatura_idassinatura) // FIXME
 editarCargo($conexao, $idcargo, $nome, $descricao)
 gerenciarVencimento($conexao)
-listarEndereco($conexao, $idendereco)
 deletarHorario($conexao, $idhorario)
 listarCupomDesconto($conexao, $idcupom)
 editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
@@ -26,8 +35,6 @@ deletarCupomDesconto($conexao, $idcupom)
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)
 deletarAssinatura($conexao, $idassinatura)
-editarEndereco($conexao, $idendereco, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
-deletarEndereco($conexao, $idendereco)
 listarProdutos($conexao, $idproduto)
 editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
 deletarPagamento($conexao, $idpagamento)
@@ -50,7 +57,6 @@ deletarRefeicao($conexao, $idrefeicao)
 cadastrarRespostaForum($conexao, $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico)
 editarHorario($conexao, $idhorario, $dia_semana, $hora_inicio, $hora_fim)
 listarForum($conexao, $idtopico)
-listarFuncionario($conexao)
 cadastrarForum($conexao, $titulo, $descricao, $data_criacao, $usuario_idusuario)
 listarTreinoExercicio($conexao, $idtreino2)
 cadastrarPlano($conexao, $tipo, $duracao, $assinatura_idassinatura)
