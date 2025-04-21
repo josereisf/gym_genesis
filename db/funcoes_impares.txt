@@ -1,7 +1,7 @@
 # 🧑‍🦽CASO ESPECIAL 🧑‍🦽#
 
 deletarUsuario($conexao, $idusuario)
-deletarFuncionario($conexao, $idfuncionario) 
+
 
 
 
@@ -14,18 +14,29 @@ loginUsuario($conexao, $email, $senha)
 cadastrarEndereco($conexao, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
 editarEndereco($conexao, $idendereco, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
 deletarEndereco($conexao, $idendereco)
+deletarFuncionario($conexao, $idfuncionario) 
 listarFuncionario($idfuncionario)
 listarEndereco($conexao, $idendereco)
+cadastrarAssinatura($conexao, $data_inicio, $data_fim, $usuario_idusuario)
+renovarAssinatura($conexao, $idassinatura)
+deletarAssinatura($conexao, $idassinatura)
+cadastrarPlano($conexao, $tipo, $duracao, $assinatura_idassinatura)
+editarPlano($conexao, $idplano, $tipo, $duracao, $assinatura_idassinatura)
+listarPlanos($conexao, $idplano)
+deletarAvaliacaoFisica($conexao, $idavaliacao)
+editarDieta($conexao, $iddieta, $descricao, $data_inicio, $data_fim, $usuario_idusuario)
+deletarDieta($conexao, $iddieta)
+listarDietas($conexao, $iddieta)
+editarCargo($conexao, $idcargo, $nome, $descricao)
 
 
 
 #🚧 EM ANDAMENTO 🚧#
 
+deletarCargo($conexao, $idcargo)
 
 #❌ PENDENTE ❌#
 
-editarPlano($conexao, $idplano, $tipo, $duracao, $assinatura_idassinatura) // FIXME
-editarCargo($conexao, $idcargo, $nome, $descricao)
 gerenciarVencimento($conexao)
 deletarHorario($conexao, $idhorario)
 listarCupomDesconto($conexao, $idcupom)
@@ -34,24 +45,17 @@ deletarTreinoExercicio($conexao, $idtreino2)
 deletarCupomDesconto($conexao, $idcupom)
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)
-deletarAssinatura($conexao, $idassinatura)
 listarProdutos($conexao, $idproduto)
 editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
 deletarPagamento($conexao, $idpagamento)
 recuperacaoSenha($conexao, $email)
 cadastrarTreino($conexao, $tipo, $horario, $descricao, $usuario_idusuario)
 deletarProduto($conexao, $idproduto)
-deletarAvaliacaoFisica($conexao, $idavaliacao)
-deletarCargo($conexao, $idcargo)
-cadastrarAssinatura($conexao, $data_inicio, $data_fim, $usuario_idusuario)
 editarMetaUsuario($conexao, $idmeta, $usuario_id, $descricao, $data_inicio, $data_limite, $status)
 deletarMetaUsuario($conexao, $idmeta)
 cadastrarRefeicao($conexao, $dieta_id, $tipo, $horario)
-editarDieta($conexao, $iddieta, $descricao, $data_inicio, $data_fim, $usuario_idusuario)
 cadastrarCupomDesconto($conexao, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
-deletarDieta($conexao, $iddieta)
 cadastrarPedido($conexao, $usuario_idusuario, $data_pedido, $status)
-listarDietas($conexao, $iddieta)
 statusPedido($conexao, $idpedido, $idusuario)
 deletarRefeicao($conexao, $idrefeicao)
 cadastrarRespostaForum($conexao, $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico)
@@ -59,15 +63,12 @@ editarHorario($conexao, $idhorario, $dia_semana, $hora_inicio, $hora_fim)
 listarForum($conexao, $idtopico)
 cadastrarForum($conexao, $titulo, $descricao, $data_criacao, $usuario_idusuario)
 listarTreinoExercicio($conexao, $idtreino2)
-cadastrarPlano($conexao, $tipo, $duracao, $assinatura_idassinatura)
-renovarAssinatura($conexao, $idassinatura)
 listarHistoricoTreino($conexao, $idhistorico)
 aplicarDesconto($conexao, $idproduto, $idcupom)
 editarHistoricoTreino($conexao, $idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes)
 editarForum($conexao, $idtopico, $titulo, $descricao, $data_criacao, $usuario_idusuario)
 editarCupomDesconto($conexao, $idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
 listarPagamentos($conexao, $idpagamento)
-listarPlanos($conexao, $idplano)
 editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuario)
 editarPagamento($conexao, $idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status)
 editarDietaAlimento($conexao, $iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao)

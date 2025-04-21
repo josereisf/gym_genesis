@@ -46,6 +46,12 @@ function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto
 function deletarUsuario($idusuario)
 {
   $conexao = conectar();
+  $id = $idusuario;
+  $tipo = 1;
+  deletarEndereco($id, $tipo);
+  deletarAssinatura($idusuario);
+  deletarAvaliacaoFisica($idusuario);
+  deletarDieta($idusuario);
   $sql = "DELETE FROM usuario WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -148,16 +154,16 @@ function listarEnderecos($id, $tipo)
       mysqli_stmt_bind_param($comando, 'i', $id);
     }
   }
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
-    $lista_enderecos = [];
-    while ($endereco = mysqli_fetch_assoc($resultados)) {
-      $lista_enderecos[] = $endereco;
-    }
-    mysqli_stmt_close($comando);
+  $lista_enderecos = [];
+  while ($endereco = mysqli_fetch_assoc($resultados)) {
+    $lista_enderecos[] = $endereco;
+  }
+  mysqli_stmt_close($comando);
 
-    return $lista_enderecos;
+  return $lista_enderecos;
 }
 function listarFuncionarios($idfuncionario)
 {
@@ -184,6 +190,9 @@ function listarFuncionarios($idfuncionario)
 function deletarFuncionario($idfuncionario)
 {
   $conexao = conectar();
+  $id = $idfuncionario;
+  $tipo = 2;
+  deletarEndereco($id, $tipo);
   $sql = "DELETE FROM funcionario WHERE idfuncionario = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -193,6 +202,202 @@ function deletarFuncionario($idfuncionario)
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
+}
+function deletarFuncionarioCargo($idcargo)
+{
+  $conexao = conectar();
+  $sql = 'SELECT idfuncionario FROM funcionario WHERE cargo_id = ?';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'i', $idcargo);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  while ($idfuncionario = mysqli_fetch_assoc($resultados)) {
+    deletarFuncionario($idfuncionario);
+  }
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+}
+function editarCargo($idcargo, $nome, $descricao)
+{
+  $conexao = conectar();
+
+  $sql = 'UPDATE cargo SET nome=?, descricao=? WHERE idcargo=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssi', $nome, $descricao, $idcargo);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletarCargo($idcargo)
+{
+  $conexao = conectar();
+  $sql = deletarFuncionarioCargo($idcargo);
+  $sql = "DELETE FROM cargo WHERE idcargo=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idcargo);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarAssinatura($data_inicio, $data_fim, $idusuario)
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO assinatura (data_inicio, data_fim, usuario_idusuario) VALUES (?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssi', $data_inicio, $data_fim, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function renovarAssinatura($idusuario, $data_inicio, $data_fim)
+{
+  $conexao = conectar();
+
+  $sql = 'UPDATE assinatura SET data_inicio=?, data_fim=? WHERE usuario_idusuario=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssi', $data_inicio, $data_fim, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletarAssinatura($idusuario)
+{
+  $conexao = conectar();
+  $sql = "DELETE FROM assinatura WHERE usuario_idusuario=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarPlano($tipo, $duracao, $idassinatura)
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO plano (tipo, duracao, assinatura_idassinatura) VALUES (?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssi', $tipo, $duracao, $idassinatura);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarPlano($idplano, $tipo, $duracao)
+{
+  $conexao = conectar();
+
+  $sql = 'UPDATE plano SET tipo=?, duracao=? WHERE idplano=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssi', $tipo, $duracao, $idplano);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarPlanos($idplano)
+{
+  $conexao = conectar();
+  if ($idplano != null) {
+    $sql = 'SELECT * FROM plano WHERE idplano=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idplano);
+  } else {
+    $sql = 'SELECT * FROM plano';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_planos = [];
+  while ($plano = mysqli_fetch_assoc($resultados)) {
+    $lista_planos[] = $plano;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_planos;
+}
+function deletarAvaliacaoFisica($idusuario)
+{
+  $conexao = conectar();
+  $sql = "DELETE FROM avaliacao_fisica WHERE usuario_idusuario=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarDieta($descricao, $data_inicio, $data_fim, $idusuario)
+{
+  $conexao = conectar();
+
+  $sql = 'UPDATE dieta SET descricao=?, data_inicio=?, data_fim=? WHERE usuario_idusuario=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sssi', $descricao, $data_inicio, $data_fim, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletarDieta($idusuario)
+{
+  $conexao = conectar();
+  $sql = "DELETE FROM dieta WHERE usuario_idusuario=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarDietas($idusuario)
+{
+  $conexao = conectar();
+  if ($idusuario != null) {
+    $sql = 'SELECT * FROM dieta WHERE usuario_idusuario=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idusuario);
+  } else {
+    $sql = 'SELECT * FROM dieta';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_dietas = [];
+  while ($dieta = mysqli_fetch_assoc($resultados)) {
+    $lista_dietas[] = $dieta;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_dietas;
 }
 function listarProdutos()
 {
