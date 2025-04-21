@@ -28,12 +28,13 @@ editarDieta($conexao, $iddieta, $descricao, $data_inicio, $data_fim, $usuario_id
 deletarDieta($conexao, $iddieta)
 listarDietas($conexao, $iddieta)
 editarCargo($conexao, $idcargo, $nome, $descricao)
+deletarCargo($conexao, $idcargo)
+editarMetaUsuario($conexao, $idmeta, $usuario_id, $descricao, $data_inicio, $data_limite, $status)
 
 
 
 #🚧 EM ANDAMENTO 🚧#
 
-deletarCargo($conexao, $idcargo)
 
 #❌ PENDENTE ❌#
 
@@ -51,7 +52,7 @@ deletarPagamento($conexao, $idpagamento)
 recuperacaoSenha($conexao, $email)
 cadastrarTreino($conexao, $tipo, $horario, $descricao, $usuario_idusuario)
 deletarProduto($conexao, $idproduto)
-editarMetaUsuario($conexao, $idmeta, $usuario_id, $descricao, $data_inicio, $data_limite, $status)
+
 deletarMetaUsuario($conexao, $idmeta)
 cadastrarRefeicao($conexao, $dieta_id, $tipo, $horario)
 cadastrarCupomDesconto($conexao, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)

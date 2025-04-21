@@ -337,6 +337,19 @@ function listarPlanos($idplano)
 
   return $lista_planos;
 }
+function editarMetaUsuario( $idmeta, $descricao, $data_inicio, $data_limite, $status){
+  $conexao = conectar();
+
+  $sql = 'UPDATE meta_usuario SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE idmeta=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idmeta);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 function deletarAvaliacaoFisica($idusuario)
 {
   $conexao = conectar();
