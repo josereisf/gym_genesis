@@ -52,6 +52,7 @@ function deletarUsuario($idusuario)
   deletarAssinatura($idusuario);
   deletarAvaliacaoFisica($idusuario);
   deletarDieta($idusuario);
+  deletarMetaPorIDUsuario($idusuario);
   $sql = "DELETE FROM usuario WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -337,10 +338,65 @@ function listarPlanos($idplano)
 
   return $lista_planos;
 }
-function editarMetaUsuario( $idmeta, $descricao, $data_inicio, $data_limite, $status){
+function editarMetaUsuario($idmeta, $descricao, $data_inicio, $data_limite, $status)
+{
   $conexao = conectar();
 
   $sql = 'UPDATE meta_usuario SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE idmeta=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idmeta);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletarMetaUsuario($idmeta)
+{
+  $conexao = conectar();
+
+  $sql = 'DELETE FROM meta_usuario WHERE idmeta=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idmeta);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletarMetaPorIDUsuario($idusuario)
+{
+  $conexao = conectar();
+
+  $sql = 'DELETE FROM meta_usuario WHERE usuario_id=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarTreino($tipo, $horario, $descricao, $idusuario){
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES (?, ?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sssi', $tipo, $horario, $descricao, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarTreino($idtreino, $tipo, $horario, $descricao){
+  $conexao = conectar();
+
+  $sql = 'UPDATE treino SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE idmeta=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idmeta);
