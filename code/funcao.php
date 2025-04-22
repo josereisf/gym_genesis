@@ -133,6 +133,7 @@ function deletarEndereco($id, $tipo)
   desconectar($conexao);
   return $funcionou;
 }
+
 function listarEnderecos($id, $tipo)
 {
   $conexao = conectar();
@@ -165,6 +166,7 @@ function listarEnderecos($id, $tipo)
 
   return $lista_enderecos;
 }
+
 function listarFuncionarios($idfuncionario)
 {
   $conexao = conectar();
@@ -187,6 +189,7 @@ function listarFuncionarios($idfuncionario)
 
   return $lista_funcionarios;
 }
+
 function deletarFuncionario($idfuncionario)
 {
   $conexao = conectar();
@@ -203,6 +206,7 @@ function deletarFuncionario($idfuncionario)
   desconectar($conexao);
   return $funcionou;
 }
+
 function deletarFuncionarioCargo($idcargo)
 {
   $conexao = conectar();
@@ -218,6 +222,7 @@ function deletarFuncionarioCargo($idcargo)
   mysqli_stmt_close($comando);
   desconectar($conexao);
 }
+
 function editarCargo($idcargo, $nome, $descricao)
 {
   $conexao = conectar();
@@ -232,10 +237,11 @@ function editarCargo($idcargo, $nome, $descricao)
   desconectar($conexao);
   return $funcionou;
 }
+
 function deletarCargo($idcargo)
 {
   $conexao = conectar();
-  $sql = deletarFuncionarioCargo($idcargo);
+  deletarFuncionarioCargo($idcargo);
   $sql = "DELETE FROM cargo WHERE idcargo=?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -411,4 +417,98 @@ function listarDietas($idusuario)
   mysqli_stmt_close($comando);
 
   return $lista_dietas;
+}
+
+
+function listarDietaAlimentos($iddieta_alimentar = null)
+{
+  $conexao = conectar();
+
+  if ($iddieta_alimentar !== null) {
+    $sql = "SELECT * FROM dieta_alimento WHERE iddieta_alimentar = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $iddieta_alimentar);
+  } else {
+    $sql = "SELECT * FROM dieta_alimento";
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_dietas = [];
+  while ($dieta = mysqli_fetch_assoc($resultados)) {
+    $lista_dietas[] = $dieta;
+  }
+
+  mysqli_stmt_close($comando);
+
+  return $lista_dietas;
+}
+
+function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario) 
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES (?, ?, ?, ?, ?, ?)';
+  
+  $comando = mysqli_prepare($conexao, $sql);
+  
+  mysqli_stmt_bind_param($comando, "dddsdi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario);
+  
+  $funcionou = mysqli_stmt_execute($comando);
+  
+  mysqli_stmt_close($comando);
+  
+  desconectar($conexao);
+  
+  return $funcionou;
+}
+
+
+function cadastrarPagamentoDetalhe($pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
+{
+    $conexao = conectar();
+
+    // Ajusta os campos de acordo com o tipo de pagamento
+    switch ($tipo) {
+        case 'cartao':
+            $codigo_pix = null;
+            $linha_digitavel_boleto = null;
+            break;
+        case 'pix':
+            $bandeira_cartao = null;
+            $ultimos_digitos = null;
+            $linha_digitavel_boleto = null;
+            break;
+        case 'boleto':
+            $bandeira_cartao = null;
+            $ultimos_digitos = null;
+            $codigo_pix = null;
+            break;
+    }
+
+    $sql = 'INSERT INTO pagamento_detalhe 
+            (pagamento_idpagamento, tipo, bandeira_cartao, ultimos_digitos, codigo_pix, linha_digitavel_boleto) 
+            VALUES (?, ?, ?, ?, ?, ?)';
+
+    $comando = mysqli_prepare($conexao, $sql);
+
+
+
+    mysqli_stmt_bind_param($comando, "isssss", 
+        $pagamento_idpagamento, 
+        $tipo, 
+        $bandeira_cartao, 
+        $ultimos_digitos, 
+        $codigo_pix, 
+        $linha_digitavel_boleto
+    );
+
+    $funcionou = mysqli_stmt_execute($comando);
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+
+    return $funcionou;
 }
