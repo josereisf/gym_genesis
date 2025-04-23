@@ -1,0 +1,179 @@
+/* 🌈 Design System com Variáveis */
+:root {
+    --bg-light: #f4f6f9;
+    --bg-dark: #1e1e1e;
+    --text-light: #333;
+    --text-dark: #eee;
+    --primary: #27ae60;
+    --primary-alt: #2ecc71;
+    --card-light: #fff;
+    --card-dark: #2c2c2c;
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+    --max-width: 1000px;
+  }
+  
+  /* 🔄 Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-light);
+    color: var(--text-light);
+    padding: 40px;
+    transition: var(--transition);
+  }
+  
+
+  
+  h1, h2 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 40px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-top: 60px;
+  }
+  
+  /* 🛍️ Grade de Produtos */
+  .produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  
+  /* 🧱 Cartão do Produto */
+  .produto {
+    background-color: var(--card-light);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    text-align: center;
+    transition: var(--transition);
+  }
+  
+  .produto:hover {
+    transform: translateY(-5px);
+  }
+  
+  .produto h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .produto p {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+  
+  /* 🟢 Botão Comprar */
+  button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-alt));
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, var(--primary-alt), var(--primary));
+    transform: scale(1.05);
+  }
+  
+  /* 🛒 Carrinho */
+  #carrinho {
+    max-width: 600px;
+    margin: 20px auto;
+    list-style: none;
+    background-color: var(--card-light);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+  }
+  
+  #carrinho li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: entrada 0.3s ease forwards;
+  }
+  
+  #carrinho li:last-child {
+    border-bottom: none;
+  }
+  
+  #total {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 20px;
+    color: var(--primary);
+    font-weight: bold;
+  }
+  
+  /* 💬 Toast */
+  .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    opacity: 0;
+    animation: toastIn 0.5s forwards;
+  }
+  
+  /* 🎞️ Animações */
+  @keyframes entrada {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes toastIn {
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* 📱 Mobile First */
+  @media (max-width: 600px) {
+    body {
+      padding: 20px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    .produto {
+      padding: 15px;
+    }
+  
+    button {
+      width: 100%;
+    }
+  }
+  

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Loja Simples</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Loja de Produtos</h1>
+  
+  <div class="produtos">
+    <div class="produto">
+      <h3>Produto 1</h3>
+      <p>R$ 50,00</p>
+      <button onclick="adicionarAoCarrinho('Produto 1', 50)">Comprar</button>
+    </div>
+
+    <div class="produto">
+      <h3>Produto 2</h3>
+      <p>R$ 80,00</p>
+      <button onclick="adicionarAoCarrinho('Produto 2', 80)">Comprar</button>
+    </div>
+  </div>
+
+  <h2>Carrinho</h2>
+  <ul id="carrinho"></ul>
+  <p id="total">Total: R$ 0,00</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
