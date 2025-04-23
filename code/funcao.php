@@ -380,7 +380,8 @@ function deletarMetaPorIDUsuario($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function cadastrarTreino($tipo, $horario, $descricao, $idusuario){
+function cadastrarTreino($tipo, $horario, $descricao, $idusuario)
+{
   $conexao = conectar();
 
   $sql = 'INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES (?, ?, ?, ?)';
@@ -393,7 +394,8 @@ function cadastrarTreino($tipo, $horario, $descricao, $idusuario){
   desconectar($conexao);
   return $funcionou;
 }
-function editarTreino($tipo, $horario, $descricao, $idtreino){
+function editarTreino($tipo, $horario, $descricao, $idtreino)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE treino SET tipo=?, horario=?, descricao=? WHERE idtreino=?';
@@ -469,7 +471,8 @@ function listarDietas($idusuario)
 
   return $lista_dietas;
 }
-function deletarTreinoExercicio($idtreino2){
+function deletarTreinoExercicio($idtreino2)
+{
   $conexao = conectar();
   $sql = " DELETE FROM treino_exercicio WHERE idtreino2=?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -481,7 +484,8 @@ function deletarTreinoExercicio($idtreino2){
   desconectar($conexao);
   return $funcionou;
 }
-function listarTreinoExercicio($idtreino2){
+function listarTreinoExercicio($idtreino2)
+{
   $conexao = conectar();
   if ($idtreino2 != null) {
     $sql = ' SELECT * FROM treino_exercicio WHERE usuario_idusuario=?';
@@ -502,7 +506,8 @@ function listarTreinoExercicio($idtreino2){
 
   return $lista_treinos;
 }
-function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url){
+function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE exercicio SET nome=?, grupo_muscular=?, descricao=?, video_url=? WHERE idexercicio=?';
@@ -515,6 +520,19 @@ function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $vide
   desconectar($conexao);
   return $funcionou;
 }
+function deletarHorario($idhorario){
+  $conexao = conectar();
+  $sql = " DELETE FROM horario WHERE idhorario=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idhorario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function deletar
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)
@@ -764,7 +782,8 @@ function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contr
   return $funcionou;
 }
 
-function listarHorario($idhorario) {
+function listarHorario($idhorario)
+{
   $conexao = conectar();
 
   if ($idhorario !== null) {
@@ -789,7 +808,8 @@ function listarHorario($idhorario) {
   return $lista_horarios;
 }
 
-function listarTreino($idtreino){
+function listarTreino($idtreino)
+{
   $conexao = conectar();
 
   if ($idtreino !== null) {
@@ -814,7 +834,8 @@ function listarTreino($idtreino){
   return $lista_treinos;
 }
 
-function cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $observacoes){
+function cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $observacoes)
+{
   $conexao = conectar();
   $sql = " INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes) VALUES (?, ?, ?, ?)";
   $comando = mysqli_prepare($conexao, $sql);
@@ -835,7 +856,7 @@ function cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $obse
 
 function listarAulaAgendada($idaula)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idaula !== null) {
     $sql = " SELECT * FROM aula_agendada WHERE $idaula = ?";
@@ -861,7 +882,7 @@ function listarAulaAgendada($idaula)
 
 function listarPagamentosDetalhados($idpagaemento2)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idpagaemento2 !== null) {
     $sql = " SELECT * FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
@@ -887,7 +908,7 @@ function listarPagamentosDetalhados($idpagaemento2)
 
 function listarMetaUsuario($idmeta)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idmeta !== null) {
     $sql = " SELECT * FROM meta_usuario WHERE $idmeta = ?";
@@ -913,7 +934,7 @@ function listarMetaUsuario($idmeta)
 
 function listarAvaliacaoFisica($idavaliacao)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idavaliacao !== null) {
     $sql = " SELECT * FROM avaliacao_fisica WHERE $idavaliacao = ?";
@@ -939,7 +960,7 @@ function listarAvaliacaoFisica($idavaliacao)
 
 function listarCargo($idcargo)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idcargo !== null) {
     $sql = " SELECT * FROM cargo WHERE $idcargo = ?";
@@ -965,7 +986,7 @@ function listarCargo($idcargo)
 
 function listarRefeicoes($idrefeicao)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idrefeicao !== null) {
     $sql = " SELECT * FROM refeicao WHERE $idrefeicao = ?";
@@ -991,7 +1012,7 @@ function listarRefeicoes($idrefeicao)
 
 function listarAlimentos($idalimento)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idalimento !== null) {
     $sql = " SELECT * FROM alimento WHERE $idalimento = ?";
@@ -1017,7 +1038,7 @@ function listarAlimentos($idalimento)
 
 function listarCategoriaProduto($idcategoria)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idcategoria !== null) {
     $sql = " SELECT * FROM categoria_produto WHERE $idcategoria = ?";
@@ -1045,7 +1066,7 @@ function listarCategoriaProduto($idcategoria)
 
 function listarRespostaForum($idresposta)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($idresposta !== null) {
     $sql = " SELECT * FROM resposta_forum WHERE $idresposta = ?";
@@ -1071,7 +1092,7 @@ function listarRespostaForum($idresposta)
 
 function listarItensPedido($iditem)
 {
- $conexao = conectar();
+  $conexao = conectar();
 
   if ($iditem !== null) {
     $sql = " SELECT * FROM item_pedido WHERE $iditem = ?";
@@ -1095,7 +1116,8 @@ function listarItensPedido($iditem)
   return $lista_item_pedidos;
 }
 
-function listarUsuario($idusuario){
+function listarUsuario($idusuario)
+{
   $conexao = conectar();
 
   if ($idusuario !== null) {
@@ -1120,7 +1142,8 @@ function listarUsuario($idusuario){
   return $lista_usuarios;
 }
 
-function listarAssinaturas($idassinatura){
+function listarAssinaturas($idassinatura)
+{
   $conexao = conectar();
 
   if ($idassinatura !== null) {
@@ -1144,6 +1167,7 @@ function listarAssinaturas($idassinatura){
 
   return $lista_assinaturas;
 }
+<<<<<<< Updated upstream
 
 function deletarDietaAlimento($iddieta_alimentar){
   $conexao = conectar();
@@ -1244,3 +1268,5 @@ function deletarExercicio($idexercicio){
   mysqli_stmt_close($comando);
 }
 
+=======
+>>>>>>> Stashed changes

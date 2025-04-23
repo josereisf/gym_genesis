@@ -40,26 +40,26 @@ editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $vid
 
 #🚧 EM ANDAMENTO 🚧#
 
+deletarHorario($conexao, $idhorario)
+deletarCupomDesconto($conexao, $idcupom)
+deletarRefeicao($conexao, $idrefeicao)
+deletarProduto($conexao, $idproduto)
 
 #❌ PENDENTE ❌#
 
 gerenciarVencimento($conexao)
-deletarHorario($conexao, $idhorario)
 listarCupomDesconto($conexao, $idcupom)
 
-deletarCupomDesconto($conexao, $idcupom)
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)
 listarProdutos($conexao, $idproduto)
 editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
 deletarPagamento($conexao, $idpagamento)
 recuperacaoSenha($conexao, $email)
-deletarProduto($conexao, $idproduto)
 cadastrarRefeicao($conexao, $dieta_id, $tipo, $horario)
 cadastrarCupomDesconto($conexao, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
 cadastrarPedido($conexao, $usuario_idusuario, $data_pedido, $status)
 statusPedido($conexao, $idpedido, $idusuario)
-deletarRefeicao($conexao, $idrefeicao)
 cadastrarRespostaForum($conexao, $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico)
 editarHorario($conexao, $idhorario, $dia_semana, $hora_inicio, $hora_fim)
 listarForum($conexao, $idtopico)
