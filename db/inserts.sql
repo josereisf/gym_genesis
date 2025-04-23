@@ -1,6 +1,6 @@
 -- Inserts para o schema `gym_genesis`
 -- 3 registros por tabela, respeitando ordem de dependências
-
+use gym_genesis;
 -- 1. Tabelas independentes
 
 -- 1.1. horario
