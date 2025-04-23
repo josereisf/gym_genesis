@@ -88,7 +88,7 @@ function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cid
   } else {
     $tipoid = "funcionario_id";
   }
-  $sql = 'INSERT INTO endereco (' . $tipoid . ', cep, rua, numero, complemento, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  $sql = ' INSERT INTO endereco (' . $tipoid . ', cep, rua, numero, complemento, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'isssssss', $id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
@@ -520,20 +520,17 @@ function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $vide
   desconectar($conexao);
   return $funcionou;
 }
-function deletarHorario($idhorario){
+function deletarRefeição($idrefeicao) {
   $conexao = conectar();
-  $sql = " DELETE FROM horario WHERE idhorario=?";
+  $sql = " DELETE FROM refeicao WHERE idrefeicao=?";
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'i', $idhorario);
+  mysqli_stmt_bind_param($comando, 'i', $idrefeicao);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
-}
-function deletarRefeição ($idrefeicao){
-  
 }
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
@@ -1170,7 +1167,8 @@ function listarAssinaturas($idassinatura)
   return $lista_assinaturas;
 }
 
-function deletarDietaAlimento($iddieta_alimentar){
+function deletarDietaAlimento($iddieta_alimentar)
+{
   $conexao = conectar();
   $sql = "DELETE FROM dieta_alimentar WHERE $iddieta_alimentar = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1179,7 +1177,8 @@ function deletarDietaAlimento($iddieta_alimentar){
   mysqli_stmt_close($comando);
 }
 
-function deletarPlano($idplano){
+function deletarPlano($idplano)
+{
   $conexao = conectar();
   $sql = "DELETE FROM plano WHERE $idplano = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1188,7 +1187,8 @@ function deletarPlano($idplano){
   mysqli_stmt_close($comando);
 }
 
-function deletarAlimento($idalimento){
+function deletarAlimento($idalimento)
+{
   $conexao = conectar();
   $sql = "DELETE FROM alimento WHERE $idalimento = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1197,7 +1197,8 @@ function deletarAlimento($idalimento){
   mysqli_stmt_close($comando);
 }
 
-function deletarCategoriaProduto($idcategoria){
+function deletarCategoriaProduto($idcategoria)
+{
   $conexao = conectar();
   $sql = "DELETE FROM categoria_produto WHERE $idcategoria = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1206,7 +1207,8 @@ function deletarCategoriaProduto($idcategoria){
   mysqli_stmt_close($comando);
 }
 
-function deletarPagamentoDetalhe($idpagaemento2){
+function deletarPagamentoDetalhe($idpagaemento2)
+{
   $conexao = conectar();
   $sql = "DELETE FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1215,7 +1217,8 @@ function deletarPagamentoDetalhe($idpagaemento2){
   mysqli_stmt_close($comando);
 }
 
-function deletarItemPedido($iditem){
+function deletarItemPedido($iditem)
+{
   $conexao = conectar();
   $sql = "DELETE FROM item_pedido WHERE $iditem = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1224,7 +1227,8 @@ function deletarItemPedido($iditem){
   mysqli_stmt_close($comando);
 }
 
-function deletarAulaAgendada($idaula){
+function deletarAulaAgendada($idaula)
+{
   $conexao = conectar();
   $sql = "DELETE FROM aula_agendada WHERE $idaula = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1233,7 +1237,8 @@ function deletarAulaAgendada($idaula){
   mysqli_stmt_close($comando);
 }
 
-function deletarTreino($idtreino){
+function deletarTreino($idtreino)
+{
   $conexao = conectar();
   $sql = "DELETE FROM treino WHERE $idtreino = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1242,7 +1247,8 @@ function deletarTreino($idtreino){
   mysqli_stmt_close($comando);
 }
 
-function deletarHistoricoTreino($idhistorico){
+function deletarHistoricoTreino($idhistorico)
+{
   $conexao = conectar();
   $sql = "DELETE FROM historico_treino WHERE $idhistorico = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1251,7 +1257,8 @@ function deletarHistoricoTreino($idhistorico){
   mysqli_stmt_close($comando);
 }
 
-function deletarPedido($idpedido){
+function deletarPedido($idpedido)
+{
   $conexao = conectar();
   $sql = "DELETE FROM pedido WHERE $idpedido = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1260,7 +1267,8 @@ function deletarPedido($idpedido){
   mysqli_stmt_close($comando);
 }
 
-function deletarExercicio($idexercicio){
+function deletarExercicio($idexercicio)
+{
   $conexao = conectar();
   $sql = "DELETE FROM exercicio WHERE $idexercicio = ?";
   $comando = mysqli_prepare($conexao, $sql);

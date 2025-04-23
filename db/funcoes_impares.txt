@@ -44,17 +44,16 @@ deletarHorario($conexao, $idhorario)
 deletarCupomDesconto($conexao, $idcupom)
 deletarRefeicao($conexao, $idrefeicao)
 deletarProduto($conexao, $idproduto)
+deletarPagamento($conexao, $idpagamento)
 
 #❌ PENDENTE ❌#
 
 gerenciarVencimento($conexao)
 listarCupomDesconto($conexao, $idcupom)
-
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)
 listarProdutos($conexao, $idproduto)
 editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
-deletarPagamento($conexao, $idpagamento)
 recuperacaoSenha($conexao, $email)
 cadastrarRefeicao($conexao, $dieta_id, $tipo, $horario)
 cadastrarCupomDesconto($conexao, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
