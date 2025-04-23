@@ -66,7 +66,7 @@ function deletarUsuario($idusuario)
 function loginUsuario($email, $senha)
 {
   $conexao = conectar();
-  $sql = "SELECT senha FROM usuario WHERE email = ?";
+  $sql = " SELECT senha FROM usuario WHERE email = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 's', $email);
   mysqli_stmt_execute($comando);
@@ -406,6 +406,7 @@ function editarTreino($idtreino, $tipo, $horario, $descricao){
   desconectar($conexao);
   return $funcionou;
 }
+
 function deletarAvaliacaoFisica($idusuario)
 {
   $conexao = conectar();
@@ -468,80 +469,7 @@ function listarDietas($idusuario)
 
   return $lista_dietas;
 }
-function listarProdutos()
-{
-  $conexao = conectar();
-  $sql = "SELECT * FROM `produtos` ORDER BY RAND() limit 4";
-  $comando = mysqli_prepare($conexao, $sql);
-
-  mysqli_stmt_execute($comando);
-
-  $resultado = mysqli_stmt_get_result($comando);
-
-
-
-  while ($row = mysqli_fetch_array($resultado)) {
-    $nome = $row['nome'];
-    $preco = $row['preco'];
-    $descricao = $row['descricao'];
-    $imagem = $row['imagem'];
-    $link = $row['link'];
-
-    echo " <a href = '$link' class='product-link'>
-                     <div class='product-card'>
-                    <img src='$imagem'
-                        alt='Product Image'>
-                    <div class='info'>
-                        <h3>$nome</h3>
-                        <p>$descricao</p>
-                        <div class='price'>R$ $preco</div>
-                    </div>
-                    <div class='price-badge'>New</div>
-                </div>
-            </a>";
-  }
-
-
-  desconectar($conexao);
-  // return $resultado;
-}
-
-function tabelaProdutos()
-{
-  echo "<h1>Listagem de Produtos</h1>";
-  echo "<table id='tabelaProdutos'>"; // Adicione um ID à tabela
-  echo "<thead>";
-  echo "  <tr>";
-  echo "    <th>#</th>";
-  echo "    <th>Nome</th>";
-  echo "    <th>Preço</th>";
-  echo "    <th>Descrição</th>";
-  echo "    <th>Imagem</th>";
-  echo "    <th>Categoria</th>";
-  echo "    <th>Link</th>";
-  echo "    <th colspan='2'>Ações</th>";
-  echo "  </tr>";
-  echo "</thead>";
-  echo "<tbody>";
-
-  require_once '../php/funcao.php';
-
-  $conexao = conectar();
-  $sql = "SELECT * FROM `produtos`";
-  $comando = mysqli_prepare($conexao, $sql);
-
-  mysqli_stmt_execute($comando);
-  $resultado = mysqli_stmt_get_result($comando);
-
-  $lista_dietas = [];
-  while ($dieta = mysqli_fetch_assoc($resultados)) {
-    $lista_dietas[] = $dieta;
-  }
-
-  mysqli_stmt_close($comando);
-
-  return $lista_dietas;
-}
+///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)
 {
@@ -647,11 +575,11 @@ function listarExercicio($idexercicio)
   $conexao = conectar();
 
   if ($idexercicio !== null) {
-    $sql = "SELECT * FROM exercicio WHERE $idexercicio = ?";
+    $sql = " SELECT * FROM exercicio WHERE $idexercicio = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idexercicio);
   } else {
-    $sql = "SELECT * FROM exercicio";
+    $sql = " SELECT * FROM exercicio";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -794,11 +722,11 @@ function listarHorario($idhorario) {
   $conexao = conectar();
 
   if ($idhorario !== null) {
-    $sql = "SELECT * FROM horario WHERE $idhorario = ?";
+    $sql = " SELECT * FROM horario WHERE $idhorario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idhorario);
   } else {
-    $sql = "SELECT * FROM horario";
+    $sql = " SELECT * FROM horario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -819,11 +747,11 @@ function listarTreino($idtreino){
   $conexao = conectar();
 
   if ($idtreino !== null) {
-    $sql = "SELECT * FROM treino WHERE $idtreino = ?";
+    $sql = " SELECT * FROM treino WHERE $idtreino = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idtreino);
   } else {
-    $sql = "SELECT * FROM treino";
+    $sql = " SELECT * FROM treino";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -864,11 +792,11 @@ function listarAulaAgendada($idaula)
  $conexao = conectar();
 
   if ($idaula !== null) {
-    $sql = "SELECT * FROM aula_agendada WHERE $idaula = ?";
+    $sql = " SELECT * FROM aula_agendada WHERE $idaula = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
   } else {
-    $sql = "SELECT * FROM aula_agendada";
+    $sql = " SELECT * FROM aula_agendada";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -890,11 +818,11 @@ function listarPagamentosDetalhados($idpagaemento2)
  $conexao = conectar();
 
   if ($idpagaemento2 !== null) {
-    $sql = "SELECT * FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
+    $sql = " SELECT * FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idpagaemento2);
   } else {
-    $sql = "SELECT * FROM pagamento_detalhado";
+    $sql = " SELECT * FROM pagamento_detalhado";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -916,11 +844,11 @@ function listarMetaUsuario($idmeta)
  $conexao = conectar();
 
   if ($idmeta !== null) {
-    $sql = "SELECT * FROM meta_usuario WHERE $idmeta = ?";
+    $sql = " SELECT * FROM meta_usuario WHERE $idmeta = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idmeta);
   } else {
-    $sql = "SELECT * FROM meta_usuario";
+    $sql = " SELECT * FROM meta_usuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -942,11 +870,11 @@ function listarAvaliacaoFisica($idavaliacao)
  $conexao = conectar();
 
   if ($idavaliacao !== null) {
-    $sql = "SELECT * FROM avaliacao_fisica WHERE $idavaliacao = ?";
+    $sql = " SELECT * FROM avaliacao_fisica WHERE $idavaliacao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idavaliacao);
   } else {
-    $sql = "SELECT * FROM avaliacao_fisica";
+    $sql = " SELECT * FROM avaliacao_fisica";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -968,11 +896,11 @@ function listarCargo($idcargo)
  $conexao = conectar();
 
   if ($idcargo !== null) {
-    $sql = "SELECT * FROM cargo WHERE $idcargo = ?";
+    $sql = " SELECT * FROM cargo WHERE $idcargo = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idcargo);
   } else {
-    $sql = "SELECT * FROM cargo";
+    $sql = " SELECT * FROM cargo";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -994,11 +922,11 @@ function listarRefeicoes($idrefeicao)
  $conexao = conectar();
 
   if ($idrefeicao !== null) {
-    $sql = "SELECT * FROM refeicao WHERE $idrefeicao = ?";
+    $sql = " SELECT * FROM refeicao WHERE $idrefeicao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idrefeicao);
   } else {
-    $sql = "SELECT * FROM refeicao";
+    $sql = " SELECT * FROM refeicao";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1020,11 +948,11 @@ function listarAlimentos($idalimento)
  $conexao = conectar();
 
   if ($idalimento !== null) {
-    $sql = "SELECT * FROM alimento WHERE $idalimento = ?";
+    $sql = " SELECT * FROM alimento WHERE $idalimento = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idalimento);
   } else {
-    $sql = "SELECT * FROM alimento";
+    $sql = " SELECT * FROM alimento";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1046,11 +974,11 @@ function listarCategoriaProduto($idcategoria)
  $conexao = conectar();
 
   if ($idcategoria !== null) {
-    $sql = "SELECT * FROM categoria_produto WHERE $idcategoria = ?";
+    $sql = " SELECT * FROM categoria_produto WHERE $idcategoria = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idcategoria);
   } else {
-    $sql = "SELECT * FROM categoria_produto";
+    $sql = " SELECT * FROM categoria_produto";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1074,11 +1002,11 @@ function listarRespostaForum($idresposta)
  $conexao = conectar();
 
   if ($idresposta !== null) {
-    $sql = "SELECT * FROM resposta_forum WHERE $idresposta = ?";
+    $sql = " SELECT * FROM resposta_forum WHERE $idresposta = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idresposta);
   } else {
-    $sql = "SELECT * FROM resposta_forum";
+    $sql = " SELECT * FROM resposta_forum";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1100,11 +1028,11 @@ function listarItensPedido($iditem)
  $conexao = conectar();
 
   if ($iditem !== null) {
-    $sql = "SELECT * FROM item_pedido WHERE $iditem = ?";
+    $sql = " SELECT * FROM item_pedido WHERE $iditem = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $iditem);
   } else {
-    $sql = "SELECT * FROM item_pedido";
+    $sql = " SELECT * FROM item_pedido";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1125,11 +1053,11 @@ function listarUsuario($idusuario){
   $conexao = conectar();
 
   if ($idusuario !== null) {
-    $sql = "SELECT * FROM usuario WHERE $idusuario = ?";
+    $sql = " SELECT * FROM usuario WHERE $idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
-    $sql = "SELECT * FROM usuario";
+    $sql = " SELECT * FROM usuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1150,11 +1078,11 @@ function listarAssinaturas($idassinatura){
   $conexao = conectar();
 
   if ($idassinatura !== null) {
-    $sql = "SELECT * FROM assinatura WHERE $idassinatura = ?";
+    $sql = " SELECT * FROM assinatura WHERE $idassinatura = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
   } else {
-    $sql = "SELECT * FROM assinatura";
+    $sql = " SELECT * FROM assinatura";
     $comando = mysqli_prepare($conexao, $sql);
   }
 

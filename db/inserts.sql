@@ -187,7 +187,7 @@ INSERT INTO produto (nome, descricao, preco, quantidade_estoque, imagem) VALUES
 -- Inserts para item_pedido
 INSERT INTO item_pedido (pedido_idpedido, produto_idproduto, quantidade) VALUES
 (1, 1, 1),
-(1, 3, 2),
+(2, 3, 2),
 (2, 2, 1),
 (2, 6, 1),
 (3, 4, 1),
