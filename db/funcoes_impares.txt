@@ -32,12 +32,12 @@ deletarCargo($conexao, $idcargo)
 editarMetaUsuario($conexao, $idmeta, $usuario_id, $descricao, $data_inicio, $data_limite, $status)
 deletarMetaUsuario($conexao, $idmeta)
 cadastrarTreino($conexao, $tipo, $horario, $descricao, $usuario_idusuario)
+editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuario)
 
 
 
 #🚧 EM ANDAMENTO 🚧#
 
-editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuario)
 
 #❌ PENDENTE ❌#
 

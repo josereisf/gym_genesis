@@ -236,7 +236,7 @@ function editarCargo($idcargo, $nome, $descricao)
 function deletarCargo($idcargo)
 {
   $conexao = conectar();
-  $sql = deletarFuncionarioCargo($idcargo);
+  deletarFuncionarioCargo($idcargo);
   $sql = "DELETE FROM cargo WHERE idcargo=?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -393,13 +393,13 @@ function cadastrarTreino($tipo, $horario, $descricao, $idusuario){
   desconectar($conexao);
   return $funcionou;
 }
-function editarTreino($idtreino, $tipo, $horario, $descricao){
+function editarTreino($tipo, $horario, $descricao, $idtreino){
   $conexao = conectar();
 
-  $sql = 'UPDATE treino SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE idmeta=?';
+  $sql = ' UPDATE treino SET tipo=?, horario=?, descricao=? WHERE idtreino=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idmeta);
+  mysqli_stmt_bind_param($comando, 'sssi', $tipo, $horario, $descricao, $idtreino);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -410,7 +410,7 @@ function editarTreino($idtreino, $tipo, $horario, $descricao){
 function deletarAvaliacaoFisica($idusuario)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM avaliacao_fisica WHERE usuario_idusuario=?";
+  $sql = " DELETE FROM avaliacao_fisica WHERE usuario_idusuario=?";
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
