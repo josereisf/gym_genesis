@@ -1,5 +1,48 @@
 Use gym_genesis;
 
+<<<<<<< Updated upstream
+=======
+-- 1.1. horario
+INSERT INTO horario (dia_semana, hora_inicio, hora_fim) VALUES
+  ('Segunda', '08:00:00', '09:00:00'),
+  ('Quarta', '10:00:00', '11:00:00'),
+  ('Sexta',  '18:00:00', '19:00:00');
+
+-- 1.2. cargo
+INSERT INTO cargo (nome, descricao) VALUES
+  ('Instrutor', 'Responsável por ministrar aulas'),
+  ('Nutricionista', 'Elabora planos alimentares'),
+  ('Recepcionista', 'Atende clientes na recepção');
+
+-- 1.3. categoria_produto
+INSERT INTO categoria_produto (nome, descricao) VALUES
+  ('Suplementos', 'Produtos nutricionais'),
+  ('Roupas', 'Vestuário esportivo'),
+  ('Acessórios', 'Equipamentos e acessórios');
+
+-- 1.4. produto
+INSERT INTO produto (nome, descricao, preco, quantidade_estoque, imagem) VALUES
+  ('Whey Protein', 'Proteína concentrada', 150.00, 50, NULL),
+  ('Camiseta Dry Fit', 'Tecido respirável', 80.00, 200, NULL),
+  ('Garrafa Squeeze', 'Capacidade 700ml', 30.00, 100, NULL);
+
+-- 1.5. exercicio
+INSERT INTO exercicio (nome, grupo_muscular, descricao, video_url) VALUES
+  ('Supino', 'Peitoral', 'Exercício de supino reto', 'https://www.youtube.com/watch?v=SCVCLChKNOk'),
+  ('Agachamento', 'Pernas', 'Agachamento livre', 'https://www.youtube.com/watch?v=Dy28eq2PjcM'),
+  ('Puxada na barra', 'Costas', 'Puxada frontal', 'https://www.youtube.com/watch?v=V9t9xCZK1KM');
+
+
+-- 1.6. alimento
+INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao, categoria) VALUES
+  ('Banana', 89.00, 23.00, 1.10, 0.30, '100g', 'Fruta'),
+  ('Peito de Frango', 165.00, 0.00, 31.00, 3.60, '100g', 'Proteína'),
+  ('Arroz Integral', 111.00, 23.00, 2.60, 0.90, '100g', 'Carboidrato');
+
+-- 2. Usuario e tabelas dependentes diretas
+
+-- 2.1. usuario
+>>>>>>> Stashed changes
 INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES
 ('João Silva', 'senha1', 'joao1@example.com', '12345678901', '1990-01-01', '11987654321', 'foto1.jpg', '1001', 0),
 ('Maria Souza', 'senha2', 'maria2@example.com', '98765432100', '1985-05-12', '11923456789', 'foto2.jpg', '1002', 1),
