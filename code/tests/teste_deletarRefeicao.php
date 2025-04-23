@@ -8,6 +8,6 @@ $idrefeicao = 1;
 if (!is_null(deletarRefeição($idrefeicao))){
     echo "funcionou";
 }
-echo '<pre>';
-print_r($listar);
-echo '</pre';
+// echo '<pre>';
+// print_r($listar);
+// echo '</pre';
