@@ -362,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pedido` (
   `usuario_idusuario` INT(11) NOT NULL,
   `data_pedido` DATETIME NOT NULL,
   `status` ENUM('processando', 'enviado', 'concluído') NULL DEFAULT 'processando',
-  PRIMARY KEY (`idpedido`),
+  PRIMARY KEsY (`idpedido`),
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `pedido_ibfk_1`
     FOREIGN KEY (`usuario_idusuario`)

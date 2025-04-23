@@ -520,7 +520,8 @@ function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $vide
   desconectar($conexao);
   return $funcionou;
 }
-function deletarRefeição($idrefeicao) {
+function deletarRefeição($idrefeicao)
+{
   $conexao = conectar();
   $sql = " DELETE FROM refeicao WHERE idrefeicao=?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1277,4 +1278,490 @@ function deletarExercicio($idexercicio)
   mysqli_stmt_bind_param($comando, "i", $idexercicio);
   mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+}
+
+function cadastrarCategoriaProduto($nome, $descricao)
+{
+  $conexao = conectar();
+  $sql = " INSERT INTO categoria_produto (nome, descricao) VALUES(?, ?)";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, "ss", $nome, $descricao);
+  $funcionou = mysqli_stmt_execute($comando);
+
+  $idInserido = null;
+  if ($funcionou) {
+    $idInserido = mysqli_insert_id($conexao);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $idInserido; // retorna o ID inserido, ou null se não funcionou
+}
+
+function editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoque, $imagem)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE produto 
+          SET nome = ?, descricao = ?, preco = ?, quantidade_estoque = ?, imagem = ?
+          WHERE idproduto = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem correta dos parâmetros
+  mysqli_stmt_bind_param($comando, "ssdisi", $nome, $descricao, $preco, $quantidade_estoque, $imagem, $idproduto);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function editarRespostaForum($idresposta, $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE resposta_forum 
+          SET mensagem = ?, data_resposta = ?, usuario_idusuario = ?, forum_idtopico = ?
+          WHERE idresposta = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem correta dos parâmetros
+  mysqli_stmt_bind_param($comando, "ssiii", $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico, $idresposta);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $imagem)
+{
+  $conexao = conectar();
+
+  $sql = " INSERT INTO produto (nome, descricao, preco, quantidade_estoque, imagem) VALUES (?,?,?,?,?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ssdis", $nome, $descricao, $preco, $quantidade_estoque, $imagem);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade)
+{
+  $conexao = conectar();
+
+  $sql = " INSERT INTO item_pedido (pedido_idpedido, produto_idproduto, quantidade) VALUES (?,?,?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "iii", $pedido_idpedido, $produto_idproduto, $quantidade);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarPagamento($usuario_idusuario, $valor, $data_pagamento, $metodo, $status = 'sucesso')
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO pagamento (usuario_idusuario, valor, data_pagamento, metodo, status)
+            VALUES (?, ?, ?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "idsss", $usuario_idusuario, $valor, $data_pagamento, $metodo, $status);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function editarPedido($idpedido, $usuario_idusuario, $data_pedido, $status)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE pedido 
+          SET usuario_idusuario = ?, data_pedido = ?, status = ?
+          WHERE idpedido = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem correta dos parâmetros
+  mysqli_stmt_bind_param($comando, "issi", $usuario_idusuario, $data_pedido, $status, $idpedido);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria)
+{
+  $conexao = conectar();
+
+  $sql = " INSERT INTO alimento (nome, caloria, carboidratos, proteina, gordura, porcao, categoria)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "sddddss", $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarCargo($nome, $descricao){
+  $conexao = conectar();
+
+  $sql = " INSERT INTO cargo  (nome, descricao) VALUES (?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ss", $nome, $descricao);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function cadastrarExercicio($nome, $grupo_muscular, $descricao, $video_url){
+  $conexao = conectar();
+
+  $sql = " INSERT INTO exercicio  (nome, grupo_muscular, descricao,  video_url) VALUES (?, ?, ?,?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ssss", $nome, $grupo_muscular, $descricao, $video_url );
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_idusuario)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE assinatura 
+            SET data_inicio = ?, data_fim = ?, usuario_idusuario = ?
+            WHERE idassinatura = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem correta dos parâmetros: data_inicio, data_fim, usuario_idusuario, idassinatura
+  mysqli_stmt_bind_param($comando, "ssii", $data_inicio, $data_fim, $usuario_idusuario, $idassinatura);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function editarPagamentoDetalhe($idpagamento2, $pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE pagamento_detalhe 
+            SET pagamento_idpagamento = ?, tipo = ?, bandeira_cartao = ?, ultimos_digitos = ?, codigo_pix = ?, linha_digitavel_boleto = ?
+            WHERE idpagamento_detalhe = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem: pagamento_idpagamento (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
+  mysqli_stmt_bind_param($comando, "isssssi", $pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto, $idpagamento2);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_idusuario)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO dieta (descricao, data_inicio, data_fim, usuario_idusuario)
+            VALUES (?, ?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem dos parâmetros: descricao (s), data_inicio (s), data_fim (s), usuario_idusuario (i)
+  mysqli_stmt_bind_param($comando, "sssi", $descricao, $data_inicio, $data_fim, $usuario_idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+function cadastrarDietaAlimento($refeicao_id, $alimento_id, $quantidade, $observacao)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO dieta_alimento (refeicao_idrefeicao, alimento_idalimento, quantidade, observacao)
+            VALUES (?, ?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  // Ordem dos parâmetros: refeicao_id (i), alimento_id (i), quantidade (d), observacao (s)
+  mysqli_stmt_bind_param($comando, "iids", $refeicao_id, $alimento_id, $quantidade, $observacao);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+//
+
+function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_idcargo)
+            VALUES (?, ?, ?, ?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  mysqli_stmt_bind_param($comando, "ssssdi", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function editarRefeicao($idrefeicao, $dieta_id, $tipo, $horario)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE refeicao 
+            SET dieta_iddieta = ?, tipo = ?, horario = ?
+            WHERE idrefeicao = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  mysqli_stmt_bind_param($comando, "issi", $dieta_id, $tipo, $horario, $idrefeicao);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE alimento 
+            SET nome = ?, calorias = ?, carboidratos = ?, proteinas = ?, gorduras = ?, porcao = ?, categoria = ?
+            WHERE idalimento = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  mysqli_stmt_bind_param($comando, "sddddssi", $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $idalimento);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limite, $status)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO meta_usuario (usuario_idusuario, descricao, data_inicio, data_limite, status)
+            VALUES (?, ?, ?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  mysqli_stmt_bind_param($comando, "issss", $usuario_id, $descricao, $data_inicio, $data_limite, $status);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function cadastrarHorario($dia_semana, $hora_inicio, $hora_fim)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO horario (dia_semana, hora_inicio, hora_fim)
+            VALUES (?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  mysqli_stmt_bind_param($comando, "sss", $dia_semana, $hora_inicio, $hora_fim);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+function cadastrarAulaAgendada($horario_idhorario, $data_aula, $usuario_idusuario)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO aula_agendada (horario_idhorario, data_aula, usuario_idusuario)
+            VALUES (?, ?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
+
+  mysqli_stmt_bind_param($comando, "isi", $horario_idhorario, $data_aula, $usuario_idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
 }
