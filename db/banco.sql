@@ -388,6 +388,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento_detalhe` (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   `idpagaemento2` INT(11) NOT NULL AUTO_INCREMENT,
   `pagamento_idpagamento` INT(11) NOT NULL,
   `tipo` ENUM('cartao', 'pix', 'boleto') NOT NULL,
@@ -404,6 +405,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 =======
+=======
+>>>>>>> Stashed changes
     `idpagamento2` INT(11) NOT NULL AUTO_INCREMENT,
     `pagamento_idpagamento` INT(11) NOT NULL,
     `tipo` ENUM('cartao', 'pix', 'boleto') NOT NULL,
@@ -415,6 +418,9 @@ DEFAULT CHARACTER SET = utf8;
     INDEX `pagamento_idpagamento` (`pagamento_idpagamento` ASC) VISIBLE,
     CONSTRAINT `pagamento_detalhe_ibfk_1` FOREIGN KEY (`pagamento_idpagamento`) REFERENCES `gym_genesis`.`pagamento` (`idpagamento`)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 -- -----------------------------------------------------
@@ -467,13 +473,20 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino_exercicio` (
 SET SQL_MODE = @OLD_SQL_MODE;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 =======
+=======
+>>>>>>> Stashed changes
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 
+<<<<<<< Updated upstream
+  -- DROP DATABASE gym_genesis;
+>>>>>>> Stashed changes
+=======
   -- DROP DATABASE gym_genesis;
 >>>>>>> Stashed changes

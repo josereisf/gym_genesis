@@ -543,22 +543,22 @@ function tabelaProdutos()
   return $lista_dietas;
 }
 
-function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario) 
+function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)
 {
   $conexao = conectar();
 
   $sql = 'INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES (?, ?, ?, ?, ?, ?)';
-  
+
   $comando = mysqli_prepare($conexao, $sql);
-  
+
   mysqli_stmt_bind_param($comando, "dddsdi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario);
-  
+
   $funcionou = mysqli_stmt_execute($comando);
-  
+
   mysqli_stmt_close($comando);
-  
+
   desconectar($conexao);
-  
+
   return $funcionou;
 }
 
@@ -567,47 +567,47 @@ function cadastrarPagamentoDetalhe($pagamento_idpagamento, $tipo, $bandeira_cart
 {
   $conexao = conectar();
 
-    // Ajusta os campos de acordo com o tipo de pagamento
-    switch ($tipo) {
-        case 'cartao':
-            $codigo_pix = null;
-            $linha_digitavel_boleto = null;
-            break;
-        case 'pix':
-            $bandeira_cartao = null;
-            $ultimos_digitos = null;
-            $linha_digitavel_boleto = null;
-            break;
-        case 'boleto':
-            $bandeira_cartao = null;
-            $ultimos_digitos = null;
-            $codigo_pix = null;
-            break;
-    }
+  // Ajusta os campos de acordo com o tipo de pagamento
+  switch ($tipo) {
+    case 'cartao':
+      $codigo_pix = null;
+      $linha_digitavel_boleto = null;
+      break;
+    case 'pix':
+      $bandeira_cartao = null;
+      $ultimos_digitos = null;
+      $linha_digitavel_boleto = null;
+      break;
+    case 'boleto':
+      $bandeira_cartao = null;
+      $ultimos_digitos = null;
+      $codigo_pix = null;
+      break;
+  }
 
-    $sql = 'INSERT INTO pagamento_detalhe 
+  $sql = 'INSERT INTO pagamento_detalhe 
             (pagamento_idpagamento, tipo, bandeira_cartao, ultimos_digitos, codigo_pix, linha_digitavel_boleto) 
             VALUES (?, ?, ?, ?, ?, ?)';
 
-    $comando = mysqli_prepare($conexao, $sql);
+  $comando = mysqli_prepare($conexao, $sql);
 
+  mysqli_stmt_bind_param(
+    $comando,
+    "isssss",
+    $pagamento_idpagamento,
+    $tipo,
+    $bandeira_cartao,
+    $ultimos_digitos,
+    $codigo_pix,
+    $linha_digitavel_boleto
+  );
 
+  $funcionou = mysqli_stmt_execute($comando);
 
-    mysqli_stmt_bind_param($comando, "isssss", 
-        $pagamento_idpagamento, 
-        $tipo, 
-        $bandeira_cartao, 
-        $ultimos_digitos, 
-        $codigo_pix, 
-        $linha_digitavel_boleto
-    );
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    $funcionou = mysqli_stmt_execute($comando);
-
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-
-    return $funcionou;
+  return $funcionou;
 }
 
 function editarTreinoExercicio($idtreino2, $treino_id, $exercicio_id, $series, $repeticoes, $carga, $intervalo_segundos)
