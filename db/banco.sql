@@ -387,21 +387,17 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento` (
 -- Table `gym_genesis`.`pagamento_detalhe`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento_detalhe` (
-  `idpagamento2` INT(11) NOT NULL AUTO_INCREMENT,
-  `pagamento_idpagamento` INT(11) NOT NULL,
-  `tipo` ENUM('cartao', 'pix', 'boleto') NOT NULL,
-  `bandeira_cartao` VARCHAR(30) NULL DEFAULT NULL,
-  `ultimos_digitos` VARCHAR(4) NULL DEFAULT NULL,
-  `codigo_pix` VARCHAR(255) NULL DEFAULT NULL,
-  `linha_digitavel_boleto` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`idpagamento2`),
-  INDEX `pagamento_idpagamento` (`pagamento_idpagamento` ASC) VISIBLE,
-  CONSTRAINT `pagamento_detalhe_ibfk_1`
-    FOREIGN KEY (`pagamento_idpagamento`)
-    REFERENCES `gym_genesis`.`pagamento` (`idpagamento`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
+    `idpagamento2` INT(11) NOT NULL AUTO_INCREMENT,
+    `pagamento_idpagamento` INT(11) NOT NULL,
+    `tipo` ENUM('cartao', 'pix', 'boleto') NOT NULL,
+    `bandeira_cartao` VARCHAR(30) NULL DEFAULT NULL,
+    `ultimos_digitos` VARCHAR(4) NULL DEFAULT NULL,
+    `codigo_pix` VARCHAR(255) NULL DEFAULT NULL,
+    `linha_digitavel_boleto` VARCHAR(255) NULL DEFAULT NULL,
+    PRIMARY KEY (`idpagamento2`),
+    INDEX `pagamento_idpagamento` (`pagamento_idpagamento` ASC) VISIBLE,
+    CONSTRAINT `pagamento_detalhe_ibfk_1` FOREIGN KEY (`pagamento_idpagamento`) REFERENCES `gym_genesis`.`pagamento` (`idpagamento`)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table `gym_genesis`.`plano`
@@ -436,28 +432,24 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`resposta_forum` (
 -- Table `gym_genesis`.`treino_exercicio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino_exercicio` (
-  `idtreino2` INT(11) NOT NULL AUTO_INCREMENT,
-  `treino_id` INT(11) NOT NULL,
-  `exercicio_id` INT(11) NOT NULL,
-  `series` INT(11) NOT NULL,
-  `repeticoes` INT(11) NOT NULL,
-  `carga` DECIMAL(5,2) NULL DEFAULT NULL,
-  `intervalo_segundos` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`idtreino2`),
-  INDEX `treino_id` (`treino_id` ASC) VISIBLE,
-  INDEX `exercicio_id` (`exercicio_id` ASC) VISIBLE,
-  CONSTRAINT `treino_exercicio_ibfk_1`
-    FOREIGN KEY (`treino_id`)
-    REFERENCES `gym_genesis`.`treino` (`idtreino`),
-  CONSTRAINT `treino_exercicio_ibfk_2`
-    FOREIGN KEY (`exercicio_id`)
-    REFERENCES `gym_genesis`.`exercicio` (`idexercicio`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    `idtreino2` INT(11) NOT NULL AUTO_INCREMENT,
+    `treino_id` INT(11) NOT NULL,
+    `exercicio_id` INT(11) NOT NULL,
+    `series` INT(11) NOT NULL,
+    `repeticoes` INT(11) NOT NULL,
+    `carga` DECIMAL(5, 2) NULL DEFAULT NULL,
+    `intervalo_segundos` INT(11) NULL DEFAULT NULL,
+    PRIMARY KEY (`idtreino2`),
+    INDEX `treino_id` (`treino_id` ASC) VISIBLE,
+    INDEX `exercicio_id` (`exercicio_id` ASC) VISIBLE,
+    CONSTRAINT `treino_exercicio_ibfk_1` FOREIGN KEY (`treino_id`) REFERENCES `gym_genesis`.`treino` (`idtreino`),
+    CONSTRAINT `treino_exercicio_ibfk_2` FOREIGN KEY (`exercicio_id`) REFERENCES `gym_genesis`.`exercicio` (`idexercicio`)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
+SET SQL_MODE = @OLD_SQL_MODE;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 
+  -- DROP DATABASE gym_genesis;
