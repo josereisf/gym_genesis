@@ -1,7 +1,6 @@
 Use gym_genesis;
 
-<<<<<<< Updated upstream
-=======
+
 -- 1.1. horario
 INSERT INTO horario (dia_semana, hora_inicio, hora_fim) VALUES
   ('Segunda', '08:00:00', '09:00:00'),
@@ -42,7 +41,6 @@ INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao,
 -- 2. Usuario e tabelas dependentes diretas
 
 -- 2.1. usuario
->>>>>>> Stashed changes
 INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES
 ('João Silva', 'senha1', 'joao1@example.com', '12345678901', '1990-01-01', '11987654321', 'foto1.jpg', '1001', 0),
 ('Maria Souza', 'senha2', 'maria2@example.com', '98765432100', '1985-05-12', '11923456789', 'foto2.jpg', '1002', 1),
