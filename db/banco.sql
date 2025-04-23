@@ -445,14 +445,14 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`pagamento_detalhe`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento_detalhe` (
-  `idpagamento2` INT(11) NOT NULL AUTO_INCREMENT,
+  `idpagaemento2` INT(11) NOT NULL AUTO_INCREMENT,
   `pagamento_idpagamento` INT(11) NOT NULL,
   `tipo` ENUM('cartao', 'pix', 'boleto') NOT NULL,
   `bandeira_cartao` VARCHAR(30) NULL DEFAULT NULL,
   `ultimos_digitos` VARCHAR(4) NULL DEFAULT NULL,
   `codigo_pix` VARCHAR(255) NULL DEFAULT NULL,
   `linha_digitavel_boleto` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`idpagamento2`),
+  PRIMARY KEY (`idpagaemento2`),
   INDEX `pagamento_idpagamento` (`pagamento_idpagamento` ASC) VISIBLE,
   CONSTRAINT `pagamento_detalhe_ibfk_1`
     FOREIGN KEY (`pagamento_idpagamento`)
@@ -527,5 +527,3 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
