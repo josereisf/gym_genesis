@@ -1167,7 +1167,6 @@ function listarAssinaturas($idassinatura)
 
   return $lista_assinaturas;
 }
-<<<<<<< Updated upstream
 
 function deletarDietaAlimento($iddieta_alimentar){
   $conexao = conectar();
@@ -1267,6 +1266,3 @@ function deletarExercicio($idexercicio){
   mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
 }
-
-=======
->>>>>>> Stashed changes
