@@ -8,60 +8,93 @@ if (!file_exists($arquivo)) {
 
 $codigo = file_get_contents($arquivo);
 
-// Captura todas as funções
+// Captura funções
 preg_match_all('/function\s+(\w+)\s*\((.*?)\)/', $codigo, $matches);
 
 $nomes_funcoes = $matches[1];
 $parametros_funcoes = $matches[2];
 $total_funcoes = count($nomes_funcoes);
 
-// Inicializa os contadores por categoria
-$cadastrar = 0;
-$listar = 0;
-$deletar = 0;
-$editar = 0;
+// Contadores por categoria
+$categorias = [
+    'cadastrar' => 0,
+    'listar' => 0,
+    'deletar' => 0,
+    'editar' => 0
+];
 
 foreach ($nomes_funcoes as $nome) {
     $nome_lower = strtolower($nome);
     
-    if (str_starts_with($nome_lower, 'cadastrar')) {
-        $cadastrar++;
-    } elseif (str_starts_with($nome_lower, 'listar')) {
-        $listar++;
-    } elseif (str_starts_with($nome_lower, 'deletar') || str_starts_with($nome_lower, 'excluir')) {
-        $deletar++;
-    } elseif (str_starts_with($nome_lower, 'editar') || str_starts_with($nome_lower, 'atualizar')) {
-        $editar++;
-    }
+    if (str_starts_with($nome_lower, 'cadastrar')) $categorias['cadastrar']++;
+    elseif (str_starts_with($nome_lower, 'listar')) $categorias['listar']++;
+    elseif (str_starts_with($nome_lower, 'deletar') || str_starts_with($nome_lower, 'excluir')) $categorias['deletar']++;
+    elseif (str_starts_with($nome_lower, 'editar') || str_starts_with($nome_lower, 'atualizar')) $categorias['editar']++;
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>🔍 Lista de Funções PHP</title>
+    <title>📘 Lista de Funções PHP</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --cor-bg: #f2f5fa;
+            --cor-primaria: #1f2d3d;
+            --cor-destaque: #3498db;
+            --cor-clara: #ffffff;
+            --cor-hover: #e9f5ff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(to right, #e8f0ff, #f4f6fb);
+            background: var(--cor-bg);
             margin: 0;
             padding: 40px 20px;
+            color: var(--cor-primaria);
         }
 
         h1 {
             text-align: center;
-            color: #1f2d3d;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
 
-        .contador {
-            text-align: center;
-            font-size: 1.2em;
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
             margin-bottom: 30px;
-            color: #34495e;
+        }
+
+        .badge {
+            background: var(--cor-clara);
+            border-left: 5px solid var(--cor-destaque);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge:hover {
+            background-color: var(--cor-hover);
+        }
+
+        .badge span {
+            font-weight: bold;
+            color: var(--cor-destaque);
         }
 
         table {
@@ -70,7 +103,7 @@ foreach ($nomes_funcoes as $nome) {
             margin: 0 auto;
             border-collapse: separate;
             border-spacing: 0;
-            background-color: #ffffff;
+            background-color: var(--cor-clara);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
@@ -78,14 +111,13 @@ foreach ($nomes_funcoes as $nome) {
         }
 
         thead {
-            background-color: #1f2d3d;
+            background-color: var(--cor-primaria);
             color: white;
         }
 
         th, td {
             padding: 16px 20px;
             text-align: left;
-            font-size: 1em;
         }
 
         th {
@@ -94,35 +126,37 @@ foreach ($nomes_funcoes as $nome) {
         }
 
         tbody tr:nth-child(even) {
-            background-color: #f4f7fb;
+            background-color: #f7f9fb;
         }
 
         tbody tr:hover {
-            background-color: #e0f0ff;
+            background-color: var(--cor-hover);
             transition: background-color 0.2s ease-in-out;
-        }
-
-        td {
-            color: #2c3e50;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .no-func {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
 
-<h1>📘 Lista de Todas as Funções PHP</h1>
-<div class="contador">
-    Total de funções: <strong><?= $total_funcoes ?></strong><br>
-    📥 Cadastrar: <strong><?= $cadastrar ?></strong> |
-    📄 Listar: <strong><?= $listar ?></strong> |
-    ❌ Deletar: <strong><?= $deletar ?></strong> |
-    ✏️ Editar: <strong><?= $editar ?></strong>
-</div>
+<h1>📘 Lista de Funções Detectadas</h1>
 
+<div class="badges">
+    <div class="badge">📥 Cadastrar: <span><?= $categorias['cadastrar'] ?></span></div>
+    <div class="badge">📄 Listar: <span><?= $categorias['listar'] ?></span></div>
+    <div class="badge">❌ Deletar: <span><?= $categorias['deletar'] ?></span></div>
+    <div class="badge">✏️ Editar: <span><?= $categorias['editar'] ?></span></div>
+    <div class="badge">📊 Total: <span><?= $total_funcoes ?></span></div>
+</div>
 
 <table>
     <thead>
@@ -134,7 +168,7 @@ foreach ($nomes_funcoes as $nome) {
     </thead>
     <tbody>
         <?php if ($total_funcoes === 0): ?>
-            <tr><td colspan="3" style="text-align: center;">Nenhuma função encontrada no arquivo.</td></tr>
+            <tr><td colspan="3" class="no-func">Nenhuma função encontrada no arquivo.</td></tr>
         <?php else: ?>
             <?php foreach ($nomes_funcoes as $i => $nome): ?>
                 <tr>
