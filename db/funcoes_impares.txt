@@ -33,20 +33,20 @@ editarMetaUsuario($conexao, $idmeta, $usuario_id, $descricao, $data_inicio, $dat
 deletarMetaUsuario($conexao, $idmeta)
 cadastrarTreino($conexao, $tipo, $horario, $descricao, $usuario_idusuario)
 editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuario)
-
+listarTreinoExercicio($conexao, $idtreino2)
+deletarTreinoExercicio($conexao, $idtreino2)
+editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
 
 
 #🚧 EM ANDAMENTO 🚧#
 
-listarTreinoExercicio($conexao, $idtreino2)
 
 #❌ PENDENTE ❌#
 
 gerenciarVencimento($conexao)
 deletarHorario($conexao, $idhorario)
 listarCupomDesconto($conexao, $idcupom)
-editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
-deletarTreinoExercicio($conexao, $idtreino2)
+
 deletarCupomDesconto($conexao, $idcupom)
 editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
 listarPedidos($conexao, $idpedido)

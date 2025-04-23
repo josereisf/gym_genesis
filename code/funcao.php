@@ -469,6 +469,18 @@ function listarDietas($idusuario)
 
   return $lista_dietas;
 }
+function deletarTreinoExercicio($idtreino2){
+  $conexao = conectar();
+  $sql = " DELETE FROM treino_exercicio WHERE idtreino2=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idtreino2);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 function listarTreinoExercicio($idtreino2){
   $conexao = conectar();
   if ($idtreino2 != null) {
@@ -489,6 +501,19 @@ function listarTreinoExercicio($idtreino2){
   mysqli_stmt_close($comando);
 
   return $lista_treinos;
+}
+function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url){
+  $conexao = conectar();
+
+  $sql = ' UPDATE exercicio SET nome=?, grupo_muscular=?, descricao=?, video_url=? WHERE idexercicio=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssssi', $nome, $grupo_muscular, $descricao, $video_url, $idexercicio);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
