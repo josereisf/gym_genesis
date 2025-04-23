@@ -469,6 +469,27 @@ function listarDietas($idusuario)
 
   return $lista_dietas;
 }
+function listarTreinoExercicio($idtreino2){
+  $conexao = conectar();
+  if ($idtreino2 != null) {
+    $sql = ' SELECT * FROM treino_exercicio WHERE usuario_idusuario=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idtreino2);
+  } else {
+    $sql = ' SELECT * FROM treino_exercicio';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_treinos = [];
+  while ($treino = mysqli_fetch_assoc($resultados)) {
+    $lista_treinos[] = $treino;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_treinos;
+}
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)

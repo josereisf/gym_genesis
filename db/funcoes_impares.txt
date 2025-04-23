@@ -38,6 +38,7 @@ editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuari
 
 #🚧 EM ANDAMENTO 🚧#
 
+listarTreinoExercicio($conexao, $idtreino2)
 
 #❌ PENDENTE ❌#
 
@@ -53,7 +54,6 @@ listarProdutos($conexao, $idproduto)
 editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
 deletarPagamento($conexao, $idpagamento)
 recuperacaoSenha($conexao, $email)
-
 deletarProduto($conexao, $idproduto)
 cadastrarRefeicao($conexao, $dieta_id, $tipo, $horario)
 cadastrarCupomDesconto($conexao, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
@@ -64,7 +64,6 @@ cadastrarRespostaForum($conexao, $mensagem, $data_resposta, $usuario_idusuario, 
 editarHorario($conexao, $idhorario, $dia_semana, $hora_inicio, $hora_fim)
 listarForum($conexao, $idtopico)
 cadastrarForum($conexao, $titulo, $descricao, $data_criacao, $usuario_idusuario)
-listarTreinoExercicio($conexao, $idtreino2)
 listarHistoricoTreino($conexao, $idhistorico)
 aplicarDesconto($conexao, $idproduto, $idcupom)
 editarHistoricoTreino($conexao, $idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes)
