@@ -532,7 +532,9 @@ function deletarHorario($idhorario){
   desconectar($conexao);
   return $funcionou;
 }
-function deletar
+function deletarRefeição ($idrefeicao){
+  
+}
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)
