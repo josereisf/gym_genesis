@@ -1145,3 +1145,102 @@ function listarAssinaturas($idassinatura){
   return $lista_assinaturas;
 }
 
+function deletarDietaAlimento($iddieta_alimentar){
+  $conexao = conectar();
+  $sql = "DELETE FROM dieta_alimentar WHERE $iddieta_alimentar = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $iddieta_alimentar);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarPlano($idplano){
+  $conexao = conectar();
+  $sql = "DELETE FROM plano WHERE $idplano = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idplano);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarAlimento($idalimento){
+  $conexao = conectar();
+  $sql = "DELETE FROM alimento WHERE $idalimento = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idalimento);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarCategoriaProduto($idcategoria){
+  $conexao = conectar();
+  $sql = "DELETE FROM categoria_produto WHERE $idcategoria = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idcategoria);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarPagamentoDetalhe($idpagaemento2){
+  $conexao = conectar();
+  $sql = "DELETE FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idpagaemento2);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarItemPedido($iditem){
+  $conexao = conectar();
+  $sql = "DELETE FROM item_pedido WHERE $iditem = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $iditem);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarAulaAgendada($idaula){
+  $conexao = conectar();
+  $sql = "DELETE FROM aula_agendada WHERE $idaula = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idaula);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarTreino($idtreino){
+  $conexao = conectar();
+  $sql = "DELETE FROM treino WHERE $idtreino = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idtreino);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarHistoricoTreino($idhistorico){
+  $conexao = conectar();
+  $sql = "DELETE FROM historico_treino WHERE $idhistorico = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idhistorico);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarPedido($idpedido){
+  $conexao = conectar();
+  $sql = "DELETE FROM pedido WHERE $idpedido = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idpedido);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+
+function deletarExercicio($idexercicio){
+  $conexao = conectar();
+  $sql = "DELETE FROM exercicio WHERE $idexercicio = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idexercicio);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+}
+

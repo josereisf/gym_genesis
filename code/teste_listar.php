@@ -1,6 +1,6 @@
 <?php
 
-$arquivo = 'funcao.php'; // Altere para o caminho correto
+$arquivo = 'funcao.php';
 
 if (!file_exists($arquivo)) {
     die("<h2 style='color:red;'>Arquivo '$arquivo' não encontrado.</h2>");
@@ -8,7 +8,6 @@ if (!file_exists($arquivo)) {
 
 $codigo = file_get_contents($arquivo);
 
-// Regex para capturar qualquer função
 preg_match_all('/function\s+(\w+)\s*\((.*?)\)/', $codigo, $matches);
 
 $nomes_funcoes = $matches[1];
@@ -21,52 +20,81 @@ $total_funcoes = count($nomes_funcoes);
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Funções</title>
+    <title>🔍 Lista de Funções PHP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f7fa;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #e8f0ff, #f4f6fb);
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
         }
+
         h1 {
             text-align: center;
-            color: #2c3e50;
+            color: #1f2d3d;
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
+
         .contador {
             text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 20px;
+            font-size: 1.2em;
+            margin-bottom: 30px;
             color: #34495e;
         }
+
         table {
-            width: 85%;
+            width: 90%;
+            max-width: 1000px;
             margin: 0 auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 8px;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: #ffffff;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+            animation: fadeIn 0.5s ease-in-out;
         }
+
         thead {
-            background-color: #2c3e50;
+            background-color: #1f2d3d;
             color: white;
         }
+
         th, td {
-            padding: 12px 16px;
+            padding: 16px 20px;
             text-align: left;
+            font-size: 1em;
         }
+
+        th {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
         tbody tr:nth-child(even) {
-            background-color: #f0f3f7;
+            background-color: #f4f7fb;
         }
+
         tbody tr:hover {
-            background-color: #e2efff;
+            background-color: #e0f0ff;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        td {
+            color: #2c3e50;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-<h1>📘 Lista de Todas as Funções</h1>
+<h1>📘 Lista de Todas as Funções PHP</h1>
 <div class="contador">
     Total de funções encontradas: <strong><?= $total_funcoes ?></strong>
 </div>
@@ -81,7 +109,7 @@ $total_funcoes = count($nomes_funcoes);
     </thead>
     <tbody>
         <?php if ($total_funcoes === 0): ?>
-            <tr><td colspan="3">Nenhuma função encontrada no arquivo.</td></tr>
+            <tr><td colspan="3" style="text-align: center;">Nenhuma função encontrada no arquivo.</td></tr>
         <?php else: ?>
             <?php foreach ($nomes_funcoes as $i => $nome): ?>
                 <tr>
