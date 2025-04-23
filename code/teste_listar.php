@@ -8,12 +8,32 @@ if (!file_exists($arquivo)) {
 
 $codigo = file_get_contents($arquivo);
 
+// Captura todas as funções
 preg_match_all('/function\s+(\w+)\s*\((.*?)\)/', $codigo, $matches);
 
 $nomes_funcoes = $matches[1];
 $parametros_funcoes = $matches[2];
 $total_funcoes = count($nomes_funcoes);
 
+// Inicializa os contadores por categoria
+$cadastrar = 0;
+$listar = 0;
+$deletar = 0;
+$editar = 0;
+
+foreach ($nomes_funcoes as $nome) {
+    $nome_lower = strtolower($nome);
+    
+    if (str_starts_with($nome_lower, 'cadastrar')) {
+        $cadastrar++;
+    } elseif (str_starts_with($nome_lower, 'listar')) {
+        $listar++;
+    } elseif (str_starts_with($nome_lower, 'deletar') || str_starts_with($nome_lower, 'excluir')) {
+        $deletar++;
+    } elseif (str_starts_with($nome_lower, 'editar') || str_starts_with($nome_lower, 'atualizar')) {
+        $editar++;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -96,8 +116,13 @@ $total_funcoes = count($nomes_funcoes);
 
 <h1>📘 Lista de Todas as Funções PHP</h1>
 <div class="contador">
-    Total de funções encontradas: <strong><?= $total_funcoes ?></strong>
+    Total de funções: <strong><?= $total_funcoes ?></strong><br>
+    📥 Cadastrar: <strong><?= $cadastrar ?></strong> |
+    📄 Listar: <strong><?= $listar ?></strong> |
+    ❌ Deletar: <strong><?= $deletar ?></strong> |
+    ✏️ Editar: <strong><?= $editar ?></strong>
 </div>
+
 
 <table>
     <thead>

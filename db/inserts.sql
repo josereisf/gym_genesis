@@ -3,11 +3,6 @@
 use gym_genesis;
 -- 1. Tabelas independentes
 
--- 1.1. horario
-INSERT INTO horario (dia_semana, hora_inicio, hora_fim) VALUES
-  ('Segunda', '08:00:00', '09:00:00'),
-  ('Quarta', '10:00:00', '11:00:00'),
-  ('Sexta',  '18:00:00', '19:00:00');
 
 -- 1.2. cargo
 INSERT INTO cargo (nome, descricao) VALUES
@@ -172,10 +167,20 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
   (60.300, 1.65, 22.04, 18.00, '2025-04-03', 3);
 
 -- 10.2. aula_agendada
-INSERT INTO aula_agendada (horario_idhorario, data_aula, usuario_idusuario) VALUES
-  (1, '2025-04-08', 1),
-  (2, '2025-04-09', 2),
-  (3, '2025-04-10', 3);
+INSERT INTO `gym_genesis`.`aula_agendada` 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`) 
+VALUES 
+('2025-04-25', 'Sexta', '08:00:00', '09:00:00', 1);
+
+INSERT INTO `gym_genesis`.`aula_agendada` 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`) 
+VALUES 
+('2025-04-27', 'Domingo', '10:00:00', '11:30:00', 2);
+
+INSERT INTO `gym_genesis`.`aula_agendada` 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`) 
+VALUES 
+('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3);
 
 -- 11. Meta usuario
 INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, status) VALUES
