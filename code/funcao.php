@@ -545,16 +545,133 @@ function listarCupomDesconto($idusuario)
 
   return $lista_cupons;
 }
-function editarCategoriaProduto($idcategoria, $nome, $descricao) {}
-function listarPedidos($idpedido) {}
-function listarProdutos($idproduto) {}
-function editarAulaAgendada($idaula, $horario_idhorario, $data_aula, $usuario_idusuario) {}
-function recuperacaoSenha($email) {}
-function cadastrarRefeicao($dieta_id, $tipo, $horario) {}
-function cadastrarCupomDesconto($codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo) {}
-function cadastrarPedido($usuario_idusuario, $data_pedido, $status) {}
-function statusPedido($idpedido, $idusuario) {}
-function cadastrarRespostaForum($mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico) {}
+function editarCategoriaProduto($idcategoria, $nome, $descricao)
+{
+  $conexao = conectar();
+
+  $sql = ' UPDATE categoria_produto SET nome=?, descricao=? WHERE usuario_idusuario=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'si', $nome, $descricao, $idcategoria);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarPedidos($idpedido)
+{
+  $conexao = conectar();
+  if ($idpedido != null) {
+    $sql = 'SELECT * FROM pedido WHERE idpedido=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idpedido);
+  } else {
+    $sql = 'SELECT * FROM pedido';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_pedidos = [];
+  while ($pedido = mysqli_fetch_assoc($resultados)) {
+    $lista_pedidos[] = $pedido;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_pedidos;
+}
+function listarProdutos($idproduto)
+{
+  $conexao = conectar();
+  if ($idproduto != null) {
+    $sql = 'SELECT * FROM produto WHERE idproduto=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idproduto);
+  } else {
+    $sql = 'SELECT * FROM produto';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_produtos = [];
+  while ($produto = mysqli_fetch_assoc($resultados)) {
+    $lista_produtos[] = $produto;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_produtos;
+}
+function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idaula)
+{
+  $conexao = conectar();
+
+  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=? WHERE idaula=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssssi', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idaula);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarRefeicao($iddieta, $tipo, $horario)
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO refeicao (dieta_id, tipo, horario) VALUES (?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'isss', $iddieta, $tipo, $horario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarCupomDesconto($codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_validade, quantidade_uso, tipo) VALUES (?, ?, ?, ?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sddsis', $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarPedido($idusuario, $data_pedido, $status, $idpagamento)
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO pedido (usuario_idusuario, data_pedido, status, pagamento_idpagamento) VALUES (?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'isssi', $idusuario, $data_pedido, $status, $idpagamento);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function cadastrarRespostaForum($mensagem, $idusuario, $idtopico) {
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES (?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sii', $mensagem, $idusuario, $idtopico);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 function editarHorario($idhorario, $dia_semana, $hora_inicio, $hora_fim) {}
 function listarForum($idtopico) {}
 function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario) {}
@@ -566,6 +683,8 @@ function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_des
 function listarPagamentos($idpagamento) {}
 function editarPagamento($idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status) {}
 function editarDietaAlimento($iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao) {}
+function recuperacaoSenha($email) {}
+function statusPedido($idpedido, $idusuario) {}
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
