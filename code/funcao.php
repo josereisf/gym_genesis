@@ -166,11 +166,12 @@ function listarEnderecos($id, $tipo)
 
   return $lista_enderecos;
 }
+
 function listarFuncionarios($idfuncionario)
 {
   $conexao = conectar();
   if ($idfuncionario != null) {
-    $sql = 'SELECT * FROM funcionario WHERE idfuncionario=?';
+    $sql = ' SELECT * FROM funcionario WHERE idfuncionario=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
   } else {
@@ -188,6 +189,8 @@ function listarFuncionarios($idfuncionario)
 
   return $lista_funcionarios;
 }
+
+
 function deletarFuncionario($idfuncionario)
 {
   $conexao = conectar();
@@ -1450,7 +1453,8 @@ function cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gordura
 
   return $funcionou;
 }
-function cadastrarCargo($nome, $descricao){
+function cadastrarCargo($nome, $descricao)
+{
   $conexao = conectar();
 
   $sql = " INSERT INTO cargo  (nome, descricao) VALUES (?, ?)";
@@ -1465,13 +1469,14 @@ function cadastrarCargo($nome, $descricao){
   return $funcionou;
 }
 
-function cadastrarExercicio($nome, $grupo_muscular, $descricao, $video_url){
+function cadastrarExercicio($nome, $grupo_muscular, $descricao, $video_url)
+{
   $conexao = conectar();
 
   $sql = " INSERT INTO exercicio  (nome, grupo_muscular, descricao,  video_url) VALUES (?, ?, ?,?)";
 
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "ssss", $nome, $grupo_muscular, $descricao, $video_url );
+  mysqli_stmt_bind_param($comando, "ssss", $nome, $grupo_muscular, $descricao, $video_url);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
