@@ -36,13 +36,12 @@ editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuari
 listarTreinoExercicio($conexao, $idtreino2)
 deletarTreinoExercicio($conexao, $idtreino2)
 editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
+deletarRefeicao($conexao, $idrefeicao)
 
 
 #🚧 EM ANDAMENTO 🚧#
 
-deletarHorario($conexao, $idhorario)
 deletarCupomDesconto($conexao, $idcupom)
-deletarRefeicao($conexao, $idrefeicao)
 deletarProduto($conexao, $idproduto)
 deletarPagamento($conexao, $idpagamento)
 
@@ -72,3 +71,4 @@ listarPagamentos($conexao, $idpagamento)
 editarPagamento($conexao, $idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status)
 editarDietaAlimento($conexao, $iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao)
 
+teste unitario e composer

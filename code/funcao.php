@@ -46,13 +46,6 @@ function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto
 function deletarUsuario($idusuario)
 {
   $conexao = conectar();
-  $id = $idusuario;
-  $tipo = 1;
-  deletarEndereco($id, $tipo);
-  deletarAssinatura($idusuario);
-  deletarAvaliacaoFisica($idusuario);
-  deletarDieta($idusuario);
-  deletarMetaPorIDUsuario($idusuario);
   $sql = "DELETE FROM usuario WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -194,9 +187,6 @@ function listarFuncionarios($idfuncionario)
 function deletarFuncionario($idfuncionario)
 {
   $conexao = conectar();
-  $id = $idfuncionario;
-  $tipo = 2;
-  deletarEndereco($id, $tipo);
   $sql = "DELETE FROM funcionario WHERE idfuncionario = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -206,21 +196,6 @@ function deletarFuncionario($idfuncionario)
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
-}
-function deletarFuncionarioCargo($idcargo)
-{
-  $conexao = conectar();
-  $sql = 'SELECT idfuncionario FROM funcionario WHERE cargo_id = ?';
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 'i', $idcargo);
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
-
-  while ($idfuncionario = mysqli_fetch_assoc($resultados)) {
-    deletarFuncionario($idfuncionario);
-  }
-  mysqli_stmt_close($comando);
-  desconectar($conexao);
 }
 function editarCargo($idcargo, $nome, $descricao)
 {
@@ -239,7 +214,6 @@ function editarCargo($idcargo, $nome, $descricao)
 function deletarCargo($idcargo)
 {
   $conexao = conectar();
-  deletarFuncionarioCargo($idcargo);
   $sql = "DELETE FROM cargo WHERE idcargo=?";
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -363,20 +337,6 @@ function deletarMetaUsuario($idmeta)
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idmeta);
-
-  $funcionou = mysqli_stmt_execute($comando);
-  mysqli_stmt_close($comando);
-  desconectar($conexao);
-  return $funcionou;
-}
-function deletarMetaPorIDUsuario($idusuario)
-{
-  $conexao = conectar();
-
-  $sql = 'DELETE FROM meta_usuario WHERE usuario_id=?';
-  $comando = mysqli_prepare($conexao, $sql);
-
-  mysqli_stmt_bind_param($comando, 'i', $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -536,6 +496,76 @@ function deletarRefeição($idrefeicao)
   desconectar($conexao);
   return $funcionou;
 }
+function deletarProduto($idproduto)
+{
+  $conexao = conectar();
+  $sql = " DELETE FROM produto WHERE idproduto=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idproduto);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function gerenciarVencimento($idusuario, $data_fim)
+{
+  $conexao = conectar();
+
+  $sql = ' UPDATE assinatura SET data_fim=? WHERE usuario_idusuario=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'si', $data_fim, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarCupomDesconto($idusuario)
+{
+  $conexao = conectar();
+  if ($idusuario != null) {
+    $sql = 'SELECT * FROM cupom_desconto WHERE usuario_idusuario=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idusuario);
+  } else {
+    $sql = 'SELECT * FROM cupom_desconto';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_cupons = [];
+  while ($cupom = mysqli_fetch_assoc($resultados)) {
+    $lista_cupons[] = $cupom;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_cupons;
+}
+function editarCategoriaProduto($idcategoria, $nome, $descricao) {}
+function listarPedidos($idpedido) {}
+function listarProdutos($idproduto) {}
+function editarAulaAgendada($idaula, $horario_idhorario, $data_aula, $usuario_idusuario) {}
+function recuperacaoSenha($email) {}
+function cadastrarRefeicao($dieta_id, $tipo, $horario) {}
+function cadastrarCupomDesconto($codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo) {}
+function cadastrarPedido($usuario_idusuario, $data_pedido, $status) {}
+function statusPedido($idpedido, $idusuario) {}
+function cadastrarRespostaForum($mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico) {}
+function editarHorario($idhorario, $dia_semana, $hora_inicio, $hora_fim) {}
+function listarForum($idtopico) {}
+function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario) {}
+function listarHistoricoTreino($idhistorico) {}
+function aplicarDesconto($idproduto, $idcupom) {}
+function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes) {}
+function editarForum($idtopico, $titulo, $descricao, $data_criacao, $usuario_idusuario) {}
+function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo) {}
+function listarPagamentos($idpagamento) {}
+function editarPagamento($idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status) {}
+function editarDietaAlimento($iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao) {}
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
