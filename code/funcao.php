@@ -659,7 +659,8 @@ function cadastrarPedido($idusuario, $data_pedido, $status, $idpagamento)
   desconectar($conexao);
   return $funcionou;
 }
-function cadastrarRespostaForum($mensagem, $idusuario, $idtopico) {
+function cadastrarRespostaForum($mensagem, $idusuario, $idtopico)
+{
   $conexao = conectar();
 
   $sql = 'INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES (?, ?, ?)';
@@ -672,9 +673,42 @@ function cadastrarRespostaForum($mensagem, $idusuario, $idtopico) {
   desconectar($conexao);
   return $funcionou;
 }
-function editarHorario($idhorario, $dia_semana, $hora_inicio, $hora_fim) {}
-function listarForum($idtopico) {}
-function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario) {}
+function listarForum($idtopico)
+{
+  $conexao = conectar();
+  if ($idtopico != null) {
+    $sql = 'SELECT * FROM forum WHERE idtopico=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idtopico);
+  } else {
+    $sql = 'SELECT * FROM forum';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_foruns = [];
+  while ($forum = mysqli_fetch_assoc($resultados)) {
+    $lista_foruns[] = $forum;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_foruns;
+}
+function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario)
+{
+  $conexao = conectar();
+
+  $sql = 'INSERT INTO forum (titulo, descricao, data_criacao, usuario_idusuario) VALUES (?, ?, ?, ?)';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sssi', $titulo, $descricao, $data_criacao, $usuario_idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 function listarHistoricoTreino($idhistorico) {}
 function aplicarDesconto($idproduto, $idcupom) {}
 function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes) {}
