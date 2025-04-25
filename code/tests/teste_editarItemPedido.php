@@ -2,21 +2,20 @@
 
 require_once '../funcao.php';
 
-$idtreino2 = 3;
-$treino_id = 3;
-$exercicio_id = 1;
-$series = 5;
-$repeticoes = 3;
-$carga = 6;
-$intervalo_segundos = 15;
+// Dados de teste
+$pedido_idpedido = 2;       // ID válido na tabela pedido
+$produto_idproduto = 3;     // ID válido na tabela produto
+$quantidade = 10;
+$preco_unitario = 25.99;    // Novo valor para o UPDATE
 
-$funcionou = editarTreinoExercicio($idtreino2, $treino_id, $exercicio_id, $series, $repeticoes, $carga, $intervalo_segundos);
+// Teste da função
+$funcionou = editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario);
 
 if ($funcionou === true) {
     echo "Deu tudo certo<br>";
 
     $conexao = conectar();
-    $sql = "SELECT * FROM treino_exercicio WHERE idtreino2 = '$idtreino2'";
+    $sql = "SELECT * FROM item_pedido WHERE pedido_idpedido = '$pedido_idpedido' AND produto_idproduto = '$produto_idproduto'";
     $resultado = mysqli_query($conexao, $sql);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {

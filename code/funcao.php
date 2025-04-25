@@ -909,14 +909,13 @@ function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_g
 
   return $funcionou;
 }
-
-function editarItemPedido($iditem, $pedido_idpedido, $produto_idproduto, $quantidade)
+function editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario)
 {
   $conexao = conectar();
 
   $sql = "UPDATE item_pedido 
-            SET pedido_idpedido = ?, produto_idproduto = ?, quantidade = ?
-            WHERE iditem = ?";
+            SET quantidade = ?, preco_unitario = ?
+            WHERE pedido_idpedido = ? AND produto_idproduto = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -925,8 +924,8 @@ function editarItemPedido($iditem, $pedido_idpedido, $produto_idproduto, $quanti
     return false;
   }
 
-  // Ordem correta dos parâmetros
-  mysqli_stmt_bind_param($comando, "iiii", $iditem, $pedido_idpedido, $produto_idproduto, $quantidade);
+  // "i" para int, "d" para double
+  mysqli_stmt_bind_param($comando, "idii", $quantidade, $preco_unitario, $pedido_idpedido, $produto_idproduto);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -1560,14 +1559,15 @@ function cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $image
 
   return $funcionou;
 }
-function cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade)
+
+function cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario)
 {
   $conexao = conectar();
 
-  $sql = " INSERT INTO item_pedido (pedido_idpedido, produto_idproduto, quantidade) VALUES (?,?,?)";
+  $sql = " INSERT INTO item_pedido (pedido_idpedido, produto_idproduto, quantidade, preco_unitario) VALUES (?,?,?,?)";
 
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "iii", $pedido_idpedido, $produto_idproduto, $quantidade);
+  mysqli_stmt_bind_param($comando, "iiid", $pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -1575,6 +1575,7 @@ function cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade)
 
   return $funcionou;
 }
+
 function cadastrarPagamento($usuario_idusuario, $valor, $data_pagamento, $metodo, $status = 'sucesso')
 {
   $conexao = conectar();
