@@ -1,7 +1,8 @@
 <?php
 // Código PHP no início do arquivo
 
-require_once 'funcao.php';
+require_once '../../code/funcao.php';
+
 
 // Função para listar dados da tabela
 function listarDados($nomeTabela)
@@ -496,7 +497,7 @@ if (isset($_GET['tabela'])) {
                             } else {
                                 resultado.innerHTML = 'Nenhum dado encontrado.';
                             }
-                        }, 4000); // 4 segundos de espera
+                        }, 0); // 4 segundos de espera
                     } catch (e) {
                         // Se a resposta não for um JSON válido, exibe o erro
                         console.error('Erro ao analisar JSON:', e);

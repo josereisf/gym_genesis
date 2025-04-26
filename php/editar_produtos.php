@@ -9,7 +9,8 @@
 <body>
 
 <?php
-    require_once 'funcao.php';
+    require_once '../../code/funcao.php';
+
 
     // Verifica se o ID foi passado corretamente na URL
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {

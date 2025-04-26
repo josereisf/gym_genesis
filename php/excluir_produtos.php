@@ -1,6 +1,7 @@
 <?php
 
-    require_once 'funcao.php';
+    require_once '../../code/funcao.php';
+
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];

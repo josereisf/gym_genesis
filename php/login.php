@@ -1,5 +1,6 @@
 <?php
-    require_once 'funcao.php';
+    require_once '../../code/funcao.php';
+
 
     $conexao = conectar();
 

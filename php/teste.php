@@ -164,7 +164,8 @@
     <div class="card-container">
         <?php
         // Inclua o arquivo com a função listarProdutos()
-        require_once 'funcao.php'; // Substitua pelo nome do arquivo onde está a função
+        require_once '../../code/funcao.php';
+ // Substitua pelo nome do arquivo onde está a função
 
         // Chame a função para listar os produtos
         listarProdutos();
