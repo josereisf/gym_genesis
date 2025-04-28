@@ -1,7 +1,7 @@
 <?php
 // Código PHP no início do arquivo
 
-require_once '../../code/funcao.php';
+require_once 'funcao.php';
 
 
 // Função para listar dados da tabela
