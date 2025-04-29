@@ -131,16 +131,20 @@ function listarEnderecos($id, $tipo)
 {
   $conexao = conectar();
   if ($id == null and $tipo == null) {
-    $sql = 'SELECT * FROM endereco';
+    $sql = 'SELECT u.nome AS nome_usuario, f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
     $comando = mysqli_prepare($conexao, $sql);
   } else {
     if ($tipo == 1) {
+      $tabela = "usuario";
       $tipoid = "usuario_id";
+      $idpegado = "idusuario";
     } else {
+      $tabela = "funcionario";
       $tipoid = "funcionario_id";
+      $idpegado = "idfuncionario";
     }
     if ($id == null) {
-      $sql = 'SELECT * FROM endereco WHERE ' . $tipoid . ' IS NOT NULL';
+      $sql = 'SELECT '.$tabela.'.nome AS nome_'.$tabela.', e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM'.$tabela.' LEFT JOIN '.$tabela.' ON e.'.$tipoid.' = '.$tabela.'.'.$idpegado.' WHERE e.'.$tabela.' IS NOT NULL;';
       $comando = mysqli_prepare($conexao, $sql);
     } else {
       $sql = 'SELECT * FROM endereco WHERE ' . $tipoid . ' =?';
