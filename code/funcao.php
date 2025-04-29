@@ -709,16 +709,116 @@ function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function listarHistoricoTreino($idhistorico) {}
-function aplicarDesconto($idproduto, $idcupom) {}
-function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes) {}
-function editarForum($idtopico, $titulo, $descricao, $data_criacao, $usuario_idusuario) {}
-function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo) {}
-function listarPagamentos($idpagamento) {}
-function editarPagamento($idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status) {}
-function editarDietaAlimento($iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao) {}
+function listarHistoricoTreino($idhistorico) {
+  $conexao = conectar();
+  if ($idhistorico != null) {
+    $sql = 'SELECT * FROM historico_treino WHERE idhistorico=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idtopico);
+  } else {
+    $sql = 'SELECT * FROM historico_treino';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_historicos = [];
+  while ($historico = mysqli_fetch_assoc($resultados)) {
+    $lista_historicos[] = $historico;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_historicos;
+}
+function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes) {
+  $conexao = conectar();
+
+  $sql = ' UPDATE historico_treino SET data_execucao=?, observacoes=? WHERE idhistorico=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'ssi', $data_execucao, $observacoes, $idhistorico);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarForum($idtopico, $titulo, $descricao, $data_criacao) {
+  $conexao = conectar();
+
+  $sql = ' UPDATE forum SET titulo=?, descricao=?, data_criacao=? WHERE idhistorico=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sssi', $titulo, $descricao, $data_criacao, $idtopico);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo) {
+  $conexao = conectar();
+
+  $sql = ' UPDATE cupom_desconto SET codigo=?, percentual_desconto=?, valor_desconto=?, data_validade=?, quantidade_uso=?, tipo=? WHERE idcupom=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'sddsisi', $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo, $idcupom);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function listarPagamentos($idpagamento) {
+  $conexao = conectar();
+  if ($idpagamento != null) {
+    $sql = 'SELECT * FROM pagamento WHERE idpagamento=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idpagamento);
+  } else {
+    $sql = 'SELECT * FROM pagamento';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_pagamentos = [];
+  while ($pagamento = mysqli_fetch_assoc($resultados)) {
+    $lista_pagamentos[] = $pagamento;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_pagamentos;
+}
+function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status) {
+  $conexao = conectar();
+
+  $sql = ' UPDATE cupom_desconto SET valor=?, data_pagamento=?, metodo=?, status=? WHERE idpagamento=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'dsssi', $valor, $data_pagamento, $metodo, $status, $idpagamento);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao) {
+  $conexao = conectar();
+
+  $sql = ' UPDATE dieta_alimento SET quantidade=?, observacao=? WHERE iddieta_alimentar=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'dsi', $quantidade, $observacao, $iddieta_alimentar);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 function recuperacaoSenha($email) {}
 function statusPedido($idpedido, $idusuario) {}
+function aplicarDesconto($idproduto, $idcupom) {}
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
