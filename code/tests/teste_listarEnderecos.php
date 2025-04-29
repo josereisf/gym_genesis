@@ -2,9 +2,9 @@
 
 require_once '../funcao.php';
 
-$id = null;
+$id = 1;
 $tipo = 2;
 
 echo '<pre>';
-print_r(listarEnderecos($id, $tipo));
+print_r(listarEnderecosID($id, $tipo));
 echo '</pre';

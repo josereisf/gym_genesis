@@ -131,14 +131,14 @@ function listarEnderecos($tipo)
 {
   $conexao = conectar();
   if ($tipo == null) {
-    $sql = 'SELECT u.nome AS nome_usuario, f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
+    $sql = ' SELECT u.nome AS nome_usuario, f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   elseif ($tipo == 1) {
-    $sql = 'SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id IS NOT NULL;';
+    $sql = ' SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id IS NOT NULL;';
     $comando = mysqli_prepare($conexao, $sql);
   } else {
-    $sql = 'SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE f.funcionario_id IS NOT NULL;';
+    $sql = ' SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE e.funcionario_id IS NOT NULL;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -158,7 +158,7 @@ function listarEnderecosID($id, $tipo) {
     $sql = 'SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id=?;';
   }
   else {
-    $sql = 'SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE f.funcionario_id=?;';
+    $sql = ' SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE e.funcionario_id=?;';
   }
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'i', $id);
