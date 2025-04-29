@@ -1452,7 +1452,7 @@ function listarAssinaturas($idassinatura)
 
   mysqli_stmt_close($comando);
 
-  return $lista_assinaturas;
+  return json_encode($lista_assinaturas);
 }
 
 function deletarDietaAlimento($iddieta_alimentar)
