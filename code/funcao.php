@@ -127,31 +127,41 @@ function deletarEndereco($id, $tipo)
   desconectar($conexao);
   return $funcionou;
 }
-function listarEnderecos($id, $tipo)
+function listarEnderecos($tipo)
 {
   $conexao = conectar();
-  if ($id == null and $tipo == null) {
+  if ($tipo == null) {
     $sql = 'SELECT u.nome AS nome_usuario, f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
     $comando = mysqli_prepare($conexao, $sql);
-  } else {
-    if ($tipo == 1) {
-      $tabela = "usuario";
-      $tipoid = "usuario_id";
-      $idpegado = "idusuario";
-    } else {
-      $tabela = "funcionario";
-      $tipoid = "funcionario_id";
-      $idpegado = "idfuncionario";
-    }
-    if ($id == null) {
-      $sql = 'SELECT '.$tabela.'.nome AS nome_'.$tabela.', e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM'.$tabela.' LEFT JOIN '.$tabela.' ON e.'.$tipoid.' = '.$tabela.'.'.$idpegado.' WHERE e.'.$tabela.' IS NOT NULL;';
-      $comando = mysqli_prepare($conexao, $sql);
-    } else {
-      $sql = 'SELECT * FROM endereco WHERE ' . $tipoid . ' =?';
-      $comando = mysqli_prepare($conexao, $sql);
-      mysqli_stmt_bind_param($comando, 'i', $id);
-    }
   }
+  elseif ($tipo == 1) {
+    $sql = 'SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id IS NOT NULL;';
+    $comando = mysqli_prepare($conexao, $sql);
+  } else {
+    $sql = 'SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE f.funcionario_id IS NOT NULL;';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_enderecos = [];
+  while ($endereco = mysqli_fetch_assoc($resultados)) {
+    $lista_enderecos[] = $endereco;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_enderecos;
+}
+function listarEnderecosID($id, $tipo) {
+  $conexao = conectar();
+  if ($tipo == 1){
+    $sql = 'SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id=?;';
+  }
+  else {
+    $sql = 'SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE f.funcionario_id=?;';
+  }
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'i', $id);
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
 
@@ -713,7 +723,8 @@ function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function listarHistoricoTreino($idhistorico) {
+function listarHistoricoTreino($idhistorico)
+{
   $conexao = conectar();
   if ($idhistorico != null) {
     $sql = 'SELECT * FROM historico_treino WHERE idhistorico=?';
@@ -734,7 +745,8 @@ function listarHistoricoTreino($idhistorico) {
 
   return $lista_historicos;
 }
-function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes) {
+function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE historico_treino SET data_execucao=?, observacoes=? WHERE idhistorico=?';
@@ -747,7 +759,8 @@ function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_exec
   desconectar($conexao);
   return $funcionou;
 }
-function editarForum($idtopico, $titulo, $descricao, $data_criacao) {
+function editarForum($idtopico, $titulo, $descricao, $data_criacao)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE forum SET titulo=?, descricao=?, data_criacao=? WHERE idhistorico=?';
@@ -760,7 +773,8 @@ function editarForum($idtopico, $titulo, $descricao, $data_criacao) {
   desconectar($conexao);
   return $funcionou;
 }
-function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo) {
+function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE cupom_desconto SET codigo=?, percentual_desconto=?, valor_desconto=?, data_validade=?, quantidade_uso=?, tipo=? WHERE idcupom=?';
@@ -773,7 +787,8 @@ function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_des
   desconectar($conexao);
   return $funcionou;
 }
-function listarPagamentos($idpagamento) {
+function listarPagamentos($idpagamento)
+{
   $conexao = conectar();
   if ($idpagamento != null) {
     $sql = 'SELECT * FROM pagamento WHERE idpagamento=?';
@@ -794,7 +809,8 @@ function listarPagamentos($idpagamento) {
 
   return $lista_pagamentos;
 }
-function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status) {
+function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE cupom_desconto SET valor=?, data_pagamento=?, metodo=?, status=? WHERE idpagamento=?';
@@ -807,7 +823,8 @@ function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status
   desconectar($conexao);
   return $funcionou;
 }
-function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao) {
+function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
+{
   $conexao = conectar();
 
   $sql = ' UPDATE dieta_alimento SET quantidade=?, observacao=? WHERE iddieta_alimentar=?';

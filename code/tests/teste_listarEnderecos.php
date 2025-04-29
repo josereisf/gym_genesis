@@ -2,7 +2,7 @@
 
 require_once '../funcao.php';
 
-$id = 1;
+$id = null;
 $tipo = 2;
 
 echo '<pre>';
