@@ -150,7 +150,7 @@ function listarEnderecos($tipo)
   }
   mysqli_stmt_close($comando);
 
-  return $lista_enderecos;
+  return json_encode($lista_enderecos);
 }
 function listarEnderecosID($id, $tipo) {
   $conexao = conectar();
@@ -171,7 +171,7 @@ function listarEnderecosID($id, $tipo) {
   }
   mysqli_stmt_close($comando);
 
-  return $lista_enderecos;
+  return json_encode($lista_enderecos);
 }
 
 function listarFuncionarios($idfuncionario)
