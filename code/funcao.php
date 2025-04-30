@@ -59,7 +59,7 @@ function deletarUsuario($idusuario)
 function loginUsuario($email, $senha)
 {
   $conexao = conectar();
-  $sql = " SELECT senha FROM usuario WHERE email = ?";
+  $sql = "SELECT senha FROM usuario WHERE email = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 's', $email);
   mysqli_stmt_execute($comando);
@@ -131,14 +131,42 @@ function listarEnderecos($tipo)
 {
   $conexao = conectar();
   if ($tipo == null) {
-    $sql = ' SELECT u.nome AS nome_usuario, f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    f.nome AS nome_funcionario,
+    e.cep,
+    e.rua,
+    e.numero,
+    e.complemento,
+    e.bairro,
+    e.cidade,
+    e.estado 
+    FROM endereco AS e 
+    LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario 
+    LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
     $comando = mysqli_prepare($conexao, $sql);
-  }
-  elseif ($tipo == 1) {
-    $sql = ' SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id IS NOT NULL;';
+  } elseif ($tipo == 1) {
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    e.cep, e.rua, e.numero,
+    e.complemento, e.bairro,
+    e.cidade,
+    e.estado
+    FROM endereco AS e
+    LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario
+    WHERE e.usuario_id IS NOT NULL;';
     $comando = mysqli_prepare($conexao, $sql);
   } else {
-    $sql = ' SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE e.funcionario_id IS NOT NULL;';
+    $sql = ' SELECT f.nome AS nome_funcionario,
+    e.cep,
+    e.rua,
+    e.numero,
+    e.complemento,
+    e.bairro,
+    e.cidade,
+    e.estado FROM endereco AS e
+    LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario
+    WHERE e.funcionario_id IS NOT NULL;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -152,13 +180,32 @@ function listarEnderecos($tipo)
 
   return json_encode($lista_enderecos);
 }
-function listarEnderecosID($id, $tipo) {
+function listarEnderecosID($id, $tipo)
+{
   $conexao = conectar();
-  if ($tipo == 1){
-    $sql = 'SELECT u.nome AS nome_usuario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario WHERE e.usuario_id=?;';
-  }
-  else {
-    $sql = ' SELECT f.nome AS nome_funcionario, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado FROM endereco AS e LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario WHERE e.funcionario_id=?;';
+  if ($tipo == 1) {
+    $sql = ' SELECT u.nome AS nome_usuario,
+    e.cep,
+    e.rua,
+    e.numero,
+    e.complemento,
+    e.bairro,
+    e.cidade,
+    e.estado
+    FROM endereco AS e
+    LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario
+    WHERE e.usuario_id=?;';
+  } else {
+    $sql = ' SELECT f.nome AS nome_funcionario,
+    e.cep,
+    e.rua,
+    e.numero,
+    e.complemento,
+    e.bairro,
+    e.cidade,
+    e.estado FROM endereco AS e
+    LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario
+    WHERE e.funcionario_id=?;';
   }
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'i', $id);
@@ -178,11 +225,28 @@ function listarFuncionarios($idfuncionario)
 {
   $conexao = conectar();
   if ($idfuncionario != null) {
-    $sql = ' SELECT * FROM funcionario WHERE idfuncionario=?';
+    $sql = ' SELECT
+    f.nome,
+    f.email,
+    f.telefone,
+    f.data_contratacao,
+    f.salario
+    c.nome
+    FROM funcionario AS f
+    JOIN cargo AS cargo ON c.idcargo = f.cargo_id
+    WHERE f.idfuncionario=?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
   } else {
-    $sql = 'SELECT * FROM funcionario';
+    $sql = ' SELECT
+    f.nome,
+    f.email,
+    f.telefone,
+    f.data_contratacao,
+    f.salario
+    c.nome
+    FROM funcionario AS f
+    JOIN cargo AS cargo ON c.idcargo = f.cargo_id';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -201,7 +265,7 @@ function listarFuncionarios($idfuncionario)
 function deletarFuncionario($idfuncionario)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM funcionario WHERE idfuncionario = ?";
+  $sql = " DELETE FROM funcionario WHERE idfuncionario = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
@@ -430,11 +494,24 @@ function listarDietas($idusuario)
 {
   $conexao = conectar();
   if ($idusuario != null) {
-    $sql = 'SELECT * FROM dieta WHERE usuario_idusuario=?';
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim
+    FROM dieta AS d
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
+    WHERE d.usuario_idusuario=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idusuario);
   } else {
-    $sql = 'SELECT * FROM dieta';
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
+    FROM dieta;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -465,11 +542,30 @@ function listarTreinoExercicio($idtreino2)
 {
   $conexao = conectar();
   if ($idtreino2 != null) {
-    $sql = ' SELECT * FROM treino_exercicio WHERE usuario_idusuario=?';
+    $sql = ' SELECT
+    t.nome,
+    e.nome,
+    te.serie,
+    te.repeticoes,
+    te.carga,
+    te.intervalo_segundos
+    FROM treino_exercicio AS te
+    JOIN treino AS t ON te.treino_id = t.idtreino
+    JOIN exercicio AS e ON te.exercicio_id = e.idexercicio
+    WHERE te.idtreino2=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idtreino2);
   } else {
-    $sql = ' SELECT * FROM treino_exercicio';
+    $sql = ' SELECT
+    t.nome,
+    e.nome,
+    te.serie,
+    te.repeticoes,
+    te.carga,
+    te.intervalo_segundos
+    FROM treino_exercicio AS te
+    JOIN treino AS t ON te.treino_id = t.idtreino
+    JOIN exercicio AS e ON te.exercicio_id = e.idexercicio';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -577,11 +673,26 @@ function listarPedidos($idpedido)
 {
   $conexao = conectar();
   if ($idpedido != null) {
-    $sql = 'SELECT * FROM pedido WHERE idpedido=?';
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    p.data_pedido,
+    p.status,
+    pa.valor
+    FROM pedido AS p
+    JOIN usuario AS u ON p.usuario_idusuario = u.idusuario
+    JOIN pagamento AS pa ON p.pagamento_idpagamento = pa.idpagamento
+    WHERE p.idpedido=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idpedido);
   } else {
-    $sql = 'SELECT * FROM pedido';
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    p.data_pedido,
+    p.status,
+    pa.valor
+    FROM pedido AS p
+    JOIN usuario AS u ON p.usuario_idusuario = u.idusuario
+    JOIN pagamento AS pa ON p.pagamento_idpagamento = pa.idpagamento';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -691,7 +802,14 @@ function listarForum($idtopico)
 {
   $conexao = conectar();
   if ($idtopico != null) {
-    $sql = 'SELECT * FROM forum WHERE idtopico=?';
+    $sql = ' SELECT
+    u.nome AS nome_usuario,
+    f.titulo,
+    f.descricao,
+    f.data_criacao,
+    FROM forum AS f
+    JOIN usuario AS u, f.usuario_idusuario = u.idusuario
+    WHERE f.idtopico=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idtopico);
   } else {
