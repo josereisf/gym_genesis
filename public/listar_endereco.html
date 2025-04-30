@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imprimindo Endereços</title>
+    <style>
+  /* Corpo da página */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    margin: 20px;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  /* Cabeçalho */
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #34495e;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  /* Estilo da tabela */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Estilo das células do cabeçalho e corpo */
+  th,
+  td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  /* Cabeçalho da tabela */
+  thead {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  /* Zebra striping nas linhas da tabela */
+  tbody tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+
+  /* Efeito de hover nas linhas */
+  tbody tr:hover {
+    background-color: #dbeef7;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    transform: scale(1.02);
+  }
+
+  /* Estilo para células de dados */
+  td {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  /* Responsividade para telas pequenas */
+  @media (max-width: 768px) {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      margin-bottom: 15px;
+    }
+
+    td {
+      position: relative;
+      padding-left: 50%;
+      border: none;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+    </style>
+  </head>
+  <body>
+    <h1>Imprimindo Endereços</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Usuário</th>
+          <th>Funcionário</th>
+          <th>CEP</th>
+          <th>Rua</th>
+          <th>Número</th>
+          <th>Complemento</th>
+          <th>Bairro</th>
+          <th>Cidade</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      // function carregarEnderecos() {
+      //     fetch("../code/tests/teste_listarEnderecos.php")
+      //         .then((response) => response.json())
+      //         .then((enderecos) => {
+      //             const tbody = document.querySelector("table tbody");
+      //             tbody.innerHTML = ""; // Limpar antes de adicionar novos
+
+      //             enderecos.forEach((endereco) => {
+      //                 const tr = document.createElement("tr");
+      //                 tr.setAttribute("data-endereco-id", endereco.idendereco);
+
+      //                 tr.innerHTML = `
+      //                     <td>${endereco.nome_usuario ?? 'N/A'}</td>  <!-- Usando 'N/A' caso seja null -->
+      //                     <td>${endereco.nome_funcionario ?? 'N/A'}</td>  <!-- Usando 'N/A' caso seja null -->
+      //                     <td>${endereco.cep}</td>
+      //                     <td>${endereco.rua}</td>
+      //                     <td>${endereco.numero}</td>
+      //                     <td>${endereco.complemento ?? 'N'}</td>  <!-- Usando '' caso seja null -->
+      //                     <td>${endereco.bairro}</td>
+      //                     <td>${endereco.cidade}</td>
+      //                     <td>${endereco.estado}</td>
+      //                 `;
+
+      //                 tbody.appendChild(tr);
+      //             });
+      //         })
+      //         .catch((error) => console.error("Erro ao carregar endereços:", error));
+      // }
+
+      // // Carregar os endereços ao inicializar a página
+      // carregarEnderecos();
+
+      const http = new XMLHttpRequest();
+      http.open("GET", "../code/tests/teste_listarEnderecos.php", true);
+      http.send();
+
+      http.onload = () => {
+        const enderecos = JSON.parse(http.responseText);
+        const tbody = document.querySelector("table tbody");
+        tbody.innerHTML = ""; // Limpar antes de adicionar novos
+
+        enderecos.forEach((endereco) => {
+          const tr = document.createElement("tr");
+          tr.setAttribute("data-endereco-id", endereco.idendereco);
+
+          tr.innerHTML = `
+            <td data-label="Usuário">${endereco.nome_usuario ?? "N/A"}</td>
+            <td data-label="Funcionário">${endereco.nome_funcionario ?? "N/A"}</td>
+            <td data-label="CEP">${endereco.cep}</td>
+            <td data-label="Rua">${endereco.rua}</td>
+            <td data-label="Número">${endereco.numero}</td>
+            <td data-label="Complemento">${endereco.complemento ?? "N"}</td>
+            <td data-label="Bairro">${endereco.bairro}</td>
+            <td data-label="Cidade">${endereco.cidade}</td>
+            <td data-label="Estado">${endereco.estado}</td>
+            `;
+
+          tbody.appendChild(tr);
+        });
+      };
+    </script>
+  </body>
+</html>

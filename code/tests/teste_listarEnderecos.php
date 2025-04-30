@@ -1,10 +1,12 @@
 <?php
 
 require_once '../funcao.php';
+header('Content-Type: application/json');
 
-$id = 1;
-$tipo = 2;
+$id = null;
+$tipo = null;
 
-echo '<pre>';
-print_r(listarEnderecosID($id, $tipo));
-echo '</pre';
+$json = json_encode(listarEnderecos($tipo), JSON_UNESCAPED_UNICODE);
+echo $json;
+
+?>
