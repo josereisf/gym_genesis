@@ -169,6 +169,7 @@ function listarEnderecos($tipo)
     WHERE e.funcionario_id IS NOT NULL;';
     $comando = mysqli_prepare($conexao, $sql);
   }
+
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
 
@@ -178,7 +179,7 @@ function listarEnderecos($tipo)
   }
   mysqli_stmt_close($comando);
 
-  return json_encode($lista_enderecos);
+  return $lista_enderecos; // agora retorna array puro
 }
 function listarEnderecosID($id, $tipo)
 {
@@ -218,7 +219,7 @@ function listarEnderecosID($id, $tipo)
   }
   mysqli_stmt_close($comando);
 
-  return json_encode($lista_enderecos);
+  return $lista_enderecos;
 }
 
 function listarFuncionarios($idfuncionario)
