@@ -9,7 +9,8 @@ if (isset($_GET['confirmar'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 
 <head>
     <meta charset="UTF-8">
