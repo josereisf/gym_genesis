@@ -61,9 +61,9 @@ INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo
 
 -- 3.2. endereco
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado) VALUES
-  (1, NULL, '01001000', 'Rua A', '100', NULL, 'Centro', 'São Paulo', 'SP'),
-  (2, NULL, '02002000', 'Av. B',  '200', 'Apto 10', 'Jardim', 'São Paulo', 'SP'),
-  (NULL, 1, '03003000', 'Rua C', '300', NULL, 'Vila', 'São Paulo', 'SP');
+  (1, 3, '01001000', 'Rua A', '100', "Apto 5", 'Centro', 'São Paulo', 'SP'),
+  (2, 2, '02002000', 'Av. B',  '200', 'Apto 10', 'Jardim', 'Santa ', 'SP'),
+  (3, 1, '03003000', 'Rua C', '300', "Apto 9", 'Vila', 'Ubatuba', 'SP');
 
 -- 4. Assinatura e plano
 
