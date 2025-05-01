@@ -231,10 +231,10 @@ function listarFuncionarios($idfuncionario)
     f.email,
     f.telefone,
     f.data_contratacao,
-    f.salario
+    f.salario,
     c.nome
     FROM funcionario AS f
-    JOIN cargo AS cargo ON c.idcargo = f.cargo_id
+    JOIN cargo AS c ON c.idcargo = f.cargo_id
     WHERE f.idfuncionario=?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
@@ -244,10 +244,10 @@ function listarFuncionarios($idfuncionario)
     f.email,
     f.telefone,
     f.data_contratacao,
-    f.salario
+    f.salario,
     c.nome
     FROM funcionario AS f
-    JOIN cargo AS cargo ON c.idcargo = f.cargo_id';
+    JOIN cargo AS c ON c.idcargo = f.cargo_id';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -958,9 +958,15 @@ function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
   desconectar($conexao);
   return $funcionou;
 }
-function recuperacaoSenha($email) {}
-function statusPedido($idpedido, $idusuario) {}
-function aplicarDesconto($idproduto, $idcupom) {}
+function recuperacaoSenha($email)
+{
+}
+function statusPedido($idpedido, $idusuario)
+{
+}
+function aplicarDesconto($idproduto, $idcupom)
+{
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
