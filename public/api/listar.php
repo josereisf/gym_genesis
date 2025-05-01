@@ -1,42 +1,68 @@
 <?php
 require_once '../../code/funcao.php';
 
-$rotas = [
-    'listarEnderecos' => 'teste_listarEnderecos.php', 
-    'listarEnderecosID' => 'teste_listarEnderecos.php',
-    'listarFuncionarios' => 'teste_listarFuncionarios.php',// nao esta funcionando
-    'listarPlanos' => 'teste_listarPlanos.php',
-    'listarDietas' => 'teste_listarDietas.php',
-    'listarTreinoExercicio' => 'teste_listarTreinoExercicio.php',// nao esta funcionando
-    'listarCupomDesconto' => 'teste_listarCupomDesconto.php',
-    'listarPedidos' => 'teste_listarPedidos.php',// nao esta funcionando
-    'listarProdutos' => 'teste_listarProdutos.php', // nao esta funcionando
-    'listarForum' => 'teste_listarForum.php', // nao esta funcionando
-    'listarPagamentos' => 'teste_listarPagamentos.php', // nao esta funcionando
-    'listarExercicio' => 'teste_listarExercicio.php', // nao esta funcionando
-    'listarTreino' => 'teste_listarTreino.php',
-    'listarAulaAgendada' => 'teste_listarAulaAgendada.php', // nao esta funcionando
-    'listarMetaUsuario' => 'teste_listarMetaUsuario.php', // nao esta funcionando
-    'listarPagamentosDetalhados' => 'teste_listarPagamentosDetalhados.php', // nao esta funcionando
-    'listarAvaliacaoFisica' => 'teste_listarAvaliacaoFisica.php', // nao esta funcionando
-    'listarCargo' => 'teste_listarCargo.php', // nao esta funcionando
-    'listarRefeicoes' => 'teste_listarRefeicoes.php', // nao esta funcionando
-    'listarAlimentos' => 'teste_listarAlimentos.php', // nao esta funcionando
-    'listarCategoriaProduto' => 'teste_listarCategoriaProduto.php', // nao esta funcionando
-    'listarRespostaForum' => 'teste_listarRespostaForum.php', // nao esta funcionando
-    'listarItensPedido' => 'teste_listarItensPedido.php', // nao esta funcionando
-    'listarUsuario' => 'teste_listarUsuario.php', // nao esta funcionando
-    'listarAssinaturas' => 'teste_listarAssinaturas.php',
-    'listarPagamentoDetalhado' => 'teste_listarPagamentoDetalhado.php',
-    'listarItemPedido'=> 'teste_listarItemPedido.php'
+// Ações e parâmetros a serem passados para as funções
+$acoes = [
+    "listarEnderecos" => ["tipo" => null],
+    "listarEnderecosID" => ["id" => null, "tipo" => null],
+    "listarFuncionarios" => ["idfuncionario" => null],
+    "listarPlanos" => ["idplano" => null],
+    "listarDietas" => ["idusuario" => null],
+    "listarTreinoExercicio" => ["idtreino2" => null],
+    "listarCupomDesconto" => ["idusuario" => null],
+    "listarPedidos" => ["idpedido" => null],
+    "listarProdutos" => ["idproduto" => null],
+    "listarForum" => ["idtopico" => null],
+    "listarHistoricoTreino" => ["idhistorico" => null],
+    "listarPagamentos" => ["idpagamento" => null],
+    "listarExercicio" => ["idexercicio" => null],
+    "listarTreino" => ["idtreino" => null],
+    "listarAulaAgendada" => ["idaula" => null],
+    "listarPagamentosDetalhados" => ["idpagamento2" => null],
+    "listarMetaUsuario" => ["idmeta" => null],
+    "listarAvaliacaoFisica" => ["idavaliacao" => null],
+    "listarCargo" => ["idcargo" => null],
+    "listarRefeicoes" => ["idrefeicao" => null],
+    "listarAlimentos" => ["idalimento" => null],
+    "listarCategoriaProduto" => ["idcategoria" => null],
+    "listarRespostaForum" => ["idresposta" => null],
+    "listarItemPedido" => ["usuario_id" => null],
+    "listarItemPedidosComFiltros" => [
+        "usuario_id" => null, "status" => null, "data_inicio" => null, "data_fim" => null,
+        "produto_nome" => null, "preco_min" => null, "preco_max" => null
+    ],
+    "listarUsuario" => ["idusuario" => null],
+    "listarAssinaturas" => ["idassinatura" => null]
 ];
 
+// Ação que o usuário enviou
 $action = $_GET['action'] ?? '';
 
-if (array_key_exists($action, $rotas)) {
-    require_once "../../code/tests/{$rotas[$action]}";
-    exit;
-}
+// Verifica se a ação existe no array de funções
+if (array_key_exists($action, $acoes)) {
+    // Obtém a função e os parâmetros
+    $parametros = $acoes[$action];
 
-http_response_code(400);
-echo json_encode(['erro' => 'Ação inválida']);
+    // Verifica se a função existe no arquivo de funções
+    if (function_exists($action)) {
+        // Preenche os parâmetros com os valores passados pela URL, se existirem
+        foreach ($parametros as $key => $value) {
+            if (isset($_GET[$key])) {
+                $parametros[$key] = $_GET[$key];  // Atualiza o valor do parâmetro com o valor da URL
+            }
+        }
+
+        // Chama a função com os parâmetros
+        $dados = call_user_func_array($action, array_values($parametros));
+
+        // Retorna os dados em formato JSON
+        echo json_encode($dados);
+    } else {
+        http_response_code(400);
+        echo json_encode(['erro' => "Função '$action' não encontrada."]);
+    }
+} else {
+    http_response_code(400);
+    echo json_encode(['erro' => 'Ação inválida']);
+}
+?>

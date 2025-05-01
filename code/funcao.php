@@ -1796,7 +1796,7 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
 function listarUsuario($idusuario)
 {
   $conexao = conectar();
-
+  
   if ($idusuario !== null) {
     $sql = " SELECT * FROM usuario WHERE $idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);

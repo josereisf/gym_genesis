@@ -151,3 +151,85 @@ td {
     font-size: 0.95rem;
   }
 }
+
+
+select {
+  background-color: #fff;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  appearance: none;
+  outline: none;
+  width: 358px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efeito de foco no select */
+select:focus {
+  border-color: #6C63FF;
+  box-shadow: 0 4px 6px rgba(108, 99, 255, 0.3);
+}
+
+/* Estilo para o botão de dropdown */
+select::-ms-expand {
+  display: none; /* Remove o ícone padrão em navegadores MS */
+}
+
+select::after {
+  content: " ▼";
+  font-size: 16px;
+  color: #6C63FF;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Estilo do container do select para centralizar */
+select {
+  position: relative;
+  padding-right: 35px; /* Para dar espaço para o ícone */
+}
+
+/* Estilo das opções do select */
+option {
+  background-color: #fff;
+  color: #333;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse por cima da opção */
+option:hover {
+  background-color: #f1f1f1;
+}
+
+/* Efeito de seleção da opção */
+option:checked {
+  background-color: #6C63FF;
+  color: #fff;
+}
+
+/* Estilo para opção desabilitada */
+option:disabled {
+  background-color: #f2f2f2;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Estilo de foco para o menu do select */
+select:focus option {
+  background-color: #f1f1f1;
+}
+
+/* Animação de transição suave */
+select, option {
+  transition: all 0.3s ease;
+}
