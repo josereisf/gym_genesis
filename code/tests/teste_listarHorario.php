@@ -1,4 +1,5 @@
 <?php
+require_once '../../code/funcao.php';
 
 header('Content-Type: application/json');
 

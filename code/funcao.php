@@ -511,8 +511,10 @@ function listarDietas($idusuario)
     d.descricao,
     d.data_inicio,
     d.data_fim
+    FROM dieta AS d
     JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
-    FROM dieta;';
+
+    ';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -544,9 +546,9 @@ function listarTreinoExercicio($idtreino2)
   $conexao = conectar();
   if ($idtreino2 != null) {
     $sql = ' SELECT
-    t.nome,
     e.nome,
-    te.serie,
+    t.tipo,
+    te.series,
     te.repeticoes,
     te.carga,
     te.intervalo_segundos
@@ -558,9 +560,9 @@ function listarTreinoExercicio($idtreino2)
     mysqli_stmt_bind_param($comando, 'i', $idtreino2);
   } else {
     $sql = ' SELECT
-    t.nome,
     e.nome,
-    te.serie,
+    t.tipo,
+    te.series,
     te.repeticoes,
     te.carga,
     te.intervalo_segundos
@@ -1209,31 +1211,6 @@ function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contr
   return $funcionou;
 }
 
-function listarHorario($idhorario)
-{
-  $conexao = conectar();
-
-  if ($idhorario !== null) {
-    $sql = " SELECT * FROM horario WHERE $idhorario = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idhorario);
-  } else {
-    $sql = " SELECT * FROM horario";
-    $comando = mysqli_prepare($conexao, $sql);
-  }
-
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
-
-  $lista_horarios = [];
-  while ($horario = mysqli_fetch_assoc($resultados)) {
-    $lista_horarios[] = $horario;
-  }
-
-  mysqli_stmt_close($comando);
-
-  return $lista_horarios;
-}
 
 function listarTreino($idtreino)
 {
