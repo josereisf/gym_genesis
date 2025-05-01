@@ -1,4 +1,8 @@
 <?php
 
-require_once '../funcao.php';
-print_r(listarAssinaturas(null));
+ header('Content-Type: application/json');
+
+ 
+
+$json = json_encode(listarAssinaturas(null), JSON_UNESCAPED_UNICODE);
+echo $json;

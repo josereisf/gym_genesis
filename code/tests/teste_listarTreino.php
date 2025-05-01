@@ -1,8 +1,7 @@
 <?php
 
-require_once '../funcao.php';
+header('Content-Type: application/json');
 
-$idtreino = 3;
-echo "<pre>";
-print_r(listarTreino($idtreino));
-echo "</pre>";
+$idtreino = null;
+$json = json_encode(listarTreino($idtreino), JSON_UNESCAPED_UNICODE);
+echo $json;

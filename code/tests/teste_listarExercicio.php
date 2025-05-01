@@ -1,7 +1,9 @@
 <?php
 
-require_once '../funcao.php';
+ header('Content-Type: application/json');
 
-echo"<pre>";
-print_r (listarExercicio($idexercicio));
-echo "</pre>";
+ 
+
+$json = json_encode(listarExercicio($idexercicio), JSON_UNESCAPED_UNICODE);
+echo $json;
+

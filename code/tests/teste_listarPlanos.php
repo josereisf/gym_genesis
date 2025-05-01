@@ -1,9 +1,10 @@
 <?php
 
-require_once '../funcao.php';
+ header('Content-Type: application/json');
 
-$idplano = 2;
+ 
+$idplano = null;
 
-echo '<pre>';
-print_r(listarPlanos($idplano));
-echo '</pre';
+$json = json_encode(listarPlanos($idplano), JSON_UNESCAPED_UNICODE);
+echo $json;
+

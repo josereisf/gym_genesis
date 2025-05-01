@@ -1,10 +1,9 @@
 <?php
 
-require_once '../funcao.php';
+ header('Content-Type: application/json');
+$idusuario = null;
+
+$json = json_encode(listarDietas($idusuario), JSON_UNESCAPED_UNICODE);
+echo $json;
 
 
-$idusuario = 5;
-
-echo "<pre>";
-print_r(listarDietas($idusuario));
-echo '</pre';

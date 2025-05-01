@@ -1244,7 +1244,16 @@ function listarTreino($idtreino)
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idtreino);
   } else {
-    $sql = " SELECT * FROM treino";
+    $sql = " SELECT 
+    u.nome,
+    t.tipo,
+    t.horario,
+    t.descricao
+    FROM treino as t
+    JOIN usuario as u ON u.idusuario = t.usuario_idusuario
+    
+    
+    ";
     $comando = mysqli_prepare($conexao, $sql);
   }
 

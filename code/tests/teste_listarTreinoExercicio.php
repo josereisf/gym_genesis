@@ -1,10 +1,10 @@
 <?php
 
-require_once '../funcao.php';
+header('Content-Type: application/json');
+
 
 
 $idtreino2 = null;
 
-echo '<pre>';
-print_r(listarTreinoExercicio($idtreino2));
-echo '</pre';
+$json = json_encode(listarTreinoExercicio($idtreino2), JSON_UNESCAPED_UNICODE);
+echo $json;
