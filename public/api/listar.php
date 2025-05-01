@@ -27,6 +27,8 @@ $rotas = [
     'listarItensPedido' => 'teste_listarItensPedido.php', // nao esta funcionando
     'listarUsuario' => 'teste_listarUsuario.php', // nao esta funcionando
     'listarAssinaturas' => 'teste_listarAssinaturas.php',
+    'listarPagamentoDetalhado' => 'teste_listarPagamentoDetalhado.php',
+    'listarItemPedido'=> 'teste_listarItemPedido.php'
 ];
 
 $action = $_GET['action'] ?? '';

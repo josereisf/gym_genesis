@@ -1278,11 +1278,25 @@ function listarAulaAgendada($idaula)
   $conexao = conectar();
 
   if ($idaula !== null) {
-    $sql = " SELECT * FROM aula_agendada WHERE $idaula = ?";
+    $sql = " SELECT
+    u.nome,
+    ag.data_aula,
+    ag.dia_semana,
+    ag.hora_inicio,
+    ag.hora_fim 
+    FROM aula_agendada AS ag
+    JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
+    WHERE $idaula = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
   } else {
-    $sql = " SELECT * FROM aula_agendada";
+    $sql = " SELECT  u.nome,
+    ag.data_aula,
+    ag.dia_semana,
+    ag.hora_inicio,
+    ag.hora_fim 
+    FROM aula_agendada AS ag
+    JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1299,16 +1313,85 @@ function listarAulaAgendada($idaula)
   return $lista_aula_agendadas;
 }
 
-function listarPagamentosDetalhados($idpagaemento2)
+function listarPagamentosDetalhados($idpagamento2)
 {
   $conexao = conectar();
 
-  if ($idpagaemento2 !== null) {
-    $sql = " SELECT * FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
+  if ($idpagamento2 !== null) {
+    $sql = " SELECT 
+    p.idpagamento, 
+    p.valor, 
+    p.data_pagamento, 
+    p.metodo, 
+    p.status AS pagamento_status,
+    pd.tipo AS pagamento_tipo, 
+    pd.bandeira_cartao, 
+    pd.ultimos_digitos, 
+    pd.codigo_pix, 
+    pd.linha_digitavel_boleto,
+    ped.idpedido,
+    ped.data_pedido,
+    ped.status AS pedido_status,
+    u.idusuario,
+    u.nome AS usuario_nome,
+    u.email AS usuario_email,
+    u.telefone AS usuario_telefone,
+    prod.idproduto,
+    prod.nome AS produto_nome,
+    prod.preco AS produto_preco,
+    prod.quantidade_estoque
+FROM 
+    pagamento p
+JOIN 
+    pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
+JOIN 
+    pedido ped ON p.idpagamento = ped.pagamento_idpagamento
+JOIN 
+    usuario u ON ped.usuario_idusuario = u.idusuario
+JOIN 
+    produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
+
+
+WHERE p.idpagamento = ?;  -- Aqui você pode passar um ID específico de pagamento
+";
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idpagaemento2);
+    mysqli_stmt_bind_param($comando, "i", $idpagamento2);
   } else {
-    $sql = " SELECT * FROM pagamento_detalhado";
+    $sql = " SELECT 
+    p.idpagamento, 
+    p.valor, 
+    p.data_pagamento, 
+    p.metodo, 
+    p.status AS pagamento_status,
+    pd.tipo AS pagamento_tipo, 
+    pd.bandeira_cartao, 
+    pd.ultimos_digitos, 
+    pd.codigo_pix, 
+    pd.linha_digitavel_boleto,
+    ped.idpedido,
+    ped.data_pedido,
+    ped.status AS pedido_status,
+    u.idusuario,
+    u.nome AS usuario_nome,
+    u.email AS usuario_email,
+    u.telefone AS usuario_telefone,
+    prod.idproduto,
+    prod.nome AS produto_nome,
+    prod.preco AS produto_preco,
+    prod.quantidade_estoque
+FROM 
+    pagamento p
+JOIN 
+    pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
+JOIN 
+    pedido ped ON p.idpagamento = ped.pagamento_idpagamento
+JOIN 
+    usuario u ON ped.usuario_idusuario = u.idusuario
+JOIN 
+    produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
+
+  -- Aqui você pode passar um ID específico de pagamento
+";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1330,11 +1413,26 @@ function listarMetaUsuario($idmeta)
   $conexao = conectar();
 
   if ($idmeta !== null) {
-    $sql = " SELECT * FROM meta_usuario WHERE $idmeta = ?";
+    $sql = " SELECT 
+     u.nome,
+     m.descricao,
+     m.data_inicio,
+     m.data_limite,
+     m.status
+    FROM meta_usuario AS M
+    JOIN usuario AS u ON m.usuario_id = u.idusuario
+    WHERE $idmeta = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idmeta);
   } else {
-    $sql = " SELECT * FROM meta_usuario";
+    $sql = " SELECT 
+     u.nome,
+     m.descricao,
+     m.data_inicio,
+     m.data_limite,
+     m.status
+    FROM meta_usuario AS M
+    JOIN usuario AS u ON m.usuario_id = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1356,11 +1454,28 @@ function listarAvaliacaoFisica($idavaliacao)
   $conexao = conectar();
 
   if ($idavaliacao !== null) {
-    $sql = " SELECT * FROM avaliacao_fisica WHERE $idavaliacao = ?";
+    $sql = " SELECT
+    u.nome,
+    a.peso,
+    a.altura,
+    a.imc,
+    a.percentual_gordura,
+    a.data_avaliacao
+    FROM avaliacao_fisica AS a
+    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
+    WHERE $idavaliacao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idavaliacao);
   } else {
-    $sql = " SELECT * FROM avaliacao_fisica";
+    $sql = " SELECT
+    u.nome,
+    a.peso,
+    a.altura,
+    a.imc,
+    a.percentual_gordura,
+    a.data_avaliacao
+    FROM avaliacao_fisica AS a
+    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1382,7 +1497,11 @@ function listarCargo($idcargo)
   $conexao = conectar();
 
   if ($idcargo !== null) {
-    $sql = " SELECT * FROM cargo WHERE $idcargo = ?";
+    $sql = " SELECT 
+
+
+    FROM cargo 
+    WHERE $idcargo = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idcargo);
   } else {
@@ -1408,11 +1527,30 @@ function listarRefeicoes($idrefeicao)
   $conexao = conectar();
 
   if ($idrefeicao !== null) {
-    $sql = " SELECT * FROM refeicao WHERE $idrefeicao = ?";
+    $sql = " SELECT 
+    u.nome,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim,
+    r.tipo,
+    r.horario
+    FROM refeicao AS r
+    JOIN dieta AS d ON r.dieta_id = d.iddieta
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
+    WHERE $idrefeicao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idrefeicao);
   } else {
-    $sql = " SELECT * FROM refeicao";
+    $sql = " SELECT 
+    u.nome,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim,
+    r.tipo,
+    r.horario
+    FROM refeicao AS r
+    JOIN dieta AS d ON r.dieta_id = d.iddieta
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -1487,52 +1625,172 @@ function listarRespostaForum($idresposta)
 {
   $conexao = conectar();
 
+  // Verifica se $idresposta não é nulo
   if ($idresposta !== null) {
-    $sql = " SELECT * FROM resposta_forum WHERE $idresposta = ?";
+    // Consulta com junção para pegar o nome do usuário ao invés do id
+    $sql = "
+     SELECT rf.idresposta, rf.mensagem, rf.data_resposta, u.nome AS nome_usuario, rf.forum_idtopico, f.descricao
+      FROM resposta_forum rf
+      JOIN usuario u ON rf.usuario_idusuario = u.idusuario
+            JOIN forum AS f ON rf.forum_idtopico = f.idtopico
+      WHERE rf.idresposta = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idresposta);
   } else {
-    $sql = " SELECT * FROM resposta_forum";
+    // Consulta para pegar todas as respostas com os nomes dos usuários
+    $sql = "
+     SELECT rf.idresposta, rf.mensagem, rf.data_resposta, u.nome AS nome_usuario, rf.forum_idtopico, f.descricao
+      FROM resposta_forum rf
+      JOIN usuario u ON rf.usuario_idusuario = u.idusuario
+            JOIN forum AS f ON rf.forum_idtopico = f.idtopico";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
+  // Executa a consulta
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
 
+  // Cria um array para armazenar as respostas do fórum
   $lista_resposta_forums = [];
   while ($resposta_forum = mysqli_fetch_assoc($resultados)) {
     $lista_resposta_forums[] = $resposta_forum;
   }
 
+  // Fecha a preparação do comando
   mysqli_stmt_close($comando);
 
   return $lista_resposta_forums;
 }
 
-function listarItensPedido($iditem)
-{
+function listarItemPedido($usuario_id): array{
   $conexao = conectar();
-
-  if ($iditem !== null) {
-    $sql = " SELECT * FROM item_pedido WHERE $iditem = ?";
+  
+  if($usuario_id != null){
+    $sql = "
+        SELECT 
+            ped.idpedido, 
+            u.nome AS usuario_nome, 
+            p.nome AS produto_nome, 
+            ip.quantidade, 
+            ip.preco_unitario, 
+            ped.status, 
+            ped.data_pedido
+        FROM pedido ped
+        JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
+        JOIN produto p ON ip.produto_idproduto = p.idproduto
+        JOIN usuario u ON ped.usuario_idusuario = u.idusuario
+        WHERE ped.usuario_idusuario = ?
+        ORDER BY ped.data_pedido DESC
+    ";
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $iditem);
-  } else {
-    $sql = " SELECT * FROM item_pedido";
+    mysqli_stmt_bind_param($comando, "i", $usuario_id);
+
+  }else{
+    $sql = "    SELECT 
+            ped.idpedido, 
+            u.nome AS usuario_nome, 
+            p.nome AS produto_nome, 
+            ip.quantidade, 
+            ip.preco_unitario, 
+            ped.status, 
+            ped.data_pedido
+        FROM pedido ped
+        JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
+        JOIN produto p ON ip.produto_idproduto = p.idproduto
+        JOIN usuario u ON ped.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
-
   mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
+  $resultado = mysqli_stmt_get_result($comando);
 
-  $lista_item_pedidos = [];
-  while ($item_pedido = mysqli_fetch_assoc($resultados)) {
-    $lista_item_pedidos[] = $item_pedido;
+  $pedidos = [];
+  while ($pedido = mysqli_fetch_assoc($resultado)) {
+      $pedidos[] = $pedido;
   }
 
   mysqli_stmt_close($comando);
+  return $pedidos;
+}
 
-  return $lista_item_pedidos;
+
+function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio = null, $data_fim = null, $produto_nome = null, $preco_min = null, $preco_max = null)
+{
+    $conexao = conectar();
+    
+    // Montar a consulta base com os filtros
+    $sql = "
+    SELECT 
+        ped.idpedido, 
+        u.nome AS usuario_nome, 
+        p.nome AS produto_nome, 
+        ip.quantidade, 
+        ip.preco_unitario, 
+        ped.status, 
+        ped.data_pedido
+    FROM pedido ped
+    JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
+    JOIN produto p ON ip.produto_idproduto = p.idproduto
+    JOIN usuario u ON ped.usuario_idusuario = u.idusuario
+    WHERE ped.usuario_idusuario = ?
+    ";
+    
+    // Filtros dinâmicos para status, data, produto e preço
+    if ($status !== null) {
+        $sql .= " AND ped.status = ?";
+    }
+    if ($data_inicio !== null && $data_fim !== null) {
+        $sql .= " AND ped.data_pedido BETWEEN ? AND ?";
+    }
+    if ($produto_nome !== null) {
+        $sql .= " AND p.nome LIKE ?";
+    }
+    if ($preco_min !== null && $preco_max !== null) {
+        $sql .= " AND ip.preco_unitario BETWEEN ? AND ?";
+    }
+
+    $sql .= " ORDER BY ped.data_pedido DESC";
+
+    // Preparar a consulta
+    $comando = mysqli_prepare($conexao, $sql);
+    
+    // Bind dos parâmetros dinamicamente
+    $bind_types = "i"; // Inicia com o tipo do ID do usuário (inteiro)
+    $params = [$usuario_id];
+    
+    // Adicionar parâmetros conforme os filtros fornecidos
+    if ($status !== null) {
+        $bind_types .= "s"; // Tipo string para o status
+        $params[] = $status;
+    }
+    if ($data_inicio !== null && $data_fim !== null) {
+        $bind_types .= "ss"; // Tipo string para as datas
+        $params[] = $data_inicio;
+        $params[] = $data_fim;
+    }
+    if ($produto_nome !== null) {
+        $bind_types .= "s"; // Tipo string para o nome do produto
+        $params[] = "%" . $produto_nome . "%";
+    }
+    if ($preco_min !== null && $preco_max !== null) {
+        $bind_types .= "dd"; // Tipo decimal para os preços
+        $params[] = $preco_min;
+        $params[] = $preco_max;
+    }
+
+    // Bind dos parâmetros
+    mysqli_stmt_bind_param($comando, $bind_types, ...$params);
+
+    // Executar a consulta
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
+    
+    $pedidos = [];
+    while ($pedido = mysqli_fetch_assoc($resultados)) {
+        $pedidos[] = $pedido;
+    }
+
+    mysqli_stmt_close($comando);
+    return $pedidos;
 }
 
 function listarUsuario($idusuario)
@@ -1566,11 +1824,28 @@ function listarAssinaturas($idassinatura)
   $conexao = conectar();
 
   if ($idassinatura !== null) {
-    $sql = " SELECT * FROM assinatura WHERE $idassinatura = ?";
+    $sql = " SELECT 
+    u.nome,
+    p.tipo,
+    p.duracao,
+    a.data_inicio,
+    a.data_fim
+    FROM assinatura AS a
+    JOIN plano AS p ON a.plano_idplano = p.idplano
+    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
+    WHERE $idassinatura = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
   } else {
-    $sql = " SELECT * FROM assinatura";
+    $sql = " SELECT 
+    u.nome,
+    p.tipo,
+    p.duracao,
+    a.data_inicio,
+    a.data_fim
+    FROM assinatura AS a
+    JOIN plano AS p ON a.plano_idplano = p.idplano
+    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
