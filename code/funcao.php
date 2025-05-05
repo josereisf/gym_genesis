@@ -848,11 +848,26 @@ function listarHistoricoTreino($idhistorico)
 {
   $conexao = conectar();
   if ($idhistorico != null) {
-    $sql = 'SELECT * FROM historico_treino WHERE idhistorico=?';
+    $sql = 'SELECT
+    u.nome,
+    t.nome,
+    ht.data_execucao,
+    ht.observacoes
+    FROM historico_treino AS ht
+    JOIN usuario AS u ON ht.usuario_id = u.idusuario
+    JOIN treino AS t ON ht.treino_id = t.idtreino
+    WHERE idhistorico=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idtopico);
   } else {
-    $sql = 'SELECT * FROM historico_treino';
+    $sql = 'SELECT
+    u.nome,
+    t.nome,
+    ht.data_execucao,
+    ht.observacoes
+    FROM historico_treino AS ht
+    JOIN usuario AS u ON ht.usuario_id = u.idusuario
+    JOIN treino AS t ON ht.treino_id = t.idtreino';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -866,7 +881,7 @@ function listarHistoricoTreino($idhistorico)
 
   return $lista_historicos;
 }
-function editarHistoricoTreino($idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes)
+function editarHistoricoTreino($idhistorico, $data_execucao, $observacoes)
 {
   $conexao = conectar();
 
