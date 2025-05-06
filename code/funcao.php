@@ -976,11 +976,39 @@ function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
 function recuperacaoSenha($email)
 {
 }
-function statusPedido($idpedido, $idusuario)
+function aplicarDesconto($idpagamento, $idcupom)
 {
-}
-function aplicarDesconto($idproduto, $idcupom)
-{
+  $conexao = conectar();
+  $sql = 'SELECT percentual_desconto, valor_desconto FROM cupom_desconto WHERE idcupom=?';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'i', $idcupom);
+  mysqli_stmt_execute($comando);
+  $valor_desconto = mysqli_stmt_get_result($comando);
+  $resultado = mysqli_fetch_assoc($valor_desconto);
+  $sql2 = 'SELECT valor FROM pagamento WHERE idpagamento=?';
+  $comando2 = mysqli_prepare($conexao, $sql2);
+  mysqli_stmt_bind_param($comando2, 'i', $idpagamento);
+  mysqli_stmt_execute($comando2);
+  $valor_da_compra = mysqli_stmt_get_result($comando2);
+  $valor2 = mysqli_fetch_assoc($valor_da_compra);
+  $valor = (float)$valor2['valor'];
+
+  if ($resultado['percentual_desconto'] != null){
+    $desconto = $resultado['percentual_desconto'];
+    $desconto = (float)$desconto;
+    $valor_com_desconto = $valor - $valor * ($desconto/ 100);
+  }
+  elseif ($resultado['valor_desconto'] != null){
+    $desconto = $resultado['valor_desconto'];
+    $desconto = (float)$desconto;
+    $valor_com_desconto = $valor - $desconto;
+  }
+  $sql = 'UPDATE pagamento SET valor=? WHERE idpagamento=?';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'di', $valor_com_desconto, $idpagamento);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  mysqli_stmt_close($comando2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
