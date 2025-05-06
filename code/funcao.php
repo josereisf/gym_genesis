@@ -973,13 +973,16 @@ function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
   desconectar($conexao);
   return $funcionou;
 }
-function recuperacaoSenha($email)
-{
+function gerarCodigoDeSegurança($email) {
+  $codigo = random_int(100000,999999);
+  $validade = time() + (5 * 60);
+  
+  return ['codigo' => $codigo,'validade' => $validade];
 }
 function aplicarDesconto($idpagamento, $idcupom)
 {
   $conexao = conectar();
-  $sql = 'SELECT percentual_desconto, valor_desconto FROM cupom_desconto WHERE idcupom=?';
+  $sql = 'SELECT percentual_desconto, valor_desconto, quantidade_uso FROM cupom_desconto WHERE idcupom=?';
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'i', $idcupom);
   mysqli_stmt_execute($comando);
@@ -993,22 +996,27 @@ function aplicarDesconto($idpagamento, $idcupom)
   $valor2 = mysqli_fetch_assoc($valor_da_compra);
   $valor = (float)$valor2['valor'];
 
-  if ($resultado['percentual_desconto'] != null){
-    $desconto = $resultado['percentual_desconto'];
-    $desconto = (float)$desconto;
-    $valor_com_desconto = $valor - $valor * ($desconto/ 100);
-  }
-  elseif ($resultado['valor_desconto'] != null){
-    $desconto = $resultado['valor_desconto'];
-    $desconto = (float)$desconto;
+  if ($resultado['percentual_desconto'] != null) {
+    $desconto = (float)$resultado['percentual_desconto'];
+    $valor_com_desconto = $valor - $valor * ($desconto / 100);
+  } elseif ($resultado['valor_desconto'] != null) {
+    $desconto = (float)$resultado['valor_desconto'];
     $valor_com_desconto = $valor - $desconto;
   }
-  $sql = 'UPDATE pagamento SET valor=? WHERE idpagamento=?';
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 'di', $valor_com_desconto, $idpagamento);
-  mysqli_stmt_execute($comando);
+  $sql3 = 'UPDATE pagamento SET valor=? WHERE idpagamento=?';
+  $comando3 = mysqli_prepare($conexao, $sql3);
+  mysqli_stmt_bind_param($comando3, 'di', $valor_com_desconto, $idpagamento);
+  mysqli_stmt_execute($comando3);
+  $usos_restantes = (int)$resultado['quantidade_uso'];
+  $usos_restantes -= 1;
+  $sql4 = 'UPDATE cupom_desconto SET quantidade_uso=? WHERE idcupom=?';
+  $comando4 = mysqli_prepare($conexao, $sql4);
+  mysqli_stmt_bind_param($comando4, 'ii', $usos_restantes, $idcupom);
+  mysqli_stmt_execute($comando4);
   mysqli_stmt_close($comando);
   mysqli_stmt_close($comando2);
+  mysqli_stmt_close($comando3);
+  mysqli_stmt_close($comando4);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
@@ -1383,7 +1391,7 @@ function listarPagamentosDetalhados($idpagamento2)
     prod.nome AS produto_nome,
     prod.preco AS produto_preco,
     prod.quantidade_estoque
-FROM 
+    FROM 
     pagamento p
 JOIN 
     pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
@@ -1705,10 +1713,11 @@ function listarRespostaForum($idresposta)
   return $lista_resposta_forums;
 }
 
-function listarItemPedido($usuario_id): array{
+function listarItemPedido($usuario_id): array
+{
   $conexao = conectar();
-  
-  if($usuario_id != null){
+
+  if ($usuario_id != null) {
     $sql = "
         SELECT 
             ped.idpedido, 
@@ -1727,8 +1736,7 @@ function listarItemPedido($usuario_id): array{
     ";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $usuario_id);
-
-  }else{
+  } else {
     $sql = "    SELECT 
             ped.idpedido, 
             u.nome AS usuario_nome, 
@@ -1748,7 +1756,7 @@ function listarItemPedido($usuario_id): array{
 
   $pedidos = [];
   while ($pedido = mysqli_fetch_assoc($resultado)) {
-      $pedidos[] = $pedido;
+    $pedidos[] = $pedido;
   }
 
   mysqli_stmt_close($comando);
@@ -1758,10 +1766,10 @@ function listarItemPedido($usuario_id): array{
 
 function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio = null, $data_fim = null, $produto_nome = null, $preco_min = null, $preco_max = null)
 {
-    $conexao = conectar();
-    
-    // Montar a consulta base com os filtros
-    $sql = "
+  $conexao = conectar();
+
+  // Montar a consulta base com os filtros
+  $sql = "
     SELECT 
         ped.idpedido, 
         u.nome AS usuario_nome, 
@@ -1776,70 +1784,70 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
     JOIN usuario u ON ped.usuario_idusuario = u.idusuario
     WHERE ped.usuario_idusuario = ?
     ";
-    
-    // Filtros dinâmicos para status, data, produto e preço
-    if ($status !== null) {
-        $sql .= " AND ped.status = ?";
-    }
-    if ($data_inicio !== null && $data_fim !== null) {
-        $sql .= " AND ped.data_pedido BETWEEN ? AND ?";
-    }
-    if ($produto_nome !== null) {
-        $sql .= " AND p.nome LIKE ?";
-    }
-    if ($preco_min !== null && $preco_max !== null) {
-        $sql .= " AND ip.preco_unitario BETWEEN ? AND ?";
-    }
 
-    $sql .= " ORDER BY ped.data_pedido DESC";
+  // Filtros dinâmicos para status, data, produto e preço
+  if ($status !== null) {
+    $sql .= " AND ped.status = ?";
+  }
+  if ($data_inicio !== null && $data_fim !== null) {
+    $sql .= " AND ped.data_pedido BETWEEN ? AND ?";
+  }
+  if ($produto_nome !== null) {
+    $sql .= " AND p.nome LIKE ?";
+  }
+  if ($preco_min !== null && $preco_max !== null) {
+    $sql .= " AND ip.preco_unitario BETWEEN ? AND ?";
+  }
 
-    // Preparar a consulta
-    $comando = mysqli_prepare($conexao, $sql);
-    
-    // Bind dos parâmetros dinamicamente
-    $bind_types = "i"; // Inicia com o tipo do ID do usuário (inteiro)
-    $params = [$usuario_id];
-    
-    // Adicionar parâmetros conforme os filtros fornecidos
-    if ($status !== null) {
-        $bind_types .= "s"; // Tipo string para o status
-        $params[] = $status;
-    }
-    if ($data_inicio !== null && $data_fim !== null) {
-        $bind_types .= "ss"; // Tipo string para as datas
-        $params[] = $data_inicio;
-        $params[] = $data_fim;
-    }
-    if ($produto_nome !== null) {
-        $bind_types .= "s"; // Tipo string para o nome do produto
-        $params[] = "%" . $produto_nome . "%";
-    }
-    if ($preco_min !== null && $preco_max !== null) {
-        $bind_types .= "dd"; // Tipo decimal para os preços
-        $params[] = $preco_min;
-        $params[] = $preco_max;
-    }
+  $sql .= " ORDER BY ped.data_pedido DESC";
 
-    // Bind dos parâmetros
-    mysqli_stmt_bind_param($comando, $bind_types, ...$params);
+  // Preparar a consulta
+  $comando = mysqli_prepare($conexao, $sql);
 
-    // Executar a consulta
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
-    
-    $pedidos = [];
-    while ($pedido = mysqli_fetch_assoc($resultados)) {
-        $pedidos[] = $pedido;
-    }
+  // Bind dos parâmetros dinamicamente
+  $bind_types = "i"; // Inicia com o tipo do ID do usuário (inteiro)
+  $params = [$usuario_id];
 
-    mysqli_stmt_close($comando);
-    return $pedidos;
+  // Adicionar parâmetros conforme os filtros fornecidos
+  if ($status !== null) {
+    $bind_types .= "s"; // Tipo string para o status
+    $params[] = $status;
+  }
+  if ($data_inicio !== null && $data_fim !== null) {
+    $bind_types .= "ss"; // Tipo string para as datas
+    $params[] = $data_inicio;
+    $params[] = $data_fim;
+  }
+  if ($produto_nome !== null) {
+    $bind_types .= "s"; // Tipo string para o nome do produto
+    $params[] = "%" . $produto_nome . "%";
+  }
+  if ($preco_min !== null && $preco_max !== null) {
+    $bind_types .= "dd"; // Tipo decimal para os preços
+    $params[] = $preco_min;
+    $params[] = $preco_max;
+  }
+
+  // Bind dos parâmetros
+  mysqli_stmt_bind_param($comando, $bind_types, ...$params);
+
+  // Executar a consulta
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $pedidos = [];
+  while ($pedido = mysqli_fetch_assoc($resultados)) {
+    $pedidos[] = $pedido;
+  }
+
+  mysqli_stmt_close($comando);
+  return $pedidos;
 }
 
 function listarUsuario($idusuario)
 {
   $conexao = conectar();
-  
+
   if ($idusuario !== null) {
     $sql = " SELECT * FROM usuario WHERE $idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
