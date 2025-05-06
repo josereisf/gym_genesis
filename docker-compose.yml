@@ -26,6 +26,6 @@ services:
     image: composer:latest
     container_name: "composer"
     volumes:
-      - .:/app
-    working_dir: /app
-    command: install
+      - .:/gym_genesis
+    working_dir: /gym_genesis
+    command: /bin/sh -c "git config --global --add safe.directory /gym_genesis && composer install && tail -f /dev/null"
