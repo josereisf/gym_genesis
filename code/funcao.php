@@ -978,70 +978,37 @@ function recuperacaoSenha($email)
 }
 function aplicarDesconto($idpagamento, $idcupom)
 {
-  // Conectar ao banco de dados
   $conexao = conectar();
-
-  // Consultar os dados do cupom de desconto
   $sql = 'SELECT percentual_desconto, valor_desconto FROM cupom_desconto WHERE idcupom=?';
   $comando = mysqli_prepare($conexao, $sql);
-  if (!$comando) {
-    die('Erro ao preparar a consulta para cupom de desconto.');
-  }
   mysqli_stmt_bind_param($comando, 'i', $idcupom);
   mysqli_stmt_execute($comando);
   $valor_desconto = mysqli_stmt_get_result($comando);
-
-  // Verificar se o cupom foi encontrado
-  if (mysqli_num_rows($valor_desconto) === 0) {
-    die('Cupom não encontrado.');
-  }
   $resultado = mysqli_fetch_assoc($valor_desconto);
-
-  // Consultar o valor da compra
   $sql2 = 'SELECT valor FROM pagamento WHERE idpagamento=?';
   $comando2 = mysqli_prepare($conexao, $sql2);
-  if (!$comando2) {
-    die('Erro ao preparar a consulta para pagamento.');
-  }
   mysqli_stmt_bind_param($comando2, 'i', $idpagamento);
   mysqli_stmt_execute($comando2);
   $valor_da_compra = mysqli_stmt_get_result($comando2);
-
-  // Verificar se o pagamento foi encontrado
-  if (mysqli_num_rows($valor_da_compra) === 0) {
-    die('Pagamento não encontrado.');
-  }
   $valor2 = mysqli_fetch_assoc($valor_da_compra);
   $valor = (float)$valor2['valor'];
 
-  // Aplicar o desconto baseado no tipo
-  if ($resultado['percentual_desconto'] !== null) {
-    // Desconto percentual
-    $descontoPercentual = (float)$resultado['percentual_desconto'];
-    $valor_com_desconto = $valor - $valor * ($descontoPercentual / 100);
-  } elseif ($resultado['valor_desconto'] !== null) {
-    // Desconto fixo
-    $descontoFixo = (float)$resultado['valor_desconto'];
-    $valor_com_desconto = $valor - $descontoFixo;
-  } else {
-    // Caso não haja desconto
-    $valor_com_desconto = $valor;
+  if ($resultado['percentual_desconto'] != null){
+    $desconto = $resultado['percentual_desconto'];
+    $desconto = (float)$desconto;
+    $valor_com_desconto = $valor - $valor * ($desconto/ 100);
   }
-
-  // Atualizar o valor do pagamento com o desconto aplicado
-  $sqlUpdate = 'UPDATE pagamento SET valor=? WHERE idpagamento=?';
-  $comandoUpdate = mysqli_prepare($conexao, $sqlUpdate);
-  if (!$comandoUpdate) {
-    die('Erro ao preparar a consulta para atualizar o pagamento.');
+  elseif ($resultado['valor_desconto'] != null){
+    $desconto = $resultado['valor_desconto'];
+    $desconto = (float)$desconto;
+    $valor_com_desconto = $valor - $desconto;
   }
-  mysqli_stmt_bind_param($comandoUpdate, 'di', $valor_com_desconto, $idpagamento);
-  mysqli_stmt_execute($comandoUpdate);
-
-  // Fechar os prepared statements e a conexão
+  $sql = 'UPDATE pagamento SET valor=? WHERE idpagamento=?';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'di', $valor_com_desconto, $idpagamento);
+  mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   mysqli_stmt_close($comando2);
-  mysqli_stmt_close($comandoUpdate);
-  mysqli_close($conexao);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
