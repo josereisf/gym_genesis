@@ -977,9 +977,11 @@ function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
   desconectar($conexao);
   return $funcionou;
 }
-function gerarCodigoDeSeguranca($email_destinatario)
+function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
 {
   $codigo = random_int(100000, 999999);
+  $expiracao = date('Y-m-d H:i:s', strtotime('+10 minutes'));
+
   $email = new PHPMailer(true);
 
   try {
@@ -1003,8 +1005,45 @@ function gerarCodigoDeSeguranca($email_destinatario)
 
     $email->send();
     echo 'A mensagem foi enviada com sucesso!';
+    $conexao = conectar();
+    $sql = 'INSERT INTO recuperacao_senha (codigo, tempo_expiracao, usuario_idusuario) VALUES (?,?)';
+    $comando = mysqli_prepare($conexao, $sql);
+
+    mysqli_stmt_bind_param($comando, 'isi', $codigo, $expiracao, $idusuario);
+  
+    mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
   } catch (Exception $e) {
     echo "Erro ao enviar e-mail: {$email->ErrorInfo}";
+  }
+}
+function VerificarCodigo($codigoInserido, $idusuario ){
+  $conexao = conectar();
+  $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario=?';
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i',$idusuario);
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+  $resultado = mysqli_fetch_assoc($resultados);
+  desconectar($conexao);
+  if ($resultado){
+    $codigoArmazenado = $resultado['codigo'];
+    $expiracaoArmazenada = $resultado['tempo_expiracao'];
+    if ($codigoInserido == $codigoArmazenado) {
+      // Verificar se o código ainda está dentro do prazo de expiração
+      if (strtotime($expiracaoArmazenada) > time()) {
+        return true;  // Código correto e válido
+      } else {
+        return false; // Código expirado
+      }
+    } else {
+      return false;  // Código incorreto
+    }
+  } else {
+    return false;  // Usuário não encontrado ou sem código de recuperação
   }
 }
 
