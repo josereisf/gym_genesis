@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 function conectar()
 {
@@ -973,12 +977,37 @@ function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
   desconectar($conexao);
   return $funcionou;
 }
-function gerarCodigoDeSegurança($email) {
-  $codigo = random_int(100000,999999);
-  $validade = time() + (5 * 60);
-  
-  return ['codigo' => $codigo,'validade' => $validade];
+function gerarCodigoDeSeguranca($email_destinatario)
+{
+  $codigo = random_int(100000, 999999);
+  $email = new PHPMailer(true);
+
+  try {
+    // Configurações do servidor SMTP do Gmail
+    $email->isSMTP();
+    $email->Host = 'smtp.gmail.com';
+    $email->SMTPAuth = true;
+    $email->Username = 'smtpemaile@gmail.com'; // Seu Gmail
+    $email->Password = 'SENHA_DO_APLICATIVO'; // Senha gerada no passo 2
+    $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $email->Port = 587;
+
+    // Remetente e destinatário
+    $email->setFrom('seuemail@gmail.com', 'Seu Nome');
+    $email->addAddress($email_destinatario, 'Destinatário');
+
+    // Conteúdo do e-mail
+    $email->isHTML(false);
+    $email->Subject = 'Recuperação de e-mail';
+    $email->Body = 'Esse é o seu código: ' . $codigo;
+
+    $email->send();
+    echo 'A mensagem foi enviada com sucesso!';
+  } catch (Exception $e) {
+    echo "Erro ao enviar e-mail: {$email->ErrorInfo}";
+  }
 }
+
 function aplicarDesconto($idpagamento, $idcupom)
 {
   $conexao = conectar();
