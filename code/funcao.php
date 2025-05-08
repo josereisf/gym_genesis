@@ -990,12 +990,12 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
     $email->Host = 'smtp.gmail.com';
     $email->SMTPAuth = true;
     $email->Username = 'smtpemaile@gmail.com'; // Seu Gmail
-    $email->Password = 'SENHA_DO_APLICATIVO'; // Senha gerada no passo 2
+    $email->Password = 'xjqc orkg ckls fant'; // Senha gerada no passo 2
     $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $email->Port = 587;
 
     // Remetente e destinatário
-    $email->setFrom('seuemail@gmail.com', 'Seu Nome');
+    $email->setFrom('smtpemaile@gmail.com', 'Jozinho');
     $email->addAddress($email_destinatario, 'Destinatário');
 
     // Conteúdo do e-mail
@@ -1018,6 +1018,7 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
     echo "Erro ao enviar e-mail: {$email->ErrorInfo}";
   }
 }
+
 function VerificarCodigo($codigoInserido, $idusuario ){
   $conexao = conectar();
   $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario=?';
