@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia Dinâmica</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .hero {
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+    }
+
+    /* Layout 0 - Preto e Ouro */
+    .layout-0 {
+      background-color: black;
+    }
+    .layout-0 .hero {
+      background: linear-gradient(to right, black, gold);
+    }
+
+    /* Layout 1 - Vermelho Escuro */
+    .layout-1 {
+      background-color: #1a0000;
+    }
+    .layout-1 .hero {
+      background: linear-gradient(to right, darkred, firebrick);
+    }
+
+    /* Layout 2 - Azul Elétrico */
+    .layout-2 {
+      background-color: #001f3f;
+    }
+    .layout-2 .hero {
+      background: linear-gradient(to right, #001f3f, #0074D9);
+    }
+
+    /* Layout 3 - Roxo Royal */
+    .layout-3 {
+      background-color: #2e003e;
+    }
+    .layout-3 .hero {
+      background: linear-gradient(to right, #2e003e, #a200ff);
+    }
+
+    /* Layout 4 - Cinza/Foco */
+    .layout-4 {
+      background-color: #222;
+    }
+    .layout-4 .hero {
+      background: linear-gradient(to right, #444, #888);
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1 id="titulo">Carregando...</h1>
+    <p id="subtitulo"></p>
+  </div>
+
+  <script>
+    const visit = Number(localStorage.getItem('visit') || 0);
+    const layoutIndex = visit % 5;
+
+    document.body.classList.add(`layout-${layoutIndex}`);
+
+    const layouts = [
+      {
+        titulo: 'Bem-vindo à Academia Elite',
+        subtitulo: 'Supere seus limites com excelência.'
+      },
+      {
+        titulo: 'Transforme sua Força em Poder',
+        subtitulo: 'Desafie-se todos os dias.'
+      },
+      {
+        titulo: 'Exploda seu Potencial',
+        subtitulo: 'A energia que você precisa está aqui.'
+      },
+      {
+        titulo: 'A Disciplina Constrói Resultados',
+        subtitulo: 'Foco. Força. Fé.'
+      },
+      {
+        titulo: 'O Corpo Alinha a Mente',
+        subtitulo: 'Conquiste equilíbrio físico e mental.'
+      }
+    ];
+
+    document.getElementById('titulo').innerText = layouts[layoutIndex].titulo;
+    document.getElementById('subtitulo').innerText = layouts[layoutIndex].subtitulo;
+
+    localStorage.setItem('visit', visit + 1);
+  </script>
+</body>
+</html>
