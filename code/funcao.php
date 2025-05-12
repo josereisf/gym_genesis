@@ -1093,7 +1093,13 @@ function aplicarDesconto($idpagamento, $idcupom)
   mysqli_stmt_close($comando3);
   mysqli_stmt_close($comando4);
 }
+function ajustarDataHora($DataeHora){
 
+  $DataeHoraUTC = strtotime($DataeHora . ' UTC');
+  $DataeHoraLocal = $DataeHoraUTC - (3 * 3600); 
+  $DataeHoraConvertido = gmdate('d-m-Y H:i:s', $DataeHoraLocal);
+  return $DataeHoraConvertido;
+}
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 
