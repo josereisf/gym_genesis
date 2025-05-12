@@ -235,10 +235,12 @@ INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, statu
   (3, 'Aumentar força no supino','2025-04-01','2025-07-01', 'ativa');
 
 
-INSERT INTO `gym_genesis`.`recuperacao_senha` 
-(`codigo`, `usuario_idusuario`)
-VALUES
-('ABC123XYZ', 1),
-('RESET456DEF', 2),
-('TOKEN789GHI', 3);
+INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
+VALUES ('A1B2C3', 1, DATE_ADD(NOW(), INTERVAL 1 HOUR));
+
+INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
+VALUES ('D4E5F6', 2, DATE_ADD(NOW(), INTERVAL 1 HOUR));
+
+INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
+VALUES ('G7H8I9', 3, DATE_ADD(NOW(), INTERVAL 1 HOUR));
 
