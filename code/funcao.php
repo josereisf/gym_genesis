@@ -1375,7 +1375,6 @@ function listarTreino($idtreino)
   }
 
   mysqli_stmt_close($comando);
-
   return $lista_treinos;
 }
 
