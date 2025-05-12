@@ -2,7 +2,7 @@
 -- 3 registros por tabela, respeitando ordem de dependências
 use gym_genesis;
 -- 1. Tabelas independentes
-
+SET GLOBAL time_zone = 'America/Sao_Paulo';
 
 -- 1.2. cargo
 INSERT INTO `gym_genesis`.`cargo` 
