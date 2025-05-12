@@ -572,18 +572,17 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`recuperacao_senha` (
   `idrecuperacao_senha` INT NOT NULL AUTO_INCREMENT,
-  `codigo` VARCHAR(45) NOT NULL,
-  `usuario_idusuario` INT(11) NOT NULL,
+  `codigo` VARCHAR(6) NOT NULL,
+  `usuario_idusuario` INT NOT NULL,
+  `tempo_expiracao` DATETIME NOT NULL,
   PRIMARY KEY (`idrecuperacao_senha`),
-  UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC) VISIBLE,
-  INDEX `fk_recuperacao_senha_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
-  CONSTRAINT `fk_recuperacao_senha_usuario1`
+  INDEX `idx_usuario` (`usuario_idusuario`),
+  CONSTRAINT `fk_recuperacao_usuario`
     FOREIGN KEY (`usuario_idusuario`)
     REFERENCES `gym_genesis`.`usuario` (`idusuario`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table `gym_genesis`.`dieta_alimentar`

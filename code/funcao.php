@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -1010,7 +1011,7 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
     $comando = mysqli_prepare($conexao, $sql);
 
     mysqli_stmt_bind_param($comando, 'isi', $codigo, $expiracao, $idusuario);
-  
+
     mysqli_stmt_execute($comando);
     mysqli_stmt_close($comando);
     desconectar($conexao);
@@ -1019,34 +1020,39 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
   }
 }
 
-function VerificarCodigo($codigoInserido, $idusuario ){
-  $conexao = conectar();
-  $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario=?';
-  $comando = mysqli_prepare($conexao, $sql);
+function VerificarCodigo($codigoInserido, $idusuario)
+{
+    $conexao = conectar();
 
-  mysqli_stmt_bind_param($comando, 'i',$idusuario);
+    $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario = ? ORDER BY tempo_expiracao DESC LIMIT 1';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idusuario);
+    mysqli_stmt_execute($comando);
 
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
-  $resultado = mysqli_fetch_assoc($resultados);
-  desconectar($conexao);
-  if ($resultado){
+    $resultados = mysqli_stmt_get_result($comando);
+    $resultado = mysqli_fetch_assoc($resultados);
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+
+    if (!$resultado) {
+        return false; // Usuário não tem código de recuperação
+    }
+
     $codigoArmazenado = $resultado['codigo'];
     $expiracaoArmazenada = $resultado['tempo_expiracao'];
-    if ($codigoInserido == $codigoArmazenado) {
-      // Verificar se o código ainda está dentro do prazo de expiração
-      if (strtotime($expiracaoArmazenada) > time()) {
-        return true;  // Código correto e válido
-      } else {
-        return false; // Código expirado
-      }
-    } else {
-      return false;  // Código incorreto
+
+    if ($codigoInserido !== $codigoArmazenado) {
+        return false; // Código incorreto
     }
-  } else {
-    return false;  // Usuário não encontrado ou sem código de recuperação
-  }
+
+    if (strtotime($expiracaoArmazenada) <= time()) {
+        return false; // Código expirado
+    }
+
+    return true; // Código correto e válido
 }
+
 
 function aplicarDesconto($idpagamento, $idcupom)
 {
