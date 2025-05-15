@@ -4,229 +4,357 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academia Dinâmica</title>
+  <title>Academia Imersiva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      color: white;
-      transition: all 0.3s ease;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .hero {
-      padding: 100px 20px;
-      text-align: center;
+    .typing::after {
+      content: '|';
+      animation: blink 1s infinite;
     }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
+    @keyframes blink {
 
-    .hero p {
-      font-size: 1.2rem;
-    }
+      0%,
+      100% {
+        opacity: 1;
+      }
 
-    /* Layout 0 - Preto e Ouro */
-    .layout-0 {
-      background-color: black;
+      50% {
+        opacity: 0;
+      }
     }
+    .nav-link {
+  transition: color 0.3s ease;
+}
 
-    .layout-0 .hero {
-      background: linear-gradient(to right, black, gold);
-    }
-
-    /* Layout 1 - Vermelho Escuro */
-    .layout-1 {
-      background-color: #1a0000;
-    }
-
-    .layout-1 .hero {
-      background: linear-gradient(to right, darkred, firebrick);
-    }
-
-    /* Layout 2 - Azul Elétrico */
-    .layout-2 {
-      background-color: #001f3f;
-    }
-
-    .layout-2 .hero {
-      background: linear-gradient(to right, #001f3f, #0074d9);
-    }
-
-    /* Layout 3 - Roxo Royal */
-    .layout-3 {
-      background-color: #2e003e;
-    }
-
-    .layout-3 .hero {
-      background: linear-gradient(to right, #2e003e, #a200ff);
-    }
-
-    /* Layout 4 - Cinza/Foco */
-    .layout-4 {
-      background-color: #222;
-    }
-
-    .layout-4 .hero {
-      background: linear-gradient(to right, #444, #888);
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 40px 20px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 20px;
-      max-width: 300px;
-      text-align: center;
-      backdrop-filter: blur(5px);
-      transition: transform 0.3s;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .cta-button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 25px;
-      background-color: gold;
-      color: black;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-
-    .cta-button:hover {
-      background-color: darkgoldenrod;
-    }
   </style>
 </head>
 
-<body>
-  <div class="hero">
-    <h1 id="titulo">Carregando...</h1>
-    <p id="subtitulo"></p>
-    <main>
-      <div id="card">
-        <h2 id="card-titulo"></h2>
-        <p id="card-texto"></p>
-        <button id="cta">Agendar Avaliação</button>
+<body class="transition-colors duration-500" id="pageBody">
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-md">
+    <ul class="flex justify-center gap-6 py-4 font-semibold text-gray-700">
+      <li><a href="#section1" class="nav-link active:text-red-600">Início</a></li>
+      <li><a href="#section2" class="nav-link active:text-red-600">Serviços</a></li>
+      <li><a href="#section3" class="nav-link active:text-red-600">Planos</a></li>
+      <li><a href="#section4" class="nav-link active:text-red-600">Equipe</a></li>
+      <!-- <li><a href="#depoimento" class="nav-link active:text-red-600">Depoimentos</a></li> -->
+    </ul>
+  </nav>
+
+
+  <!-- Section 1: Hero -->
+  <section class="h-screen flex flex-col items-center justify-center text-center px-4" id="section1">
+    <h1 id="typedText" class="text-4xl md:text-6xl font-bold typing"></h1>
+    <p class="mt-4 text-lg md:text-2xl">Transforme seu corpo. Inspire sua mente.</p>
+    <button class="mt-8 px-6 py-3 font-semibold rounded-full transition-colors" id="mainButton">Comece Agora</button>
+  </section>
+
+  <!-- Section 2: Serviços -->
+  <section class="h-screen flex flex-col items-center justify-center text-center px-4" id="section2">
+    <h2 class="text-3xl md:text-5xl font-bold mb-10" id="servicosTitulo">Nossos Serviços</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl px-4" id="cardsContainer">
+      <!-- Cards de serviço -->
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="card1">
+        <img src="https://hubconteudo.dasa.com.br/wp-content/uploads/2022/08/abre_musculacao_saude.jpg" alt="Musculação"
+          class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-xl font-semibold mb-2">Musculação</h3>
+        <p class="mb-4">Treine com equipamentos modernos e acompanhamento.</p>
+        <button class="px-4 py-2 font-medium rounded-full transition-colors" id="btn1">Saiba mais</button>
       </div>
-    </main>
-    <footer>
-      <p id="rodape"></p>
-    </footer>
-  </div>
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="card2">
+        <img src="https://media.unimedcampinas.com.br/bb0c65d5-59cc-4677-9000-d1f8ca743f78" alt="Personal Trainer"
+          class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-xl font-semibold mb-2">Personal Trainer</h3>
+        <p class="mb-4">Treinamento exclusivo com acompanhamento profissional.</p>
+        <button class="px-4 py-2 font-medium rounded-full transition-colors" id="btn2">Saiba mais</button>
+      </div>
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="card3">
+        <img src="https://blog.lionfitness.com.br/wp-content/uploads/2018/10/muscula%C3%A7%C3%A3o-benef%C3%ADcios.jpg"
+          alt="Funcional" class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-xl font-semibold mb-2">Funcional</h3>
+        <p class="mb-4">Aulas dinâmicas para condicionamento físico completo.</p>
+        <button class="px-4 py-2 font-medium rounded-full transition-colors" id="btn3">Saiba mais</button>
+      </div>
+    </div>
+  </section>
 
+  <!-- Section 3: Planos e Assinaturas -->
+  <section class="h-screen flex flex-col items-center justify-center text-center px-4" id="section3">
+    <h2 class="text-3xl md:text-5xl font-bold mb-10" id="planosTitulo">Escolha Seu Plano</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4" id="planosContainer">
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="plano1">
+        <i class="ph ph-dumbbell text-4xl mb-4"></i>
+        <h3 class="text-2xl font-bold mb-2">Plano Básico</h3>
+        <p class="text-xl mb-2">R$ 99/mês</p>
+        <ul class="mb-4">
+          <li>Acesso livre à academia</li>
+          <li>1 avaliação física</li>
+        </ul>
+        <button class="px-4 py-2 font-medium rounded-full transition-colors" id="btnPlano1">Assinar</button>
+      </div>
+      <div class="p-6 rounded-xl shadow-xl scale-105 transition-colors" id="plano2">
+        <i class="ph ph-fire text-4xl mb-4"></i>
+        <h3 class="text-2xl font-bold mb-2">Plano Intermediário</h3>
+        <p class="text-xl mb-2">R$ 149/mês</p>
+        <ul class="mb-4">
+          <li>Acesso ilimitado</li>
+          <li>2 avaliações físicas</li>
+          <li>1 sessão com personal</li>
+        </ul>
+        <button class="px-4 py-2 font-medium rounded-full transition-colors" id="btnPlano2">Assinar</button>
+      </div>
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="plano3">
+        <i class="ph ph-star text-4xl mb-4"></i>
+        <h3 class="text-2xl font-bold mb-2">Plano Avançado</h3>
+        <p class="text-xl mb-2">R$ 199/mês</p>
+        <ul class="mb-4">
+          <li>Tudo do plano intermediário</li>
+          <li>Consultoria nutricional</li>
+          <li>Aulas exclusivas</li>
+        </ul>
+        <button class="px-4 py-2 font-medium rounded-full transition-colors" id="btnPlano3">Assinar</button>
+      </div>
+    </div>
+  </section>
+  <!-- Section 4: Equipe -->
+  <section class="h-screen flex flex-col items-center justify-center text-center px-4" id="section4">
+    <h2 class="text-3xl md:text-5xl font-bold mb-10" id="equipeTitulo">Nossa Equipe</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4" id="equipeContainer">
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="prof1">
+        <img src="https://blog.unoeste.br/wp-content/uploads/2024/10/quem-pode-dar-aulas-pilates.jpg" alt="Instrutor"
+          class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+        <h3 class="text-xl font-semibold">Carlos Silva</h3>
+        <p class="italic mb-2">Especialista em Musculação</p>
+        <p class="text-sm">"Disciplina supera motivação."</p>
+      </div>
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="prof2">
+        <img src="https://blog.unoeste.br/wp-content/uploads/2024/10/quem-pode-dar-aulas-pilates.jpg" alt="Instrutora"
+          class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+        <h3 class="text-xl font-semibold">Ana Paula</h3>
+        <p class="italic mb-2">Treinadora Funcional</p>
+        <p class="text-sm">"Movimente-se todos os dias."</p>
+      </div>
+      <div class="p-6 rounded-xl shadow-xl transition-colors" id="prof3">
+        <img src="https://blog.unoeste.br/wp-content/uploads/2024/10/quem-pode-dar-aulas-pilates.jpg"
+          alt="Nutricionista" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+        <h3 class="text-xl font-semibold">Marcos Vieira</h3>
+        <p class="italic mb-2">Nutricionista Esportivo</p>
+        <p class="text-sm">"Você é o que você come."</p>
+      </div>
+    </div>
+  </section>
+  <!-- <section id="depoimento" class="h-screen py-16 px-4 transition-all duration-500 items-center justify-center text-center">
+    <h2 id="depoimentosTitulo" class="text-3xl font-bold text-center mb-10">O que nossos alunos dizem</h2>
+
+    <div class="relative max-w-3xl mx-auto">
+      <div id="testimonialSlides" class="overflow-hidden relative h-52">
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out">
+          <p class="text-lg text-center">“Transformei meu corpo e minha autoestima. Os treinos aqui são incríveis!”</p>
+          <p class="text-center font-semibold mt-4">— Carla Mendes</p>
+        </div>
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out">
+          <p class="text-lg text-center">“Nunca pensei que iria gostar tanto de musculação. Equipe top!”</p>
+          <p class="text-center font-semibold mt-4">— João Henrique</p>
+        </div>
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-700 ease-in-out">
+          <p class="text-lg text-center">“Ambiente limpo, aparelhos modernos e treinos personalizados.”</p>
+          <p class="text-center font-semibold mt-4">— Ana Paula</p>
+        </div>
+      </div>
+
+      <div class="flex justify-center gap-4 mt-8">
+        <button onclick="prevSlide()"
+          class="btnSlide w-10 h-10 rounded-full flex items-center justify-center transition-colors">←</button>
+        <button onclick="nextSlide()"
+          class="btnSlide w-10 h-10 rounded-full flex items-center justify-center transition-colors">→</button>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Section 5: Rodapé -->
+  <footer class="flex flex-col items-center justify-center text-center py-10 px-4 transition-colors" id="footer">
+    <div class="mb-6">
+      <h4 class="text-xl font-bold mb-2">Links Rápidos</h4>
+      <ul class="space-y-2">
+        <li><a href="#section3" class="hover:underline">Planos</a></li>
+        <li><a href="#section4" class="hover:underline">Equipe</a></li>
+        <li><a href="#section1" class="hover:underline">Contato</a></li>
+      </ul>
+    </div>
+    <div class="mb-6">
+      <h4 class="text-xl font-bold mb-2">Redes Sociais</h4>
+      <div class="flex gap-4 justify-center">
+        <a href="#" class="hover:underline">Instagram</a>
+        <a href="#" class="hover:underline">Facebook</a>
+        <a href="#" class="hover:underline">YouTube</a>
+      </div>
+    </div>
+    <div class="mb-6">
+      <h4 class="text-xl font-bold mb-2">Horários</h4>
+      <p>Seg a Sex: 6h - 22h | Sábado: 8h - 14h</p>
+    </div>
+    <div class="text-sm">
+      <p>© 2025 Academia Imersiva. Todos os direitos reservados.</p>
+      <a href="#" class="underline">Política de Privacidade</a> | <a href="#" class="underline">Termos de Uso</a>
+    </div>
+  </footer>
   <script>
-    const visit = Number(localStorage.getItem("visit") || 0);
-    const layoutIndex = visit % 5;
-
-    document.body.classList.add(`layout-${layoutIndex}`);
-
-    const layouts = [
+    // 🎨 Temas dinâmicos
+    const themes = [
       {
-        titulo: "Desperte o Atleta em Você",
-        subtitulo: "Descubra sua melhor versão com treinos intensos.",
-        cards: [
-          { titulo: "Cross Training", texto: "Desafios variados para corpo e mente." },
-          { titulo: "Corrida Indoor", texto: "Aumente resistência sem sair da academia." },
-          { titulo: "Circuito Funcional", texto: "Treinamento rápido e eficaz." }
-        ],
-        cta: "Comece sua Jornada",
-        rodape: "© 2025 Performance Pro. Energia em movimento."
+        bg: 'bg-gradient-to-br from-blue-800 to-blue-400',
+        text: 'text-white',
+        btn: 'bg-white text-blue-800 hover:bg-blue-100'
       },
       {
-        titulo: "Seu Corpo, Sua Prioridade",
-        subtitulo: "Cuidar da saúde é um ato de amor próprio.",
-        cards: [
-          { titulo: "Pilates", texto: "Fortaleça com suavidade e precisão." },
-          { titulo: "Alongamento", texto: "Mais flexibilidade e menos dores." },
-          { titulo: "Yoga", texto: "Equilíbrio entre mente e corpo." }
-        ],
-        cta: "Experimente uma Aula",
-        rodape: "© 2025 Studio Zen. Equilíbrio em primeiro lugar."
+        bg: 'bg-gradient-to-br from-green-700 to-emerald-400',
+        text: 'text-white',
+        btn: 'bg-white text-green-800 hover:bg-green-100'
       },
       {
-        titulo: "Ganhe Energia e Disposição",
-        subtitulo: "Exercite-se para viver melhor todos os dias.",
-        cards: [
-          { titulo: "Spinning", texto: "Pedale com intensidade ao som da música." },
-          { titulo: "Zumba", texto: "Dance e queime calorias com alegria." },
-          { titulo: "Treino Funcional", texto: "Movimentos naturais e eficazes." }
-        ],
-        cta: "Reserve sua Vaga",
-        rodape: "© 2025 Movimento Vital. Energia não para."
+        bg: 'bg-gradient-to-br from-neutral-900 to-gray-700',
+        text: 'text-white',
+        btn: 'bg-white text-neutral-900 hover:bg-neutral-200'
       },
       {
-        titulo: "Desafie-se em Cada Repetição",
-        subtitulo: "A evolução começa com o primeiro passo.",
-        cards: [
-          { titulo: "Treino de Força", texto: "Aumente sua potência com segurança." },
-          { titulo: "Carga Progressiva", texto: "Resultados consistentes semana após semana." },
-          { titulo: "Supervisão Técnica", texto: "Acompanhamento de profissionais." }
-        ],
-        cta: "Venha Evoluir Conosco",
-        rodape: "© 2025 PowerFit. Fortes juntos."
+        bg: 'bg-gradient-to-br from-yellow-600 to-orange-400',
+        text: 'text-black',
+        btn: 'bg-black text-yellow-300 hover:bg-yellow-500'
       },
       {
-        titulo: "Bem-estar que Transforma",
-        subtitulo: "Cuide da sua saúde com estrutura completa.",
-        cards: [
-          { titulo: "Nutrição Esportiva", texto: "Plano alimentar alinhado ao seu treino." },
-          { titulo: "Avaliação Postural", texto: "Previna lesões e otimize movimentos." },
-          { titulo: "Acompanhamento 360º", texto: "Treino, saúde e bem-estar integrados." }
-        ],
-        cta: "Marque uma Consulta",
-        rodape: "© 2025 Corpo Inteiro. Cuidamos de você por completo."
+        bg: 'bg-gradient-to-br from-pink-600 to-fuchsia-500',
+        text: 'text-white',
+        btn: 'bg-white text-pink-700 hover:bg-pink-100'
       }
-
     ];
 
-    // Renderizar Cards
-    const cardsContainer = document.createElement("section");
-    cardsContainer.className = "cards";
+    const selected = themes[Math.floor(Math.random() * themes.length)];
 
-    layouts[layoutIndex].cards.forEach((card) => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `<h2>${card.titulo}</h2><p>${card.texto}</p>`;
-      cardsContainer.appendChild(div);
-    });
-    document.querySelector("main").appendChild(cardsContainer);
+    // 🧩 Seções e elementos principais
+    const section1 = document.getElementById('section1');
+    const section2 = document.getElementById('section2');
+    const section3 = document.getElementById('section3');
+    const section4 = document.getElementById('section4');
+    const button = document.getElementById('mainButton');
+    const servicosTitulo = document.getElementById('servicosTitulo');
+    const planosTitulo = document.getElementById('planosTitulo');
+    const equipeTitulo = document.getElementById('equipeTitulo');
 
-    // Botão de Ação
-    const cta = document.createElement("button");
-    cta.className = "cta-button";
-    cta.textContent = layouts[layoutIndex].cta;
-    document.querySelector("main").appendChild(cta);
+    const cards = [
+      document.getElementById('card1'),
+      document.getElementById('card2'),
+      document.getElementById('card3'),
+      document.getElementById('plano1'),
+      document.getElementById('plano2'),
+      document.getElementById('plano3'),
+      document.getElementById('prof1'),
+      document.getElementById('prof2'),
+      document.getElementById('prof3')
+    ];
 
-    // Rodapé
-    const footer = document.createElement("footer");
-    footer.style.textAlign = "center";
-    footer.style.padding = "30px";
-    footer.style.background = "#111";
-    footer.innerHTML = `<p>${layouts[layoutIndex].rodape}</p>`;
-    document.body.appendChild(footer);
+    const buttons = [
+      document.getElementById('btn1'),
+      document.getElementById('btn2'),
+      document.getElementById('btn3'),
+      document.getElementById('btnPlano1'),
+      document.getElementById('btnPlano2'),
+      document.getElementById('btnPlano3')
+    ];
 
-    document.getElementById("titulo").innerText = layouts[layoutIndex].titulo;
-    document.getElementById("subtitulo").innerText =
-      layouts[layoutIndex].subtitulo;
+    // 🎨 Aplicando o tema selecionado
+    [section1, section2, section3, section4].forEach(sec => sec.classList.add(...selected.bg.split(' '), selected.text));
+    [servicosTitulo, planosTitulo, equipeTitulo].forEach(title => title.classList.add(selected.text));
+    button.classList.add(...selected.btn.split(' '));
+    cards.forEach(card => card.classList.add(...selected.bg.split(' '), selected.text));
+    buttons.forEach(btn => btn.classList.add(...selected.btn.split(' ')));
 
-    localStorage.setItem("visit", visit + 1);
-  </script>
+    // ⌨️ Texto digitando
+    const frases = [
+      "Sua jornada começa aqui.",
+      "Corpo forte, mente forte.",
+      "Desafie seus limites.",
+      "Treine com propósito.",
+      "Academia Gym Genesis."
+    ];
+    let index = 0;
+    let charIndex = 0;
+    const typedText = document.getElementById('typedText');
+
+    function digitar() {
+      if (charIndex < frases[index].length) {
+        typedText.textContent += frases[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(digitar, 80);
+      } else {
+        setTimeout(() => {
+          typedText.textContent = '';
+          charIndex = 0;
+          index = (index + 1) % frases.length;
+          digitar();
+        }, 2500);
+      }
+    }
+
+    digitar();
+
+    // 💬 Depoimentos (carrossel)
+    const depoimentosSection = document.getElementById('depoimentos');
+    const depoimentosTitulo = document.getElementById('depoimentosTitulo');
+    const slideButtons = document.querySelectorAll('.btnSlide');
+    const slides = document.querySelectorAll('#testimonialSlides .slide');
+    let currentIndex = 0;
+
+    depoimentosSection.classList.add(...selected.bg.split(' '), selected.text);
+    depoimentosTitulo.classList.add(selected.text);
+    slideButtons.forEach(btn => btn.classList.add(...selected.btn.split(' ')));
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('opacity-100', i === index);
+        slide.classList.toggle('opacity-0', i !== index);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    }
+    
+    // Auto play depoimentos
+    setInterval(nextSlide, 5000);
+    showSlide(currentIndex);
+    </script>
+    <script>
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+    
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute("id");
+          const navItem = document.querySelector(`.nav-link[href="#${id}"]`);
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => link.classList.remove("text-red-600", "font-bold"));
+            navItem.classList.add("text-red-600", "font-bold");
+          }
+        });
+      }, {
+        rootMargin: "-50% 0px -50% 0px", // ativa no meio da viewport
+        threshold: 0
+      });
+    
+      sections.forEach(section => observer.observe(section));
+    </script>
+
 </body>
 
 </html>
