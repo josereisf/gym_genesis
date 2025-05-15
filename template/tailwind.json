@@ -1,0 +1,86 @@
+{
+  "Cores e Fundos": {
+    "bg-white/80": "Cor de fundo branca com 80% de opacidade",
+    "text-gray-700": "Cor do texto cinza escuro",
+    "text-red-600": "Cor do texto vermelho forte"
+  },
+  "Tamanhos de Texto": {
+    "text-sm": "Tamanho de texto pequeno",
+    "text-lg": "Tamanho de texto grande",
+    "text-xl": "Texto extra grande",
+    "text-2xl": "Texto 2x extra grande",
+    "text-3xl": "Texto 3x extra grande",
+    "text-4xl": "Texto 4x extra grande",
+    "text-5xl": "Texto 5x extra grande",
+    "text-6xl": "Texto 6x extra grande"
+  },
+  "Tipografia": {
+    "font-bold": "Texto em negrito forte",
+    "font-semibold": "Texto em negrito médio",
+    "font-medium": "Texto com peso médio",
+    "italic": "Texto em itálico",
+    "uppercase": "Texto em letras maiúsculas"
+  },
+  "Posicionamento e Layout": {
+    "fixed": "Elemento fixado na tela",
+    "top-0": "Alinhado ao topo",
+    "left-0": "Alinhado à esquerda",
+    "w-full": "Largura total",
+    "h-screen": "Altura total da tela (100vh)",
+    "z-50": "Z-index alto (posição superior)",
+    "flex": "Layout flexível",
+    "flex-col": "Flex direction: coluna",
+    "items-center": "Centraliza horizontalmente",
+    "justify-center": "Centraliza verticalmente",
+    "text-center": "Texto centralizado",
+    "mx-auto": "Margem horizontal automática"
+  },
+  "Espaçamento": {
+    "py-4": "Padding vertical 1rem",
+    "px-4": "Padding horizontal 1rem",
+    "px-6": "Padding horizontal 1.5rem",
+    "py-2": "Padding vertical 0.5rem",
+    "py-3": "Padding vertical 0.75rem",
+    "mt-4": "Margem superior 1rem",
+    "mt-8": "Margem superior 2rem",
+    "mb-2": "Margem inferior 0.5rem",
+    "mb-4": "Margem inferior 1rem",
+    "mb-10": "Margem inferior 2.5rem",
+    "gap-6": "Espaçamento entre elementos 1.5rem",
+    "gap-8": "Espaçamento entre elementos 2rem"
+  },
+  "Tamanhos": {
+    "w-32": "Largura de 8rem (128px)",
+    "w-full": "Largura total",
+    "h-32": "Altura de 8rem (128px)",
+    "h-40": "Altura de 10rem (160px)",
+    "max-w-6xl": "Largura máxima ~72rem (1152px)"
+  },
+  "Responsividade": {
+    "md:text-2xl": "Texto 2x grande em telas médias ou maiores",
+    "md:text-5xl": "Texto 5x grande em telas médias ou maiores",
+    "md:text-6xl": "Texto 6x grande em telas médias ou maiores",
+    "md:grid-cols-3": "Grade de 3 colunas em telas médias ou maiores"
+  },
+  "Grid e Colunas": {
+    "grid": "Ativa layout em grade",
+    "grid-cols-1": "Grade com 1 coluna",
+    "md:grid-cols-3": "Grade com 3 colunas em telas médias ou maiores"
+  },
+  "Estilo Visual": {
+    "shadow-md": "Sombra média",
+    "shadow-xl": "Sombra extra grande",
+    "rounded-lg": "Bordas arredondadas grandes",
+    "rounded-xl": "Bordas ainda mais arredondadas",
+    "rounded-full": "Bordas totalmente arredondadas (círculo)",
+    "backdrop-blur-md": "Desfoque médio no fundo",
+    "object-cover": "Imagem cobre o contêiner sem distorção",
+    "transition-colors": "Transição suave entre cores",
+    "scale-105": "Aumenta tamanho em 5% (ex: hover)"
+  },
+  "Transições e Interações": {
+    "transition": "Ativa transições suaves",
+    "duration-500": "Duração da transição: 500ms",
+    "active:text-red-600": "Texto fica vermelho quando ativo"
+  }
+}
