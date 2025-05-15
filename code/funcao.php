@@ -1100,6 +1100,34 @@ function ajustarDataHora($DataeHora){
   $DataeHoraConvertido = gmdate('d-m-Y H:i:s', $DataeHoraLocal);
   return $DataeHoraConvertido;
 }
+function uploadImagem($foto, $target_dir){
+  $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+  $uploadOk = 1;
+  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+  if(isset($foto)) {
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if($check !== false) {
+      $resposta = "O arquivo é uma imagem- " . $check["mime"] . ".";
+      $uploadOk = 1;
+    } else {
+      $resposta = "O arquivo não é uma imagem.";
+      $uploadOk = 0;
+    }
+  }
+  if (file_exists($target_file)) {
+    $resposta = "Esse arquivo já existe.";
+    $uploadOk = 0;
+  }
+  if ($_FILES["fileToUpload"]["size"] > 500000) {
+    $resposta = "Esse arquivo é muito grande.";
+    $uploadOk = 0;
+  }
+  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+&& $imageFileType != "gif" ) {
+  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  $uploadOk = 0;
+  }
+}
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 
