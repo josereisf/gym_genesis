@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`usuario` (
   `cpf` VARCHAR(15) NOT NULL,
   `data_de_nascimento` DATE NOT NULL,
   `telefone` VARCHAR(20) NULL DEFAULT NULL,
-  `foto_de_perfil` VARCHAR(100) NULL DEFAULT NULL,
+  `foto_de_perfil` LONGTEXT NULL DEFAULT NULL,
   `numero_matricula` VARCHAR(20) NOT NULL,
   `tipo_usuario` INT(11) NOT NULL,
   PRIMARY KEY (`idusuario`),
