@@ -59,4 +59,12 @@ Abaixo estão os elementos essenciais para a construção de uma página inicial
   - Frase motivacional ou lema pessoal
   - (Opcional) Avaliação por estrelas ou depoimento de alunos
 
+## 6. **Rodapé Rico**
+
+* **Conteúdo sugerido:**
+
+  * Links rápidos (Planos, Equipe, Contato)
+  * Redes sociais
+  * Horários de funcionamento
+  * Política de privacidade / Termos de uso
 
