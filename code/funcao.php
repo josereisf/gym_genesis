@@ -1152,7 +1152,12 @@ function uploadImagem($foto, $target_dir)
     }
   }
 }
-
+  function mostrarImagem($target_file){
+    $imagem = fopen($target_file, 'r');
+    $resposta = fread($imagem,filesize($target_file));
+    fclose($imagem);
+    return $resposta;
+  }
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 
