@@ -1022,35 +1022,35 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
 
 function VerificarCodigo($codigoInserido, $idusuario)
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario = ? ORDER BY tempo_expiracao DESC LIMIT 1';
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'i', $idusuario);
-    mysqli_stmt_execute($comando);
+  $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario = ? ORDER BY tempo_expiracao DESC LIMIT 1';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'i', $idusuario);
+  mysqli_stmt_execute($comando);
 
-    $resultados = mysqli_stmt_get_result($comando);
-    $resultado = mysqli_fetch_assoc($resultados);
+  $resultados = mysqli_stmt_get_result($comando);
+  $resultado = mysqli_fetch_assoc($resultados);
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    if (!$resultado) {
-        return false; // Usuário não tem código de recuperação
-    }
+  if (!$resultado) {
+    return false; // Usuário não tem código de recuperação
+  }
 
-    $codigoArmazenado = $resultado['codigo'];
-    $expiracaoArmazenada = $resultado['tempo_expiracao'];
+  $codigoArmazenado = $resultado['codigo'];
+  $expiracaoArmazenada = $resultado['tempo_expiracao'];
 
-    if ($codigoInserido !== $codigoArmazenado) {
-        return false; // Código incorreto
-    }
+  if ($codigoInserido !== $codigoArmazenado) {
+    return false; // Código incorreto
+  }
 
-    if (strtotime($expiracaoArmazenada) <= time()) {
-        return false; // Código expirado
-    }
+  if (strtotime($expiracaoArmazenada) <= time()) {
+    return false; // Código expirado
+  }
 
-    return true; // Código correto e válido
+  return true; // Código correto e válido
 }
 
 
@@ -1083,7 +1083,7 @@ function aplicarDesconto($idpagamento, $idcupom)
   mysqli_stmt_bind_param($comando3, 'di', $valor_com_desconto, $idpagamento);
   mysqli_stmt_execute($comando3);
   $usos_restantes = (int)$resultado['quantidade_uso'];
-  $usos_restantes -= 1;
+  $usos_restantes--;
   $sql4 = 'UPDATE cupom_desconto SET quantidade_uso=? WHERE idcupom=?';
   $comando4 = mysqli_prepare($conexao, $sql4);
   mysqli_stmt_bind_param($comando4, 'ii', $usos_restantes, $idcupom);
@@ -1093,41 +1093,66 @@ function aplicarDesconto($idpagamento, $idcupom)
   mysqli_stmt_close($comando3);
   mysqli_stmt_close($comando4);
 }
-function ajustarDataHora($DataeHora){
+function ajustarDataHora($DataeHora)
+{
 
   $DataeHoraUTC = strtotime($DataeHora . ' UTC');
-  $DataeHoraLocal = $DataeHoraUTC - (3 * 3600); 
+  $DataeHoraLocal = $DataeHoraUTC - (3 * 3600);
   $DataeHoraConvertido = gmdate('d-m-Y H:i:s', $DataeHoraLocal);
   return $DataeHoraConvertido;
 }
-function uploadImagem($foto, $target_dir){
-  $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+function uploadImagem($foto, $target_dir)
+{
+  $target_file = $target_dir . basename($foto["name"]);
   $uploadOk = 1;
-  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-  if(isset($foto)) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-      $resposta = "O arquivo é uma imagem- " . $check["mime"] . ".";
-      $uploadOk = 1;
-    } else {
+  $resposta = "";
+  // Verifica se é uma imagem
+  if (isset($foto)) {
+    $check = getimagesize($foto["tmp_name"]);
+    if ($check === false) {
       $resposta = "O arquivo não é uma imagem.";
       $uploadOk = 0;
     }
   }
+
+  // Verifica se o arquivo já existe
   if (file_exists($target_file)) {
     $resposta = "Esse arquivo já existe.";
     $uploadOk = 0;
   }
-  if ($_FILES["fileToUpload"]["size"] > 500000) {
+
+  // Verifica o tamanho do arquivo
+  if ($foto["size"] > 500000) {
     $resposta = "Esse arquivo é muito grande.";
     $uploadOk = 0;
   }
-  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-  $uploadOk = 0;
+
+  // Verifica o tipo de arquivo
+  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+  if (
+    $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+  ) {
+    $resposta = "Apenas arquivos JPG, PNG ou JPEG são permitidos.";
+    $uploadOk = 0;
+  }
+
+
+  if ($uploadOk == 0) {
+    return $resposta;
+  } else {
+    // Verificar se o diretório é gravável
+    if (!is_writable($target_dir)) {
+      chmod($target_dir, 0775);  // Tenta ajustar as permissões para 775
+    }
+    if (move_uploaded_file($foto["tmp_name"], $target_file)) {
+      return $target_file;
+    } else {
+      return "Erro ao enviar o arquivo.";
+    }
   }
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 
