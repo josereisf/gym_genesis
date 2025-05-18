@@ -1,0 +1,35 @@
+# Ativa o mecanismo de reescrita de URLs
+RewriteEngine On
+
+# Define a base do projeto, se estiver na raiz do domínio, deixe assim:
+RewriteBase /
+
+# Bloqueia o acesso aos arquivos sensíveis
+<FilesMatch "(\.env|composer\.json|composer\.lock|docker-compose\.yml|Dockerfile|\.htaccess)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Desativa listagem de diretórios
+Options -Indexes
+
+# Define o charset para UTF-8
+AddDefaultCharset UTF-8
+
+# Redireciona tudo que não for arquivo ou diretório para index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Página customizada para erro 404
+ErrorDocument 404 /err/404.html
+
+# Configura cache para arquivos estáticos
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
