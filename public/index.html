@@ -25,6 +25,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- JS Bundle com Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
       html {
         scroll-behavior: smooth;
@@ -75,6 +80,7 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      
     </style>
   </head>
 
@@ -275,212 +281,61 @@
       </div>
     </section>
     <!-- Loja com Carrossel -->
-    <section
-      class="min-h-screen py-16 px-4 bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white text-center"
-    >
-      <h2 class="text-3xl font-semibold mb-10" data-aos="fade-up">
-        Loja Gym Genesis
-      </h2>
+<!-- Loja / Carrossel -->
+<section class="min-h-screen flex flex-col justify-center items-center py-10 bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white text-center px-4">
+  <h2 class="text-3xl font-semibold mb-8" data-aos="fade-up">Nossa Loja</h2>
 
-      <div class="relative" data-aos="fade-up">
-        <!-- Botão esquerdo -->
-        <button
-          id="prev"
-          class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-60 hover:bg-opacity-90 p-2 rounded-full shadow-lg"
-        >
-          <i class="fas fa-chevron-left text-2xl text-white"></i>
-        </button>
+  <div id="storeCarousel" class="carousel slide w-full max-w-4xl" data-bs-ride="carousel" data-aos="fade-up">
+    <div class="carousel-inner rounded-lg shadow-lg overflow-hidden">
 
-        <!-- Área do carrossel -->
-        <div
-          id="carousel"
-          class="flex overflow-x-auto no-scrollbar gap-6 px-4 scroll-smooth snap-x snap-mandatory"
-        >
-          <!-- Card 1 -->
-          <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="data:image/webp;base64,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"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div>
-
-          <!-- Card 2 -->
-          <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="data:image/webp;base64,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"
-              alt="Roupas"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Camiseta Dry Fit</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Conforto térmico para seus treinos intensos.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Ver</a
-            >
-          </div>
-
-          <!-- Card 3 -->
-          <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="data:image/webp;base64,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"
-              alt="Acessórios"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Cinto de Levantamento</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Suporte e segurança nos seus treinos de força.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div>
-
-          <!-- Card 1 -->
-          <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="https://via.placeholder.com/250x150?text=Suplemento"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div>
-          <!-- Card 1 -->
-          <!-- <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="https://via.placeholder.com/250x150?text=Suplemento"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div> -->
-          <!-- Card 1 -->
-          <!-- <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="https://via.placeholder.com/250x150?text=Suplemento"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div> -->
-          <!-- Card 1 -->
-          <!-- <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="https://via.placeholder.com/250x150?text=Suplemento"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div> -->
-          <!-- Card 1 -->
-          <!-- <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="https://via.placeholder.com/250x150?text=Suplemento"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div> -->
-          <!-- Card 1 -->
-          <!-- <div
-            class="min-w-[280px] bg-black bg-opacity-70 border-2 border-red-600 rounded-xl p-6 snap-start"
-          >
-            <img
-              src="https://via.placeholder.com/250x150?text=Suplemento"
-              alt="Suplemento"
-              class="mb-4 rounded"
-            />
-            <h3 class="text-xl font-bold mb-2">Whey Protein</h3>
-            <p class="text-sm text-gray-300 mb-3">
-              Ganho de massa muscular com sabor e qualidade.
-            </p>
-            <a
-              href="#"
-              class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
-              >Comprar</a
-            >
-          </div> -->
+      <!-- Slide 1 -->
+      <div class="carousel-item active">
+        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07b" class="d-block w-100 object-cover h-[400px]" alt="Produto 1">
+        <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
+          <h5 class="text-xl font-bold text-white">Suplementos Whey Power</h5>
+          <p class="text-gray-300 text-sm">Ganhe energia e acelere seus resultados!</p>
         </div>
-
-        <!-- Botão direito -->
-        <button
-          id="next"
-          class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-60 hover:bg-opacity-90 p-2 rounded-full shadow-lg"
-        >
-          <i class="fas fa-chevron-right text-2xl text-white"></i>
-        </button>
       </div>
-    </section>
+
+      <!-- Slide 2 -->
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1600180758890-6d8d57ecca2f" class="d-block w-100 object-cover h-[400px]" alt="Produto 2">
+        <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
+          <h5 class="text-xl font-bold text-white">Luvas e Acessórios</h5>
+          <p class="text-gray-300 text-sm">Conforto e performance nos treinos.</p>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1600185365483-26c3e037b421" class="d-block w-100 object-cover h-[400px]" alt="Produto 3">
+        <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
+          <h5 class="text-xl font-bold text-white">Camisetas PowerFit</h5>
+          <p class="text-gray-300 text-sm">Estilo e conforto para treinar com atitude.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controles -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Próximo</span>
+    </button>
+
+    <!-- Indicadores -->
+    <div class="carousel-indicators mt-4">
+      <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+  </div>
+</section>
+
 
     <!-- Equipe -->
     <section
