@@ -26,9 +26,12 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <!-- CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- JS Bundle com Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- JS Bundle com Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
       html {
@@ -50,13 +53,18 @@
         }
       }
 
-      .animate-fade-in-delay {
-        animation: fadeIn 1s ease-out 0.3s forwards;
-        transform: translateY(20px);
+      @keyframes fadeInDelay {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
       }
-      #typing-text {
-        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.9),
-          0 0 10px rgba(255, 0, 0, 0.5);
+
+      .animate-fade-in-delay {
+        animation: fadeInDelay 1s ease forwards;
+        animation-delay: 0.3s;
       }
       @keyframes logoFadeZoom {
         0% {
@@ -80,14 +88,45 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
-      
+      #typing-text {
+        font-size: 3rem; /* tamanho base para mobile */
+        font-weight: 900;
+        text-align: center;
+        color: white;
+        opacity: 0;
+        animation: fadeIn 1.5s ease-in-out forwards;
+        -webkit-text-stroke: 2px black;
+        text-shadow: 3px 3px 0 #dc2626,
+          /* vermelho vibrante (Tailwind: red-600) */ 6px 6px 8px
+            rgba(0, 0, 0, 0.7);
+        letter-spacing: 0.06em;
+        line-height: 1.2;
+      }
+
+      @media (min-width: 768px) {
+        #typing-text {
+          font-size: 4rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        #typing-text {
+          font-size: 5rem;
+        }
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
 
   <body
     class="bg-gray-100 text-gray-800 snap-y snap-mandatory overflow-y-scroll h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800"
   >
-    <div id="particles-js" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+    <!-- <div id="particles-js" class="fixed top-0 left-0 w-full h-full -z-10"></div> -->
 
     <section
       class="min-h-screen flex flex-col justify-start items-center py-10 text-center bg-gradient-to-b from-black via-gray-900 to-gray-800"
@@ -98,15 +137,7 @@
       </a>
 
       <!-- Texto com typing -->
-      <h1
-        id="typing-text"
-        class="text-5xl font-extrabold mb-2 text-white opacity-0 animate-fade-in-delay"
-        style="
-          -webkit-text-stroke: 1.5px black; /* contorno preto */
-          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* sombra pra profundidade */
-          letter-spacing: 0.05em;
-        "
-      ></h1>
+      <h1 id="typing-text"></h1>
 
       <p class="text-lg italic max-w-xl text-gray-300 drop-shadow-md mt-4">
         “Cada treino é um passo mais perto do seu objetivo.”
@@ -121,96 +152,150 @@
 
     <!-- Serviços -->
     <section
-      class="min-h-screen flex flex-col justify-center items-center py-10 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white text-center"
+      class="min-h-screen flex flex-col justify-center items-center py-10 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white text-center px-4"
     >
       <div data-aos="fade-up">
         <h2 class="text-3xl font-semibold mb-8">Nossos Serviços</h2>
 
-        <div class="swiper mySwiper w-full max-w-6xl">
-          <div class="swiper-wrapper">
-            <!-- Card 1 -->
-            <div
-              class="transition-transform duration-300 hover:scale-105 swiper-slide bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs mx-auto"
-            >
-              <i class="fas fa-dumbbell text-red-600 text-4xl"></i>
-              <h3 class="text-xl font-bold">Musculação</h3>
-              <p class="text-gray-300">
-                Equipamentos modernos para todos os níveis.
-              </p>
-              <a
-                href="#"
-                class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
-                >Saiba mais</a
-              >
+        <div
+          id="servicosCarousel"
+          class="carousel slide max-w-6xl mx-auto"
+          data-bs-ride="carousel"
+          data-bs-interval="3500"
+          data-bs-wrap="true"
+        >
+          <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="flex flex-wrap justify-center gap-6">
+                <!-- Card 1 -->
+                <div
+                  class="bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs w-full transition-transform duration-300 hover:scale-105"
+                >
+                  <i class="fas fa-dumbbell text-red-600 text-4xl"></i>
+                  <h3 class="text-xl font-bold">Musculação</h3>
+                  <p class="text-gray-300">
+                    Equipamentos modernos para todos os níveis.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
+                    >Saiba mais</a
+                  >
+                </div>
+                <!-- Card 2 -->
+                <div
+                  class="bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs w-full transition-transform duration-300 hover:scale-105"
+                >
+                  <i class="fas fa-user-tie text-red-600 text-4xl"></i>
+                  <h3 class="text-xl font-bold">Personal Trainer</h3>
+                  <p class="text-gray-300">
+                    Acompanhamento individual com profissionais experientes.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
+                    >Ver horários</a
+                  >
+                </div>
+                <!-- Card 3 -->
+                <div
+                  class="bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs w-full transition-transform duration-300 hover:scale-105"
+                >
+                  <i class="fas fa-running text-red-600 text-4xl"></i>
+                  <h3 class="text-xl font-bold">Funcional</h3>
+                  <p class="text-gray-300">
+                    Exercícios dinâmicos para o corpo todo.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
+                    >Saiba mais</a
+                  >
+                </div>
+              </div>
             </div>
 
-            <!-- Card 2 -->
-            <div
-              class="transition-transform duration-300 hover:scale-105 swiper-slide bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs mx-auto"
-            >
-              <i class="fas fa-user-tie text-red-600 text-4xl"></i>
-              <h3 class="text-xl font-bold">Personal Trainer</h3>
-              <p class="text-gray-300">
-                Acompanhamento individual com profissionais experientes.
-              </p>
-              <a
-                href="#"
-                class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
-                >Ver horários</a
-              >
-            </div>
-
-            <!-- Card 3 -->
-            <div
-              class="transition-transform duration-300 hover:scale-105 swiper-slide bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs mx-auto"
-            >
-              <i class="fas fa-running text-red-600 text-4xl"></i>
-              <h3 class="text-xl font-bold">Funcional</h3>
-              <p class="text-gray-300">
-                Exercícios dinâmicos para o corpo todo.
-              </p>
-              <a
-                href="#"
-                class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
-                >Saiba mais</a
-              >
-            </div>
-
-            <!-- Card 4 -->
-            <div
-              class="transition-transform duration-300 hover:scale-105 swiper-slide bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs mx-auto"
-            >
-              <i class="fas fa-bolt text-red-600 text-4xl"></i>
-              <h3 class="text-xl font-bold">HIIT</h3>
-              <p class="text-gray-300">
-                Treinos intensos para resultados rápidos.
-              </p>
-              <a
-                href="#"
-                class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
-                >Ver horários</a
-              >
-            </div>
-
-            <!-- Card 5 -->
-            <div
-              class="transition-transform duration-300 hover:scale-105 swiper-slide bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs mx-auto"
-            >
-              <i class="fas fa-music text-red-600 text-4xl"></i>
-              <h3 class="text-xl font-bold">Zumba</h3>
-              <p class="text-gray-300">
-                Diversão e condicionamento ao som da música.
-              </p>
-              <a
-                href="#"
-                class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
-                >Saiba mais</a
-              >
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+              <div class="flex flex-wrap justify-center gap-6">
+                <!-- Card 4 -->
+                <div
+                  class="bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs w-full transition-transform duration-300 hover:scale-105"
+                >
+                  <i class="fas fa-bolt text-red-600 text-4xl"></i>
+                  <h3 class="text-xl font-bold">HIIT</h3>
+                  <p class="text-gray-300">
+                    Treinos intensos para resultados rápidos.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
+                    >Ver horários</a
+                  >
+                </div>
+                <!-- Card 5 -->
+                <div
+                  class="bg-black bg-opacity-70 border-2 border-red-600 rounded-lg shadow-lg p-6 flex flex-col items-center gap-4 max-w-xs w-full transition-transform duration-300 hover:scale-105"
+                >
+                  <i class="fas fa-music text-red-600 text-4xl"></i>
+                  <h3 class="text-xl font-bold">Zumba</h3>
+                  <p class="text-gray-300">
+                    Diversão e condicionamento ao som da música.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded transition"
+                    >Saiba mais</a
+                  >
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Pagination -->
-          <div class="swiper-pagination mt-6"></div>
+          <!-- Indicadores -->
+          <div class="carousel-indicators mt-6">
+            <button
+              type="button"
+              data-bs-target="#servicosCarousel"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#servicosCarousel"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+          </div>
+
+          <!-- Controles -->
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#servicosCarousel"
+            data-bs-slide="prev"
+          >
+            <span
+              class="carousel-control-prev-icon bg-dark rounded p-2"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#servicosCarousel"
+            data-bs-slide="next"
+          >
+            <span
+              class="carousel-control-next-icon bg-dark rounded p-2"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden">Próximo</span>
+          </button>
         </div>
       </div>
     </section>
@@ -281,61 +366,118 @@
       </div>
     </section>
     <!-- Loja com Carrossel -->
-<!-- Loja / Carrossel -->
-<section class="min-h-screen flex flex-col justify-center items-center py-10 bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white text-center px-4">
-  <h2 class="text-3xl font-semibold mb-8" data-aos="fade-up">Nossa Loja</h2>
+    <!-- Loja / Carrossel -->
+    <section
+      class="min-h-screen flex flex-col justify-center items-center py-10 bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white text-center px-4"
+    >
+      <h2 class="text-3xl font-semibold mb-8" data-aos="fade-up">Nossa Loja</h2>
 
-  <div id="storeCarousel" class="carousel slide w-full max-w-4xl" data-bs-ride="carousel" data-aos="fade-up">
-    <div class="carousel-inner rounded-lg shadow-lg overflow-hidden">
+      <div
+        id="storeCarousel"
+        class="carousel slide w-full max-w-4xl"
+        data-bs-ride="carousel"
+        data-aos="fade-up"
+      >
+        <div class="carousel-inner rounded-lg shadow-lg overflow-hidden">
+          <!-- Slide 1 -->
+          <div class="carousel-item active">
+            <img
+              src="https://wallpapers.com/images/featured/imagens-muito-legais-40it5k0y58kfe71d.jpg"
+              class="d-block w-100 object-cover h-[400px]"
+              alt="Produto 1"
+            />
+            <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
+              <h5 class="text-xl font-bold text-white">
+                Suplementos Whey Power
+              </h5>
+              <p class="text-gray-300 text-sm">
+                Ganhe energia e acelere seus resultados!
+              </p>
+            </div>
+          </div>
 
-      <!-- Slide 1 -->
-      <div class="carousel-item active">
-        <img src="data:image/webp;base64,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" class="d-block w-100 object-cover h-[400px]" alt="Produto 1">
-        <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
-          <h5 class="text-xl font-bold text-white">Suplementos Whey Power</h5>
-          <p class="text-gray-300 text-sm">Ganhe energia e acelere seus resultados!</p>
+          <!-- Slide 2 -->
+          <div class="carousel-item">
+            <img
+              src="https://wallpapers.com/images/featured/imagens-muito-legais-40it5k0y58kfe71d.jpg"
+              class="d-block w-100 object-cover h-[400px]"
+              alt="Produto 2"
+            />
+            <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
+              <h5 class="text-xl font-bold text-white">Luvas e Acessórios</h5>
+              <p class="text-gray-300 text-sm">
+                Conforto e performance nos treinos.
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item">
+            <img
+              src="https://wallpapers.com/images/featured/imagens-muito-legais-40it5k0y58kfe71d.jpg"
+              class="d-block w-100 object-cover h-[400px]"
+              alt="Produto 3"
+            />
+            <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
+              <h5 class="text-xl font-bold text-white">Camisetas PowerFit</h5>
+              <p class="text-gray-300 text-sm">
+                Estilo e conforto para treinar com atitude.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#storeCarousel"
+          data-bs-slide="prev"
+        >
+          <span
+            class="carousel-control-prev-icon bg-dark rounded p-2"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#storeCarousel"
+          data-bs-slide="next"
+        >
+          <span
+            class="carousel-control-next-icon bg-dark rounded p-2"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Próximo</span>
+        </button>
+
+        <!-- Indicadores -->
+        <div class="carousel-indicators mt-4">
+          <button
+            type="button"
+            data-bs-target="#storeCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#storeCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#storeCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
         </div>
       </div>
-
-      <!-- Slide 2 -->
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1600180758890-6d8d57ecca2f" class="d-block w-100 object-cover h-[400px]" alt="Produto 2">
-        <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
-          <h5 class="text-xl font-bold text-white">Luvas e Acessórios</h5>
-          <p class="text-gray-300 text-sm">Conforto e performance nos treinos.</p>
-        </div>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1600185365483-26c3e037b421" class="d-block w-100 object-cover h-[400px]" alt="Produto 3">
-        <div class="carousel-caption bg-black bg-opacity-50 p-3 rounded">
-          <h5 class="text-xl font-bold text-white">Camisetas PowerFit</h5>
-          <p class="text-gray-300 text-sm">Estilo e conforto para treinar com atitude.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Controles -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#storeCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon bg-dark rounded p-2" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#storeCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon bg-dark rounded p-2" aria-hidden="true"></span>
-      <span class="visually-hidden">Próximo</span>
-    </button>
-
-    <!-- Indicadores -->
-    <div class="carousel-indicators mt-4">
-      <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#storeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <!-- Equipe -->
     <section
@@ -462,9 +604,9 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+      // Inicialização do AOS (Animações de scroll)
       AOS.init();
-    </script>
-    <script>
+
       const text = "Transforme o seu corpo, transforme a sua vida!";
       const typingText = document.getElementById("typing-text");
       let index = 0;
@@ -473,15 +615,16 @@
         if (index < text.length) {
           typingText.textContent += text.charAt(index);
           index++;
-          setTimeout(type, 100); // velocidade da digitação (100ms por letra)
+          setTimeout(type, 80); // velocidade ajustável
         }
       }
 
       window.onload = () => {
-        type();
+        setTimeout(type, 500); // pequeno atraso para iniciar após fade-in
       };
+
+      // Função para selecionar plano com destaque
       function selectPlan(element) {
-        // Remove borda vermelha de todos
         const plans = document.querySelectorAll(
           ".bg-white.border, .bg-white.border-2"
         );
@@ -490,35 +633,18 @@
           plan.classList.add("border", "shadow");
         });
 
-        // Adiciona borda vermelha no clicado
         element.classList.remove("border");
         element.classList.add("border-2", "border-red-500", "shadow-lg");
       }
-    </script>
-    <script>
+
+      // Inicialização do Particles.js
       particlesJS("particles-js", {
         particles: {
-          number: {
-            value: 50,
-            density: {
-              enable: true,
-              value_area: 800,
-            },
-          },
-          color: {
-            value: "#f87171", // vermelho para combinar com seu tema
-          },
-          shape: {
-            type: "circle",
-          },
-          opacity: {
-            value: 0.5,
-            random: true,
-          },
-          size: {
-            value: 3,
-            random: true,
-          },
+          number: { value: 50, density: { enable: true, value_area: 800 } },
+          color: { value: "#f87171" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: true },
+          size: { value: 3, random: true },
           move: {
             enable: true,
             speed: 1,
@@ -528,17 +654,14 @@
         },
         interactivity: {
           events: {
-            onhover: {
-              enable: true,
-              mode: "repulse",
-            },
+            onhover: { enable: true, mode: "repulse" },
           },
         },
         retina_detect: true,
       });
-    </script>
-    <script>
-      let swiperInstance = null; // pra controlar se já inicializou
+
+      // Inicialização do Swiper (carrossel de serviços)
+      let swiperInstance = null;
 
       function initSwiper() {
         if (!swiperInstance) {
@@ -569,42 +692,46 @@
         }
       }
 
+      // Ativa o swiper somente quando ele estiver visível
       const swiperSection = document.querySelector(".mySwiper");
-
       const observer = new IntersectionObserver(
         (entries, observer) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               initSwiper();
-              observer.unobserve(swiperSection); // desliga o observer depois de iniciar o swiper
+              observer.unobserve(swiperSection);
             }
           });
         },
-        {
-          threshold: 0.1, // inicia quando 10% do swiperSection estiver visível
-        }
+        { threshold: 0.1 }
       );
 
-      observer.observe(swiperSection);
+      if (swiperSection) {
+        observer.observe(swiperSection);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.getElementById("carousel");
+        const prevBtn = document.getElementById("prev");
+        const nextBtn = document.getElementById("next");
+
+        if (carousel && prevBtn && nextBtn) {
+          const scrollAmount = 300;
+
+          nextBtn.addEventListener("click", () => {
+            carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+          });
+
+          prevBtn.addEventListener("click", () => {
+            carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+          });
+        }
+
+        // Aguarda 600ms para começar a digitar (tempo da animação + atraso)
+        setTimeout(() => {
+          type();
+        }, 600);
+      });
     </script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const carousel = document.getElementById("carousel");
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
-
-    if (carousel && prevBtn && nextBtn) {
-      const scrollAmount = 300;
-
-      nextBtn.addEventListener("click", () => {
-        carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
-      });
-
-      prevBtn.addEventListener("click", () => {
-        carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-      });
-    }
-  });
-</script>
   </body>
 </html>
