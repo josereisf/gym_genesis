@@ -2,7 +2,12 @@
 require_once '../funcao.php';
 
 $idusuario = 1;
-$email_destinatario ='pabloalmeidathe1@gmail.com';
+$emails = [
+    'diosep70@gmail.com',
+    'pabloalmeidathe1@gmail.com',
+    'kairobarbosa2007@gmail.com'
+];
+
 echo '<pre>';
-print_r(gerarCodigoDeSeguranca($email_destinatario, $idusuario));
-echo '</pre';
+print_r(gerarCodigosDeSegurancaa($emails, $idusuario));
+echo '</pre>';
