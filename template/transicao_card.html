@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Carrossel Suave</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .carousel-wrapper {
+        perspective: 1000px;
+      }
+
+      .card {
+        transition: transform 0.6s ease, opacity 0.6s ease;
+        position: absolute;
+        width: 250px;
+        height: 350px;
+        background-color: white;
+        border-radius: 1rem;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+      }
+
+      .card img {
+        width: 96px;
+        height: 96px;
+        border-radius: 9999px;
+        object-fit: cover;
+        margin-top: 1rem;
+      }
+
+      .center {
+        transform: translateX(0) scale(1.1);
+        z-index: 10;
+        opacity: 1;
+      }
+
+      .left {
+        transform: translateX(-280px) scale(0.9);
+        z-index: -1;
+        opacity: 0.6;
+      }
+
+      .right {
+        transform: translateX(280px) scale(0.9);
+        z-index: 15;
+        opacity: 0.6;
+      }
+
+      .hidden-card {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6"
+  >
+    <div class="relative w-full flex justify-center items-center mb-6">
+      <!-- Botão Esquerdo -->
+      <button
+        id="prevBtn"
+        class="absolute left-4 z-20 bg-white text-blue-500 hover:bg-blue-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300"
+      >
+        ←
+      </button>
+
+      <!-- Carrossel -->
+      <div class="relative w-[300px] h-[400px] carousel-wrapper">
+        <div id="carousel" class="relative w-full h-full">
+          <!-- Cards serão inseridos via JS -->
+        </div>
+      </div>
+
+      <!-- Botão Direito -->
+      <button
+        id="nextBtn"
+        class="absolute right-4 z-20 bg-white text-blue-500 hover:bg-blue-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300"
+      >
+        →
+      </button>
+    </div>
+
+    <script>
+      const people = [
+        {
+          nome: "Ana Souza",
+          idade: 28,
+          profissao: "Designer",
+          descricao: "Ama criar interfaces bonitas.",
+          foto: "https://randomuser.me/api/portraits/women/44.jpg",
+        },
+        {
+          nome: "Carlos Lima",
+          idade: 34,
+          profissao: "Desenvolvedor",
+          descricao: "Apaixonado por código limpo.",
+          foto: "https://randomuser.me/api/portraits/men/35.jpg",
+        },
+        {
+          nome: "Mariana Dias",
+          idade: 25,
+          profissao: "Engenheira de Dados",
+          descricao: "Transforma dados em soluções.",
+          foto: "https://randomuser.me/api/portraits/women/65.jpg",
+        },
+        {
+          nome: "João Pedro",
+          idade: 40,
+          profissao: "Gerente de Projetos",
+          descricao: "Organização é seu lema.",
+          foto: "https://randomuser.me/api/portraits/men/45.jpg",
+        },
+        {
+          nome: "Laura Mendes",
+          idade: 30,
+          profissao: "Psicóloga",
+          descricao: "Ajudando pessoas a se entenderem.",
+          foto: "https://randomuser.me/api/portraits/women/55.jpg",
+        },
+      ];
+
+      let currentIndex = 0;
+
+      const carousel = document.getElementById("carousel");
+
+      function renderCards() {
+        carousel.innerHTML = "";
+
+        people.forEach((pessoa, index) => {
+          const div = document.createElement("div");
+          div.className = "card";
+
+          const leftIndex = (currentIndex - 1 + people.length) % people.length;
+          const rightIndex = (currentIndex + 1) % people.length;
+
+          if (index === currentIndex) {
+            div.classList.add("center");
+          } else if (index === leftIndex) {
+            div.classList.add("left");
+          } else if (index === rightIndex) {
+            div.classList.add("right");
+          } else {
+            div.classList.add("hidden-card");
+          }
+
+          div.innerHTML = `
+          <img src="${pessoa.foto}" />
+          <div>
+            <h2 class="text-xl font-bold mt-2">${pessoa.nome}</h2>
+            <p class="text-gray-600">${pessoa.idade} anos</p>
+            <p class="text-blue-500 font-semibold">${pessoa.profissao}</p>
+            <p class="text-gray-700 mt-2">${pessoa.descricao}</p>
+          </div>
+        `;
+
+          carousel.appendChild(div);
+        });
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + people.length) % people.length;
+        renderCards();
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % people.length;
+        renderCards();
+      });
+
+      renderCards();
+    </script>
+  </body>
+</html>
