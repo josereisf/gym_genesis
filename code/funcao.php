@@ -1104,8 +1104,8 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
           <div class="container">
             <h2>Recuperação de Senha</h2>
             <p>Esse é o seu código de segurança:</p>
-            <div class="codigo">' .$codigo. '</div>
-            <p class="expiracao">O código expira em: ' .$expiracao. '</p>
+            <div class="codigo">' . $codigo . '</div>
+            <p class="expiracao">O código expira em: ' . $expiracao . '</p>
           </div>
         </body>
         </html>
@@ -1342,18 +1342,13 @@ function uploadImagem($foto, $target_dir)
     }
   }
 }
-  function mostrarImagem($idusuario){
-    $conexao = conectar();
-    $sql = " SELECT foto_de_perfil FROM usuario WHERE $idusuario = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idusuario);
-    mysqli_stmt_execute($comando);
-    $target_file = mysqli_stmt_get_result($comando);
-    $imagem = fopen($target_file, 'r');
-    $resposta = fread($imagem,filesize($target_file));
-    fclose($imagem);
-    return $resposta;
-  }
+function mostrarImagem($target_file)
+{
+  $imagem = fopen($target_file, 'r');
+  $resposta = fread($imagem, filesize($target_file));
+  fclose($imagem);
+  return $resposta;
+}
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 
