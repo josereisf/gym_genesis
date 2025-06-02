@@ -1294,61 +1294,80 @@ function ajustarDataHora($DataeHora)
 
 function uploadImagem($foto, $target_dir)
 {
-  $target_file = $target_dir . basename($foto["name"]);
-  $uploadOk = 1;
   $resposta = "";
-  // Verifica se é uma imagem
-  if (isset($foto)) {
-    $check = getimagesize($foto["tmp_name"]);
-    if ($check === false) {
-      $resposta = "O arquivo não é uma imagem.";
-      $uploadOk = 0;
-    }
+  $uploadOk = 1;
+
+  // Verifica se o arquivo foi enviado
+  if (!isset($foto) || !isset($foto["tmp_name"]) || empty($foto["tmp_name"])) {
+    return "Nenhum arquivo foi enviado.";
   }
 
-  // Verifica se o arquivo já existe
-  if (file_exists($target_file)) {
-    $resposta = "Esse arquivo já existe.";
+  // Verifica se é uma imagem
+  $check = getimagesize($foto["tmp_name"]);
+  if ($check === false) {
+    $resposta .= "O arquivo não é uma imagem. ";
+    $uploadOk = 0;
+  }
+
+  // Gera nome único para o arquivo
+  $imageFileType = strtolower(pathinfo($foto["name"], PATHINFO_EXTENSION));
+  $nomeUnico = uniqid("img_", true) . "." . $imageFileType;
+  $target_file = rtrim($target_dir, "/") . "/" . $nomeUnico;
+
+  // Verifica o tipo de arquivo
+  if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
+    $resposta .= "Apenas arquivos JPG, PNG ou JPEG são permitidos. ";
     $uploadOk = 0;
   }
 
   // Verifica o tamanho do arquivo
   if ($foto["size"] > 500000) {
-    $resposta = "Esse arquivo é muito grande.";
+    $resposta .= "Esse arquivo é muito grande (máx: 500 KB). ";
     $uploadOk = 0;
   }
 
-  // Verifica o tipo de arquivo
-  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-  if (
-    $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-  ) {
-    $resposta = "Apenas arquivos JPG, PNG ou JPEG são permitidos.";
+  // Verifica se o diretório existe e é gravável
+  if (!is_dir($target_dir)) {
+    $resposta .= "Diretório de destino não existe. ";
     $uploadOk = 0;
-  }
-
-
-  if ($uploadOk == 0) {
-    return $resposta;
-  } else {
-    // Verificar se o diretório é gravável
+  } elseif (!is_writable($target_dir)) {
+    // Tenta ajustar as permissões
+    chmod($target_dir, 0775);
     if (!is_writable($target_dir)) {
-      chmod($target_dir, 0775);  // Tenta ajustar as permissões para 775
+      $resposta .= "Diretório de destino não é gravável. ";
+      $uploadOk = 0;
     }
+  }
+
+  // Tentativa final de upload
+  if ($uploadOk == 0) {
+    return trim($resposta);
+  } else {
     if (move_uploaded_file($foto["tmp_name"], $target_file)) {
-      return $target_file;
+      return $target_file; // Upload bem-sucedido
     } else {
-      return "Erro ao enviar o arquivo.";
+      return "Erro ao mover o arquivo para o diretório de destino.";
     }
   }
 }
+
 function mostrarImagem($target_file)
 {
-  $imagem = fopen($target_file, 'r');
-  $resposta = fread($imagem, filesize($target_file));
-  fclose($imagem);
-  return $resposta;
+  $target_file = rtrim($target_file, "/");
+
+  if (!file_exists($target_file)) {
+    http_response_code(404);
+    echo "Imagem não encontrada.";
+    exit;
+  }
+
+  $mime = mime_content_type($target_file);
+  header("Content-Type: $mime");
+  header("Content-Length: " . filesize($target_file));
+  readfile($target_file);
+  exit;
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 

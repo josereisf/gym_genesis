@@ -32,10 +32,12 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`alimento` (
   `gorduras` DECIMAL(6,2) NULL DEFAULT NULL,
   `porcao` VARCHAR(50) NULL DEFAULT NULL,
   `categoria` VARCHAR(50) NULL DEFAULT NULL,
-  `foto_de_perfil` LONGTEXT NULL DEFAULT NULL
-  PRIMARY KEY (`idalimento`))
+  `foto_de_perfil` LONGTEXT NULL,
+  PRIMARY KEY (`idalimento`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------
