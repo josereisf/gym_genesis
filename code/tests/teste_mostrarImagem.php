@@ -1,9 +1,18 @@
 <?php
 require_once('../funcao.php');
 
+$target_file = "./teste_imagem/print2.png";
 
-$target_file = "./teste_imagem/print2.png/";
+// Testando a função mostrarImagem
+$resultado = mostrarImagem($target_file);
 
-echo '<pre>';
-print_r(mostrarImagem($target_file));
-echo '</pre';
+// Verifica se retornou erro (string com mensagem) ou conteúdo da imagem
+if (is_string($resultado) && str_starts_with($resultado, 'Erro') || str_contains($resultado, 'Arquivo')) {
+    echo '<pre>';
+    echo $resultado;
+    echo '</pre>';
+} else {
+    // Se for conteúdo da imagem, exibe no navegador
+    header("Content-Type: image/png"); // ou image/jpeg conforme o arquivo
+    echo $resultado;
+}
