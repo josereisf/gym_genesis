@@ -9,5 +9,6 @@ $foto = $_FILES['arquivo'];
 $target_dir = "./teste_imagem/";
 
 echo '<pre>';
-print_r(uploadImagem($foto, $target_dir));
+$resposta = uploadImagem($foto, $target_dir);
+echo $resposta;
 echo '</pre';
