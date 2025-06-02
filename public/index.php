@@ -1,5 +1,5 @@
 <?php
-require_once '../php/funcao.php'; // Inclui o arquivo com as funções
+require_once '../code/funcao.php'; // Inclui o arquivo com as funções
 
 // Verifica se o formulário foi enviado
 if (isset($_GET['confirmar'])) {
