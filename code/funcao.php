@@ -1353,7 +1353,6 @@ function uploadImagem($foto, $target_dir)
 
 function mostrarImagem($target_file)
 {
-<<<<<<< Updated upstream
   $target_file = rtrim($target_file, "/");
 
   if (!file_exists($target_file)) {
@@ -1367,10 +1366,6 @@ function mostrarImagem($target_file)
   header("Content-Length: " . filesize($target_file));
   readfile($target_file);
   exit;
-=======
-  $resposta = "<img src='".$target_file."'/>";
-  return $resposta;
->>>>>>> Stashed changes
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////

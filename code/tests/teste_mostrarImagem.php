@@ -3,7 +3,6 @@ require_once('../funcao.php');
 
 $target_file = "./teste_imagem/print2.png";
 
-<<<<<<< Updated upstream
 // Testando a função mostrarImagem
 $resultado = mostrarImagem($target_file);
 
@@ -17,11 +16,3 @@ if (is_string($resultado) && str_starts_with($resultado, 'Erro') || str_contains
     header("Content-Type: image/png"); // ou image/jpeg conforme o arquivo
     echo $resultado;
 }
-=======
-$target_file = './teste_imagem/print2.png';
-
-echo '<pre>';
-$resposta = mostrarImagem($target_file);
-echo $resposta;
-echo '</pre';
->>>>>>> Stashed changes
