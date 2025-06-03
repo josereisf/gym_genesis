@@ -1,0 +1,134 @@
+/* Reset geral - mantido */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY e HTML ajustados para fullscreen e centralizar conteúdo */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita scroll */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #2c3e50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Agora slider-container ocupa a tela inteira */
+.slider-container {
+  position: relative;
+  width: 100vw;       /* tela cheia */
+  height: 100vh;      /* tela cheia */
+  border-radius: 0;   /* remover bordas arredondadas para fullscreen */
+  overflow: hidden;
+  box-shadow: none;   /* remover sombra para não poluir o fundo */
+  background: #4a90e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ajuste na overlay - mantive o estilo mas corrigindo o posicionamento */
+.color-overlay {
+  position: absolute;
+  top: 0;             /* corrigido de -100% para 0 para cobrir toda a área */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #e94b4b;
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 10;
+}
+
+.color-overlay.slide-down {
+  transform: translateY(100%);
+}
+
+/* Conteúdo ocupa toda a área do container */
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* centraliza verticalmente */
+  align-items: center;
+  z-index: 15; /* maior que overlay para aparecer por cima */
+  padding: 40px; /* um pouco de espaçamento */
+  box-sizing: border-box;
+  color: white;
+}
+
+/* Product name centralizado e responsivo */
+.product-name {
+  font-size: 6vw;   /* responsivo ao tamanho da viewport */
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  z-index: 20;
+}
+
+/* Ajuste nas partes das palavras para animar bem */
+.word-part {
+  transition: transform 0.8s ease-out;
+  display: inline-block;
+}
+
+/* Ajusta a imagem para ficar proporcional e centrada */
+.milkshake-image {
+  max-width: 50vw;   /* não ultrapassa 50% da largura da tela */
+  max-height: 50vh;
+  margin: 0 0 20px 0;
+  object-fit: contain;
+  position: relative; /* remove absolute para não sair do fluxo */
+  z-index: 15;
+  transition: opacity 1.5s ease;
+}
+
+/* Painel nutricional adaptado para largura dinâmica */
+.nutrition-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 90vw;     /* ocupa quase toda a largura */
+  max-width: 900px;
+  z-index: 20;
+  color: #2c3e50;
+}
+
+/* Itens do painel */
+.nutrition-item {
+  text-align: center;
+  flex: 1;
+}
+
+.nutrition-value {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.nutrition-label {
+  font-size: 14px;
+  color: #7f8c8d;
+  line-height: 1.2;
+}
+
+/* Esconde os controles porque não queremos no fundo */
+.controls {
+  display: none;
+}
