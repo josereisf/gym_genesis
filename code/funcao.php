@@ -641,13 +641,13 @@ function gerenciarVencimento($idusuario, $data_fim)
   desconectar($conexao);
   return $funcionou;
 }
-function listarCupomDesconto($idusuario)
+function listarCupomDesconto($idcupom)
 {
   $conexao = conectar();
-  if ($idusuario != null) {
-    $sql = 'SELECT * FROM cupom_desconto WHERE usuario_idusuario=?';
+  if ($idcupom != null) {
+    $sql = 'SELECT * FROM cupom_desconto WHERE idcupom=?';
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'i', $idusuario);
+    mysqli_stmt_bind_param($comando, 'i', $idcupom);
   } else {
     $sql = 'SELECT * FROM cupom_desconto';
     $comando = mysqli_prepare($conexao, $sql);
@@ -757,7 +757,7 @@ function cadastrarRefeicao($iddieta, $tipo, $horario)
   $sql = 'INSERT INTO refeicao (dieta_id, tipo, horario) VALUES (?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'isss', $iddieta, $tipo, $horario);
+  mysqli_stmt_bind_param($comando, 'iss', $iddieta, $tipo, $horario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -1375,6 +1375,18 @@ function mostrarImagemSimples($arquivo) {
     }
 }
 
+function deletarPagamento($idpagamento){
+  $conexao = conectar();
+  $sql = " DELETE FROM pagamento WHERE idpagamento=?";
+  $comando = mysqli_prepare($conexao, $sql);
+
+  mysqli_stmt_bind_param($comando, 'i', $idpagamento);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 

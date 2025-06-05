@@ -3,9 +3,8 @@
 
 require_once '../funcao.php';
 
-if (!empty($funcao)){
-    echo "funcionou";
-}
+$idproduto = 1;
+
 echo '<pre>';
-print_r($listar);
+print_r(listarProdutos($idproduto));
 echo '</pre';

@@ -1,11 +1,9 @@
 <?php
 
-
 require_once '../funcao.php';
 
-if (!empty($funcao)){
-    echo "funcionou";
-}
+$idcupom = 1;
+
 echo '<pre>';
-print_r($listar);
+print_r(listarCupomDesconto($idcupom));
 echo '</pre';
