@@ -8,5 +8,5 @@ $target_dir = "teste_imagem";
 
 echo '<pre>';
 $resposta = uploadImagem($foto, $target_dir);
-echo $resposta;
+echo "<img src=teste_imagem/$resposta>";
 echo '</pre';
