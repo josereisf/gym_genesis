@@ -7,7 +7,7 @@ ini_set('post_max_size', '20M');
 $foto = $_FILES['arquivo'];
 $target_dir = "./teste_imagem/";
 
-$resultado = uploadImagem($foto, $target_dir);
+$resultado = uploadImagem($foto, $target_dir)
 ?>
 
 <!DOCTYPE html>
