@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`forum` (
   `idtopico` INT(11) NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(100) NOT NULL,
   `descricao` TEXT NOT NULL,
-  `data_criacao` DATETIME NOT NULL,
+  `data_criacao` TIMESTAMP NOT NULL,
   `usuario_idusuario` INT(11) NOT NULL,
   PRIMARY KEY (`idtopico`),
   INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
@@ -457,7 +457,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`resposta_forum` (
   `idresposta` INT(11) NOT NULL AUTO_INCREMENT,
   `mensagem` TEXT NOT NULL,
-  `data_resposta` DATETIME NOT NULL,
+  `data_resposta` TIMESTAMP NOT NULL,
   `usuario_idusuario` INT(11) NOT NULL,
   `forum_idtopico` INT(11) NOT NULL,
   PRIMARY KEY (`idresposta`),

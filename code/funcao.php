@@ -782,10 +782,10 @@ function cadastrarPedido($idusuario, $data_pedido, $status, $idpagamento)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO pedido (usuario_idusuario, data_pedido, status, pagamento_idpagamento) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO pedido (usuario_idusuario, data_pedido, status, pagamento_idpagamento) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'isssi', $idusuario, $data_pedido, $status, $idpagamento);
+  mysqli_stmt_bind_param($comando, 'issi', $idusuario, $data_pedido, $status, $idpagamento);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -814,14 +814,20 @@ function listarForum($idtopico)
     u.nome AS nome_usuario,
     f.titulo,
     f.descricao,
-    f.data_criacao,
+    f.data_criacao
     FROM forum AS f
-    JOIN usuario AS u, f.usuario_idusuario = u.idusuario
-    WHERE f.idtopico=?';
+    JOIN usuario AS u ON f.usuario_idusuario = u.idusuario
+    WHERE f.idtopico=?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idtopico);
   } else {
-    $sql = 'SELECT * FROM forum';
+    $sql = 'SELECT
+    u.nome AS nome_usuario,
+    f.titulo,
+    f.descricao,
+    f.data_criacao
+    FROM forum AS f
+    JOIN usuario AS u ON f.usuario_idusuario = idusuario;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -835,14 +841,14 @@ function listarForum($idtopico)
 
   return $lista_foruns;
 }
-function cadastrarForum($titulo, $descricao, $data_criacao, $usuario_idusuario)
+function cadastrarForum($titulo, $descricao, $usuario_idusuario)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO forum (titulo, descricao, data_criacao, usuario_idusuario) VALUES (?, ?, ?, ?)';
+  $sql = 'INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES (?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'sssi', $titulo, $descricao, $data_criacao, $usuario_idusuario);
+  mysqli_stmt_bind_param($comando, 'ssi', $titulo, $descricao, $usuario_idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -855,7 +861,7 @@ function listarHistoricoTreino($idhistorico)
   if ($idhistorico != null) {
     $sql = 'SELECT
     u.nome,
-    t.nome,
+    t.tipo,
     ht.data_execucao,
     ht.observacoes
     FROM historico_treino AS ht
@@ -863,11 +869,11 @@ function listarHistoricoTreino($idhistorico)
     JOIN treino AS t ON ht.treino_id = t.idtreino
     WHERE idhistorico=?';
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'i', $idtopico);
+    mysqli_stmt_bind_param($comando, 'i', $idhistorico);
   } else {
     $sql = 'SELECT
     u.nome,
-    t.nome,
+    t.tipo,
     ht.data_execucao,
     ht.observacoes
     FROM historico_treino AS ht
@@ -900,14 +906,14 @@ function editarHistoricoTreino($idhistorico, $data_execucao, $observacoes)
   desconectar($conexao);
   return $funcionou;
 }
-function editarForum($idtopico, $titulo, $descricao, $data_criacao)
+function editarForum($idtopico, $titulo, $descricao)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE forum SET titulo=?, descricao=?, data_criacao=? WHERE idhistorico=?';
+  $sql = ' UPDATE forum SET titulo=?, descricao=? WHERE idtopico=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'sssi', $titulo, $descricao, $data_criacao, $idtopico);
+  mysqli_stmt_bind_param($comando, 'ssi', $titulo, $descricao, $idtopico);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -954,7 +960,7 @@ function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE cupom_desconto SET valor=?, data_pagamento=?, metodo=?, status=? WHERE idpagamento=?';
+  $sql = ' UPDATE pagamento SET valor=?, data_pagamento=?, metodo=?, status=? WHERE idpagamento=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'dsssi', $valor, $data_pagamento, $metodo, $status, $idpagamento);
@@ -1350,7 +1356,8 @@ function mostrarImagem($target_file)
   exit;
 }
 
-function deletarPagamento($idpagamento){
+function deletarPagamento($idpagamento)
+{
   $conexao = conectar();
   $sql = " DELETE FROM pagamento WHERE idpagamento=?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1735,56 +1742,56 @@ function listarPagamentosDetalhados($idpagamento2)
     prod.quantidade_estoque
     FROM 
     pagamento p
-JOIN 
+  JOIN 
     pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
-JOIN 
-    pedido ped ON p.idpagamento = ped.pagamento_idpagamento
-JOIN 
-    usuario u ON ped.usuario_idusuario = u.idusuario
-JOIN 
-    produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
+  JOIN 
+      pedido ped ON p.idpagamento = ped.pagamento_idpagamento
+  JOIN 
+      usuario u ON ped.usuario_idusuario = u.idusuario
+  JOIN 
+      produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
 
 
-WHERE p.idpagamento = ?;  -- Aqui você pode passar um ID específico de pagamento
-";
+  WHERE p.idpagamento = ?;  -- Aqui você pode passar um ID específico de pagamento
+  ";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idpagamento2);
   } else {
     $sql = " SELECT 
-    p.idpagamento, 
-    p.valor, 
-    p.data_pagamento, 
-    p.metodo, 
-    p.status AS pagamento_status,
-    pd.tipo AS pagamento_tipo, 
-    pd.bandeira_cartao, 
-    pd.ultimos_digitos, 
-    pd.codigo_pix, 
-    pd.linha_digitavel_boleto,
-    ped.idpedido,
-    ped.data_pedido,
-    ped.status AS pedido_status,
-    u.idusuario,
-    u.nome AS usuario_nome,
-    u.email AS usuario_email,
-    u.telefone AS usuario_telefone,
-    prod.idproduto,
-    prod.nome AS produto_nome,
-    prod.preco AS produto_preco,
-    prod.quantidade_estoque
-FROM 
-    pagamento p
-JOIN 
-    pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
-JOIN 
-    pedido ped ON p.idpagamento = ped.pagamento_idpagamento
-JOIN 
-    usuario u ON ped.usuario_idusuario = u.idusuario
-JOIN 
-    produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
+      p.idpagamento, 
+      p.valor, 
+      p.data_pagamento, 
+      p.metodo, 
+      p.status AS pagamento_status,
+      pd.tipo AS pagamento_tipo, 
+      pd.bandeira_cartao, 
+      pd.ultimos_digitos, 
+      pd.codigo_pix, 
+      pd.linha_digitavel_boleto,
+      ped.idpedido,
+      ped.data_pedido,
+      ped.status AS pedido_status,
+      u.idusuario,
+      u.nome AS usuario_nome,
+      u.email AS usuario_email,
+      u.telefone AS usuario_telefone,
+      prod.idproduto,
+      prod.nome AS produto_nome,
+      prod.preco AS produto_preco,
+      prod.quantidade_estoque
+  FROM 
+      pagamento p
+  JOIN 
+      pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
+  JOIN 
+      pedido ped ON p.idpagamento = ped.pagamento_idpagamento
+  JOIN 
+      usuario u ON ped.usuario_idusuario = u.idusuario
+  JOIN 
+      produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
 
-  -- Aqui você pode passar um ID específico de pagamento
-";
+    -- Aqui você pode passar um ID específico de pagamento
+  ";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2415,12 +2422,12 @@ function editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoqu
   return $funcionou;
 }
 
-function editarRespostaForum($idresposta, $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico)
+function editarRespostaForum($idresposta, $mensagem, $usuario_idusuario, $forum_idtopico)
 {
   $conexao = conectar();
 
   $sql = "UPDATE resposta_forum 
-          SET mensagem = ?, data_resposta = ?, usuario_idusuario = ?, forum_idtopico = ?
+          SET mensagem = ?, usuario_idusuario = ?, forum_idtopico = ?
           WHERE idresposta = ?";
 
   $comando = mysqli_prepare($conexao, $sql);

@@ -135,16 +135,16 @@ INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes)
 -- 7. Forum, resposta_forum
 
 -- 7.1. forum
-INSERT INTO forum (titulo, descricao, data_criacao, usuario_idusuario) VALUES
-  ('Dúvida Treino Peitoral', 'Como evoluir no supino?', '2025-04-01 09:00:00', 1),
-  ('Nutrição Pós-Treino',    'O que comer após o treino?', '2025-04-02 12:00:00', 2),
-  ('Equipamentos',           'Qual melhor barra?', '2025-04-03 15:00:00', 3);
+INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
+  ('Dúvida Treino Peitoral', 'Como evoluir no supino?', 1),
+  ('Nutrição Pós-Treino',    'O que comer após o treino?', 2),
+  ('Equipamentos',           'Qual melhor barra?', 3);
 
 -- 7.2. resposta_forum
-INSERT INTO resposta_forum (mensagem, data_resposta, usuario_idusuario, forum_idtopico) VALUES
-  ('Tente aumentar 2kg por semana.', '2025-04-01 10:00:00', 2, 1),
-  ('Carboidrato e proteína juntos.', '2025-04-02 13:00:00', 3, 2),
-  ('Barra olímpica convencional.',  '2025-04-03 16:00:00', 1, 3);
+INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
+  ('Tente aumentar 2kg por semana.', 2, 1),
+  ('Carboidrato e proteína juntos.', 3, 2),
+  ('Barra olímpica convencional.', 1, 3);
 
 -- 8. Pedido, item_pedido
 INSERT INTO `gym_genesis`.`pagamento` 
