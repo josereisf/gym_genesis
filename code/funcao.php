@@ -1299,7 +1299,7 @@ function uploadImagem($foto, $target_dir)
 
   // Verifica se o arquivo foi enviado
   if (!isset($foto) || !isset($foto["tmp_name"]) || empty($foto["tmp_name"])) {
-    return "Nenhum arquivo foi enviado.";
+    return ['erro' => "Nenhum arquivo foi enviado."];
   }
 
   // Verifica se é uma imagem
@@ -1331,7 +1331,6 @@ function uploadImagem($foto, $target_dir)
     $resposta .= "Diretório de destino não existe. ";
     $uploadOk = 0;
   } elseif (!is_writable($target_dir)) {
-    // Tenta ajustar as permissões
     chmod($target_dir, 0775);
     if (!is_writable($target_dir)) {
       $resposta .= "Diretório de destino não é gravável. ";
@@ -1341,15 +1340,16 @@ function uploadImagem($foto, $target_dir)
 
   // Tentativa final de upload
   if ($uploadOk == 0) {
-    return trim($resposta);
+    return ['erro' => trim($resposta)];
   } else {
     if (move_uploaded_file($foto["tmp_name"], $target_file)) {
-      return $target_file; // Upload bem-sucedido
+      return ['nome' => basename($target_file)];
     } else {
-      return "Erro ao mover o arquivo para o diretório de destino.";
+      return ['erro' => "Erro ao mover o arquivo para o diretório de destino."];
     }
   }
 }
+
 
 function mostrarImagem($target_file)
 {
@@ -1366,6 +1366,13 @@ function mostrarImagem($target_file)
   header("Content-Length: " . filesize($target_file));
   readfile($target_file);
   exit;
+}
+function mostrarImagemSimples($arquivo) {
+    if (file_exists($arquivo)) {
+        readfile($arquivo);
+    } else {
+        echo "Imagem não encontrada.";
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
