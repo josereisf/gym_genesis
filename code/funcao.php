@@ -1320,17 +1320,13 @@ function uploadImagem($foto, $target_dir)
     $uploadOk = 0;
   }
 
-  // Verifica o tamanho do arquivo
-  if ($foto["size"] > 500000) {
-    $resposta .= "Esse arquivo é muito grande (máx: 500 KB). ";
-    $uploadOk = 0;
-  }
+
   // Tentativa final de upload
   if ($uploadOk == 0) {
     return trim($resposta);
   } else {
     if (move_uploaded_file($foto["tmp_name"], $target_file)) {
-      return $target_file; // Upload bem-sucedido
+      return $nomeUnico; // Upload bem-sucedido
     } else {
       return "Erro ao mover o arquivo para o diretório de destino.";
     }
