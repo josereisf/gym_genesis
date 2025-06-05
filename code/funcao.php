@@ -1325,7 +1325,6 @@ function uploadImagem($foto, $target_dir)
     $resposta .= "Esse arquivo é muito grande (máx: 500 KB). ";
     $uploadOk = 0;
   }
-return $target_file;
   // Tentativa final de upload
   if ($uploadOk == 0) {
     return trim($resposta);
