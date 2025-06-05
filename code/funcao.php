@@ -1325,20 +1325,7 @@ function uploadImagem($foto, $target_dir)
     $resposta .= "Esse arquivo é muito grande (máx: 500 KB). ";
     $uploadOk = 0;
   }
-
-  // Verifica se o diretório existe e é gravável
-  if (!is_dir($target_dir)) {
-    $resposta .= "Diretório de destino não existe. ";
-    $uploadOk = 0;
-  } elseif (!is_writable($target_dir)) {
-    // Tenta ajustar as permissões
-    chmod($target_dir, 0775);
-    if (!is_writable($target_dir)) {
-      $resposta .= "Diretório de destino não é gravável. ";
-      $uploadOk = 0;
-    }
-  }
-
+return $target_file;
   // Tentativa final de upload
   if ($uploadOk == 0) {
     return trim($resposta);
