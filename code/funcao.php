@@ -1299,7 +1299,7 @@ function uploadImagem($foto, $target_dir)
 
   // Verifica se o arquivo foi enviado
   if (!isset($foto) || !isset($foto["tmp_name"]) || empty($foto["tmp_name"])) {
-    return "Nenhum arquivo foi enviado.";
+    return ['erro' => "Nenhum arquivo foi enviado."];
   }
 
   // Verifica se é uma imagem
@@ -1320,18 +1320,18 @@ function uploadImagem($foto, $target_dir)
     $uploadOk = 0;
   }
 
-
   // Tentativa final de upload
   if ($uploadOk == 0) {
-    return trim($resposta);
+    return ['erro' => trim($resposta)];
   } else {
     if (move_uploaded_file($foto["tmp_name"], $target_file)) {
-      return $nomeUnico; // Upload bem-sucedido
+      return ['nome' => basename($target_file)];
     } else {
-      return "Erro ao mover o arquivo para o diretório de destino.";
+      return ['erro' => "Erro ao mover o arquivo para o diretório de destino."];
     }
   }
 }
+
 
 function mostrarImagem($target_file)
 {
