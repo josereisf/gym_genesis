@@ -970,14 +970,14 @@ function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status
   desconectar($conexao);
   return $funcionou;
 }
-function editarDietaAlimento($iddieta_alimentar, $quantidade, $observacao)
+function editarDietaAlimento($idalimento, $idrefeicao, $quantidade, $observacao)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE dieta_alimento SET quantidade=?, observacao=? WHERE iddieta_alimentar=?';
+  $sql = ' UPDATE dieta_alimentar SET quantidade=?, observacao=? WHERE alimento_idalimento=? and refeicao_idrefeicao=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'dsi', $quantidade, $observacao, $iddieta_alimentar);
+  mysqli_stmt_bind_param($comando, 'dsii', $quantidade, $observacao, $idalimento, $idrefeicao);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);

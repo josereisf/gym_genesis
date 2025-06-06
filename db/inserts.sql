@@ -105,7 +105,7 @@ VALUES
 
 -- 5.3. dieta_alimento
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
-(`alimento_idalimento`, `refeicao_idrefeicao`, `quantidade`, `observacoes`)
+(`alimento_idalimento`, `refeicao_idrefeicao`, `quantidade`, `observacao`)
 VALUES
 (1, 1, '200g', 'Proteína para o café da manhã'),
 (2, 2, '150g', 'Carboidrato para o almoço'),

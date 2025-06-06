@@ -595,7 +595,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`dieta_alimentar` (
   `alimento_idalimento` INT(11) NOT NULL,
   `refeicao_idrefeicao` INT(11) NOT NULL,
   `quantidade` VARCHAR(45) NOT NULL,
-  `observacoes` VARCHAR(45) NOT NULL,
+  `observacao` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`alimento_idalimento`, `refeicao_idrefeicao`),
   INDEX `fk_alimento_has_refeicao_refeicao1_idx` (`refeicao_idrefeicao` ASC) VISIBLE,
   INDEX `fk_alimento_has_refeicao_alimento1_idx` (`alimento_idalimento` ASC) VISIBLE,
