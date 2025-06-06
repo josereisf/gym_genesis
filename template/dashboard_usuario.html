@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Gym Gênesis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-950 text-white font-sans">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-gray-900 shadow-lg p-6 flex flex-col items-center">
+      <!-- Logo -->
+      <img src="https://github.com/josereisf/gym_genesis/blob/main/public/logo.png" alt="Logo Gym Gênesis" class="mb-6 w-32 h-auto">
+      <h2 class="text-2xl font-bold text-center text-white mb-8">Gym Gênesis</h2>
+      <nav class="w-full space-y-3">
+        <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-blue-700 p-2 rounded-md">
+          <span class="material-icons">dashboard</span> <span>Dashboard</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-blue-700 p-2 rounded-md">
+          <span class="material-icons">fitness_center</span> <span>Treinos</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-blue-700 p-2 rounded-md">
+          <span class="material-icons">restaurant</span> <span>Dietas</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-blue-700 p-2 rounded-md">
+          <span class="material-icons">shopping_cart</span> <span>Loja</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-blue-700 p-2 rounded-md">
+          <span class="material-icons">question_answer</span> <span>Fórum</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-blue-700 p-2 rounded-md">
+          <span class="material-icons">settings</span> <span>Configurações</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex-1 p-8 overflow-y-auto">
+      <!-- Header -->
+      <header class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-white">Painel do Usuário</h1>
+        <div class="text-gray-400 text-lg">Bem-vindo(a), Usuário 👋</div>
+      </header>
+
+      <!-- Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-6 rounded-xl shadow-lg">
+          <h2 class="text-lg font-medium">Progresso de Treino</h2>
+          <p class="text-3xl font-bold mt-2">72%</p>
+        </div>
+        <div class="bg-gradient-to-r from-green-700 to-green-900 text-white p-6 rounded-xl shadow-lg">
+          <h2 class="text-lg font-medium">Pedidos Recentes</h2>
+          <p class="text-3xl font-bold mt-2">3</p>
+        </div>
+        <div class="bg-gradient-to-r from-purple-700 to-purple-900 text-white p-6 rounded-xl shadow-lg">
+          <h2 class="text-lg font-medium">Mensagens do Fórum</h2>
+          <p class="text-3xl font-bold mt-2">5 novas</p>
+        </div>
+      </div>
+
+      <!-- Tabela de Treinos Recentes -->
+      <div class="bg-gray-900 p-6 rounded-xl shadow-md mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Treinos Recentes</h2>
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-800 text-gray-400">
+              <th class="border-b border-gray-700 p-3">Data</th>
+              <th class="border-b border-gray-700 p-3">Treino</th>
+              <th class="border-b border-gray-700 p-3">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-gray-800">
+              <td class="p-3">05/06/2025</td>
+              <td class="p-3">Peito e Tríceps</td>
+              <td class="p-3 text-green-400 font-semibold">Concluído</td>
+            </tr>
+            <tr class="hover:bg-gray-800">
+              <td class="p-3">04/06/2025</td>
+              <td class="p-3">Perna</td>
+              <td class="p-3 text-yellow-400 font-semibold">Parcial</td>
+            </tr>
+            <tr class="hover:bg-gray-800">
+              <td class="p-3">03/06/2025</td>
+              <td class="p-3">Costas e Bíceps</td>
+              <td class="p-3 text-green-400 font-semibold">Concluído</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tabela de Pedidos Recentes -->
+      <div class="bg-gray-900 p-6 rounded-xl shadow-md">
+        <h2 class="text-2xl font-semibold mb-4">Pedidos Recentes</h2>
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-800 text-gray-400">
+              <th class="border-b border-gray-700 p-3">Produto</th>
+              <th class="border-b border-gray-700 p-3">Status</th>
+              <th class="border-b border-gray-700 p-3">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-gray-800">
+              <td class="p-3">Whey Protein</td>
+              <td class="p-3 text-blue-400 font-semibold">Enviado</td>
+              <td class="p-3">R$ 199,00</td>
+            </tr>
+            <tr class="hover:bg-gray-800">
+              <td class="p-3">Camiseta Dry Fit</td>
+              <td class="p-3 text-green-400 font-semibold">Concluído</td>
+              <td class="p-3">R$ 89,90</td>
+            </tr>
+            <tr class="hover:bg-gray-800">
+              <td class="p-3">Creatina 300g</td>
+              <td class="p-3 text-yellow-400 font-semibold">Processando</td>
+              <td class="p-3">R$ 120,00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
