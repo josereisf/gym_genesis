@@ -2861,3 +2861,14 @@ function cadastrarAulaAgendada($horario_idhorario, $data_aula, $usuario_idusuari
 
   return $funcionou;
 }
+
+function gerarCodigoPix($tamanho = 32) {
+  $caracteres = array_merge(range('a', 'z'), range('0', '9'));
+  $codigo = '';
+
+  for ($i = 0; $i < $tamanho; $i++) {
+    $codigo .= $caracteres[array_rand($caracteres)];
+  }
+
+  return $codigo;
+}
