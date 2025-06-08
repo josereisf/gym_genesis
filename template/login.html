@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Gym Genesis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .bg-darkgray { background-color: #1a1a1a; }
+    .bg-neongreen { background-color: #39ff14; }
+    .text-neongreen { color: #39ff14; }
+    .text-neonred { color: #ff2e63; }
+
+    /* Flip */
+    .flip-container { perspective: 1000px; }
+    .flipper {
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+    .flipped { transform: rotateY(180deg); }
+    .front, .back {
+      backface-visibility: hidden;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .back { transform: rotateY(180deg); }
+
+    /* Slider */
+    .testimonial-slider {
+      overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      z-index: 0;
+      opacity: 0.1;
+    }
+    .testimonial-track {
+      display: flex;
+      animation: slide 10s linear infinite;
+      gap: 1rem;
+    }
+    @keyframes slide {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body class="bg-darkgray text-white min-h-screen flex items-center justify-center relative overflow-hidden">
+
+  <!-- Fundo com depoimentos passando -->
+  <div class="testimonial-slider h-[500px] px-4">
+    <div class="testimonial-track">
+      <!-- Repetindo depoimentos -->
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Perdi 15kg em 6 meses com a Gym Genesis!"</p>
+        <span class="block mt-2 text-neonred">Roberto Almeida</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Personal trainer mudou meu jogo!"</p>
+        <span class="block mt-2 text-neonred">Lucas Mendes</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Estrutura e ambiente sensacionais!"</p>
+        <span class="block mt-2 text-neongreen">Fernanda Lima</span>
+      </div>
+
+      <!-- Duplicado para looping -->
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Perdi 15kg em 6 meses com a Gym Genesis!"</p>
+        <span class="block mt-2 text-neonred">Roberto Almeida</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+      <div class="bg-gray-800 p-6 h-[200px] rounded-2xl min-w-[400px] text-base">
+        <p class="italic">"Nunca me senti tão forte nas aulas da Ana!"</p>
+        <span class="block mt-2 text-neongreen">Camila Ferreira</span>
+      </div>
+    </div>
+  </div>
+<!-- Glow sob o card -->
+<div class="absolute inset-0 flex items-center justify-center z-0">
+  <div class="w-[380px] h-[480px] rounded-2xl blur-2xl bg-neongreen opacity-10"></div>
+</div>
+
+<!-- Desfoque sobre os depoimentos -->
+<div class="absolute inset-0 z-10 "></div>
+
+  <!-- Card de login/cadastro -->
+  <div class="flip-container w-full max-w-md h-[480px] z-20">
+    <div id="flipper" class="flipper w-full h-full">
+
+      <!-- Login -->
+      <div class="front bg-gray-800 rounded-2xl shadow-xl p-8">
+        <h2 class="text-3xl font-bold text-center mb-6">
+          Acesse a <span class="text-neongreen">Gym Genesis</span>
+        </h2>
+        <form class="space-y-4">
+          <div>
+            <label for="login-email" class="block text-sm">Email</label>
+            <input id="login-email" type="email" required
+              class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-neongreen" />
+          </div>
+          <div>
+            <label for="login-senha" class="block text-sm">Senha</label>
+            <input id="login-senha" type="password" required
+              class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-neongreen" />
+          </div>
+          <button type="submit" class="w-full bg-neongreen text-black font-bold py-2 rounded hover:bg-green-400">
+            Entrar
+          </button>
+          <p class="text-center text-sm text-white/60">
+            Não possui uma conta?
+            <button type="button" onclick="toggleFlip()" class="text-neongreen hover:underline">Cadastre-se</button>
+          </p>
+        </form>
+      </div>
+
+      <!-- Cadastro -->
+      <div class="back bg-gray-800 rounded-2xl shadow-xl p-8">
+        <h2 class="text-3xl font-bold text-center mb-6">
+          Cadastre-se na <span class="text-neongreen">Gym Genesis</span>
+        </h2>
+        <form class="space-y-4">
+          <div>
+            <label for="nome" class="block text-sm">Nome</label>
+            <input id="nome" type="text" required
+              class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-neongreen" />
+          </div>
+          <div>
+            <label for="cadastro-email" class="block text-sm">Email</label>
+            <input id="cadastro-email" type="email" required
+              class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-neongreen" />
+          </div>
+          <div>
+            <label for="cadastro-senha" class="block text-sm">Senha</label>
+            <input id="cadastro-senha" type="password" required
+              class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-neongreen" />
+          </div>
+          <button type="submit" class="w-full bg-neongreen text-black font-bold py-2 rounded hover:bg-green-400">
+            Cadastrar
+          </button>
+          <p class="text-center text-sm text-white/60">
+            Já tem uma conta?
+            <button type="button" onclick="toggleFlip()" class="text-neongreen hover:underline">Entrar</button>
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleFlip() {
+      document.getElementById("flipper").classList.toggle("flipped");
+    }
+  </script>
+
+</body>
+</html>
