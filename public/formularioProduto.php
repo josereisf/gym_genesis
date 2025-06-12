@@ -3,12 +3,15 @@ require_once '../code/funcao.php';
 
 if (isset($_GET['idproduto'])){
   $idproduto = $_GET['idproduto'];
-  $resultados = json_decode(listarProdutos($idproduto));
-  $nome = $resultados['nome'];
-  $descricao = $resultados['descricao'];
-  $preco = $resultados['preco'];
-  $quantidade = $resultados['quantidade_estoque'];
-  $imagem = $resultados['imagem'];
+  $resultados = json_decode(listarProdutos($idproduto), JSON_UNESCAPED_UNICODE);
+  // echo "<pre>";
+  // print_r($resultados[0]['nome']); 
+  // echo "</pre>";
+  $nome = $resultados[0]['nome'];
+  $descricao = $resultados[0]['descricao'];
+  $preco = $resultados[0]['preco'];
+  $quantidade = $resultados[0]['quantidade_estoque'];
+  $imagem = $resultados[0]['imagem'];
   }
 else {
   $idproduto = 0;
