@@ -71,4 +71,6 @@ listarPagamentos($conexao, $idpagamento)
 editarPagamento($conexao, $idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status)
 editarDietaAlimento($conexao, $iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao)
 
-teste unitario e composer
+tela de 14
+intel i5 ou melhor
+dell
