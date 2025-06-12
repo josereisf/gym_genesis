@@ -2873,3 +2873,28 @@ function gerarCodigoPix($tamanho = 32) {
 
   return $codigo;
 }
+// numeração do adms[0], aluno[1] e funcionário[2]
+function gerarNumeroMatriculaPorTipo($tipo) {
+  // Define o comprimento desejado por tipo
+  switch ($tipo) {
+      case 0: // ADM
+          $comprimento = 5;
+          break;
+      case 1: // Aluno
+          $comprimento = 15;
+          break;
+      case 2: // Funcionário
+          $comprimento = 10;
+          break;
+      default:
+          return "Tipo inválido";
+  }
+
+  // Gera um número aleatório com o comprimento certo
+  $min = (int)str_pad('1', $comprimento, '0');     // Ex: 10000
+  $max = (int)str_pad('', $comprimento, '9');      // Ex: 99999
+
+  return strval(rand($min, $max));
+}
+
+
