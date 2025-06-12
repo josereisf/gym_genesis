@@ -81,7 +81,7 @@ function loginUsuario($email, $senha)
 function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
 {
   $conexao = conectar();
-  if ($tipo == 1) {
+  if ($tipo == 1 or $tipo == 2) {
     $tipoid = "usuario_id";
   } else {
     $tipoid = "funcionario_id";
@@ -99,7 +99,7 @@ function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cid
 function editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id)
 {
   $conexao = conectar();
-  if ($tipo == 1) {
+  if ($tipo == 1 or $tipo == 2) {
     $tipoid = "usuario_id";
   } else {
     $tipoid = "funcionario_id";
@@ -733,7 +733,7 @@ function listarProdutos($idproduto)
     $lista_produtos[] = $produto;
   }
   mysqli_stmt_close($comando);
-  $lista_produto = array_values($lista_produtos);
+  $lista_produtos = array_values($lista_produtos);
   return json_encode($lista_produtos);
 }
 
@@ -1299,10 +1299,11 @@ function ajustarDataHora($DataeHora)
   return $DataeHoraConvertido;
 }
 
-function uploadImagem($foto, $target_dir)
+function uploadImagem($foto)
 {
   $resposta = "";
   $uploadOk = 1;
+  $target_dir = __DIR__ . '/../public/uploads/';
 
   // Verifica se o arquivo foi enviado
   if (!isset($foto) || !isset($foto["tmp_name"]) || empty($foto["tmp_name"])) {
@@ -1332,7 +1333,7 @@ function uploadImagem($foto, $target_dir)
     return ['erro' => trim($resposta)];
   } else {
     if (move_uploaded_file($foto["tmp_name"], $target_file)) {
-      return ['nome' => basename($target_file)];
+      return $nomeUnico;
     } else {
       return ['erro' => "Erro ao mover o arquivo para o diretório de destino."];
     }
