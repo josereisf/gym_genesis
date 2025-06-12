@@ -1,35 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>formulario produto</title>
-</head>
-<body>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulário de Produto</title>
+  </head>
+  <body>
     <form action="" method="post" enctype="multipart/form-data">
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
+      <label for="nome">Nome:</label>
+      <input type="text" name="nome" id="nome" required /><br />
 
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        <label for="nome">nome:</label>
-        <input type="text" name="nome" >
-        
+      <label for="descricao">Descrição:</label>
+      <input type="text" name="descricao" id="descricao" required /><br />
 
+      <label for="preco">Preço:</label>
+      <input type="number" name="preco" id="preco" step="0.01" required /><br />
+
+      <label for="qtd">Quantidade no estoque:</label>
+      <input type="number" name="qtd" id="qtd" required /><br />
+
+      <label for="imagem">Imagem:</label>
+      <input type="file" name="imagem" id="imagem" accept="image/*" /><br />
+
+      <input type="submit" value="Salvar" />
     </form>
-</body>
+  </body>
 </html>
