@@ -1591,12 +1591,12 @@ function editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $pr
   return $funcionou;
 }
 
-function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id)
+function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem)
 {
   $conexao = conectar();
 
   $sql = "UPDATE funcionario 
-            SET nome = ?, email = ?, telefone = ?, data_contratacao = ?, salario = ?, cargo_id = ?
+            SET nome = ?, email = ?, telefone = ?, data_contratacao = ?, salario = ?, cargo_id = ?, foto_de_perfil=?
             WHERE idfuncionario = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -1607,7 +1607,7 @@ function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contr
   }
 
   // Correção aqui:
-  mysqli_stmt_bind_param($comando, "ssssdii", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $idfuncionario);
+  mysqli_stmt_bind_param($comando, "ssssdisi", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem, $idfuncionario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2695,12 +2695,12 @@ function cadastrarDietaAlimento($refeicao_id, $alimento_id, $quantidade, $observ
 }
 //
 
-function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id)
+function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem)
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_idcargo)
-            VALUES (?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_idcargo, foto_de_perfil)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -2709,7 +2709,7 @@ function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $sala
     return false;
   }
 
-  mysqli_stmt_bind_param($comando, "ssssdi", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id);
+  mysqli_stmt_bind_param($comando, "ssssdis", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
 
   $funcionou = mysqli_stmt_execute($comando);
 

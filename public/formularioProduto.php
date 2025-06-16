@@ -4,14 +4,12 @@ require_once '../code/funcao.php';
 if (isset($_GET['idproduto'])){
   $idproduto = $_GET['idproduto'];
   $resultados = json_decode(listarProdutos($idproduto), JSON_UNESCAPED_UNICODE);
-  // echo "<pre>";
-  // print_r($resultados[0]['nome']); 
-  // echo "</pre>";
   $nome = $resultados[0]['nome'];
   $descricao = $resultados[0]['descricao'];
   $preco = $resultados[0]['preco'];
   $quantidade = $resultados[0]['quantidade_estoque'];
   $imagem = $resultados[0]['imagem'];
+  $acao = 'editar';
   }
 else {
   $idproduto = 0;
@@ -20,6 +18,7 @@ else {
   $preco = 0;
   $quantidade = 0;
   $imagem = null;
+  $acao = 'cadastrar';
 }
 
 
@@ -32,8 +31,9 @@ else {
     <title>Formulário de Produto</title>
   </head>
   <body>
-    <form action="api/index.php?entidade=produto&acao=cadastrar" method="post" enctype="multipart/form-data">
+    <form action="api/index.php?entidade=produto&acao=<?= $acao ?>" method="post" enctype="multipart/form-data">
       <label for="nome">Nome:</label>
+      <input type="hidden" name="idproduto" value="<?= $idproduto ?>">
       <input type="text" name="nome" id="nome" value="<?= $nome?>" required /><br />
 
       <label for="descricao">Descrição:</label>
@@ -45,14 +45,15 @@ else {
       <label for="qtd">Quantidade no estoque:</label>
       <input type="number" name="qtd" id="qtd" value="<?= $quantidade ?>" required /><br />
 
+      <label for="imagem">Imagem:</label>
       <?php 
       if (!empty($imagem)){
         echo "<img src='uploads/$imagem' alt='$imagem'>";
+        echo "<input type='hidden' name='imagem' value='$imagem'>";
       }
       ?>
-      <label for="imagem">Imagem:</label>
       <input type="file" name="imagem" id="imagem" accept="image/*" /><br />
-      <input type="submit" value="Salvar" />
+      <input type="submit" value="<?= $acao ?>" />
     </form>
   </body>
 </html>
