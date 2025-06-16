@@ -1801,7 +1801,7 @@
         </div>
       </div>
     </footer>
-
+<!-- 
     <script>
       // Criar partículas para o fundo
       function createParticles() {
@@ -1930,107 +1930,8 @@
           }
         }
       })();
-    </script>
+    </script> -->
 
-<script>
-  const ambientes = [
-    {
-      nome: "Área de Musculação",
-      descricao: "Equipamentos modernos e espaço amplo para treinar.",
-      imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
-    },
-    {
-      nome: "Aulas Coletivas",
-      descricao: "Zumba, funcional, spinning e muito mais.",
-      imagem: "https://www.amlhr.com.br/assets/images/whatsapp-image-2024-03-15-at-17.40.35-1.webp"
-    },
-    {
-      nome: "Cardio",
-      descricao: "Esteiras, bicicletas e simuladores de escada.",
-      imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
-    },
-    {
-      nome: "Área Funcional",
-      descricao: "Treinamentos de força, resistência e agilidade.",
-      imagem: "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-    },
-    {
-      nome: "Avaliação Física",
-      descricao: "Acompanhamento individual com especialistas.",
-      imagem: "https://blog.supertechfitness.com.br/wp-content/uploads/2023/06/espaco-academia-1024x768.jpeg"
-    },
-  ];
-
-  let currentIndex = 0;
-  let autoPlayInterval;
-  const carousel = document.getElementById("carousel");
-  const container = document.getElementById("carouselContainer");
-
-  function renderCards() {
-    carousel.innerHTML = "";
-
-    ambientes.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "card";
-
-      const leftIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
-      const rightIndex = (currentIndex + 1) % ambientes.length;
-
-      if (index === currentIndex) {
-        div.classList.add("center");
-      } else if (index === leftIndex) {
-        div.classList.add("left");
-      } else if (index === rightIndex) {
-        div.classList.add("right");
-      } else {
-        div.classList.add("hidden-card");
-      }
-
-      div.innerHTML = `
-        <img src="${item.imagem}" alt="${item.nome}" />
-        <div class="p-3">
-          <h2 class="text-lg font-bold text-gray-900">${item.nome}</h2>
-          <p class="text-sm text-gray-700">${item.descricao}</p>
-        </div>
-      `;
-
-      carousel.appendChild(div);
-    });
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % ambientes.length;
-    renderCards();
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
-    renderCards();
-  }
-
-  function startAutoplay() {
-    autoPlayInterval = setInterval(nextSlide, 3500);
-  }
-
-  function stopAutoplay() {
-    clearInterval(autoPlayInterval);
-  }
-
-  // Botões
-  document.getElementById("nextBtn").addEventListener("click", nextSlide);
-  document.getElementById("prevBtn").addEventListener("click", prevSlide);
-
-  // Eventos desktop (mouse)
-  container.addEventListener("mouseenter", stopAutoplay);
-  container.addEventListener("mouseleave", startAutoplay);
-
-  // Eventos mobile (toque)
-  container.addEventListener("touchstart", stopAutoplay);
-  container.addEventListener("touchend", startAutoplay);
-
-  // Inicialização
-  renderCards();
-  startAutoplay();
-</script>
+<script src="./js/inicial.js"></script>
   </body>
 </html>
