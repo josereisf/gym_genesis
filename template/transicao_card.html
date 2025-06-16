@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Carrossel Suave</title>
+    <title>Carrossel Academia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       .carousel-wrapper {
@@ -26,11 +26,10 @@
       }
 
       .card img {
-        width: 96px;
-        height: 96px;
-        border-radius: 9999px;
+        width: 100%;
+        height: 160px;
+        border-radius: 0.75rem;
         object-fit: cover;
-        margin-top: 1rem;
       }
 
       .center {
@@ -57,86 +56,73 @@
       }
     </style>
   </head>
-  <body
-    class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6"
-  >
-    <div class="relative w-full flex justify-center items-center mb-6">
+  <body class="bg-[#132237] text-white flex flex-col items-center justify-center min-h-screen p-6">
+    <div class="relative w-full flex justify-center items-center mb-6 group" id="carouselContainer">
       <!-- Botão Esquerdo -->
       <button
         id="prevBtn"
-        class="absolute left-4 z-20 bg-white text-blue-500 hover:bg-blue-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300"
+        class="absolute left-4 z-20 bg-white text-black hover:bg-green-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300"
       >
         ←
       </button>
 
       <!-- Carrossel -->
       <div class="relative w-[300px] h-[400px] carousel-wrapper">
-        <div id="carousel" class="relative w-full h-full">
-          <!-- Cards serão inseridos via JS -->
-        </div>
+        <div id="carousel" class="relative w-full h-full"></div>
       </div>
 
       <!-- Botão Direito -->
       <button
         id="nextBtn"
-        class="absolute right-4 z-20 bg-white text-blue-500 hover:bg-blue-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300"
+        class="absolute right-4 z-20 bg-white text-black hover:bg-green-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300"
       >
         →
       </button>
     </div>
 
     <script>
-      const people = [
+      const ambientes = [
         {
-          nome: "Ana Souza",
-          idade: 28,
-          profissao: "Designer",
-          descricao: "Ama criar interfaces bonitas.",
-          foto: "https://randomuser.me/api/portraits/women/44.jpg",
+          nome: "Musculação",
+          descricao: "Equipamentos modernos e espaço completo para seu treino.",
+          imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
         },
         {
-          nome: "Carlos Lima",
-          idade: 34,
-          profissao: "Desenvolvedor",
-          descricao: "Apaixonado por código limpo.",
-          foto: "https://randomuser.me/api/portraits/men/35.jpg",
+          nome: "Aulas Coletivas",
+          descricao: "Zumba, funcional, spinning e muito mais.",
+          imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
         },
         {
-          nome: "Mariana Dias",
-          idade: 25,
-          profissao: "Engenheira de Dados",
-          descricao: "Transforma dados em soluções.",
-          foto: "https://randomuser.me/api/portraits/women/65.jpg",
+          nome: "Cardio",
+          descricao: "Esteiras, bicicletas e simuladores de escada.",
+          imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
         },
         {
-          nome: "João Pedro",
-          idade: 40,
-          profissao: "Gerente de Projetos",
-          descricao: "Organização é seu lema.",
-          foto: "https://randomuser.me/api/portraits/men/45.jpg",
+          nome: "Área Funcional",
+          descricao: "Espaço para treinos de mobilidade, força e agilidade.",
+          imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
         },
         {
-          nome: "Laura Mendes",
-          idade: 30,
-          profissao: "Psicóloga",
-          descricao: "Ajudando pessoas a se entenderem.",
-          foto: "https://randomuser.me/api/portraits/women/55.jpg",
+          nome: "Avaliação Física",
+          descricao: "Acompanhamento com profissionais especializados.",
+          imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
         },
       ];
 
       let currentIndex = 0;
-
+      let autoPlayInterval;
       const carousel = document.getElementById("carousel");
+      const container = document.getElementById("carouselContainer");
 
       function renderCards() {
         carousel.innerHTML = "";
 
-        people.forEach((pessoa, index) => {
+        ambientes.forEach((item, index) => {
           const div = document.createElement("div");
           div.className = "card";
 
-          const leftIndex = (currentIndex - 1 + people.length) % people.length;
-          const rightIndex = (currentIndex + 1) % people.length;
+          const leftIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
+          const rightIndex = (currentIndex + 1) % ambientes.length;
 
           if (index === currentIndex) {
             div.classList.add("center");
@@ -149,30 +135,43 @@
           }
 
           div.innerHTML = `
-          <img src="${pessoa.foto}" />
-          <div>
-            <h2 class="text-xl font-bold mt-2">${pessoa.nome}</h2>
-            <p class="text-gray-600">${pessoa.idade} anos</p>
-            <p class="text-blue-500 font-semibold">${pessoa.profissao}</p>
-            <p class="text-gray-700 mt-2">${pessoa.descricao}</p>
-          </div>
-        `;
+            <img src="${item.imagem}" alt="${item.nome}" />
+            <div>
+              <h2 class="text-xl font-bold mt-2 text-gray-900">${item.nome}</h2>
+              <p class="text-sm text-gray-700">${item.descricao}</p>
+            </div>
+          `;
 
           carousel.appendChild(div);
         });
       }
 
-      document.getElementById("prevBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + people.length) % people.length;
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % ambientes.length;
         renderCards();
-      });
+      }
 
-      document.getElementById("nextBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % people.length;
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
         renderCards();
-      });
+      }
+
+      function startAutoplay() {
+        autoPlayInterval = setInterval(nextSlide, 3000);
+      }
+
+      function stopAutoplay() {
+        clearInterval(autoPlayInterval);
+      }
+
+      document.getElementById("nextBtn").addEventListener("click", nextSlide);
+      document.getElementById("prevBtn").addEventListener("click", prevSlide);
+
+      container.addEventListener("mouseenter", stopAutoplay);
+      container.addEventListener("mouseleave", startAutoplay);
 
       renderCards();
+      startAutoplay();
     </script>
   </body>
 </html>
