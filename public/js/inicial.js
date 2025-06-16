@@ -126,61 +126,100 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // carrosel na parte da sobre
 
+const ambientes = [
+  {
+    nome: "Área de Musculação",
+    descricao: "Equipamentos modernos e espaço amplo para treinar.",
+    imagem:
+      "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg",
+  },
+  {
+    nome: "Aulas Coletivas",
+    descricao: "Zumba, funcional, spinning e muito mais.",
+    imagem:
+      "https://www.amlhr.com.br/assets/images/whatsapp-image-2024-03-15-at-17.40.35-1.webp",
+  },
+  {
+    nome: "Cardio",
+    descricao: "Esteiras, bicicletas e simuladores de escada.",
+    imagem:
+      "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg",
+  },
+  {
+    nome: "Área Funcional",
+    descricao: "Treinamentos de força, resistência e agilidade.",
+    imagem:
+      "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  },
+  {
+    nome: "Avaliação Física",
+    descricao: "Acompanhamento individual com especialistas.",
+    imagem:
+      "https://blog.supertechfitness.com.br/wp-content/uploads/2023/06/espaco-academia-1024x768.jpeg",
+  },
+  {
+    nome: "Sala de Alongamento",
+    descricao:
+      "Espaço tranquilo com colchonetes e acessórios para relaxar e prevenir lesões.",
+    imagem:
+      "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  },
+  {
+    nome: "Vestiários e Duchas",
+    descricao:
+      "Ambiente limpo e confortável com armários individuais e chuveiros modernos.",
+    imagem:
+      "http://media.istockphoto.com/id/976582586/pt/foto/empty-public-restroom-have-clean-comfortable-interiors-with-white-porcelain-urinals-interior-of.jpg?s=612x612&w=0&k=20&c=m5IJDKHqvg_wx2whrl49wW4WmyuX1eSV8h7RpzHYS68=",
+  },
+  {
+    nome: "Área de Treinamento Personalizado",
+    descricao:
+      "Espaço exclusivo para treinos individuais com acompanhamento de coach.",
+    imagem:
+      "https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  },
+  {
+    nome: "Espaço Zen",
+    descricao:
+      "Ideal para meditação, respiração guiada e pós-treino relaxante.",
+    imagem:
+      "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+  },
+  {
+    nome: "Área Kids",
+    descricao:
+      "Ambiente divertido e seguro para os pequenos se exercitarem com alegria.",
+    imagem:
+      "https://img.freepik.com/fotos-premium/criancas-se-exercitando-na-academia_865967-46026.jpg",
+  },
+];
 
-  const ambientes = [
-    {
-      nome: "Área de Musculação",
-      descricao: "Equipamentos modernos e espaço amplo para treinar.",
-      imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
-    },
-    {
-      nome: "Aulas Coletivas",
-      descricao: "Zumba, funcional, spinning e muito mais.",
-      imagem: "https://www.amlhr.com.br/assets/images/whatsapp-image-2024-03-15-at-17.40.35-1.webp"
-    },
-    {
-      nome: "Cardio",
-      descricao: "Esteiras, bicicletas e simuladores de escada.",
-      imagem: "https://p2.trrsf.com/image/fget/cf/1200/1200/middle/images.terra.com/2024/07/04/1275438437-academia.jpg"
-    },
-    {
-      nome: "Área Funcional",
-      descricao: "Treinamentos de força, resistência e agilidade.",
-      imagem: "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-    },
-    {
-      nome: "Avaliação Física",
-      descricao: "Acompanhamento individual com especialistas.",
-      imagem: "https://blog.supertechfitness.com.br/wp-content/uploads/2023/06/espaco-academia-1024x768.jpeg"
-    },
-  ];
+let currentIndex = 0;
+let autoPlayInterval;
+const carousel = document.getElementById("carousel");
+const container = document.getElementById("carouselContainer");
 
-  let currentIndex = 0;
-  let autoPlayInterval;
-  const carousel = document.getElementById("carousel");
-  const container = document.getElementById("carouselContainer");
+function renderCards() {
+  carousel.innerHTML = "";
 
-  function renderCards() {
-    carousel.innerHTML = "";
+  ambientes.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
 
-    ambientes.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "card";
+    const leftIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
+    const rightIndex = (currentIndex + 1) % ambientes.length;
 
-      const leftIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
-      const rightIndex = (currentIndex + 1) % ambientes.length;
+    if (index === currentIndex) {
+      div.classList.add("center");
+    } else if (index === leftIndex) {
+      div.classList.add("left");
+    } else if (index === rightIndex) {
+      div.classList.add("right");
+    } else {
+      div.classList.add("hidden-card");
+    }
 
-      if (index === currentIndex) {
-        div.classList.add("center");
-      } else if (index === leftIndex) {
-        div.classList.add("left");
-      } else if (index === rightIndex) {
-        div.classList.add("right");
-      } else {
-        div.classList.add("hidden-card");
-      }
-
-      div.innerHTML = `
+    div.innerHTML = `
         <img src="${item.imagem}" alt="${item.nome}" />
         <div class="p-3">
           <h2 class="text-lg font-bold text-gray-900">${item.nome}</h2>
@@ -188,40 +227,40 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       `;
 
-      carousel.appendChild(div);
-    });
-  }
+    carousel.appendChild(div);
+  });
+}
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % ambientes.length;
-    renderCards();
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
-    renderCards();
-  }
-
-  function startAutoplay() {
-    autoPlayInterval = setInterval(nextSlide, 3500);
-  }
-
-  function stopAutoplay() {
-    clearInterval(autoPlayInterval);
-  }
-
-  // Botões
-  document.getElementById("nextBtn").addEventListener("click", nextSlide);
-  document.getElementById("prevBtn").addEventListener("click", prevSlide);
-
-  // Eventos desktop (mouse)
-  container.addEventListener("mouseenter", stopAutoplay);
-  container.addEventListener("mouseleave", startAutoplay);
-
-  // Eventos mobile (toque)
-  container.addEventListener("touchstart", stopAutoplay);
-  container.addEventListener("touchend", startAutoplay);
-
-  // Inicialização
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % ambientes.length;
   renderCards();
-  startAutoplay();
+}
+
+function prevSlide() {
+  currentIndex = (currentIndex - 1 + ambientes.length) % ambientes.length;
+  renderCards();
+}
+
+function startAutoplay() {
+  autoPlayInterval = setInterval(nextSlide, 3500);
+}
+
+function stopAutoplay() {
+  clearInterval(autoPlayInterval);
+}
+
+// Botões
+document.getElementById("nextBtn").addEventListener("click", nextSlide);
+document.getElementById("prevBtn").addEventListener("click", prevSlide);
+
+// Eventos desktop (mouse)
+container.addEventListener("mouseenter", stopAutoplay);
+container.addEventListener("mouseleave", startAutoplay);
+
+// Eventos mobile (toque)
+container.addEventListener("touchstart", stopAutoplay);
+container.addEventListener("touchend", startAutoplay);
+
+// Inicialização
+renderCards();
+startAutoplay();
