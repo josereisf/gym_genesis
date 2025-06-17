@@ -237,7 +237,9 @@ function listarFuncionarios($idfuncionario)
     f.telefone,
     f.data_contratacao,
     f.salario,
-    c.nome
+    f.cargo_id,
+    c.nome AS nome_cargo,
+    f.foto_de_perfil
     FROM funcionario AS f
     JOIN cargo AS c ON c.idcargo = f.cargo_id
     WHERE f.idfuncionario=?;';
@@ -250,6 +252,7 @@ function listarFuncionarios($idfuncionario)
     f.telefone,
     f.data_contratacao,
     f.salario,
+    f.cargo_id,
     c.nome
     FROM funcionario AS f
     JOIN cargo AS c ON c.idcargo = f.cargo_id';
@@ -264,7 +267,7 @@ function listarFuncionarios($idfuncionario)
   }
   mysqli_stmt_close($comando);
 
-  return $lista_funcionarios;
+  return json_encode($lista_funcionarios, JSON_UNESCAPED_UNICODE);
 }
 
 
@@ -1899,12 +1902,12 @@ function listarCargo($idcargo)
 {
   $conexao = conectar();
 
-  if ($idcargo !== null) {
+  if ($idcargo != null) {
     $sql = " SELECT 
 
 
     FROM cargo 
-    WHERE $idcargo = ?";
+    WHERE idcargo = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idcargo);
   } else {
@@ -2699,7 +2702,7 @@ function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $sala
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_idcargo, foto_de_perfil)
+  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, foto_de_perfil)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2865,7 +2868,8 @@ function cadastrarAulaAgendada($horario_idhorario, $data_aula, $usuario_idusuari
   return $funcionou;
 }
 
-function gerarCodigoPix($tamanho = 32) {
+function gerarCodigoPix($tamanho = 32)
+{
   $caracteres = array_merge(range('a', 'z'), range('0', '9'));
   $codigo = '';
 
@@ -2876,20 +2880,21 @@ function gerarCodigoPix($tamanho = 32) {
   return $codigo;
 }
 // numeração do adms[0], aluno[1] e funcionário[2]
-function gerarNumeroMatriculaPorTipo($tipo) {
+function gerarNumeroMatriculaPorTipo($tipo)
+{
   // Define o comprimento desejado por tipo
   switch ($tipo) {
-      case 0: // ADM
-          $comprimento = 5;
-          break;
-      case 1: // Aluno
-          $comprimento = 15;
-          break;
-      case 2: // Funcionário
-          $comprimento = 10;
-          break;
-      default:
-          return "Tipo inválido";
+    case 0: // ADM
+      $comprimento = 5;
+      break;
+    case 1: // Aluno
+      $comprimento = 15;
+      break;
+    case 2: // Funcionário
+      $comprimento = 10;
+      break;
+    default:
+      return "Tipo inválido";
   }
 
   // Gera um número aleatório com o comprimento certo
@@ -2898,5 +2903,3 @@ function gerarNumeroMatriculaPorTipo($tipo) {
 
   return strval(rand($min, $max));
 }
-
-
