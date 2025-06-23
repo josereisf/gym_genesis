@@ -21,10 +21,14 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
 switch ($acao) {
     case 'cadastrar':
         cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
+        break;
     case 'editar':
         editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
+        break;
     case 'listar':
         listarFuncionarios($idfuncionario);
+        break;
     case 'deletar':
         deletarFuncionario($idfuncionario);
+        break;
 }
