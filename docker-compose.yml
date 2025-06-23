@@ -22,10 +22,27 @@ services:
       - MARIADB_ROOT_PASSWORD=123
     ports:
       - "3307:3306"
-  composer:
-    image: composer:latest
-    container_name: "composer"
-    volumes:
-      - .:/gym_genesis
-    working_dir: /gym_genesis
-    command: /bin/sh -c "git config --global --add safe.directory /gym_genesis && composer install && tail -f /dev/null"
+
+  composer:                       # Serviço chamado "composer"
+    image: composer:2.8.9         # Usa a imagem oficial do Composer, versão 2.8.9
+    container_name: composer      # Nome fixo para o container criado ("composer")
+    
+    volumes:                      # Define volumes (diretórios compartilhados)
+      - .:/gym_genesis            # Monta a pasta atual (projeto local) em /gym_genesis dentro do container
+      - composer_cache:/root/.composer/cache  # Monta um volume Docker nomeado para cache do Composer, melhorando performance
+    
+    working_dir: /gym_genesis     # Define o diretório padrão para rodar comandos dentro do container
+    
+    environment:                  # Define variáveis de ambiente dentro do container
+      COMPOSER_ALLOW_SUPERUSER: "1"  # Permite rodar Composer como root sem warnings
+    
+    stdin_open: true              # Mantém o stdin aberto para permitir interação com o container
+    tty: true                    # Aloca um terminal TTY para comandos interativos
+    
+    command: sh -c "git config --global --add safe.directory /gym_genesis && tail -f /dev/null"
+                                  # Ao iniciar o container, executa:
+                                  # 1) Configura o Git para reconhecer /gym_genesis como diretório seguro (evita erros ao usar volumes montados)
+                                  # 2) Mantém o container rodando com 'tail -f /dev/null' (não fecha o container automaticamente)
+
+volumes:                          # Declaração dos volumes nomeados do Docker
+  composer_cache:                 # Volume nomeado para armazenar cache do Composer entre execuções
