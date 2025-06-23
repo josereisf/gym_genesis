@@ -101,6 +101,7 @@
         <div class="step hidden" data-step="2">
           <label>CEP</label>
           <input type="text" id="cep" class="input" />
+          <p class="error-message text-red-500 text-sm mt-1 hidden" id="erro"></p>
 
           <label>Rua</label>
           <input type="text" id="rua" class="input" disabled />
