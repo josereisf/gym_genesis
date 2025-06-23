@@ -264,5 +264,76 @@ let currentStep = 1;
           this.value = aplicarMascaraTelefone(this.value);
         });
       this.value = aplicarMascaraCPF(this.value).substring(0, 14);
+//=================================================================================================================================================================
+// aqui vamos fazer um ajax para o banco
+const nome = document.getElementById('nome').value;
+const data = document.getElementById('data').value;
+const email = document.getElementById('email').value;
+const cpf = document.getElementById('cpf').value;
+const senha = document.getElementById('senha').value;
+const cep = document.getElementById('cep').value;
+const rua = document.getElementById('rua').value;
+const numero = document.getElementById('numero').value;
+const complemento = document.getElementById('complemento').value;
+const bairro = document.getElementById('bairro').value;
+const cidade = document.getElementById('cidade').value;
+const estado = document.getElementById('estado').value;
+const plano = document.getElementById('plano').value;
 
+async function usuario(nomeusuario, senha, email, cpf, data_nascimento, telefone) {
+  try {
+    const response = await fetch('../api/input.php?entidade=usuario&acao=cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: nomeusuario,
+        senha: senha,
+        email: email,
+        cpf: cpf,
+        data_nascimento: data_nascimento,
+        telefone: telefone
+      })
+    });
 
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Resposta da API:', data);
+    return data; // caso queira usar o resultado depois
+
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error);
+    throw error; // para lidar com erro lá fora, se precisar
+  }
+}
+
+async function enviarEndereco(cep, rua, numero, complemento, bairro, cidade, estado) {
+  try {
+    const response = await fetch('../api/input.php?entidade=endereco&acao=cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cep: cep,
+        rua: rua,
+        numero: numero,
+        complemento: complemento,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Resposta endereço:', data);
+    return data;
+  } catch (error) {
+    console.error('Erro ao cadastrar endereço:', error);
+    throw error;
+  }
+}
