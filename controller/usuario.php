@@ -9,7 +9,7 @@ $email = $_POST['email'] ?? null;
 $cpf = $_POST['cpf'] ?? null;
 $data_nasc = $_POST['data_nasc'] ?? null;
 $telefone = $_POST['telefone'] ?? null;
-$numero_matricula = $_POST['numero_matricula'] ?? null;
+$numero_matricula = $_POST['num_matri'] ?? null;
 $tipo = $_POST['tipo'] ?? null;
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     $imagem = uploadImagem($_FILES['imagem']);
