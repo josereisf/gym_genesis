@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/tailwindcss">
+  .textarea-premium {
+    @apply w-full min-h-[100px] max-h-[300px] p-4 rounded-lg
+      bg-gradient-to-r from-gray-800 via-gray-900 to-black
+      text-white
+      border border-gray-700
+      shadow-lg
+      transition-shadow duration-300 ease-in-out
+      resize-y
+      focus:outline-none
+      focus:ring-4 focus:ring-green-400 focus:border-green-400
+      placeholder-gray-400
+      scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800;
+  }
+  
+  /* Scrollbar customizada para navegadores baseados em WebKit */
+  .textarea-premium::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .textarea-premium::-webkit-scrollbar-thumb {
+    background-color: #4ade80; /* verde claro */
+    border-radius: 4px;
+  }
+  
+  .textarea-premium::-webkit-scrollbar-track {
+    background-color: #1f2937; /* cinza escuro */
+  }
+</style>
+
+</head>
+<body>
+<textarea
+  class="textarea-premium"
+  placeholder="Escreva sua descrição aqui..."
+  oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+></textarea>
+
+
+</body>
+</html>
