@@ -37,15 +37,15 @@ if (isset($_GET['idfuncionario'])) {
     <form action="api/index.php?entidade=funcionario&acao=<?= $acao ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="idfuncionario" value="<?= $idfuncionario ?>">
         <label for="">Nome:</label>
-        <input type="text" name="nome" id="" value="<?= $nome ?>">
+        <input type="text" name="nome" id="" value="<?= $nome ?>"><br>
         <label for="">Email:</label>
-        <input type="text" name="email" value="<?= $email ?>">
+        <input type="text" name="email" value="<?= $email ?>"><br>
         <label for="">Telefone:</label>
-        <input type="text" name="telefone" value="<?= $telefone ?>">
+        <input type="text" name="telefone" value="<?= $telefone ?>"><br>
         <label for="">Data:</label>
-        <input type="date" name="data" value="<?= $data_contratacao ?>">
+        <input type="date" name="data" value="<?= $data_contratacao ?>"><br>
         <label for="">Salário:</label>
-        <input type="number" name="salario" value="<?= $salario ?>">
+        <input type="number" name="salario" value="<?= $salario ?>"><br>
         <label for="">Cargo:</label>
         <select name="cargo_id" id="">
             <?php
@@ -60,15 +60,16 @@ if (isset($_GET['idfuncionario'])) {
                 echo "<option value='" . $c['idcargo'] . "' $selecionado>" . $c['nome'] . "</option>";
             }
             ?>
-        </select>
+        </select><br>
         <label for="">Foto do funcionário:</label>
         <?php
         if (!empty($imagem)) {
             echo "<img src='uploads/$imagem' alt='$imagem'>";
             echo "<input type='hidden' name='imagem' value='$imagem'>";
+            echo "<br>";
         }
         ?>
-        <input type="file" name="imagem" id="imagem" accept="image/*">
+        <input type="file" name="imagem" id="imagem" accept="image/*"><br>
         <input type="submit" value="<?= $acao ?>">
     </form>
 </body>

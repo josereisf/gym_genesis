@@ -1903,9 +1903,7 @@ function listarCargo($idcargo)
   $conexao = conectar();
 
   if ($idcargo != null) {
-    $sql = " SELECT 
-
-
+    $sql = " SELECT *
     FROM cargo 
     WHERE idcargo = ?";
     $comando = mysqli_prepare($conexao, $sql);
