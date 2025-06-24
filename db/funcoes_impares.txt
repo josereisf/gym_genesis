@@ -1,76 +1,12 @@
-# 🧑‍🦽CASO ESPECIAL 🧑‍🦽#
-
-deletarUsuario($conexao, $idusuario)
-
-
-
-
-
-#✅ FEITO ✅#
-
-cadastrarUsuario($conexao, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
-editarUsuario($conexao, $idusuario, $nome, $senha, $email, $cpf, $data_de_nascimento, $telefone, $foto_de_perfil, $numero_matricula, $tipo_usuario)
-loginUsuario($conexao, $email, $senha)
-cadastrarEndereco($conexao, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
-editarEndereco($conexao, $idendereco, $usuario_id, $funcionario_id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado)
-deletarEndereco($conexao, $idendereco)
-deletarFuncionario($conexao, $idfuncionario) 
-listarFuncionario($idfuncionario)
-listarEndereco($conexao, $idendereco)
-cadastrarAssinatura($conexao, $data_inicio, $data_fim, $usuario_idusuario)
-renovarAssinatura($conexao, $idassinatura)
-deletarAssinatura($conexao, $idassinatura)
-cadastrarPlano($conexao, $tipo, $duracao, $assinatura_idassinatura)
-editarPlano($conexao, $idplano, $tipo, $duracao, $assinatura_idassinatura)
-listarPlanos($conexao, $idplano)
-deletarAvaliacaoFisica($conexao, $idavaliacao)
-editarDieta($conexao, $iddieta, $descricao, $data_inicio, $data_fim, $usuario_idusuario)
-deletarDieta($conexao, $iddieta)
-listarDietas($conexao, $iddieta)
-editarCargo($conexao, $idcargo, $nome, $descricao)
-deletarCargo($conexao, $idcargo)
-editarMetaUsuario($conexao, $idmeta, $usuario_id, $descricao, $data_inicio, $data_limite, $status)
-deletarMetaUsuario($conexao, $idmeta)
-cadastrarTreino($conexao, $tipo, $horario, $descricao, $usuario_idusuario)
-editarTreino($conexao, $idtreino, $tipo, $horario, $descricao, $usuario_idusuario)
-listarTreinoExercicio($conexao, $idtreino2)
-deletarTreinoExercicio($conexao, $idtreino2)
-editarExercicio($conexao, $idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
-deletarRefeicao($conexao, $idrefeicao)
-
-
-#🚧 EM ANDAMENTO 🚧#
-
-deletarCupomDesconto($conexao, $idcupom)
-deletarProduto($conexao, $idproduto)
-deletarPagamento($conexao, $idpagamento)
-
-#❌ PENDENTE ❌#
-
-gerenciarVencimento($conexao)
-listarCupomDesconto($conexao, $idcupom)
-editarCategoriaProduto($conexao, $idcategoria, $nome, $descricao)
-listarPedidos($conexao, $idpedido)
-listarProdutos($conexao, $idproduto)
-editarAulaAgendada($conexao, $idaula, $horario_idhorario, $data_aula, $usuario_idusuario)
-recuperacaoSenha($conexao, $email)
-cadastrarRefeicao($conexao, $dieta_id, $tipo, $horario)
-cadastrarCupomDesconto($conexao, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
-cadastrarPedido($conexao, $usuario_idusuario, $data_pedido, $status)
-statusPedido($conexao, $idpedido, $idusuario)
-cadastrarRespostaForum($conexao, $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico)
-editarHorario($conexao, $idhorario, $dia_semana, $hora_inicio, $hora_fim)
-listarForum($conexao, $idtopico)
-cadastrarForum($conexao, $titulo, $descricao, $data_criacao, $usuario_idusuario)
-listarHistoricoTreino($conexao, $idhistorico)
-aplicarDesconto($conexao, $idproduto, $idcupom)
-editarHistoricoTreino($conexao, $idhistorico, $usuario_id, $treino_id, $data_execucao, $observacoes)
-editarForum($conexao, $idtopico, $titulo, $descricao, $data_criacao, $usuario_idusuario)
-editarCupomDesconto($conexao, $idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
-listarPagamentos($conexao, $idpagamento)
-editarPagamento($conexao, $idpagamento, $usuario_idusuario, $valor, $data_pagamento, $metodo, $status)
-editarDietaAlimento($conexao, $iddieta_alimentar, $refeicao_id, $alimento_id, $quantidade, $observacao)
-
-tela de 14
-intel i5 ou melhor
-dell
+          <template
+          <?php
+          echo 'x-for="(item, index) in [';
+          $idaula = 0;
+          $horarios = listarAulaAgendada($idaula);
+          foreach ($horarios AS $h){
+            print_r($h);
+            echo "{ dia: '".$h['dia_semana']."', horario: '".$h['hora_inicio']."', alunos: 14, treino: '".$h['hora_fim']."' },";
+          }
+          echo ']" :key="index"';
+          ?>>
+          testar direito

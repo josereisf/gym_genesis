@@ -1658,6 +1658,30 @@ function listarTreino($idtreino)
   mysqli_stmt_close($comando);
   return $lista_treinos;
 }
+function listarTreinoTipo($tipo)
+{
+  $conexao = conectar();
+  $sql = "SELECT 
+  u.nome,
+  t.tipo,
+  t.horario,
+  t.descricao
+  FROM treino as t
+  JOIN usuario as u ON u.idusuario = t.usuario_idusuario
+  WHERE t.tipo = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "s", $tipo);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_treinos = [];
+  while ($treino = mysqli_fetch_assoc($resultados)) {
+    $lista_treinos[] = $treino;
+  }
+
+  mysqli_stmt_close($comando);
+  return $lista_treinos;
+}
 
 function cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $observacoes)
 {
@@ -1692,7 +1716,7 @@ function listarAulaAgendada($idaula)
     ag.hora_fim 
     FROM aula_agendada AS ag
     JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
-    WHERE $idaula = ?";
+    WHERE idaula = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
   } else {
@@ -1705,6 +1729,34 @@ function listarAulaAgendada($idaula)
     JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_aula_agendadas = [];
+  while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
+    $lista_aula_agendadas[] = $aula_agendada;
+  }
+
+  mysqli_stmt_close($comando);
+
+  return $lista_aula_agendadas;
+}
+function listarAulaAgendadaUsuario($idusuario)
+{
+  $conexao = conectar();
+
+  $sql = " SELECT
+  u.nome,
+  ag.data_aula,
+  ag.dia_semana,
+  ag.hora_inicio,
+  ag.hora_fim 
+  FROM aula_agendada AS ag
+  JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
+  WHERE idusuario = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idusuario);
 
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
