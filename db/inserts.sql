@@ -214,19 +214,20 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
 
 -- 10.2. aula_agendada
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
 VALUES 
-('2025-04-25', 'Sexta', '08:00:00', '09:00:00', 1);
+('2025-04-25', 'Sexta', '08:00:00', '09:00:00', 1, 1);
 
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
 VALUES 
-('2025-04-27', 'Domingo', '10:00:00', '11:30:00', 2);
+('2025-04-27', 'Domingo', '10:00:00', '11:30:00', 2, 2);
 
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
 VALUES 
-('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3);
+('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3, 3);
+
 
 -- 11. Meta usuario
 INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, status) VALUES
