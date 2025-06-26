@@ -1,5 +1,9 @@
+<?php
+require_once "../code/funcao.php";
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +12,7 @@
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body class="bg-gray-900 text-white font-sans">
   <div class="flex h-screen">
     <!-- Sidebar -->
@@ -46,12 +51,16 @@
       <div class="bg-gray-800 p-6 rounded-xl shadow-md mb-8">
         <h2 class="text-2xl font-semibold mb-4">Agenda de Aulas</h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <template x-for="(item, index) in [
-            { dia: 'Segunda', horario: '08:00', alunos: 4, treino: 'Funcional' },
-            { dia: 'Terça', horario: '10:00', alunos: 6, treino: 'HIIT' },
-            { dia: 'Quarta', horario: '14:00', alunos: 5, treino: 'Musculação' },
-            { dia: 'Sexta', horario: '07:00', alunos: 3, treino: 'Cardio' }
-          ]" :key="index">
+          <template
+            <?php
+            echo 'x-for="(item, index) in [';
+            $idaula = 0;
+            $horarios = listarAulaAgendada($idaula);
+            foreach ($horarios as $h) {
+              echo "{ dia: '" . $h['dia_semana'] . "', horario: '" . $h['hora_inicio'] . "', horario: '" . $h['hora_fim'] . "' },";
+            }
+            echo ']" :key="index"';
+            ?>>
             <div @click="modal = true; aula = item" class="cursor-pointer bg-gray-700 p-4 rounded-lg hover:bg-indigo-600 transition">
               <h3 class="text-xl font-bold" x-text="item.dia"></h3>
               <p class="text-sm mt-1">Horário: <span x-text="item.horario"></span></p>
@@ -118,4 +127,5 @@
     </div>
   </div>
 </body>
+
 </html>

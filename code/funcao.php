@@ -1707,7 +1707,7 @@ function listarAulaAgendada($idaula)
 {
   $conexao = conectar();
 
-  if ($idaula !== null) {
+  if ($idaula != null) {
     $sql = " SELECT
     u.nome,
     ag.data_aula,
