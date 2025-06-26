@@ -9,8 +9,9 @@ $email = $_POST['email'] ?? null;
 $cpf = $_POST['cpf'] ?? null;
 $data_nasc = $_POST['data_nasc'] ?? null;
 $telefone = $_POST['telefone'] ?? null;
-$numero_matricula = $_POST['num_matri'] ?? null;
 $tipo = $_POST['tipo'] ?? null;
+$numero_matricula = gerarNumeroMatriculaPorTipo($tipo);
+
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     $imagem = uploadImagem($_FILES['imagem']);
 } elseif (isset($_POST['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
@@ -21,9 +22,9 @@ if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
 
 switch ($acao){
     case 'cadastrar':
-        cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo);
+        cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
     case 'editar':
-        editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo, $idusuario);
+        editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario);
     case 'listar':
         listarUsuario($idusuario);
     case 'deletar':

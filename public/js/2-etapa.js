@@ -291,7 +291,8 @@ async function usuario(nomeusuario, senha, email, cpf, data_nascimento, telefone
         email: email,
         cpf: cpf,
         data_nascimento: data_nascimento,
-        telefone: telefone
+        telefone: telefone,
+        tipo: 1
       })
     });
 
@@ -301,7 +302,7 @@ async function usuario(nomeusuario, senha, email, cpf, data_nascimento, telefone
 
     const data = await response.json();
     console.log('Resposta da API:', data);
-    return data; // caso queira usar o resultado depois
+    return data; 
 
   } catch (error) {
     console.error('Erro ao cadastrar usuário:', error);
@@ -321,7 +322,7 @@ async function enviarEndereco(cep, rua, numero, complemento, bairro, cidade, est
         complemento: complemento,
         bairro: bairro,
         cidade: cidade,
-        estado: estado
+        estado: estado,
       })
     });
 
