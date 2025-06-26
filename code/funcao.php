@@ -32,9 +32,14 @@ function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $i
   mysqli_stmt_bind_param($comando, 'ssssssssi', $nome, $senhahash, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
 
   $funcionou = mysqli_stmt_execute($comando);
+  $id_usuario = mysqli_insert_id($conexao);
+
   mysqli_stmt_close($comando);
   desconectar($conexao);
-  return $funcionou;
+  return [
+  'sucess' => $funcionou,
+  'id' => $id_usuario
+  ];
 }
 function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario)
 {

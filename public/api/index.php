@@ -14,4 +14,3 @@ $entidade = $_GET['entidade'] ?? null;
      echo json_encode(['erro' => 'Controlador não encontrado']);
  }
 ?>
- <!-- <a href="../../controller/ produto.php"></a> -->

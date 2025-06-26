@@ -1,36 +1,74 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-$acao = $_GET['acao'];
-var_dump($_POST);
-// $id = $_POST['id'] ?? 0;
-// $nome = $_POST['nome'] ?? null;
-// $senha = $_POST['senha'] ?? null;
-// $email = $_POST['email'] ?? null;
-// $cpf = $_POST['cpf'] ?? null;
-// $data_nasc = $_POST['data_nasc'] ?? null;
-// $telefone = $_POST['telefone'] ?? null;
-// $tipo = $_POST['tipo'] ?? null;
-// $numero_matricula = gerarNumeroMatriculaPorTipo($tipo);
 
-// if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-//     $imagem = uploadImagem($_FILES['imagem']);
-// } elseif (isset($_POST['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
-//     $imagem = $_POST['imagem'];
-// } else {
-//     $imagem = null;
-// }
+header('Content-Type: application/json; charset=utf-8');
 
-// switch ($acao) {
-//     case 'cadastrar':
-//         cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo);
-//         break;
-//     case 'editar':
-//         editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id);
-//         break;
-//     case 'listar':
-//         listarEnderecos($tipo);
-//         break;
-//     case 'deletar':
-//         deletarEndereco($id, $tipo);
-//         break;
-// }
+$acao = $_GET['acao'] ?? null;
+$input = json_decode(file_get_contents('php://input'), true);
+
+// Pegando corretamente os dados esperados pela função
+$id = $input['id'] ?? null; // esse é o id do usuário ou funcionário
+$tipo = $input['tipo'] ?? null;
+
+$cep = $input['cep'] ?? null;
+$rua = $input['rua'] ?? null;
+$numero = $input['numero'] ?? null;
+$complemento = $input['complemento'] ?? null;
+$bairro = $input['bairro'] ?? null;
+$cidade = $input['cidade'] ?? null;
+$estado = $input['estado'] ?? null;
+
+// Função de resposta padrão
+function enviarResposta($success, $msg = '', $data = []) {
+    echo json_encode([
+        'success' => $success,
+        'message' => $msg,
+        'data' => $data
+    ]);
+    exit;
+}
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
+
+switch ($acao) {
+    case 'cadastrar':
+        $ok = cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo);
+        if ($ok) {
+            enviarResposta(true, 'Endereço cadastrado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar endereço');
+        }
+        break;
+
+    case 'editar':
+        $ok = editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id);
+        if ($ok) {
+            enviarResposta(true, 'Endereço editado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar endereço');
+        }
+        break;
+
+    case 'listar':
+        $dados = listarEnderecos($tipo);
+        if ($dados) {
+            enviarResposta(true, 'Endereços listados com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar endereços');
+        }
+        break;
+
+    case 'deletar':
+        $ok = deletarEndereco($id, $tipo);
+        if ($ok) {
+            enviarResposta(true, 'Endereço deletado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar endereço');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
+}

@@ -25,107 +25,103 @@ function showStep(step) {
   nextBtn.textContent = step === totalSteps ? "Finalizar" : "Próximo";
 }
 
-nextBtn.addEventListener("click", () => {
+nextBtn.addEventListener("click", async () => {
   if (currentStep < totalSteps) {
     currentStep++;
     showStep(currentStep);
   } else {
-    alert("Formulário enviado com sucesso!");
-    // Funções já existentes (sem alterações)
-    async function usuario(nomeusuario, senha, email, cpf, data_nascimento, telefone) {
-      try {
-        const response = await fetch('../api/input.php?entidade=usuario&acao=cadastrar', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            nome: nomeusuario,
-            senha: senha,
-            email: email,
-            cpf: cpf,
-            data_nascimento: data_nascimento,
-            telefone: telefone,
-            tipo: 1
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Erro na requisição: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Resposta da API:', data);
-        return data;
-
-      } catch (error) {
-        console.error('Erro ao cadastrar usuário:', error);
-        throw error;
-      }
-    }
-
-    async function enviarEndereco(cep, rua, numero, complemento, bairro, cidade, estado) {
-      try {
-        const response = await fetch('../api/input.php?entidade=endereco&acao=cadastrar', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            cep: cep,
-            rua: rua,
-            numero: numero,
-            complemento: complemento,
-            bairro: bairro,
-            cidade: cidade,
-            estado: estado,
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Erro na requisição: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Resposta endereço:', data);
-        return data;
-      } catch (error) {
-        console.error('Erro ao cadastrar endereço:', error);
-        throw error;
-      }
-    }
-
-    // Adiciona o event listener no botão para capturar o clique
-    addEventListener("click", async (event) => {
-      event.preventDefault(); // evita comportamento padrão (se estiver dentro de form)
-
-      // Pega os valores dos inputs *na hora do clique*
-      const nome = document.getElementById('nome').value;
-      const data = document.getElementById('data').value;
-      const email = document.getElementById('email').value;
-      const cpf = document.getElementById('cpf').value;
-      const senha = document.getElementById('senha').value;
-      const cep = document.getElementById('cep').value;
-      const rua = document.getElementById('rua').value;
-      const numero = document.getElementById('numero').value;
-      const complemento = document.getElementById('complemento').value;
-      const bairro = document.getElementById('bairro').value;
-      const cidade = document.getElementById('cidade').value;
-      const estado = document.getElementById('estado').value;
-      // const plano = document.getElementById('plano').value; // caso queira usar depois
-      const respostaUsuario = [nome, data, email, cpf, senha, cep, rua, numero, complemento, bairro, cidade, estado];
-      try {
-        console.log("Usuário cadastrado:", respostaUsuario);
-        //  const respostaUsuario = await usuario(nome, senha, email, cpf, data, "");  telefone está vazio pois não capturou ainda
-
-        console.log("Endereço cadastrado:", respostaEndereco);
-         const respostaEndereco = await enviarEndereco(cep, rua, numero, complemento, bairro, cidade, estado);
-
-        alert("Cadastro realizado com sucesso!");
-      } catch (error) {
-        alert("Erro no cadastro, verifique os dados e tente novamente.");
-        console.log(error)
-
-      }
-    });
+    await enviarFormulario(); // Chama a função principal
   }
 });
+
+showStep(currentStep);
+
+// ================= FUNÇÕES DE ENVIO =================
+
+async function usuario(nome, senha, email, cpf, data, telefone) {
+  try {
+    const response = await fetch('http://localhost:83/public/api/index.php?entidade=usuario&acao=cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome, 
+        senha, 
+        email, 
+        cpf,
+        data_nascimento: data,
+        telefone,
+        imagem: null,
+        tipo: 1
+      })
+    });
+
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error);
+    throw error;
+  }
+}
+
+async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, cidade, estado) {
+  try {
+    const response = await fetch('http://localhost:83/public/api/index.php?entidade=endereco&acao=cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id,           // ID do usuário ou funcionário
+        tipo,         // tipo = 1 (usuário), 2 (funcionário), etc.
+        cep,
+        rua,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        estado
+      })
+    });
+
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao cadastrar endereço:', error);
+    throw error;
+  }
+}
+
+
+async function enviarFormulario() {
+  const nome = document.getElementById('nome').value;
+  const data = document.getElementById('data').value;
+  const telefone = document.getElementById('telefone').value;
+  const email = document.getElementById('email').value;
+  const cpf = document.getElementById('cpf').value;
+  const senha = document.getElementById('senha').value;
+  const cep = document.getElementById('cep').value;
+  const rua = document.getElementById('rua').value;
+  const numero = document.getElementById('numero').value;
+  const complemento = document.getElementById('complemento').value;
+  const bairro = document.getElementById('bairro').value;
+  const cidade = document.getElementById('cidade').value;
+  const estado = document.getElementById('estado').value;
+
+  try {
+    const respostaUsuario = await usuario(nome, senha, email, cpf, data, telefone);
+    console.log("Usuário cadastrado:", respostaUsuario);
+    const idUsuario = respostaUsuario.data.id;
+
+    const respostaEndereco = await enviarEndereco(idUsuario, 1, cep, rua, numero, complemento, bairro, cidade, estado);
+    console.log("Endereço cadastrado:", respostaEndereco);
+
+    alert("Cadastro realizado com sucesso!");
+    form.reset();
+    currentStep = 1;
+    showStep(currentStep);
+  } catch (error) {
+    alert("Erro no cadastro. Verifique os dados e tente novamente.");
+  }
+}
+
 
 prevBtn.addEventListener("click", () => {
   if (currentStep > 1) {

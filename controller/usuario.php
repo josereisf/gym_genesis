@@ -1,32 +1,81 @@
 <?php
-require_once __DIR__ .'/../code/funcao.php';
-$acao = $_GET ['acao'];
+require_once __DIR__ . '/../code/funcao.php';
 
-$idusuario = $_POST['idusuario'] ?? 0;
-$nome = $_POST['nome'] ?? null;
-$senha = $_POST['senha'] ?? null;
-$email = $_POST['email'] ?? null;
-$cpf = $_POST['cpf'] ?? null;
-$data_nasc = $_POST['data_nasc'] ?? null;
-$telefone = $_POST['telefone'] ?? null;
-$tipo = $_POST['tipo'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
+
+$acao = $_GET['acao'] ?? null;
+
+// Como você está recebendo dados JSON no fetch, não use $_POST direto,
+// leia o raw input e decodifique JSON:
+$input = json_decode(file_get_contents('php://input'), true);
+
+$idusuario = $input['idusuario'] ?? 0;
+$nome = $input['nome'] ?? null;
+$senha = $input['senha'] ?? null;
+$email = $input['email'] ?? null;
+$cpf = $input['cpf'] ?? null;
+$data_nasc = $input['data_nascimento'] ?? null;
+$telefone = $input['telefone'] ?? null;
+$tipo = $input['tipo'] ?? null;
 $numero_matricula = gerarNumeroMatriculaPorTipo($tipo);
 
-if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-    $imagem = uploadImagem($_FILES['imagem']);
-} elseif (isset($_POST['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
-    $imagem = $_POST['imagem'];
-} else {
-    $imagem = null;
+// Supondo que a imagem vai vir como string base64 no JSON, trate aqui
+$imagem = $input['imagem'] ?? null;
+
+// Função para enviar a resposta JSON padrão
+function enviarResposta($success, $msg = '', $data = []) {
+    echo json_encode([
+        'success' => $success,
+        'message' => $msg,
+        'data' => $data
+    ]);
+    exit;
 }
 
-switch ($acao){
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
+
+switch ($acao) {
     case 'cadastrar':
-        cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
+        $funcionou = cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
+case 'cadastrar':
+    $resultado = cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
+    
+    if ($resultado['success']) {
+        enviarResposta(true, 'Usuário cadastrado com sucesso', ['id' => $resultado['id']]);
+    } else {
+        enviarResposta(false, 'Erro ao cadastrar usuário');
+    }
+    break;
+
     case 'editar':
-        editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario);
+        $funcionou = editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario);
+        if ($funcionou) {
+            enviarResposta(true, 'Usuário editado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar usuário');
+        }
+        break;
+
     case 'listar':
-        listarUsuario($idusuario);
+        $resultado = listarUsuario($idusuario);
+        if ($resultado !== false) {
+            enviarResposta(true, 'Usuário listado', $resultado);
+        } else {
+            enviarResposta(false, 'Erro ao listar usuário');
+        }
+        break;
+
     case 'deletar':
-        deletarUsuario($idusuario);
+        $funcionou = deletarUsuario($idusuario);
+        if ($funcionou) {
+            enviarResposta(true, 'Usuário deletado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar usuário');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
 }
