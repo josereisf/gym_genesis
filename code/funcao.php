@@ -1913,9 +1913,9 @@ function listarAvaliacaoFisica($idavaliacao)
 {
   $conexao = conectar();
 
-  if ($idavaliacao !== null) {
+  if ($idavaliacao != null) {
     $sql = " SELECT
-    u.nome,
+    u.nome AS nome_usuario,
     a.peso,
     a.altura,
     a.imc,
@@ -1923,12 +1923,12 @@ function listarAvaliacaoFisica($idavaliacao)
     a.data_avaliacao
     FROM avaliacao_fisica AS a
     JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
-    WHERE $idavaliacao = ?";
+    WHERE idavaliacao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idavaliacao);
   } else {
     $sql = " SELECT
-    u.nome,
+    u.nome AS nome_usuario,
     a.peso,
     a.altura,
     a.imc,
@@ -1995,7 +1995,7 @@ function listarRefeicoes($idrefeicao)
     FROM refeicao AS r
     JOIN dieta AS d ON r.dieta_id = d.iddieta
     JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
-    WHERE $idrefeicao = ?";
+    WHERE idrefeicao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idrefeicao);
   } else {

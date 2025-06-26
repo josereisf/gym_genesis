@@ -1,3 +1,16 @@
+<?php
+  require_once "../code/funcao.php";
+  $idaluno = $_GET['idusuario'];
+  $resultados = listarAvaliacaoFisica($idaluno);
+  foreach ($resultados AS $r){
+    $nome = $r['nome_usuario'];
+    $peso =$r['peso'];
+    $altura = $r['altura'];
+    $imc = $r['imc'];
+    $perc_gord = $r['percentual_gordura'];
+    $data = $r['data_avaliacao'];
+  }
+?>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -67,7 +80,7 @@
                 alt="Perfil"
                 class="h-8 w-8 rounded-full bg-white p-1"
               />
-              <span class="font-medium hidden md:block">Carlos Silva</span>
+              <span class="font-medium hidden md:block"><?= $nome ?></span>
             </div>
           </div>
         </div>
@@ -143,7 +156,7 @@
                 <p class="text-sm font-medium text-gray-500">
                   Calorias Queimadas
                 </p>
-                <h3 class="text-2xl font-bold text-gray-800 mt-1">4,320</h3>
+                <h3 class="text-2xl font-bold text-gray-800 mt-1"><?= $perc_gord ?></h3>
                 <p class="text-sm text-green-600 mt-1 flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +206,7 @@
           >
             <div class="flex justify-between items-start">
               <div>
-                <p class="text-sm font-medium text-gray-500">Peso Atual</p>
+                <p class="text-sm font-medium text-gray-500"><?= $peso ?></p>
                 <h3 class="text-2xl font-bold text-gray-800 mt-1">78.5 kg</h3>
                 <p class="text-sm text-green-600 mt-1 flex items-center">
                   <svg
