@@ -118,7 +118,7 @@ async function enviarFormulario() {
     currentStep = 1;
     showStep(currentStep);
   } catch (error) {
-    alert("Erro no cadastro. Verifique os dados e tente novamente.");
+    alert("error ao cadastrar: " + error.message);
   }
 }
 

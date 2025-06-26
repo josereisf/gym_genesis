@@ -36,10 +36,11 @@ function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $i
 
   mysqli_stmt_close($comando);
   desconectar($conexao);
-  return [
-  'sucess' => $funcionou,
+return [
+  'success' => $funcionou,
   'id' => $id_usuario
-  ];
+];
+
 }
 function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario)
 {

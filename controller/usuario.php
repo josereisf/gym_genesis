@@ -38,11 +38,9 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        $funcionou = cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
-case 'cadastrar':
-    $resultado = cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
+        $resultado = cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
     
-    if ($resultado['success']) {
+    if ($resultado['success'] == true) {
         enviarResposta(true, 'Usuário cadastrado com sucesso', ['id' => $resultado['id']]);
     } else {
         enviarResposta(false, 'Erro ao cadastrar usuário');
