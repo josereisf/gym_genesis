@@ -33,7 +33,7 @@
                 d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
               ></path>
             </svg>
-            <span class="font-bold text-xl">FitPro Academia</span>
+            <span class="font-bold text-xl">Gym Genesis Academia</span>
           </div>
           <div class="flex items-center space-x-4">
             <div class="relative">
