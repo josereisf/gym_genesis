@@ -1713,7 +1713,9 @@ function listarAulaAgendada($idaula)
     ag.data_aula,
     ag.dia_semana,
     ag.hora_inicio,
-    ag.hora_fim 
+    ag.hora_fim ,
+    t.tipo,
+    t.descricao
     FROM aula_agendada AS ag
     JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
     WHERE idaula = ?";
