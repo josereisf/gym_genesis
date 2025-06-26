@@ -1,5 +1,10 @@
 <?php
-  require_once "../code/funcao.php";
+require_once "../code/funcao.php";
+if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
+  $liberado = 1;
+} else {
+  $liberado = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" class="bg-gray-900 text-white">
@@ -69,6 +74,20 @@
     <form action="" id="multiStepForm" class="space-y-4 relative min-h-[400px]">
       <!-- Etapa 1 -->
       <div class="step" data-step="1">
+        <?php
+        if ($liberado == 1) {
+          echo '<label for="">Tipo de Usuário:</label> <br>';
+          echo "<select name='tipo_usuario'>";
+          echo '<option value="0">Administrador</option>';
+          echo '<option value="1">Aluno</option>';
+          echo '<option value="2">Professor</option>';
+          echo '</select>';
+          echo '<br>';
+        }
+        else {
+          echo '<input type="hidden" name="tipo_usuario" value="1">';
+        }
+        ?>
         <label for="nome">Nome completo</label>
         <input id="nome" type="text" class="input" name="nome" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
@@ -182,7 +201,7 @@
           $idplano = 0;
           $planos = listarPlanos($idplano);
           foreach ($planos as $p) {
-            echo "<option value='".$p['idplano']."'>".$p['tipo']."</option>";
+            echo "<option value='" . $p['idplano'] . "'>" . $p['tipo'] . "</option>";
           }
           ?>
         </select>
