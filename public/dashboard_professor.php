@@ -56,6 +56,9 @@ require_once "../code/funcao.php";
             echo 'x-for="(item, index) in [';
             $idaula = 0;
             $horarios = listarAulaAgendada($idaula);
+            // $treino = listarTreino($idtreino);
+            // $usuario = listarUsuario($idusuario);
+
             foreach ($horarios as $h) {
               echo "{ dia: '" . $h['dia_semana'] . "', horario: '" . $h['hora_inicio'] . "', horario: '" . $h['hora_fim'] . "' },";
             }
