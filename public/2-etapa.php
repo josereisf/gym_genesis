@@ -196,7 +196,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         </div>
 
         <label>Plano</label>
-        <select class="input" name="plano">
+        <select class="input" id="plano" name="plano">
           <?php
           $idplano = 0;
           $planos = listarPlanos($idplano);

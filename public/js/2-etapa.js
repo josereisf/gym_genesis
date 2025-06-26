@@ -92,7 +92,7 @@ nextBtn.addEventListener("click", () => {
     }
 
     // Adiciona o event listener no botão para capturar o clique
-    document.getElementById("btnCadastrar").addEventListener("click", async (event) => {
+    addEventListener("click", async (event) => {
       event.preventDefault(); // evita comportamento padrão (se estiver dentro de form)
 
       // Pega os valores dos inputs *na hora do clique*
@@ -108,18 +108,20 @@ nextBtn.addEventListener("click", () => {
       const bairro = document.getElementById('bairro').value;
       const cidade = document.getElementById('cidade').value;
       const estado = document.getElementById('estado').value;
-      const plano = document.getElementById('plano').value; // caso queira usar depois
-
+      // const plano = document.getElementById('plano').value; // caso queira usar depois
+      const respostaUsuario = [nome, data, email, cpf, senha, cep, rua, numero, complemento, bairro, cidade, estado];
       try {
-        const respostaUsuario = await usuario(nome, senha, email, cpf, data, ""); // telefone está vazio pois não capturou ainda
         console.log("Usuário cadastrado:", respostaUsuario);
+        //  const respostaUsuario = await usuario(nome, senha, email, cpf, data, "");  telefone está vazio pois não capturou ainda
 
-        const respostaEndereco = await enviarEndereco(cep, rua, numero, complemento, bairro, cidade, estado);
         console.log("Endereço cadastrado:", respostaEndereco);
+         const respostaEndereco = await enviarEndereco(cep, rua, numero, complemento, bairro, cidade, estado);
 
         alert("Cadastro realizado com sucesso!");
       } catch (error) {
         alert("Erro no cadastro, verifique os dados e tente novamente.");
+        console.log(error)
+
       }
     });
   }
