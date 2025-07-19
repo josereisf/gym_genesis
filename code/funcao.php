@@ -1709,47 +1709,56 @@ function cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $obse
   return $idInserido; // retorna o ID inserido, ou null se não funcionou
 }
 
-function listarAulaAgendada($idaula)
+function listarAulaAgendada($idaula = null)
 {
   $conexao = conectar();
 
   if ($idaula != null) {
-    $sql = " SELECT
-    u.nome,
-    ag.data_aula,
-    ag.dia_semana,
-    ag.hora_inicio,
-    ag.hora_fim ,
-    t.tipo,
-    t.descricao
+    $sql = "SELECT
+      ag.data_aula,
+      ag.dia_semana,
+      ag.hora_inicio,
+      ag.hora_fim,
+      t.tipo AS treino_tipo,
+      t.descricao AS treino_desc,
+      GROUP_CONCAT(u.nome SEPARATOR ', ') AS alunos
     FROM aula_agendada AS ag
     JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
-    WHERE idaula = ?";
+    JOIN treino AS t ON ag.treino_idtreino = t.idtreino
+    WHERE idaula = ?
+    GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_idtreino";
+    
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
   } else {
-    $sql = " SELECT  u.nome,
-    ag.data_aula,
-    ag.dia_semana,
-    ag.hora_inicio,
-    ag.hora_fim 
+    $sql = "SELECT
+      ag.data_aula,
+      ag.dia_semana,
+      ag.hora_inicio,
+      ag.hora_fim,
+      t.tipo AS treino_tipo,
+      t.descricao AS treino_desc,
+      GROUP_CONCAT(u.nome SEPARATOR ', ') AS alunos
     FROM aula_agendada AS ag
-    JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario";
+    JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
+    JOIN treino AS t ON ag.treino_idtreino = t.idtreino
+    GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_idtreino";
+
     $comando = mysqli_prepare($conexao, $sql);
   }
 
   mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
+  $resultado = mysqli_stmt_get_result($comando);
 
-  $lista_aula_agendadas = [];
-  while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
-    $lista_aula_agendadas[] = $aula_agendada;
+  $lista = [];
+  while ($linha = mysqli_fetch_assoc($resultado)) {
+    $lista[] = $linha;
   }
 
   mysqli_stmt_close($comando);
-
-  return $lista_aula_agendadas;
+  return $lista;
 }
+
 function listarAulaAgendadaUsuario($idusuario)
 {
   $conexao = conectar();
