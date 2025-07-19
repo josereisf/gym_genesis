@@ -617,6 +617,31 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino_exercicio` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- -----------------------------------------------------
+-- Table `gym_genesis`.`professor_aluno`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`professor_aluno` (
+  `idprofessor_aluno` INT(11) NOT NULL AUTO_INCREMENT,
+  `idprofessor` INT(11) NOT NULL,
+  `idaluno` INT(11) NOT NULL,
+  PRIMARY KEY (`idprofessor_aluno`),
+  INDEX `fk_professor_idx` (`idprofessor` ASC) VISIBLE,
+  INDEX `fk_aluno_idx` (`idaluno` ASC) VISIBLE,
+  CONSTRAINT `fk_professor`
+    FOREIGN KEY (`idprofessor`)
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_aluno`
+    FOREIGN KEY (`idaluno`)
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
