@@ -69,21 +69,29 @@ function deletarUsuario($idusuario)
 }
 function loginUsuario($email, $senha)
 {
-  $conexao = conectar();
-  $sql = "SELECT senha FROM usuario WHERE email = ?";
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 's', $email);
-  mysqli_stmt_execute($comando);
-  mysqli_stmt_bind_result($comando, $senhahash);
-  mysqli_stmt_fetch($comando);
-  $tf = password_verify($senha, $senhahash);
-  if ($senhahash && password_verify($senha, $senhahash)) {
-    $resul = 1;
-  } else {
-    $resul = 0;
-  }
-  return $resul;
+    $conexao = conectar();
+    $sql = "SELECT idusuario, nome, email, senha FROM usuario WHERE email = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+
+    mysqli_stmt_bind_param($comando, 's', $email);
+
+    mysqli_stmt_execute($comando);
+
+    mysqli_stmt_bind_result($comando, $id, $nome, $emailDb, $senhahash);
+    
+    if (mysqli_stmt_fetch($comando)) {
+        if (password_verify($senha, $senhahash)) {
+            return [
+                'id' => $id,
+                'nome' => $nome,
+                'email' => $emailDb
+            ];
+        }
+    }
+
+    return false;
 }
+
 function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
 {
   $conexao = conectar();
@@ -2946,7 +2954,7 @@ function gerarCodigoPix($tamanho = 32)
 
   return $codigo;
 }
-// numeração do adms[0], aluno[1] e funcionário[2]
+// numeração do adms[0], aluno[1] e funcionário(Professores)[2]
 function gerarNumeroMatriculaPorTipo($tipo)
 {
   // Define o comprimento desejado por tipo
@@ -2969,4 +2977,25 @@ function gerarNumeroMatriculaPorTipo($tipo)
   $max = (int)str_pad('', $comprimento, '9');      // Ex: 99999
 
   return strval(rand($min, $max));
+}
+
+function verificarTipoUsuario($email)
+{
+    $conexao = conectar(); // usa sua função de conexão
+    $sql = "SELECT tipo_usuario FROM usuario WHERE email = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+
+    if (!$comando) {
+        die("Erro ao preparar: " . mysqli_error($conexao));
+    }
+
+    mysqli_stmt_bind_param($comando, 's', $email);
+    mysqli_stmt_execute($comando);
+    mysqli_stmt_bind_result($comando, $tipo);
+
+    if (mysqli_stmt_fetch($comando)) {
+        return $tipo;
+    } else {
+        return false; // email não encontrado
+    }
 }
