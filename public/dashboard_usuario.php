@@ -1,6 +1,7 @@
 <?php
   require_once "../code/funcao.php";
-  $idaluno = $_GET['idusuario'];
+  session_start();
+  $idaluno = $_SESSION['usuario_id'];
   $resultados = listarAvaliacaoFisica($idaluno);
   foreach ($resultados AS $r){
     $nome = $r['nome_usuario'];
