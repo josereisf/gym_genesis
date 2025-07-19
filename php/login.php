@@ -1,55 +1,35 @@
 <?php
-    require_once '../../code/funcao.php';
 
+require_once '../code/funcao.php';
 
-    $conexao = conectar();
+$email = $_GET['email'] ?? '';
+$senha = $_GET['senha'] ?? '';
 
-    $input=$_POST['acao'];
+if (empty($email) || empty($senha)) {
+    header('Location: ../public/login.html?error=empty_fields');
+    exit();
+}
 
-    if($input == "cadastro"){
+$usuario = loginUsuario($email, $senha); // agora deve retornar os dados do usuário, não só true/false
 
-            // cadastro
-        $nome = $_POST['nome'];
-        $email = $_POST['user-email'];
-        $senha = $_POST['senha'];
-        $conf_senha = $_POST['confirmar-senha'];
-        if($senha == $conf_senha){
-            $sql = "INSERT INTO `usuarios`(`nome`, `email`, `senha`) VALUES ('{$nome}', '{$email}', '{$senha}')";
-            mysqli_query($conexao, $sql);
-            echo "<script>alert('Cadastro realizado com sucesso!')</script>";
-            echo "<script>location.href='../public/index.php'</script>";
-        }else{
-            echo "<script>alert('As senhas não são iguais!')</script>";
-            echo "<script>location.href='../index.php'</script>";
-        }
+if ($usuario !== null) {
+    $tipo = verificarTipoUsuario($email); // ou $usuario['tipo'], se já vier junto
+
+    if ($tipo == 0) {
+        header('Location: ../public/dashboard_administrador.html');
+        exit();
+    } elseif ($tipo == 2) {
+        header('Location: ../public/dashboard_professor.html');
+        exit();
+    } else {
+        $usuarioId = $usuario['id']; // ou $usuario['id_usuario'], dependendo de como está estruturado
+        session_start();
+        $_SESSION['usuario_id'] = $usuarioId;
+        $_SESSION['usuario_email'] = $email;
+        header('Location: ../public/dashboard_usuario.php');
+        exit();
     }
-
-    if($input == "login"){
-        $email= $_POST['email'];
-        $senha = $_POST['senha'];
-
-            // Exemplo simples de verificação no servidor
-        if ($_POST['email'] === 'admin@example.com' && $_POST['senha'] === 'admin1234!') {
-                header('Location: ../admin/index.php');
-        } else {
-
-            $sql = "SELECT * FROM `usuarios` WHERE `email` = '{$email}' AND `senha` = '{$senha}'";
-            $result = mysqli_query($conexao, $sql);
-            $row = mysqli_fetch_assoc($result);
-
-            if($row['email'] == $email && $row['senha'] == $senha){
-                echo "<script>alert('Login realizado com sucesso!')</script>";
-                echo "<script>location.href='../public/index.php'</script>";
-            }else{
-                echo "<script>alert('Email ou senha incorretos!')</script>";
-                echo "<script>location.href='../index.php'</script>";
-            }
-        }
-
-
-    }
-
-    desconectar($conexao);
-    exit;
-
-
+} else {
+    header('Location: ../public/login.html?error=invalid_credentials');
+    exit();
+}
