@@ -245,3 +245,10 @@ VALUES ('D4E5F6', 2, DATE_ADD(NOW(), INTERVAL 1 HOUR));
 INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
 VALUES ('G7H8I9', 3, DATE_ADD(NOW(), INTERVAL 1 HOUR));
 
+
+
+INSERT INTO professor_aluno (idprofessor, idaluno)
+VALUES
+  (2, 1),  -- Professor 2 ensina o Aluno 5
+  (2, 2),  -- Professor 2 também ensina o Aluno 6
+  (3, 3);  -- Professor 3 ensina o Aluno 7
