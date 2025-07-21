@@ -95,7 +95,7 @@ function loginUsuario($email, $senha)
 function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
 {
   $conexao = conectar();
-  if ($tipo == 1 or $tipo == 2) {
+  if ($tipo == 1) {
     $tipoid = "usuario_id";
   } else {
     $tipoid = "funcionario_id";
@@ -1937,28 +1937,28 @@ function listarAvaliacaoFisica($idavaliacao)
   $conexao = conectar();
 
   if ($idavaliacao != null) {
-    $sql = " SELECT
-    u.nome AS nome_usuario,
-    a.peso,
-    a.altura,
-    a.imc,
-    a.percentual_gordura,
-    a.data_avaliacao
-    FROM avaliacao_fisica AS a
-    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
-    WHERE idavaliacao = ?";
+    $sql = "SELECT
+              u.nome AS nome_usuario,
+              a.peso,
+              a.altura,
+              a.imc,
+              a.percentual_gordura,
+              a.data_avaliacao
+            FROM avaliacao_fisica AS a
+            JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
+            WHERE a.idavaliacao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idavaliacao);
   } else {
-    $sql = " SELECT
-    u.nome AS nome_usuario,
-    a.peso,
-    a.altura,
-    a.imc,
-    a.percentual_gordura,
-    a.data_avaliacao
-    FROM avaliacao_fisica AS a
-    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario";
+    $sql = "SELECT
+              u.nome AS nome_usuario,
+              a.peso,
+              a.altura,
+              a.imc,
+              a.percentual_gordura,
+              a.data_avaliacao
+            FROM avaliacao_fisica AS a
+            JOIN usuario AS u ON a.usuario_idusuario = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
