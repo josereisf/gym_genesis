@@ -26,6 +26,7 @@ if ($usuario !== null) {
         session_start();
         $_SESSION['usuario_id'] = $usuarioId;
         $_SESSION['usuario_email'] = $email;
+        $_SESSION['usuario_nome'] = $usuario['nome']; // opcional, se quiser
         header('Location: ../public/dashboard_usuario.php');
         exit();
     }
