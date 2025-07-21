@@ -2,15 +2,18 @@
   require_once "../code/funcao.php";
   session_start();
   $idaluno = $_SESSION['usuario_id'];
+  $nomes = $_SESSION['usuario_nome'] ?? null;
   $resultados = listarAvaliacaoFisica($idaluno);
-  foreach ($resultados AS $r){
-    $nome = $r['nome_usuario'];
-    $peso =$r['peso'];
-    $altura = $r['altura'];
-    $imc = $r['imc'];
-    $perc_gord = $r['percentual_gordura'];
-    $data = $r['data_avaliacao'];
+  $nome = $peso = $altura = $imc = $perc_gord = $data = "-"; // evita warning
+  foreach ($resultados as $r) {
+      $nome = $r['nome_usuario'];
+      $peso = $r['peso'];
+      $altura = $r['altura'];
+      $imc = $r['imc'];
+      $perc_gord = $r['percentual_gordura'];
+      $data = $r['data_avaliacao'];
   }
+
 ?>
 <html lang="pt-BR">
   <head>
@@ -81,7 +84,7 @@
                 alt="Perfil"
                 class="h-8 w-8 rounded-full bg-white p-1"
               />
-              <span class="font-medium hidden md:block"><?= $nome ?></span>
+              <span class="font-medium hidden md:block"><?= $nomes ?></span>
             </div>
           </div>
         </div>
@@ -89,10 +92,11 @@
 
       <!-- Main Content -->
       <div class="container mx-auto px-4 py-6">
+        
         <!-- Welcome Section -->
         <div class="mb-8">
           <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
-            Olá, Carlos! 👋
+            Olá, <?= "$nomes'!'"?>👋
           </h1>
           <p class="text-gray-600">
             Bem-vindo ao seu dashboard. Veja seu progresso e próximos treinos.
