@@ -115,6 +115,7 @@ async function enviarFormulario() {
 
     alert("Cadastro realizado com sucesso!");
     form.reset();
+    window.location.href = "http://localhost:83/public/login.html"; // Redireciona para a página inicial
     currentStep = 1;
     showStep(currentStep);
   } catch (error) {
