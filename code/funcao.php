@@ -486,14 +486,14 @@ function deletarAvaliacaoFisica($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function editarDieta($descricao, $data_inicio, $data_fim, $idusuario)
+function editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta)
 {
   $conexao = conectar();
 
-  $sql = 'UPDATE dieta SET descricao=?, data_inicio=?, data_fim=? WHERE usuario_idusuario=?';
+  $sql = 'UPDATE dieta SET descricao=?, data_inicio=?, data_fim=?, usuario_idusuario=? WHERE iddieta=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'sssi', $descricao, $data_inicio, $data_fim, $idusuario);
+  mysqli_stmt_bind_param($comando, 'sssii', $descricao, $data_inicio, $data_fim, $idusuario, $iddieta);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -513,7 +513,44 @@ function deletarDieta($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function listarDietas($idusuario)
+function listarDietas($iddieta){
+  $conexao = conectar();
+  if ($iddieta != null) {
+    $sql = 'SELECT
+    idusuario,
+    u.nome AS nome_usuario,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim
+    FROM dieta AS d
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
+    WHERE d.iddieta=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $iddieta);
+  } else {
+    $sql = ' SELECT
+    idusuario,
+    u.nome AS nome_usuario,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim
+    FROM dieta AS d
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_dietas = [];
+  while ($dieta = mysqli_fetch_assoc($resultados)) {
+    $lista_dietas[] = $dieta;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_dietas;
+}
+
+function listarDietasUsuario($idusuario)
 {
   $conexao = conectar();
   if ($idusuario != null) {
@@ -534,9 +571,7 @@ function listarDietas($idusuario)
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
-
-    ';
+    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);

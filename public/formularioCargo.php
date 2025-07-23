@@ -15,9 +15,6 @@ $nome = '';
 $descricao = '';
 $acao = "cadastrar";
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
