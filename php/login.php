@@ -1,36 +1,57 @@
-<?php
-
+<?
 require_once '../code/funcao.php';
+session_start(); // Precisa estar no topo antes de qualquer header()
 
 $email = $_GET['email'] ?? '';
 $senha = $_GET['senha'] ?? '';
 
+// Verifica campos vazios
 if (empty($email) || empty($senha)) {
-    header('Location: ../public/login.html?error=empty_fields');
+    $_SESSION['erro_login'] = 'Preencha todos os campos.';
+    header('Location: ../public/login.php');
     exit();
 }
 
-$usuario = loginUsuario($email, $senha); // agora deve retornar os dados do usuário, não só true/false
+$usuario = loginUsuario($email, $senha);
 
 if ($usuario !== null) {
-    $tipo = verificarTipoUsuario($email); // ou $usuario['tipo'], se já vier junto
+    $tipo = verificarTipoUsuario($email);
 
+    if ($tipo === null || $tipo === false) {
+        $_SESSION['erro_login'] = 'Credenciais inválidas ou tipo de usuário não reconhecido.';
+        header('Location: ../public/login.php');
+        exit();
+    }
+
+    // Redirecionamento por tipo
     if ($tipo == 0) {
         header('Location: ../public/dashboard_administrador.html');
         exit();
-    } elseif ($tipo == 2) {
+    }
+
+    if ($tipo == 2) {
         header('Location: ../public/dashboard_professor.html');
         exit();
-    } else {
-        $usuarioId = $usuario['id']; // ou $usuario['id_usuario'], dependendo de como está estruturado
-        session_start();
-        $_SESSION['usuario_id'] = $usuarioId;
-        $_SESSION['usuario_email'] = $email;
-        $_SESSION['usuario_nome'] = $usuario['nome']; // opcional, se quiser
-        header('Location: ../public/dashboard_usuario.php');
-        exit();
     }
+
+    // Tipo padrão (aluno)
+    $usuarioId = $usuario['id'];
+    $resposta = listarAvaliacaoFisica($usuarioId);
+
+    $_SESSION['id'] = $usuarioId;
+    $_SESSION['email'] = $email;
+    $_SESSION['nome'] = $usuario['nome'];
+
+    if ($resposta) {
+        header('Location: ../public/dashboard_usuario.php');
+    } else {
+        header('Location: ../public/primeira_avaliacao.php');
+    }
+
+    exit();
 } else {
-    header('Location: ../public/login.html?error=invalid_credentials');
+    $_SESSION['erro_login'] = 'E-mail ou senha incorretos.';
+    header('Location: ../public/login.php');
     exit();
 }
+?>
