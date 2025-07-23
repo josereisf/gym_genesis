@@ -1435,7 +1435,7 @@ function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $da
 
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, "dddsdi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario);
+mysqli_stmt_bind_param($comando, "ddddsi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
