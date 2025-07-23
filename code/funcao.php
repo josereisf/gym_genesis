@@ -1967,48 +1967,47 @@ function listarMetaUsuario($idmeta)
   return $lista_meta_usuarios;
 }
 
-function listarAvaliacaoFisica($idavaliacao)
+function listarAvaliacaoFisica($usuarioId)
 {
-  $conexao = conectar();
+    $conexao = conectar();
 
-  if ($idavaliacao != null) {
+    // Se não passou usuário, já retorna falso
+    if ($usuarioId == null) {
+        return false;
+    }
+
     $sql = "SELECT
-              u.nome AS nome_usuario,
-              a.peso,
-              a.altura,
-              a.imc,
-              a.percentual_gordura,
-              a.data_avaliacao
+                u.nome AS nome_usuario,
+                a.peso,
+                a.altura,
+                a.imc,
+                a.percentual_gordura,
+                a.data_avaliacao
             FROM avaliacao_fisica AS a
             JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
-            WHERE a.idavaliacao = ?";
+            WHERE a.usuario_idusuario = ?
+            ORDER BY a.data_avaliacao DESC
+            LIMIT 1";  // só pega a avaliação mais recente
+
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idavaliacao);
-  } else {
-    $sql = "SELECT
-              u.nome AS nome_usuario,
-              a.peso,
-              a.altura,
-              a.imc,
-              a.percentual_gordura,
-              a.data_avaliacao
-            FROM avaliacao_fisica AS a
-            JOIN usuario AS u ON a.usuario_idusuario = u.idusuario";
-    $comando = mysqli_prepare($conexao, $sql);
-  }
+    if (!$comando) {
+        // Erro na preparação, pode tratar ou retornar false
+        return false;
+    }
 
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
+    mysqli_stmt_bind_param($comando, "i", $usuarioId);
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
 
-  $lista_avaliacao_fisicas = [];
-  while ($avaliacao_fisica = mysqli_fetch_assoc($resultados)) {
-    $lista_avaliacao_fisicas[] = $avaliacao_fisica;
-  }
+    $avaliacao = mysqli_fetch_assoc($resultados);
 
-  mysqli_stmt_close($comando);
+    mysqli_stmt_close($comando);
+    mysqli_close($conexao);
 
-  return $lista_avaliacao_fisicas;
+    // Retorna o array da avaliação ou false caso não tenha
+    return $avaliacao ?: false;
 }
+
 
 function listarCargo($idcargo)
 {
