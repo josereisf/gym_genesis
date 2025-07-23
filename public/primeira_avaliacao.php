@@ -276,11 +276,25 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         <option value="noite">Noite</option>
       </select>
       <div class="text-center mt-6">
-        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Finalizar</button>
+        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continua</button>
+      </div>
+    </div>
+    
+    <!-- Etapa7: Dia da Avaliação -->
+    <div class="etapa hidden">
+      <h2 class="text-2xl font-semibold mb-4">🗓️ Quando essa avaliação foi feita?</h2>
+      <p class="mb-4 text-gray-300">Escolha o dia em que realizou essa avaliação física.</p>
+      <input name="data_avaliacao" type="date" required
+        class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+      <div class="text-center mt-6">
+        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">
+          Finalizar
+        </button>
       </div>
     </div>
 
-    <!-- Etapa 7: Conclusão -->
+
+    <!-- Etapa 8: Conclusão -->
     <div class="etapa hidden text-center">
       <h2 class="text-2xl font-bold mb-4">🚀 Pronto para começar!</h2>
       <p class="mb-6">Seu painel está pronto com base no que você nos contou.</p>
