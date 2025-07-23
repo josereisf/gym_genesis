@@ -2052,8 +2052,8 @@ function listarAlimentos($idalimento)
 {
   $conexao = conectar();
 
-  if ($idalimento !== null) {
-    $sql = " SELECT * FROM alimento WHERE $idalimento = ?";
+  if ($idalimento != null) {
+    $sql = " SELECT * FROM alimento WHERE idalimento = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idalimento);
   } else {
@@ -2609,15 +2609,15 @@ function editarPedido($idpedido, $usuario_idusuario, $data_pedido, $status)
 
   return $funcionou;
 }
-function cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria)
+function cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem)
 {
   $conexao = conectar();
 
-  $sql = " INSERT INTO alimento (nome, caloria, carboidratos, proteina, gordura, porcao, categoria)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+  $sql = " INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao, categoria, foto_de_perfil)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "sddddss", $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria);
+  mysqli_stmt_bind_param($comando, "sddddsss", $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2830,12 +2830,12 @@ function editarRefeicao($idrefeicao, $dieta_id, $tipo, $horario)
   return $funcionou;
 }
 
-function editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria)
+function editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem)
 {
   $conexao = conectar();
 
   $sql = "UPDATE alimento 
-            SET nome = ?, calorias = ?, carboidratos = ?, proteinas = ?, gorduras = ?, porcao = ?, categoria = ?
+            SET nome = ?, calorias = ?, carboidratos = ?, proteinas = ?, gorduras = ?, porcao = ?, categoria = ?, foto_de_perfil = ?
             WHERE idalimento = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2845,7 +2845,7 @@ function editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas
     return false;
   }
 
-  mysqli_stmt_bind_param($comando, "sddddssi", $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $idalimento);
+  mysqli_stmt_bind_param($comando, "sddddsssi", $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem, $idalimento);
 
   $funcionou = mysqli_stmt_execute($comando);
 
