@@ -55,8 +55,22 @@ async function usuario(nome, senha, email, cpf, data, telefone) {
       })
     });
 
+    // Primeiro, verifica se a requisição deu certo
     if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
-    return await response.json();
+
+    // Lê a resposta como texto cru
+    const textoBruto = await response.text();
+    console.log("Resposta bruta da API:", textoBruto);
+
+    // Tenta converter pra JSON
+    try {
+      const json = JSON.parse(textoBruto);
+      return json;
+    } catch (erroDeParse) {
+      console.error("Erro ao fazer JSON.parse. A resposta não é um JSON válido.");
+      throw erroDeParse;
+    }
+
   } catch (error) {
     console.error('Erro ao cadastrar usuário:', error);
     throw error;
