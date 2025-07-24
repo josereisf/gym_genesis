@@ -5,3 +5,4 @@ vendor/composer/installed.php
 /vendor
 /public/uploads
 composer.json
+/document
