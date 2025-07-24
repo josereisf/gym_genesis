@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captura de Foto - Gym Genesis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-2xl shadow-xl max-w-md w-full space-y-6">
+      <h2 class="text-xl font-bold text-center text-gray-800">
+        📸 Tire sua foto de perfil
+      </h2>
+
+      <!-- Preview da câmera -->
+      <video
+        id="preview"
+        autoplay
+        class="w-full aspect-video rounded-md border-2 border-gray-300 shadow"
+      ></video>
+
+      <!-- Botão de tirar foto -->
+      <button
+        onclick="tirarFoto()"
+        class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-semibold transition duration-300 flex items-center justify-center gap-2"
+      >
+        <i class="fas fa-camera"></i>
+        Tirar Foto
+      </button>
+
+      <!-- Preview da imagem capturada -->
+      <div id="previewFoto" class="hidden space-y-2">
+        <p class="text-sm text-gray-500 text-center">
+          Foto capturada:
+        </p>
+        <img id="imgPreview" class="rounded-md border shadow w-full" />
+        <div class="text-green-600 text-sm text-center flex items-center justify-center gap-2">
+          <i class="fas fa-check-circle"></i>
+          Foto pronta para envio!
+        </div>
+      </div>
+
+      <!-- Elementos ocultos -->
+      <canvas id="canvas" class="hidden"></canvas>
+      <input type="hidden" name="foto_base64" id="foto_base64" />
+    </div>
+
+    <script>
+      const video = document.getElementById("preview");
+      const canvas = document.getElementById("canvas");
+      const fotoInput = document.getElementById("foto_base64");
+      const imgPreview = document.getElementById("imgPreview");
+      const previewFoto = document.getElementById("previewFoto");
+
+      // Solicita acesso à câmera
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+        })
+        .catch((err) => {
+          alert("Erro ao acessar a câmera: " + err.message);
+        });
+
+      function tirarFoto() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0);
+
+        const imagemBase64 = canvas.toDataURL("image/png");
+        fotoInput.value = imagemBase64;
+
+        imgPreview.src = imagemBase64;
+        previewFoto.classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>
