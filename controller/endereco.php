@@ -18,15 +18,6 @@ $bairro = $input['bairro'] ?? null;
 $cidade = $input['cidade'] ?? null;
 $estado = $input['estado'] ?? null;
 
-// Função de resposta padrão
-function enviarResposta($success, $msg = '', $data = []) {
-    echo json_encode([
-        'success' => $success,
-        'message' => $msg,
-        'data' => $data
-    ]);
-    exit;
-}
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

@@ -103,28 +103,21 @@ async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, c
   }
 }
 
-async function enviarEndereco(plano) {
+async function enviarAssinatura(id, plano) {
   try {
     const response = await fetch('http://localhost:83/public/api/index.php?entidade=assinatura&acao=cadastrar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id,           // ID do usuário ou funcionário
-        tipo,         // tipo = 1 (usuário), 2 (funcionário), etc.
-        cep,
-        rua,
-        numero,
-        complemento,
-        bairro,
-        cidade,
-        estado
+        plano        // tipo = 1 (usuário), 2 (funcionário), etc.
       })
     });
 
     if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
     return await response.json();
   } catch (error) {
-    console.error('Erro ao cadastrar endereço:', error);
+    console.error('Erro ao cadastrar assinatura:', error);
     throw error;
   }
 }
@@ -143,7 +136,7 @@ async function enviarFormulario() {
   const bairro = document.getElementById('bairro').value;
   const cidade = document.getElementById('cidade').value;
   const estado = document.getElementById('estado').value;
-
+  const plano = document.getElementById('plano').value;
   try {
     const respostaUsuario = await usuario(nome, senha, email, cpf, data, telefone);
     console.log("Usuário cadastrado:", respostaUsuario);
@@ -152,6 +145,10 @@ async function enviarFormulario() {
     const respostaEndereco = await enviarEndereco(idUsuario, 1, cep, rua, numero, complemento, bairro, cidade, estado);
     console.log("Endereço cadastrado:", respostaEndereco);
 
+    const respostaAssinatura = await enviarAssinatura(idUsuario, plano);
+    console.log("Assinatura cadastrada:", respostaAssinatura);
+    
+    // Se tudo deu certo, exibe mensagem de sucesso e redireciona
     alert("Cadastro realizado com sucesso!");
     form.reset();
     window.location.href = "http://localhost:83/public/login.html"; // Redireciona para a página inicial
@@ -179,6 +176,12 @@ const nomeInput = document.getElementById("nome");
 const emailInput = document.getElementById("email");
 const cpfInput = document.getElementById("cpf");
 const telefoneInput = document.getElementById("telefone");
+
+if (cpfInput) {
+  cpfInput.addEventListener("input", function () {
+    this.value = aplicarMascaraCPF(this.value);
+  });
+}
 
 function showError(input, message) {
   const errorMsg = input.nextElementSibling;
