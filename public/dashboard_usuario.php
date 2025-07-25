@@ -1,7 +1,14 @@
 <?php
 require_once "../code/funcao.php";
 session_start();
-$idaluno = $_SESSION['id'] ?? 1;
+
+if (empty($_SESSION['id'])) {
+$_SESSION['erro_login'] = "Sessão expirada ou não iniciada. Faça login para continuar.";
+  header('Location: login.php');
+  exit;
+}
+
+$idaluno = $_SESSION['id'] ?? null;
 $nomes = $_SESSION['nome'] ?? null;
 $nomes = $peso = $altura = $imc = $perc_gord = $data = "-"; // evita warning
 $resultados = listarUsuarioCompleto($idaluno);

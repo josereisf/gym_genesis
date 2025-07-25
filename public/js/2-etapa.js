@@ -137,27 +137,37 @@ async function enviarFormulario() {
   const cidade = document.getElementById('cidade').value;
   const estado = document.getElementById('estado').value;
   const plano = document.getElementById('plano').value;
+ 
   try {
     const respostaUsuario = await usuario(nome, senha, email, cpf, data, telefone);
     console.log("Usuário cadastrado:", respostaUsuario);
-    const idUsuario = respostaUsuario.data.id;
+
+    if (!respostaUsuario.sucesso) throw new Error("Erro ao cadastrar usuário");
+
+    const idUsuario = respostaUsuario.dados.id;
 
     const respostaEndereco = await enviarEndereco(idUsuario, 1, cep, rua, numero, complemento, bairro, cidade, estado);
     console.log("Endereço cadastrado:", respostaEndereco);
 
+    if (!respostaEndereco.sucesso) throw new Error("Erro ao cadastrar endereço");
+
     const respostaAssinatura = await enviarAssinatura(idUsuario, plano);
     console.log("Assinatura cadastrada:", respostaAssinatura);
-    
-    // Se tudo deu certo, exibe mensagem de sucesso e redireciona
+
+    if (!respostaAssinatura.sucesso) throw new Error("Erro ao cadastrar assinatura");
+
+    // Se todos os cadastros foram bem-sucedidos
     alert("Cadastro realizado com sucesso!");
     form.reset();
-    window.location.href = "http://localhost:83/public/login.html"; // Redireciona para a página inicial
+    window.location.href = "http://localhost:83/public/login.php"; // Redireciona
     currentStep = 1;
     showStep(currentStep);
+    
   } catch (error) {
-    alert("error ao cadastrar: " + error.message);
+    alert("Erro ao cadastrar: " + error.message);
   }
 }
+
 
 
 prevBtn.addEventListener("click", () => {

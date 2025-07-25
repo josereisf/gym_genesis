@@ -1,5 +1,5 @@
 <?php
-$entidade = $_GET['entidade'] ?? null;
+$entidade = $_REQUEST['entidade'] ?? null;
 // echo $entidade;
  if (!$entidade) {
      http_response_code(400);

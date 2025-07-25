@@ -18,7 +18,7 @@ if ($usuario !== null) {
     $tipo = verificarTipoUsuario($email);
 
     if ($tipo === null || $tipo === false) {
-        $_SESSION['erro_login'] = 'Credenciais inválidas ou tipo de usuário não reconhecido.';
+        $_SESSION['erro_login'] = 'Credenciais inválidas ou Usuario não reconhecido.';
         header('Location: ../public/login.php');
         exit();
     }

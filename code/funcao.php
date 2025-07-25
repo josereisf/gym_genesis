@@ -3244,6 +3244,23 @@ function enviarResposta($sucesso, $mensagem, $dados = []) {
         'sucesso' => $sucesso,
         'mensagem' => $mensagem,
         'dados' => $dados
+        
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
+
+function calcularIMC($pesoKg, $alturaCm) {
+    $alturaMetros = $alturaCm / 100;
+
+    // Validação básica
+    if ($pesoKg <= 0 || $alturaMetros <= 0) {
+        return "Peso e altura devem ser maiores que zero.";
+    }
+
+    // Cálculo do IMC
+    $imc = $pesoKg / ($alturaMetros * $alturaMetros);
+
+    // Retorna o IMC com duas casas decimais
+    return number_format($imc, 2);
+}
+

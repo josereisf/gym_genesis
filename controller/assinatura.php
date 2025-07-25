@@ -3,7 +3,7 @@ require_once __DIR__ . '/../code/funcao.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-$acao = $_GET['acao'] ?? null;
+$acao = $_REQUEST['acao'] ?? null;
 $input = json_decode(file_get_contents('php://input'), true);
 
 $idassinatura = $input['idassinatura'] ?? null;
@@ -36,28 +36,42 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        if ($data_fim && $idplano && $idusuario) {
+        $erros = [];
+
+        if (!$idusuario) $erros[] = 'ID do usuário não informado';
+        if (!$idplano) $erros[] = 'ID do plano não informado';
+        if (!$data_fim) $erros[] = 'Data de término não informada';
+        if (!$data_inicio) $erros[] = 'Data de início não informada';
+
+        if (!empty($erros)) {
+            enviarResposta(false, 'Erro no cadastro da assinatura: ' . implode(', ', $erros));
+        } else {
             $ok = cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario);
             if ($ok) {
                 enviarResposta(true, 'Assinatura cadastrada com sucesso');
             } else {
-                enviarResposta(false, 'Erro ao cadastrar assinatura');
+                enviarResposta(false, 'Erro ao cadastrar assinatura no banco de dados');
             }
-        } else {
-            enviarResposta(false, 'Dados inválidos para cadastro');
         }
         break;
 
     case 'editar':
-        if ($data_inicio && $data_fim && $idplano && $idusuario) {
+        $erros = [];
+
+        if (!$idusuario) $erros[] = 'ID do usuário não informado';
+        if (!$idplano) $erros[] = 'ID do plano não informado';
+        if (!$data_inicio) $erros[] = 'Data de início não informada';
+        if (!$data_fim) $erros[] = 'Data de término não informada';
+
+        if (!empty($erros)) {
+            enviarResposta(false, 'Erro na edição da assinatura: ' . implode(', ', $erros));
+        } else {
             $ok = editarAssinatura($data_inicio, $data_fim, $idplano, $idusuario);
             if ($ok) {
                 enviarResposta(true, 'Assinatura editada com sucesso');
             } else {
-                enviarResposta(false, 'Erro ao editar assinatura');
+                enviarResposta(false, 'Erro ao editar assinatura no banco de dados');
             }
-        } else {
-            enviarResposta(false, 'Dados inválidos para edição');
         }
         break;
 

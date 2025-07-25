@@ -22,15 +22,6 @@ $numero_matricula = gerarNumeroMatriculaPorTipo($tipo);
 // Supondo que a imagem vai vir como string base64 no JSON, trate aqui
 $imagem = $input['imagem'] ?? null;
 
-// Função para enviar a resposta JSON padrão
-function enviarResposta($success, $msg = '', $data = []) {
-    echo json_encode([
-        'success' => $success,
-        'message' => $msg,
-        'data' => $data
-    ]);
-    exit;
-}
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

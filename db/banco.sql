@@ -156,7 +156,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`avaliacao_fisica` (
   `idavaliacao` INT(11) NOT NULL AUTO_INCREMENT,
-  `peso` DECIMAL(5,3) NOT NULL,
+  `peso` DECIMAL(9,3) NOT NULL,
   `altura` DECIMAL(5,2) NOT NULL,
   `imc` DECIMAL(5,2) NOT NULL,
   `percentual_gordura` DECIMAL(5,2) NULL DEFAULT NULL,

@@ -21,7 +21,9 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data_avaliacao)) {
     $data_avaliacao = date('Y-m-d'); // fallback
 }
 
-$imc = $altura > 0 ? $peso / ($altura ** 2) : 0;
+$imc = calcularIMC($peso, $altura);
+
+
 
 // Tenta salvar imagem
 $resultadoUpload = uploadImagem($foto);
@@ -31,7 +33,7 @@ if (is_array($resultadoUpload) && isset($resultadoUpload['erro'])) {
 }
 
 $nomeImagem = $resultadoUpload;
-atualizarFotoUsuario($idusuario, $nomeImagem);
+atualizarFotoUsuario($nomeImagem, $idusuario);
 
 
 // Agora salva os dados
