@@ -96,7 +96,7 @@ function loginUsuario($email, $senha)
 function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
 {
   $conexao = conectar();
-  if ($tipo == 1) {
+  if ($tipo == 1 or $tipo == 2) {
     $tipoid = "usuario_id";
   } else {
     $tipoid = "funcionario_id";
@@ -326,14 +326,14 @@ function deletarCargo($idcargo)
   desconectar($conexao);
   return $funcionou;
 }
-function cadastrarAssinatura($data_inicio, $data_fim, $idusuario)
+function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO assinatura (data_inicio, data_fim, usuario_idusuario) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO assinatura (data_inicio, data_fim, usuario_idusuario, plano_idplano) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssi', $data_inicio, $data_fim, $idusuario);
+  mysqli_stmt_bind_param($comando, 'ssii', $data_inicio, $data_fim, $idplano, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -371,7 +371,7 @@ function cadastrarPlano($tipo, $duracao, $idassinatura)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO plano (tipo, duracao, assinatura_idassinatura) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO plano (tipo, duracao) VALUES (?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'ssi', $tipo, $duracao, $idassinatura);
@@ -398,14 +398,16 @@ function editarPlano($idplano, $tipo, $duracao)
 function listarPlanos($idplano)
 {
   $conexao = conectar();
+
   if ($idplano != null) {
-    $sql = 'SELECT * FROM plano WHERE idplano=?';
+    $sql = 'SELECT * FROM plano WHERE idplano = ?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idplano);
   } else {
     $sql = 'SELECT * FROM plano';
     $comando = mysqli_prepare($conexao, $sql);
   }
+
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
 
@@ -413,10 +415,13 @@ function listarPlanos($idplano)
   while ($plano = mysqli_fetch_assoc($resultados)) {
     $lista_planos[] = $plano;
   }
+
   mysqli_stmt_close($comando);
 
-  return $lista_planos;
+  return $lista_planos; // agora retorna array puro
+  
 }
+
 function editarMetaUsuario($idmeta, $descricao, $data_inicio, $data_limite, $status)
 {
   $conexao = conectar();
@@ -2338,7 +2343,7 @@ function listarAssinaturas($idassinatura)
   $conexao = conectar();
 
   if ($idassinatura !== null) {
-    $sql = " SELECT 
+    $sql = "SELECT 
     u.nome,
     p.tipo,
     p.duracao,
@@ -3203,4 +3208,42 @@ function atualizarFotoUsuario($imagem, $idusuario) {
     mysqli_stmt_close($comando);
     desconectar($conexao);
     return $funcionou;
+}
+
+function calcularDataFinal($tipoPlano, $dataInicio = null) {
+    if (!$dataInicio) {
+        $dataInicio = date('Y-m-d'); // se não for passado, pega a data atual
+    }
+
+    $data = new DateTime($dataInicio);
+
+    switch (strtolower($tipoPlano)) {
+        case 'mensal':
+            $data->modify('+1 month');
+            break;
+        case 'trimestral':
+            $data->modify('+3 months');
+            break;
+        case 'semestral':
+            $data->modify('+6 months');
+            break;
+        case 'anual':
+            $data->modify('+1 year');
+            break;
+        default:
+            throw new Exception("Tipo de plano inválido.");
+    }
+
+    return $data->format('Y-m-d');
+}
+
+
+
+function enviarResposta($sucesso, $mensagem, $dados = []) {
+    echo json_encode([
+        'sucesso' => $sucesso,
+        'mensagem' => $mensagem,
+        'dados' => $dados
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
 }
