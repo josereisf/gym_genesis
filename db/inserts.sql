@@ -68,19 +68,22 @@ INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento,
 -- 4. Assinatura e plano
 
 -- 4.2. plano
-INSERT INTO `gym_genesis`.`plano` 
-(`tipo`, `duracao`)
+-- Inserção de planos disponíveis
+INSERT INTO `gym_genesis`.`plano` (`tipo`, `duracao`)
 VALUES
 ('Mensal', '30 dias'),
 ('Trimestral', '90 dias'),
 ('Anual', '365 dias');
+
 -- 4.1. assinatura
+-- Inserção de assinaturas vinculadas a usuários e planos
 INSERT INTO `gym_genesis`.`assinatura` 
 (`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_idplano`)
 VALUES
-('2025-04-01', '2025-07-01', 1, 1),
-('2025-03-15', '2025-06-15', 2, 2),
-('2025-04-10', '2025-07-10', 3, 3);
+('2025-04-01', '2025-07-01', 1, 1), -- Usuário 1, Plano Mensal
+('2025-03-15', '2025-06-15', 2, 2), -- Usuário 2, Plano Trimestral
+('2025-04-10', '2025-07-10', 3, 3); -- Usuário 3, Plano Anual
+
 
 
 -- 5. Dieta, refeição e dieta_alimento

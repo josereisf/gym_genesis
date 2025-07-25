@@ -64,11 +64,12 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`plano` (
   `idplano` INT(11) NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(45) NULL DEFAULT NULL,
-  `duracao` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idplano`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+  `tipo` VARCHAR(45) NOT NULL,
+  `duracao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idplano`)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------
@@ -81,21 +82,26 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`assinatura` (
   `usuario_idusuario` INT(11) NOT NULL,
   `plano_idplano` INT(11) NOT NULL,
   PRIMARY KEY (`idassinatura`),
-  INDEX `usuario_idusuario` (`usuario_idusuario` ASC) VISIBLE,
-  INDEX `fk_assinatura_plano1_idx` (`plano_idplano` ASC) VISIBLE,
-  CONSTRAINT `assinatura_ibfk_1`
+
+  -- Índices para as chaves estrangeiras
+  INDEX `idx_usuario_idusuario` (`usuario_idusuario`),
+  INDEX `idx_plano_idplano` (`plano_idplano`),
+
+  -- Relacionamento com usuário
+  CONSTRAINT `fk_assinatura_usuario`
     FOREIGN KEY (`usuario_idusuario`)
     REFERENCES `gym_genesis`.`usuario` (`idusuario`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_assinatura_plano1`
+
+  -- Relacionamento com plano
+  CONSTRAINT `fk_assinatura_plano`
     FOREIGN KEY (`plano_idplano`)
     REFERENCES `gym_genesis`.`plano` (`idplano`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
+    ON UPDATE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table `gym_genesis`.`treino`
