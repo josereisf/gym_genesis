@@ -1395,22 +1395,20 @@ function uploadImagem($foto)
 }
 
 
-function mostrarImagem($target_file)
+function mostrarImagem($caminhoImagem)
 {
-  $target_file = rtrim($target_file, "/");
+    if (!file_exists($caminhoImagem)) {
+        http_response_code(404);
+        echo "Imagem não encontrada.";
+        exit;
+    }
 
-  if (!file_exists($target_file)) {
-    http_response_code(404);
-    echo "Imagem não encontrada.";
+    header("Content-Type: " . mime_content_type($caminhoImagem));
+    header("Content-Length: " . filesize($caminhoImagem));
+    readfile($caminhoImagem);
     exit;
-  }
-
-  $mime = mime_content_type($target_file);
-  header("Content-Type: $mime");
-  header("Content-Length: " . filesize($target_file));
-  readfile($target_file);
-  exit;
 }
+
 
 function deletarPagamento($idpagamento)
 {
@@ -3053,6 +3051,7 @@ SELECT
     u.email,
     u.cpf,
     u.telefone,
+    u.foto_de_perfil AS foto_perfil,
     u.numero_matricula,
     u.tipo_usuario,
     e.cep,
