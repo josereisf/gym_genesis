@@ -128,7 +128,7 @@ if ($hoje < $dataRenovacao) {
             <img
               src="./uploads/<?= $foto ?>"
               alt="Perfil"
-              class="h-12 w-12 rounded-full bg-white p-1" />
+              class="h-12 w-12 rounded-full  p-1" />
             <span class="font-medium hidden md:block text-white"><?= $nome ?></span>
           </div>
 
@@ -564,98 +564,68 @@ if ($hoje < $dataRenovacao) {
   </div>
 
   <!-- Notification Modal -->
-  <div
-    id="notificationModal"
-    class="fixed inset-0 bg-black bg-opacity-30 z-50 hidden items-center justify-center">
-    <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">Notificações</h3>
-        <button
-          id="closeNotificationBtn"
-          class="text-gray-500 hover:text-gray-700">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="space-y-4">
-        <div class="flex p-3 bg-indigo-50 rounded-lg">
-          <div class="bg-indigo-100 p-2 rounded-full mr-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-indigo-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <div>
-            <h4 class="font-medium text-gray-800">
-              Aula de Spinning Confirmada
-            </h4>
-            <p class="text-sm text-gray-600">
-              Sua reserva para a aula de amanhã às 19h foi confirmada.
-            </p>
-            <p class="text-xs text-gray-500 mt-1">Há 2 horas</p>
-          </div>
-        </div>
-
-        <div class="flex p-3 bg-green-50 rounded-lg">
-          <div class="bg-green-100 p-2 rounded-full mr-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-green-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <div>
-            <h4 class="font-medium text-gray-800">Meta Alcançada!</h4>
-            <p class="text-sm text-gray-600">
-              Você atingiu sua meta de frequência semanal. Continue assim!
-            </p>
-            <p class="text-xs text-gray-500 mt-1">Ontem</p>
-          </div>
-        </div>
-      </div>
+<div
+  id="notificationModal"
+  class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden items-center justify-center">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6">
+    
+    <!-- Cabeçalho -->
+    <div class="flex justify-between items-center mb-5">
+      <h3 class="text-xl font-semibold text-gray-800">🔔 Notificações</h3>
       <button
-        class="w-full mt-4 text-sm text-indigo-600 hover:underline flex items-center justify-center">
-        Ver todas as notificações
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4 ml-1"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"></path>
-        </svg>
+        id="closeNotificationBtn"
+        class="text-gray-400 hover:text-indigo-500 transition">
+        <i class="fas fa-times text-xl"></i>
       </button>
     </div>
+
+    <!-- Lista de Notificações -->
+    <div class="space-y-4 max-h-72 overflow-y-auto pr-1">
+
+      <!-- Notificação 1 -->
+      <div class="flex items-start p-3 bg-indigo-50 border border-indigo-100 rounded-xl">
+        <div class="bg-indigo-100 p-2 rounded-full mr-3">
+          <i class="fas fa-calendar-check text-indigo-600 text-base"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-gray-800">
+            Aula de Spinning Confirmada
+          </h4>
+          <p class="text-sm text-gray-600">
+            Sua reserva para a aula de amanhã às 19h foi confirmada.
+          </p>
+          <p class="text-xs text-gray-500 mt-1">⏰ Há 2 horas</p>
+        </div>
+      </div>
+
+      <!-- Notificação 2 -->
+      <div class="flex items-start p-3 bg-green-50 border border-green-100 rounded-xl">
+        <div class="bg-green-100 p-2 rounded-full mr-3">
+          <i class="fas fa-check-circle text-green-600 text-base"></i>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-gray-800">
+            Meta Alcançada!
+          </h4>
+          <p class="text-sm text-gray-600">
+            Você atingiu sua meta de frequência semanal. Continue assim!
+          </p>
+          <p class="text-xs text-gray-500 mt-1">📅 Ontem</p>
+        </div>
+      </div>
+
+      <!-- + Você pode adicionar mais notificações aqui -->
+      
+    </div>
+
+    <!-- Botão Ver Todas -->
+    <button
+      class="w-full mt-5 text-sm text-indigo-600 hover:underline flex items-center justify-center font-medium transition">
+      Ver todas as notificações
+      <i class="fas fa-chevron-right text-xs ml-2"></i>
+    </button>
   </div>
+</div>
 
   <script>
     // Progress Chart

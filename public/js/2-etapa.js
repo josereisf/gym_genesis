@@ -103,6 +103,31 @@ async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, c
   }
 }
 
+async function enviarEndereco(plano) {
+  try {
+    const response = await fetch('http://localhost:83/public/api/index.php?entidade=assinatura&acao=cadastrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id,           // ID do usuário ou funcionário
+        tipo,         // tipo = 1 (usuário), 2 (funcionário), etc.
+        cep,
+        rua,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        estado
+      })
+    });
+
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao cadastrar endereço:', error);
+    throw error;
+  }
+}
 
 async function enviarFormulario() {
   const nome = document.getElementById('nome').value;
