@@ -333,13 +333,15 @@ function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
   $sql = 'INSERT INTO assinatura (data_inicio, data_fim, usuario_idusuario, plano_idplano) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssii', $data_inicio, $data_fim, $idplano, $idusuario);
+  // CORRETO: $idusuario vem antes de $idplano
+  mysqli_stmt_bind_param($comando, 'ssii', $data_inicio, $data_fim, $idusuario, $idplano);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
 }
+
 function renovarAssinatura($idusuario, $data_inicio, $data_fim)
 {
   $conexao = conectar();

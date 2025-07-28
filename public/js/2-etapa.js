@@ -103,26 +103,38 @@ async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, c
   }
 }
 
-async function enviarAssinatura(id, plano) {
+async function enviarAssinatura(idusuario, idplano) {
   try {
+    // Gera a data atual no formato YYYY-MM-DD
+    const dataAtual = new Date().toISOString().split('T')[0];
+
     const response = await fetch('http://localhost:83/public/api/index.php?entidade=assinatura&acao=cadastrar', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        id,           // ID do usuário ou funcionário
-        plano        // tipo = 1 (usuário), 2 (funcionário), etc.
+        idusuario: idusuario,
+        idplano: idplano,
+        data_inicio: dataAtual
       })
     });
 
-    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
-    return await response.json();
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
+    }
+
+    const resultado = await response.json();
+    return resultado;
+
   } catch (error) {
-    console.error('Erro ao cadastrar assinatura:', error);
+    console.error('Erro ao cadastrar assinatura:', error.message);
     throw error;
   }
 }
 
 async function enviarFormulario() {
+  // Captura os valores dos campos do formulário
   const nome = document.getElementById('nome').value;
   const data = document.getElementById('data').value;
   const telefone = document.getElementById('telefone').value;
@@ -136,37 +148,49 @@ async function enviarFormulario() {
   const bairro = document.getElementById('bairro').value;
   const cidade = document.getElementById('cidade').value;
   const estado = document.getElementById('estado').value;
-  const plano = document.getElementById('plano').value;
- 
+  const plano = parseInt(document.getElementById('plano').value); // Certifique-se que é um número
+
   try {
+    // 1. Cadastra o usuário
     const respostaUsuario = await usuario(nome, senha, email, cpf, data, telefone);
     console.log("Usuário cadastrado:", respostaUsuario);
 
-    if (!respostaUsuario.sucesso) throw new Error("Erro ao cadastrar usuário");
+    if (!respostaUsuario.sucesso || !respostaUsuario.dados?.id) {
+      throw new Error("Erro ao cadastrar usuário.");
+    }
 
     const idUsuario = respostaUsuario.dados.id;
 
+    // 2. Cadastra o endereço
     const respostaEndereco = await enviarEndereco(idUsuario, 1, cep, rua, numero, complemento, bairro, cidade, estado);
     console.log("Endereço cadastrado:", respostaEndereco);
 
-    if (!respostaEndereco.sucesso) throw new Error("Erro ao cadastrar endereço");
+    if (!respostaEndereco.sucesso) {
+      throw new Error("Erro ao cadastrar endereço.");
+    }
 
+    // 3. Cadastra a assinatura com o plano selecionado
     const respostaAssinatura = await enviarAssinatura(idUsuario, plano);
     console.log("Assinatura cadastrada:", respostaAssinatura);
 
-    if (!respostaAssinatura.sucesso) throw new Error("Erro ao cadastrar assinatura");
+    if (!respostaAssinatura.sucesso) {
+      throw new Error("Erro ao cadastrar assinatura.");
+    }
 
-    // Se todos os cadastros foram bem-sucedidos
+    // ✅ Tudo certo: limpa formulário e redireciona
     alert("Cadastro realizado com sucesso!");
-    form.reset();
-    window.location.href = "http://localhost:83/public/login.php"; // Redireciona
-    currentStep = 1;
-    showStep(currentStep);
-    
+
+    const form = document.querySelector('form'); // Garante que o form será resetado
+    if (form) form.reset();
+
+    window.location.href = "http://localhost:83/public/login.php";
+
   } catch (error) {
+    console.error("Erro no envio do formulário:", error);
     alert("Erro ao cadastrar: " + error.message);
   }
 }
+
 
 
 
