@@ -82,7 +82,7 @@ INSERT INTO `gym_genesis`.`assinatura`
 VALUES
 ('2025-04-01', '2025-07-01', 1, 1), -- Usuário 1, Plano Mensal
 ('2025-03-15', '2025-06-15', 2, 2), -- Usuário 2, Plano Trimestral
-('2025-04-10', '2025-07-10', 3, 3); -- Usuário 3, Plano Anual
+('2025-04-10', '2026-04-10', 3, 3); -- Usuário 3, Plano Anual
 
 
 

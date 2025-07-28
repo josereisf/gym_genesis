@@ -116,7 +116,7 @@ async function enviarAssinatura(idusuario, idplano) {
       body: JSON.stringify({
         idusuario: idusuario,
         idplano: idplano,
-        data_inicio: dataAtual
+        
       })
     });
 

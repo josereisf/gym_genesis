@@ -23,27 +23,7 @@ foreach ($resultados as $r) {
   $foto = $r['foto_perfil'] ?? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg=='; // imagem padrão se não houver foto
 }
 
-$dataPlano = new DateTime('2025-07-06');
-
-// Duração do plano (exemplo: 30 dias)
-$diasPlano = 30;
-
-// Data de renovação (data do plano + 30 dias)
-$dataRenovacao = clone $dataPlano;
-$dataRenovacao->modify("+$diasPlano days");
-
-// Data de hoje
-$hoje = new DateTime();
-
-// Diferença entre hoje e a data de renovação
-$diasRestantes = $hoje->diff($dataRenovacao)->days;
-
-// Verifica se o plano ainda está ativo
-if ($hoje < $dataRenovacao) {
-  $dia_renovacao = "Renova em $diasRestantes dias";
-} else {
-  $dia_renovacao = "Plano expirado há $diasRestantes dias";
-}
+$dia
 
 ?>
 <html lang="pt-BR">
