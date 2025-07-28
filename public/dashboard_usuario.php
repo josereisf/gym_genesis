@@ -3,29 +3,70 @@ require_once "../code/funcao.php";
 session_start();
 
 if (empty($_SESSION['id'])) {
-$_SESSION['erro_login'] = "Sessão expirada ou não iniciada. Faça login para continuar.";
+  $_SESSION['erro_login'] = "Sessão expirada ou não iniciada. Faça login para continuar.";
   header('Location: login.php');
   exit;
 }
 
-$idaluno = $_SESSION['id'] ?? null;
-$nomes = $_SESSION['nome'] ?? null;
-$nomes = $peso = $altura = $imc = $perc_gord = $data = "-"; // evita warning
+$idaluno = $_SESSION['id'];
+$nomes = $_SESSION['nome'] ?? "-";
+
+$peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
+$foto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg==';
+
 $resultados = listarUsuarioCompleto($idaluno);
-foreach ($resultados as $r) {
-  $nome = $r['nome_usuario'];
-  $peso = (float) $r['peso'];
-  $altura = $r['altura'];
-  $imc = $r['imc'];
-  $perc_gord = $r['percentual_gordura'];
-  $data = $r['data_avaliacao'];
-  $plano = $r['tipo_plano'];
-  $foto = $r['foto_perfil'] ?? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg=='; // imagem padrão se não houver foto
+if ($resultados && count($resultados) > 0) {
+  $r = $resultados[0]; // Assume apenas um resultado
+
+  $nomes = $r['nome_usuario'] ?? $nomes;
+  $peso = (float)($r['peso'] ?? 0);
+  $altura = $r['altura'] ?? "-";
+  $imc = $r['imc'] ?? "-";
+  $perc_gord = $r['percentual_gordura'] ?? "-";
+  $plano = $r['tipo_plano'] ?? "-";
+  $dia_inicial = $r['data_inicio'] ?? "-";
+  $dia_fim = $r['data_fim'] ?? null;
+  $foto = $r['foto_perfil'] ?? $foto;
 }
 
-$dia
+// Cálculo da renovação se não tiver data fim vinda do usuário
+if ($dia_fim === null || $dia_fim === "-") {
+  $assinaturasJson = listarAssinaturas(null); // Busca todas
+  $assinaturas = json_decode($assinaturasJson, true);
+
+  // Filtra pelas assinaturas do usuário atual
+  if (is_array($assinaturas)) {
+    foreach ($assinaturas as $assinatura) {
+      if (isset($assinatura['nome']) && $assinatura['nome'] === $nomes) {
+        $dia_fim = $assinatura['data_fim'] ?? null;
+        break;
+      }
+    }
+  }
+
+  $classe_cor = 'text-gray-400'; // padrão visual
+
+  if ($dia_fim && strtotime($dia_fim) > time()) {
+    $dias_restantes = (strtotime($dia_fim) - time()) / (60 * 60 * 24);
+
+    if ($dias_restantes > 10) {
+      $classe_cor = 'text-green-400';
+    } elseif ($dias_restantes > 3) {
+      $classe_cor = 'text-yellow-400';
+    } else {
+      $classe_cor = 'text-red-500';
+    }
+
+    $dia_renovacao = "Faltam " . ceil($dias_restantes) . " dias para vencer";
+  } else {
+    $classe_cor = 'text-red-500';
+    $dia_renovacao = "Plano vencido ou não definido";
+  }
+}
+
 
 ?>
+
 <html lang="pt-BR">
 
 <head>
@@ -116,7 +157,7 @@ $dia
               src="./uploads/<?= $foto ?>"
               alt="Perfil"
               class="h-12 w-12 rounded-full  p-1" />
-            <span class="font-medium hidden md:block text-white"><?= $nome ?></span>
+            <span class="font-medium hidden md:block text-white"><?= $nomes ?></span>
           </div>
 
         </div>
@@ -130,7 +171,7 @@ $dia
       <!-- Welcome Section -->
       <div class="mb-8">
         <h1 class="text-2xl md:text-3xl font-bold text-green-400">
-          Olá, <?= "$nome'!'" ?>👋
+          Olá, <?= "$nomes'!'" ?>👋
         </h1>
         <p class="text-gray-300">
           Bem-vindo ao seu dashboard. Veja seu progresso e próximos treinos.
@@ -143,16 +184,31 @@ $dia
         <!-- Frequência -->
         <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
           <div class="flex justify-between items-start">
-            <div>
-              <p class="text-sm font-medium text-gray-400">Frequência Mensal</p>
-              <h3 class="text-2xl font-bold text-white mt-1">16/20</h3>
-              <p class="text-sm text-green-400 mt-1 flex items-center">
-                <i class="fas fa-arrow-up text-green-400 w-4 h-4 mr-1"></i>
-                80% de presença
+            <div class="w-full">
+              <p class="text-sm font-medium text-gray-400">Consumo de Água</p>
+              <h3 class="text-2xl font-bold text-white mt-1">1.5L / 3L</h3>
+              <div class="w-full bg-[#1f2937] h-2 rounded-full mt-2">
+                <div class="bg-blue-500 h-2 rounded-full" style="width: 50%"></div>
+              </div>
+              <p class="text-sm text-blue-400 mt-1 flex items-center">
+                <i class="fas fa-tint text-blue-400 w-4 h-4 mr-1"></i>
+                Hidratação em andamento
               </p>
+
+              <!-- Botões escondidos inicialmente -->
+              <div id="botoes-agua" class="flex gap-2 mt-4 hidden">
+                <button class="bg-[#1f2937] text-white px-3 py-1 rounded-lg border border-blue-500 hover:bg-blue-600 transition text-sm">
+                  +250ml
+                </button>
+                <button class="bg-[#1f2937] text-white px-3 py-1 rounded-lg border border-blue-500 hover:bg-blue-600 transition text-sm">
+                  +500ml
+                </button>
+              </div>
             </div>
-            <div class="bg-[#1f2937] p-3 rounded-lg">
-              <i class="fas fa-calendar-days text-green-400 text-xl"></i>
+
+            <!-- Ícone com clique -->
+            <div class="bg-[#1f2937] p-3 rounded-lg ml-4 cursor-pointer" onclick="mostrarBotoesAgua()">
+              <i class="fas fa-glass-water-droplet text-blue-400 text-xl"></i>
             </div>
           </div>
         </div>
@@ -197,10 +253,11 @@ $dia
             <div>
               <p class="text-sm font-medium text-gray-400">Plano</p>
               <h3 class="text-2xl font-bold text-white mt-1"><?= $plano ?></h3>
-              <p class="text-sm text-yellow-400 mt-1 flex items-center">
-                <i class="fas fa-clock text-yellow-400 w-4 h-4 mr-1"></i>
+              <p class="text-sm <?= $classe_cor ?> mt-1 flex items-center">
+                <i class="fas fa-clock <?= $classe_cor ?> w-4 h-4 mr-1"></i>
                 <?= $dia_renovacao ?>
               </p>
+
             </div>
             <div class="bg-[#1f2937] p-3 rounded-lg">
               <i class="fas fa-gem text-indigo-400 text-xl"></i>
@@ -551,68 +608,68 @@ $dia
   </div>
 
   <!-- Notification Modal -->
-<div
-  id="notificationModal"
-  class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden items-center justify-center">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6">
-    
-    <!-- Cabeçalho -->
-    <div class="flex justify-between items-center mb-5">
-      <h3 class="text-xl font-semibold text-gray-800">🔔 Notificações</h3>
+  <div
+    id="notificationModal"
+    class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6">
+
+      <!-- Cabeçalho -->
+      <div class="flex justify-between items-center mb-5">
+        <h3 class="text-xl font-semibold text-gray-800">🔔 Notificações</h3>
+        <button
+          id="closeNotificationBtn"
+          class="text-gray-400 hover:text-indigo-500 transition">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Lista de Notificações -->
+      <div class="space-y-4 max-h-72 overflow-y-auto pr-1">
+
+        <!-- Notificação 1 -->
+        <div class="flex items-start p-3 bg-indigo-50 border border-indigo-100 rounded-xl">
+          <div class="bg-indigo-100 p-2 rounded-full mr-3">
+            <i class="fas fa-calendar-check text-indigo-600 text-base"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-gray-800">
+              Aula de Spinning Confirmada
+            </h4>
+            <p class="text-sm text-gray-600">
+              Sua reserva para a aula de amanhã às 19h foi confirmada.
+            </p>
+            <p class="text-xs text-gray-500 mt-1">⏰ Há 2 horas</p>
+          </div>
+        </div>
+
+        <!-- Notificação 2 -->
+        <div class="flex items-start p-3 bg-green-50 border border-green-100 rounded-xl">
+          <div class="bg-green-100 p-2 rounded-full mr-3">
+            <i class="fas fa-check-circle text-green-600 text-base"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-gray-800">
+              Meta Alcançada!
+            </h4>
+            <p class="text-sm text-gray-600">
+              Você atingiu sua meta de frequência semanal. Continue assim!
+            </p>
+            <p class="text-xs text-gray-500 mt-1">📅 Ontem</p>
+          </div>
+        </div>
+
+        <!-- + Você pode adicionar mais notificações aqui -->
+
+      </div>
+
+      <!-- Botão Ver Todas -->
       <button
-        id="closeNotificationBtn"
-        class="text-gray-400 hover:text-indigo-500 transition">
-        <i class="fas fa-times text-xl"></i>
+        class="w-full mt-5 text-sm text-indigo-600 hover:underline flex items-center justify-center font-medium transition">
+        Ver todas as notificações
+        <i class="fas fa-chevron-right text-xs ml-2"></i>
       </button>
     </div>
-
-    <!-- Lista de Notificações -->
-    <div class="space-y-4 max-h-72 overflow-y-auto pr-1">
-
-      <!-- Notificação 1 -->
-      <div class="flex items-start p-3 bg-indigo-50 border border-indigo-100 rounded-xl">
-        <div class="bg-indigo-100 p-2 rounded-full mr-3">
-          <i class="fas fa-calendar-check text-indigo-600 text-base"></i>
-        </div>
-        <div>
-          <h4 class="text-sm font-semibold text-gray-800">
-            Aula de Spinning Confirmada
-          </h4>
-          <p class="text-sm text-gray-600">
-            Sua reserva para a aula de amanhã às 19h foi confirmada.
-          </p>
-          <p class="text-xs text-gray-500 mt-1">⏰ Há 2 horas</p>
-        </div>
-      </div>
-
-      <!-- Notificação 2 -->
-      <div class="flex items-start p-3 bg-green-50 border border-green-100 rounded-xl">
-        <div class="bg-green-100 p-2 rounded-full mr-3">
-          <i class="fas fa-check-circle text-green-600 text-base"></i>
-        </div>
-        <div>
-          <h4 class="text-sm font-semibold text-gray-800">
-            Meta Alcançada!
-          </h4>
-          <p class="text-sm text-gray-600">
-            Você atingiu sua meta de frequência semanal. Continue assim!
-          </p>
-          <p class="text-xs text-gray-500 mt-1">📅 Ontem</p>
-        </div>
-      </div>
-
-      <!-- + Você pode adicionar mais notificações aqui -->
-      
-    </div>
-
-    <!-- Botão Ver Todas -->
-    <button
-      class="w-full mt-5 text-sm text-indigo-600 hover:underline flex items-center justify-center font-medium transition">
-      Ver todas as notificações
-      <i class="fas fa-chevron-right text-xs ml-2"></i>
-    </button>
   </div>
-</div>
 
   <script>
     // Progress Chart
@@ -727,6 +784,11 @@ $dia
         notificationModal.classList.remove("flex");
       }
     });
+
+    function mostrarBotoesAgua() {
+      const botoes = document.getElementById('botoes-agua');
+      botoes.classList.toggle('hidden');
+    }
   </script>
   <script>
     (function() {

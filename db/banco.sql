@@ -647,6 +647,21 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`professor_aluno` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+CREATE TABLE IF NOT EXISTS `gym_genesis`.`historico_peso` (
+  `idhistorico_peso` INT(11) NOT NULL AUTO_INCREMENT,
+  `idusuario` INT(11) NOT NULL,
+  `peso` DECIMAL(5,2) NOT NULL,
+  `data_registro` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idhistorico_peso`),
+  INDEX `fk_usuario_idx` (`idusuario` ASC) VISIBLE,
+  CONSTRAINT `fk_usuario_historico`
+    FOREIGN KEY (`idusuario`)
+    REFERENCES `gym_genesis`.`usuario` (`idusuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
