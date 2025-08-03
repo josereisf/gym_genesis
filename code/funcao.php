@@ -1379,12 +1379,12 @@ function uploadImagem($foto)
   }
 
   // Gera nome único para o arquivo
-  $imageFileType = strtolower(pathinfo($foto["name"], PATHINFO_EXTENSION));
-  $nomeUnico = uniqid("img_", true) . "." . $imageFileType;
+  $tipo = strtolower(pathinfo($foto["name"], PATHINFO_EXTENSION));
+  $nomeUnico = uniqid("img_", true) . "." . $tipo;
   $target_file = rtrim($target_dir, "/") . "/" . $nomeUnico;
 
   // Verifica o tipo de arquivo
-  if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
+  if (!in_array($tipo, ['jpg', 'jpeg', 'png'])) {
     $resposta .= "Apenas arquivos JPG, PNG ou JPEG são permitidos. ";
     $uploadOk = 0;
   }
