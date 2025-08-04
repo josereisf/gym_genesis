@@ -798,14 +798,14 @@ function listarProdutos($idproduto)
   return $lista;
 }
 
-function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idaula)
+function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino, $idaula)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=? WHERE idaula=?';
+  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, usuario_idusuario=?, treino_idtreino=? WHERE idaula=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssi', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idaula);
+  mysqli_stmt_bind_param($comando, 'ssssiii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino, $idaula);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2956,12 +2956,12 @@ function cadastrarHorario($dia_semana, $hora_inicio, $hora_fim)
   return $funcionou;
 }
 
-function cadastrarAulaAgendada($horario_idhorario, $data_aula, $usuario_idusuario)
+function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino)
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO aula_agendada (horario_idhorario, data_aula, usuario_idusuario)
-            VALUES (?, ?, ?)";
+  $sql = "INSERT INTO aula_agendada (data_aula, dia_semana, hora_inicio, hora_fim, idusuario, idtreino)
+            VALUES (?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -2969,9 +2969,7 @@ function cadastrarAulaAgendada($horario_idhorario, $data_aula, $usuario_idusuari
     echo "Erro na preparação: " . mysqli_error($conexao);
     return false;
   }
-
-  mysqli_stmt_bind_param($comando, "isi", $horario_idhorario, $data_aula, $usuario_idusuario);
-
+   mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino);
   $funcionou = mysqli_stmt_execute($comando);
 
   if (!$funcionou) {
