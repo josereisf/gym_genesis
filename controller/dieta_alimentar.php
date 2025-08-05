@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../code/funcao.php';
 $acao = $_GET['acao'];
 
-$idtreino = $_POST['idtreino'] ?? 0;
+$idDietaAlimentar = $_POST['idDietaAlimentar'] ?? 0;
 $tipo = $_POST['tipo'] ?? null;
 $horario = $_POST['horario'] ?? null;
 $descricao = $_POST['descricao'] ?? null;
@@ -11,15 +11,16 @@ $idusuario = $_POST['idusuario'] ?? null;
 
 switch ($acao) {
     case 'cadastrar':
-        cadastrarTreino($tipo, $horario, $descricao, $idusuario);
+        cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observacao);
         break;
     case 'editar':
-        editarTreino($tipo, $horario, $descricao, $idtreino);
+        editarDietaAlimentar($idalimento, $idrefeicao, $quantidade, $observacao);
         break;
     case 'listar':
-        listarTreino($idtreino);
+// fazer dps
+//        listarDietaAlimentar($iddieta, $idalimento);
         break;
     case 'deletar':
-        deletarTreino($idtreino);
+        deletarDietaAlimento($iddieta, $idlalimento);
         break;
 }

@@ -661,7 +661,7 @@ function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $vide
   desconectar($conexao);
   return $funcionou;
 }
-function deletarRefeição($idrefeicao)
+function deletarRefeicao($idrefeicao)
 {
   $conexao = conectar();
   $sql = " DELETE FROM refeicao WHERE idrefeicao=?";
@@ -1032,7 +1032,7 @@ function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status
   desconectar($conexao);
   return $funcionou;
 }
-function editarDietaAlimento($idalimento, $idrefeicao, $quantidade, $observacao)
+function editarDietaAlimentar($idalimento, $idrefeicao, $quantidade, $observacao)
 {
   $conexao = conectar();
 
@@ -1433,7 +1433,7 @@ function deletarPagamento($idpagamento)
 ///////////////////////////////////////////////////////////////////////////////////////// ultimo que o jose fez//////////////////////////////////////////////////////////////////////////////////////
 
 
-function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)
+function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario)
 {
   $conexao = conectar();
 
@@ -1441,7 +1441,7 @@ function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $da
 
   $comando = mysqli_prepare($conexao, $sql);
 
-mysqli_stmt_bind_param($comando, "ddddsi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario);
+mysqli_stmt_bind_param($comando, "ddddsi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -1738,7 +1738,7 @@ function listarTreinoTipo($tipo)
   return $lista_treinos;
 }
 
-function cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $observacoes)
+function cadastrarHistoricoTreino($idusuario, $idtreino, $data_execucao, $observacoes)
 {
   $conexao = conectar();
   $sql = " INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes) VALUES (?, ?, ?, ?)";
@@ -2384,12 +2384,12 @@ function listarAssinaturas($idassinatura)
 }
 
 
-function deletarDietaAlimento($iddieta_alimentar)
+function deletarDietaAlimento($iddieta, $idalimento)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM dieta_alimentar WHERE $iddieta_alimentar = ?";
+  $sql = "DELETE FROM dieta_alimentar WHERE $iddieta = ? and $idalimento = ?";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "i", $iddieta_alimentar);
+  mysqli_stmt_bind_param($comando, "ii", $iddieta, $alimento);
   mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
 }
@@ -2784,11 +2784,11 @@ function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_idusuario)
 
   return $funcionou;
 }
-function cadastrarDietaAlimento($refeicao_id, $alimento_id, $quantidade, $observacao)
+function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observacao)
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO dieta_alimento (refeicao_idrefeicao, alimento_idalimento, quantidade, observacao)
+  $sql = "INSERT INTO dieta_alimentar (refeicao_idrefeicao, alimento_idalimento, quantidade, observacao)
             VALUES (?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2799,7 +2799,7 @@ function cadastrarDietaAlimento($refeicao_id, $alimento_id, $quantidade, $observ
   }
 
   // Ordem dos parâmetros: refeicao_id (i), alimento_id (i), quantidade (d), observacao (s)
-  mysqli_stmt_bind_param($comando, "iids", $refeicao_id, $alimento_id, $quantidade, $observacao);
+  mysqli_stmt_bind_param($comando, "iids", $idrefeicao, $idalimento, $quantidade, $observacao);
 
   $funcionou = mysqli_stmt_execute($comando);
 
