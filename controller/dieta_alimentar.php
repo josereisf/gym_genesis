@@ -2,11 +2,10 @@
 require_once __DIR__ . '/../code/funcao.php';
 $acao = $_GET['acao'];
 
-$idDietaAlimentar = $_POST['idDietaAlimentar'] ?? 0;
-$tipo = $_POST['tipo'] ?? null;
-$horario = $_POST['horario'] ?? null;
-$descricao = $_POST['descricao'] ?? null;
-$idusuario = $_POST['idusuario'] ?? null;
+$idrefeicao = $_POST['idrefeicao'] ?? 0;
+$idalimento = $_POST['idalimento'] ?? null;
+$quantidade = $_POST['quantidade'] ?? null;
+$observacao = $_POST['observacao'] ?? null;
 
 
 switch ($acao) {
@@ -21,6 +20,6 @@ switch ($acao) {
 //        listarDietaAlimentar($iddieta, $idalimento);
         break;
     case 'deletar':
-        deletarDietaAlimento($iddieta, $idlalimento);
+        deletarDietaAlimentar($iddieta, $idlalimento);
         break;
 }

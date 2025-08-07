@@ -2384,7 +2384,7 @@ function listarAssinaturas($idassinatura)
 }
 
 
-function deletarDietaAlimento($iddieta, $idalimento)
+function deletarDietaAlimentar($iddieta, $idalimento)
 {
   $conexao = conectar();
   $sql = "DELETE FROM dieta_alimentar WHERE $iddieta = ? and $idalimento = ?";
