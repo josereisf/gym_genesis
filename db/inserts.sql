@@ -330,7 +330,7 @@ VALUES
   ('Dieta para atletas', '2026-06-20', NULL, 18),
   ('Dieta para emagrecimento', '2026-07-01', NULL, 19),
   ('Dieta personalizada', '2026-08-10', NULL, 20);
-  
+
   -- 5.1. dieta
 INSERT INTO `gym_genesis`.`dieta` 
 (`descricao`, `data_inicio`, `data_fim`, `usuario_idusuario`) 
@@ -359,6 +359,13 @@ VALUES
   (17, 'Café da manhã', '18:00:00'),
   (18, 'Almoço', '21:00:00');    -- Alterado para Almoço
 
+-- 5.2. refeicao
+INSERT INTO `gym_genesis`.`refeicao` 
+(`dieta_id`, `tipo`, `horario`) 
+VALUES
+  (1, 'Café da manhã', '07:00:00'),
+  (2, 'Almoço', '12:00:00'),
+  (3, 'Jantar', '19:00:00');
 
 -- 5.3. dieta_alimentar
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
@@ -382,13 +389,6 @@ VALUES
 
 
 
--- 5.2. refeicao
-INSERT INTO `gym_genesis`.`refeicao` 
-(`dieta_id`, `tipo`, `horario`) 
-VALUES
-  (1, 'Café da manhã', '07:00:00'),
-  (2, 'Almoço', '12:00:00'),
-  (3, 'Jantar', '19:00:00');
 
 
 -- 5.3. dieta_alimento
@@ -420,6 +420,10 @@ INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
   ('Cardio', '07:00:00', 'Corrida longa', 18),
   ('Resistência', '20:30:00', 'Treino de resistência avançado', 19),
   ('Funcional', '10:30:00', 'Circuito funcional básico', 20);
+  INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
+  ('Força', '08:00:00', 'Treino de força peitoral', 1),
+  ('Cardio','18:00:00', 'Corrida na esteira',      2),
+  ('Resistência','10:00:00', 'Circuito full body',   3);
 
 -- 6.2. treino_exercicio (continuação dos 20 inserts)
 INSERT INTO treino_exercicio (treino_id, exercicio_id, series, repeticoes, carga, intervalo_segundos) VALUES
@@ -440,6 +444,11 @@ INSERT INTO treino_exercicio (treino_id, exercicio_id, series, repeticoes, carga
   (18, 1, 3, 15, NULL, 45),
   (19, 2, 4, 10, 75.00, 60),
   (20, 3, 5, 8, 95.00, 120);
+  -- 6.2. treino_exercicio
+INSERT INTO treino_exercicio (treino_id, exercicio_id, series, repeticoes, carga, intervalo_segundos) VALUES
+  (1, 1, 4, 10, 60.00, 60),
+  (2, 3, 3, 15, NULL, 30),
+  (3, 2, 5, 12, 80.00, 90);
 
 -- 6.3. historico_treino (continuação dos 20 inserts)
 INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes) VALUES
@@ -461,16 +470,9 @@ INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes)
   (19, 19, '2025-04-28 20:30:00', 'Resistência avançada'),
   (20, 20, '2025-04-29 10:30:00', 'Circuito básico realizado');
 -- 6.1. treino
-INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
-  ('Força', '08:00:00', 'Treino de força peitoral', 1),
-  ('Cardio','18:00:00', 'Corrida na esteira',      2),
-  ('Resistência','10:00:00', 'Circuito full body',   3);
 
--- 6.2. treino_exercicio
-INSERT INTO treino_exercicio (treino_id, exercicio_id, series, repeticoes, carga, intervalo_segundos) VALUES
-  (1, 1, 4, 10, 60.00, 60),
-  (2, 3, 3, 15, NULL, 30),
-  (3, 2, 5, 12, 80.00, 90);
+
+
 
 -- 6.3. historico_treino
 INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes) VALUES
@@ -498,6 +500,11 @@ INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
   ('Treino de resistência', 'Como evoluir?', 18),
   ('Treino em grupo', 'Vantagens?', 19),
   ('Treino outdoor', 'Precauções?', 20);
+  INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
+  ('Dúvida Treino Peitoral', 'Como evoluir no supino?', 1),
+  ('Nutrição Pós-Treino',    'O que comer após o treino?', 2),
+  ('Equipamentos',           'Qual melhor barra?', 3);
+
 
 -- 7.2. resposta_forum (continuação dos 20 inserts)
 INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
@@ -519,10 +526,6 @@ INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
   ('Motiva e melhora desempenho.', 20, 19),
   ('Use protetor solar e hidrate-se.', 4, 20);
 -- 7.1. forum
-INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
-  ('Dúvida Treino Peitoral', 'Como evoluir no supino?', 1),
-  ('Nutrição Pós-Treino',    'O que comer após o treino?', 2),
-  ('Equipamentos',           'Qual melhor barra?', 3);
 
 -- 7.2. resposta_forum
 INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
@@ -551,6 +554,13 @@ VALUES
   (18, '2025-05-02 11:50:00', 'concluído', 18),
   (19, '2025-05-03 13:05:00', 'processando', 19),
   (20, '2025-05-04 15:20:00', 'enviado', 20);
+  -- 8.1. pedido
+INSERT INTO `gym_genesis`.`pedido` 
+(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
+VALUES
+  (1, '2025-04-15 14:00:00', 'processando', 1),
+  (2, '2025-04-16 10:30:00', 'enviado', 2),
+  (3, '2025-04-17 18:45:00', 'concluído', 3);
 
 INSERT INTO `gym_genesis`.`item_pedido` 
 (`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
@@ -589,6 +599,14 @@ VALUES
   (19, 1, 1, 150.00),
   (20, 2, 2, 80.00),
   (20, 3, 1, 30.00);
+  -- 8.2. item_pedido
+INSERT INTO `gym_genesis`.`item_pedido` 
+(`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
+VALUES
+  (1, 1, 2, 50.00),  -- Produto 1, 2 unidades, preço unitário 50
+  (2, 3, 1, 100.00), -- Produto 3, 1 unidade, preço unitário 100
+  (3, 2, 4, 25.00);  -- Produto 2, 4 unidades, preço unitário 25
+
 
 -- 9. Pagamento e pagamento_detalhe
 INSERT INTO `gym_genesis`.`pagamento` 
@@ -612,6 +630,13 @@ VALUES
   (150.00, '2025-04-25 10:55:00', 'cartao', 'sucesso'),
   (80.00, '2025-04-26 13:00:00', 'pix', 'sucesso'),
   (30.00, '2025-04-26 13:05:00', 'boleto', 'sucesso');
+  INSERT INTO `gym_genesis`.`pagamento` 
+(`valor`, `data_pagamento`, `metodo`, `status`)
+VALUES
+  (150.00, '2025-04-20 10:00:00', 'cartao', 'sucesso'),
+  (200.00, '2025-04-21 11:30:00', 'pix', 'sucesso'),
+  (50.00, '2025-04-22 14:00:00', 'boleto', 'falha');
+
 
 INSERT INTO `gym_genesis`.`pagamento_detalhe` 
 (`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
@@ -636,12 +661,6 @@ VALUES
   ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000008000', 21),
   ('cartao', 'Mastercard', '0987', NULL, NULL, 22),
   ('pix', NULL, NULL, 'pix-codigo-xyz007', NULL, 23);
-INSERT INTO `gym_genesis`.`pagamento` 
-(`valor`, `data_pagamento`, `metodo`, `status`)
-VALUES
-  (150.00, '2025-04-20 10:00:00', 'cartao', 'sucesso'),
-  (200.00, '2025-04-21 11:30:00', 'pix', 'sucesso'),
-  (50.00, '2025-04-22 14:00:00', 'boleto', 'falha');
 
 
 -- 9.2. pagamento_detalhe
@@ -652,22 +671,9 @@ VALUES
   ('pix', NULL, NULL, 'pix-codigo-xyz987', NULL, 2),
   ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000005000', 3);
   
--- 8.1. pedido
-INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
-VALUES
-  (1, '2025-04-15 14:00:00', 'processando', 1),
-  (2, '2025-04-16 10:30:00', 'enviado', 2),
-  (3, '2025-04-17 18:45:00', 'concluído', 3);
 
 
--- 8.2. item_pedido
-INSERT INTO `gym_genesis`.`item_pedido` 
-(`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
-VALUES
-  (1, 1, 2, 50.00),  -- Produto 1, 2 unidades, preço unitário 50
-  (2, 3, 1, 100.00), -- Produto 3, 1 unidade, preço unitário 100
-  (3, 2, 4, 25.00);  -- Produto 2, 4 unidades, preço unitário 25
+
 
 
 -- 9. Pagamento e pagamento_detalhe
@@ -753,6 +759,11 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
   (73.700, 1.77, 23.52, 16.00, '2025-04-18', 18),
   (67.900, 1.72, 22.93, 15.50, '2025-04-19', 19),
   (80.500, 1.85, 23.52, 18.50, '2025-04-20', 20);
+  -- 10.1. avaliacao_fisica
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES
+  (70.500, 1.75, 23.02, 15.00, '2025-04-01', 1),
+  (85.000, 1.80, 26.23, 20.00, '2025-04-02', 2),
+  (60.300, 1.65, 22.04, 18.00, '2025-04-03', 3);
 
 -- 10.2. aula_agendada (continuação dos 20 inserts)
 INSERT INTO `gym_genesis`.`aula_agendada` 
@@ -775,12 +786,6 @@ VALUES
 ('2025-05-15', 'Quinta', '07:00:00', '08:00:00', 18, 18),
 ('2025-05-16', 'Sexta', '20:30:00', '21:30:00', 19, 19),
 ('2025-05-17', 'Sábado', '10:30:00', '11:30:00', 20, 20);
--- 10.1. avaliacao_fisica
-INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES
-  (70.500, 1.75, 23.02, 15.00, '2025-04-01', 1),
-  (85.000, 1.80, 26.23, 20.00, '2025-04-02', 2),
-  (60.300, 1.65, 22.04, 18.00, '2025-04-03', 3);
-
 -- 10.2. aula_agendada
 INSERT INTO `gym_genesis`.`aula_agendada` 
 (`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
@@ -796,6 +801,9 @@ INSERT INTO `gym_genesis`.`aula_agendada`
 (`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
 VALUES 
 ('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3, 3);
+
+
+
 
 
 -- 11. Meta usuario
