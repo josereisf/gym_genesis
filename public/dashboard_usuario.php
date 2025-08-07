@@ -82,7 +82,6 @@ if ($dia_fim === null || $dia_fim === "-") {
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -152,13 +151,58 @@ if ($dia_fim === null || $dia_fim === "-") {
               <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">2</span>
             </button>
           </div>
-          <div class="flex items-center space-x-2">
-            <img
-              src="./uploads/<?= $foto ?>"
-              alt="Perfil"
-              class="h-12 w-12 rounded-full  p-1" />
-            <span class="font-medium hidden md:block text-white"><?= $nomes ?></span>
-          </div>
+        <!-- BOTÃO DO PERFIL -->
+<div id="botaoPerfil" class="flex items-center space-x-2 cursor-pointer">
+  <img
+    src="./uploads/<?= $foto ?>"
+    alt="Perfil"
+    class="h-12 w-12 rounded-full p-1" />
+  <span class="font-medium hidden md:block text-white"><?= $nomes ?></span>
+</div>
+<!-- DROPDOWN DO PERFIL (INICIALMENTE OCULTO) -->
+<div
+  id="menuPerfil"
+  class="absolute top-16 right-4 z-50 max-w-xs w-full bg-white border border-gray-200 rounded-xl overflow-hidden shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.04)] hidden transition-all duration-300"
+>
+  <div class="px-4 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-700 to-blue-600">
+    <p class="text-xs font-medium text-blue-200 uppercase tracking-wider">
+      Signed in as
+    </p>
+    <div class="flex items-center mt-1">
+      <div class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-2">
+        <i data-lucide="user" class="w-4 h-4"></i>
+      </div>
+      <p class="text-sm font-medium text-white truncate">john.parker@example.com</p>
+    </div>
+  </div>
+
+  <div class="py-1.5">
+    <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50">
+      <div class="absolute left-0 top-0 h-full w-1 bg-blue-500 rounded-r opacity-0 group-hover:opacity-100"></div>
+      <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center mr-3 group-hover:bg-blue-200">
+        <i data-lucide="user-circle" class="w-5 h-5 text-blue-600 group-hover:text-[#2b6cb0]"></i>
+      </div>
+      <span class="font-medium group-hover:text-[#1a365d]">Profile</span>
+    </a>
+
+    <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50">
+      <div class="absolute left-0 top-0 h-full w-1 bg-blue-600 rounded-r opacity-0 group-hover:opacity-100"></div>
+      <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center mr-3 group-hover:bg-blue-200">
+        <i data-lucide="settings" class="h-5 w-5 text-blue-600 group-hover:text-[#2b6cb0]"></i>
+      </div>
+      <span class="font-medium group-hover:text-[#1a365d]">Settings</span>
+    </a>
+
+    <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50">
+      <div class="absolute left-0 top-0 h-full w-1 bg-red-500 rounded-r opacity-0 group-hover:opacity-100"></div>
+      <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200">
+        <i data-lucide="log-out" class="h-5 w-5 text-red-500 group-hover:text-red-600"></i>
+      </div>
+      <span class="font-medium group-hover:text-red-600">Logout</span>
+    </a>
+  </div>
+</div>
+
 
         </div>
       </div>

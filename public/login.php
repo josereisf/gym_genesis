@@ -82,7 +82,7 @@ unset($_SESSION['erro_login']); // Limpa depois de exibir
         alerta.classList.add('opacity-0');
         setTimeout(() => alerta.remove(), 500); // remove depois da transição
       }
-    }, 3000);
+    }, 30000);
   </script>
 </body>
 </html>
