@@ -194,7 +194,7 @@
     <h2 class="text-2xl font-bold mb-6">Você já possui cadastro?</h2>
     <div class="flex flex-col space-y-4">
       <a
-        href="login.html"
+        href="login.php"
         class="bg-blue-600 hover:bg-blue-700 py-2 rounded-xl font-semibold transition"
         >Sim, já tenho</a
       >
