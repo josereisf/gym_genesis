@@ -1415,8 +1415,44 @@ function mostrarImagem($caminhoImagem)
     readfile($caminhoImagem);
     exit;
 }
+function listarProfessorAluno($idprofessor){
+  $conexao = conectar();
+  if ($idprofessor != null) {
+    $sql = 'SELECT 
+    pf.idprofessor_aluno, 
+    pf.idprofessor, 
+    u1.nome AS nome_professor, 
+    pf.idaluno, 
+    u2.nome AS nome_aluno
+    FROM professor_aluno AS pf
+    JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
+    JOIN usuario AS u2 ON pf.idaluno = u2.idusuario
+    WHERE idprofessor=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idprofessor);
+  } else {
+    $sql = 'SELECT 
+    pf.idprofessor_aluno, 
+    pf.idprofessor, 
+    u1.nome AS nome_professor, 
+    pf.idaluno, 
+    u2.nome AS nome_aluno
+    FROM professor_aluno AS pf
+    JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
+    JOIN usuario AS u2 ON pf.idaluno = u2.idusuario';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
+  $lista = [];
+  while ($prof_al = mysqli_fetch_assoc($resultados)) {
+    $lista[] = $prof_al;
+  }
+  mysqli_stmt_close($comando);
 
+  return $lista;
+}
 function deletarPagamento($idpagamento)
 {
   $conexao = conectar();

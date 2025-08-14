@@ -1,7 +1,6 @@
 <?php
 require_once "../code/funcao.php";
 $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do usuário
-$horarios = listarAulaAgendada($idprofessor); // Função para listar
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,11 +15,11 @@ $horarios = listarAulaAgendada($idprofessor); // Função para listar
 </head>
 
 <body class="bg-gray-950 text-white font-sans">
-  <div class="flex min-h-screen">
+  <div class="flex min-horarios-screen">
     <!-- Sidebar -->
     <aside class="w-72 bg-gradient-to-b from-gray-900 to-gray-800 p-6 flex flex-col items-center shadow-xl border-r border-gray-700">
       <!-- Logo -->
-      <img src="https://github.com/josereisf/gym_genesis/blob/main/public/logo.png" alt="Logo Gym Gênesis" class="mb-6 w-32 h-auto">
+      <img src="https://github.com/josereisf/gym_genesis/blob/main/public/logo.png" alt="Logo Gym Gênesis" class="mb-6 w-32 horarios-auto">
       <h2 class="text-3xl font-extrabold text-center mb-10 text-indigo-400">Gym Gênesis</h2>
       <nav class="w-full space-y-4">
         <a href="#" class="flex items-center gap-3 text-gray-300 hover:bg-indigo-600 hover:text-white p-3 rounded-lg transition">
@@ -56,15 +55,16 @@ $horarios = listarAulaAgendada($idprofessor); // Função para listar
           <template
             <?php
             echo 'x-for="(item, index) in [';
-            $horarios = listarAulaAgendada();
+            $alunos = listarProfessorAluno($idusuario);
 
-            foreach ($horarios as $h) {
+            foreach ($alunos as $a) {
+              $horarios = listarAulaAgendadaUsuario($idusuario);
               echo "{
-                dia: '" . $h['dia_semana'] . "',
-                inicio: '" . $h['hora_inicio'] . "',
-                fim: '" . $h['hora_fim'] . "',
-                treino: '" . $h['treino_tipo'] . " - " . $h['treino_desc'] . "',
-                alunos: '" . $h['alunos'] . "'
+                dia: '" . $horarios['dia_semana'] . "',
+                inicio: '" . $horarios['hora_inicio'] . "',
+                fim: '" . $horarios['hora_fim'] . "',
+                treino: '" . $horarios['treino_tipo'] . " - " . $horarios['treino_desc'] . "',
+                alunos: '" . $horarios['alunos'] . "'
               },";
             }
             echo ']" :key="index"';
