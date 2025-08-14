@@ -2904,8 +2904,7 @@ function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limit
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO meta_usuario (usuario_idusuario, descricao, data_inicio, data_limite, status)
-            VALUES (?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, status) VALUES (?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 

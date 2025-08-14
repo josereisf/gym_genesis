@@ -53,12 +53,11 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         Bem-vindo à <span class="text-indigo-400 font-semibold">Gym Genesis</span>! Vamos configurar seu perfil.
         Para isso, vamos coletar algumas informações suas para personalizar sua experiência e indicar os melhores profissionais, garantindo o seu máximo desempenho.
       </p>
-      <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-2 rounded-full transition-all">
-        Vamos lá
-      </button>
+      <div class="text-center mt-6">
+        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
+      </div>
+
     </div>
-
-
 
     <!-- Etapa 2: Peso e Altura -->
     <div class="etapa hidden">
@@ -78,8 +77,10 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         </div>
       </div>
       <div class="text-center mt-6">
-        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
-      </div>
+        <div class="text-center mt-6">
+          <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
+          <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
+        </div>      </div>
     </div>
 
     <!-- Etapa 3: Objetivo -->
@@ -145,14 +146,13 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
 
       <!-- Botão Continuar -->
       <div class="mt-6 hidden" id="btn-continuar">
-        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full transition-all">
-          Continuar
-        </button>
+        <div class="text-center mt-6">
+          <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
+          <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
+        </div>
+
       </div>
     </div>
-
-
-
 
     <!-- Etapa 4: Meta -->
     <div class="etapa hidden">
@@ -244,7 +244,11 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
       </div>
       <!-- Botão continuar -->
       <div class="mt-6">
-        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-2 rounded-full transition-all">Continuar</button>
+        <div class="text-center mt-6">
+          <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
+          <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
+        </div>
+
       </div>
     </div>
 
@@ -276,12 +280,15 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         <option value="noite">Noite</option>
       </select>
       <div class="text-center mt-6">
-        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continua</button>
+        <div class="text-center mt-6">
+          <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
+          <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
+        </div>
       </div>
     </div>
 
-    <!-- Etapa WQQX: Tirar Foto -->
-    <div class="etapa hidden">
+    <!-- Etapa 7: Tirar Foto -->
+    <div class="etapa hidden" id="etapa-foto">
       <h2 class="text-2xl font-semibold mb-4">📸 Tire uma foto do aluno</h2>
       <p class="mb-4 text-gray-300">Essa foto será usada para identificar o aluno nos registros.</p>
 
@@ -305,14 +312,13 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
       <input type="file" id="foto_input" name="foto" accept="image/png, image/jpeg" class="hidden" />
 
       <div class="text-center mt-6">
-        <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">
-          Continuar
-        </button>
+        <div class="text-center mt-6">
+          <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
+          <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
+        </div>
+
       </div>
     </div>
-
-
-
 
     <!-- Etapa 8: Conclusão -->
     <div class="etapa hidden text-center">
@@ -359,39 +365,59 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
       }
     }
 
-    // ===============================
-    // FUNÇÃO: Ativar câmera
-    // ===============================
-    async function ativarCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
-        });
-        video.srcObject = stream;
-        video.play();
-      } catch (error) {
-        console.error("Erro ao acessar a câmera:", error);
-        alert("Não foi possível acessar a câmera. Verifique as permissões.");
-        video.classList.add("hidden");
+    function etapaAnterior() {
+      if (etapaAtual > 0) {
+        etapas[etapaAtual].classList.add('hidden');
+        etapaAtual--;
+        etapas[etapaAtual].classList.remove('hidden');
+        atualizarProgresso();
+
+        if (etapas[etapaAtual].querySelector("video#preview")) {
+          ativarCamera();
+        }
       }
     }
 
     // ===============================
+    // FUNÇÃO: Ativar câmera
+    // ===============================
+let fotoUsuario = null; // vai guardar o nome da foto (capturada ou padrão)
+
+async function ativarCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true
+    });
+    video.srcObject = stream;
+    video.play();
+  } catch (error) {
+    console.error('Erro ao acessar a câmera:', error);
+    alert('Não foi possível acessar a câmera. Essa etapa será ignorada.');
+
+    // Define a imagem padrão
+    fotoUsuario = "padrao.png";
+
+    // Oculta a etapa de foto
+    const etapaFoto = document.getElementById("etapa-foto");
+    if (etapaFoto) {
+      etapaFoto.remove(); // ou etapaFoto.classList.add("hidden");
+    }
+
+    // Avança automaticamente para a próxima etapa
+    if (etapaAtual < etapas.length - 1) {
+      etapas[etapaAtual].classList.add('hidden');
+      etapaAtual++;
+      etapas[etapaAtual].classList.remove('hidden');
+      atualizarProgresso();
+    }
+  }
+}
+
+
+    // ===============================
     // FUNÇÃO: Tirar foto
     // ===============================
-    async function ativarCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
-        });
-        video.srcObject = stream;
-        video.play();
-      } catch (error) {
-        console.error('Erro ao acessar a câmera:', error);
-        alert('Não foi possível acessar a câmera. Verifique as permissões.');
-        video.classList.add('hidden');
-      }
-    }
+
 
     function tirarFoto() {
       canvas.width = video.videoWidth;

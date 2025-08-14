@@ -65,7 +65,7 @@ unset($_SESSION['erro_login']); // Limpa depois de exibir
       </button>
     </form>
 <p class="text-sm text-center mt-4 text-gray-400">
-      Você ja possui Cadastro?
+      Se ainda não possui Cadastro?
       <a href="2-etapa.php" class="text-blue-400 hover:underline">Clique aqui</a>
     </p>
     <p class="text-sm text-center mt-4 text-gray-400">
@@ -82,7 +82,7 @@ unset($_SESSION['erro_login']); // Limpa depois de exibir
         alerta.classList.add('opacity-0');
         setTimeout(() => alerta.remove(), 500); // remove depois da transição
       }
-    }, 3000);
+    }, 30000);
   </script>
 </body>
 </html>

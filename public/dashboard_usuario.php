@@ -14,7 +14,7 @@ $nomes = $_SESSION['nome'] ?? "-";
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
 $foto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg==';
 
-$resultados = listarUsuarioCompleto($idaluno);
+$resultados = listarUsuarioCompleto(3);
 if ($resultados && count($resultados) > 0) {
   $r = $resultados[0]; // Assume apenas um resultado
 
@@ -27,6 +27,7 @@ if ($resultados && count($resultados) > 0) {
   $dia_inicial = $r['data_inicio'] ?? "-";
   $dia_fim = $r['data_fim'] ?? null;
   $foto = $r['foto_perfil'] ?? $foto;
+  $email = $r['email'] ?? "-";
 }
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
@@ -82,7 +83,6 @@ if ($dia_fim === null || $dia_fim === "-") {
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -90,56 +90,6 @@ if ($dia_fim === null || $dia_fim === "-") {
 
 <body>
   <div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
-    <!-- Navbar
-    <nav class="bg-indigo-600 text-white shadow-lg">
-      <div
-        class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-          </svg>
-          <span class="font-bold text-xl">Gym Genesis Academia</span>
-        </div>
-        <div class="flex items-center space-x-4">
-          <div class="relative">
-            <button
-              id="notificationBtn"
-              class="text-white hover:text-indigo-200">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-              </svg>
-              <span
-                class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">2</span>
-            </button>
-          </div>
-          <div class="flex items-center space-x-2">
-            <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg=="
-              alt="Perfil"
-              class="h-8 w-8 rounded-full bg-white p-1" />
-            <span class="font-medium hidden md:block"><?= $nome ?></span>
-          </div>
-        </div>
-      </div>
-    </nav> -->
     <nav class=" text-green-400 shadow-lg">
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <div class="flex items-center space-x-2">
@@ -152,13 +102,60 @@ if ($dia_fim === null || $dia_fim === "-") {
               <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">2</span>
             </button>
           </div>
-          <div class="flex items-center space-x-2">
+          <!-- BOTÃO DO PERFIL -->
+          <div id="botaoPerfil" class="flex items-center space-x-2 cursor-pointer">
             <img
               src="./uploads/<?= $foto ?>"
               alt="Perfil"
-              class="h-12 w-12 rounded-full  p-1" />
+              class="h-12 w-12 rounded-full p-1" />
             <span class="font-medium hidden md:block text-white"><?= $nomes ?></span>
           </div>
+          <!-- DROPDOWN DO PERFIL (INICIALMENTE OCULTO) -->
+          <div
+            id="menuPerfil"
+            class="absolute top-16 right-4 z-50 max-w-xs w-full bg-white border border-green-200 rounded-xl overflow-hidden shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.04)] hidden transition-all duration-300">
+            <!-- Cabeçalho -->
+            <div class="px-4 py-4 border-b border-green-200 bg-gradient-to-r from-green-700 to-green-600">
+              <p class="text-xs font-medium text-green-200 uppercase tracking-wider">
+                Conectado como
+              </p>
+              <div class="flex items-center mt-1">
+                <div class="bg-green-100 text-green-600 rounded-full w-8 h-8 flex items-center justify-center mr-2 overflow-hidden">
+                  <img src="./uploads/<?= $foto ?>" alt="" class="w-full h-full object-cover rounded-full">
+                </div>
+                <p class="text-sm font-medium text-white truncate"><?= $email ?></p>
+              </div>
+            </div>
+
+            <!-- Opções -->
+            <div class="py-1.5">
+              <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
+                <div class="absolute left-0 top-0 h-full w-1 bg-green-500 rounded-r opacity-0 group-hover:opacity-100"></div>
+                <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
+                  <i data-lucide="user-circle" class="w-5 h-5 text-green-600 group-hover:text-green-700"></i>
+                </div>
+                <span class="font-medium group-hover:text-green-900">Perfil</span>
+              </a>
+
+              <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
+                <div class="absolute left-0 top-0 h-full w-1 bg-green-600 rounded-r opacity-0 group-hover:opacity-100"></div>
+                <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
+                  <i data-lucide="settings" class="h-5 w-5 text-green-600 group-hover:text-green-700"></i>
+                </div>
+                <span class="font-medium group-hover:text-green-900">Configurações</span>
+              </a>
+
+              <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50">
+                <div class="absolute left-0 top-0 h-full w-1 bg-red-500 rounded-r opacity-0 group-hover:opacity-100"></div>
+                <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200">
+                  <i data-lucide="log-out" class="h-5 w-5 text-red-500 group-hover:text-red-600"></i>
+                </div>
+                <span class="font-medium group-hover:text-red-600">Sair</span>
+              </a>
+            </div>
+          </div>
+
+
 
         </div>
       </div>
@@ -431,6 +428,8 @@ if ($dia_fim === null || $dia_fim === "-") {
 
               <!-- Botão -->
               <button
+                id="btnAbrirModal"
+
                 class="w-full border border-green-500 text-green-400 hover:bg-green-900/20 py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -447,6 +446,59 @@ if ($dia_fim === null || $dia_fim === "-") {
                 Adicionar Nova Meta
               </button>
 
+            </div>
+            <!-- Modal -->
+            <div
+              id="modalForm"
+              class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+              <div class="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+                <h3 class="text-white text-xl mb-4">Nova Meta</h3>
+                <form id="formMeta" class="space-y-4">
+                  <input type="hidden" name="idusuario" value="<?= $idaluno ?>" />
+                  <input type="hidden" name="status" value="ativa" />
+                  <div>
+                    <label class="block text-gray-300 mb-1" for="descricao">Descrição</label>
+                    <textarea
+                      id="descricao"
+                      name="descricao"
+                      required
+                      rows="3"
+                      class="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-white resize-none"
+                      placeholder="Descreva sua meta aqui"></textarea>
+                  </div>
+                  <div>
+                    <label class="block text-gray-300 mb-1" for="data_inicio">Data de Início</label>
+                    <input
+                      type="date"
+                      id="data_inicio"
+                      name="data_inicio"
+                      required
+                      class="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-white" />
+                  </div>
+                  <div>
+                    <label class="block text-gray-300 mb-1" for="data_limite">Data Limite (opcional)</label>
+                    <input
+                      type="date"
+                      id="data_limite"
+                      name="data_limite"
+                      class="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-white" />
+                  </div>
+
+                  <div class="flex justify-end space-x-3">
+                    <button
+                      type="button"
+                      id="btnFecharModal"
+                      class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-white">
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      class="px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white">
+                      Salvar
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
 
@@ -670,6 +722,89 @@ if ($dia_fim === null || $dia_fim === "-") {
       </button>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const botaoPerfil = document.getElementById("botaoPerfil");
+      const menuPerfil = document.getElementById("menuPerfil");
+
+      botaoPerfil.addEventListener("click", () => {
+        menuPerfil.classList.toggle("hidden");
+      });
+
+      // Fecha o menu se clicar fora dele
+      document.addEventListener("click", (event) => {
+        if (!menuPerfil.contains(event.target) && !botaoPerfil.contains(event.target)) {
+          menuPerfil.classList.add("hidden");
+        }
+      });
+    });
+
+  </script>
+<script>
+  const btnAbrirModal = document.getElementById('btnAbrirModal');
+  const btnFecharModal = document.getElementById('btnFecharModal');
+  const modalForm = document.getElementById('modalForm');
+  const formMeta = document.getElementById('formMeta');
+
+  btnAbrirModal.addEventListener('click', () => {
+    modalForm.classList.remove('hidden');
+  });
+
+  btnFecharModal.addEventListener('click', () => {
+    modalForm.classList.add('hidden');
+    formMeta.reset();
+  });
+
+formMeta.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(formMeta);
+
+  try {
+    const res = await fetch('http://localhost:83/public/api/index.php?entidade=meta&acao=cadastrar', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const texto = await res.text(); // pega a resposta crua
+    console.log('Resposta do servidor:', texto);
+
+    if (!res.ok) {
+      alert(`Erro HTTP: ${res.status}`);
+      return;
+    }
+
+    let data;
+    try {
+      data = JSON.parse(texto); // parse manual
+    } catch (err) {
+      alert('Resposta inválida do servidor, não é JSON.');
+      console.error('Erro ao fazer parse do JSON:', err);
+      return;
+    }
+
+    // Aqui mostro a mensagem que vier do backend, mesmo no sucesso ou erro
+    if (data.mensagem) {
+      alert(data.mensagem);
+    } else if (data.sucesso) {
+      alert('Operação realizada com sucesso!');
+    } else {
+      alert('Resposta inesperada do servidor.');
+    }
+
+    if (data.sucesso) {
+      modalForm.classList.add('hidden');
+      formMeta.reset();
+
+      // Aqui pode atualizar a lista no dashboard se quiser
+    }
+  } catch (err) {
+    alert('Erro ao conectar com o servidor.');
+    console.error(err);
+  }
+});
+
+</script>
 
   <script>
     // Progress Chart

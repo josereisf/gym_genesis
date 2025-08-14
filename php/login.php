@@ -4,7 +4,6 @@ session_start(); // Precisa estar no topo antes de qualquer header()
 
 $email = $_GET['email'] ?? '';
 $senha = $_GET['senha'] ?? '';
-
 // Verifica campos vazios
 if (empty($email) || empty($senha)) {
     $_SESSION['erro_login'] = 'Preencha todos os campos.';
@@ -16,12 +15,30 @@ $usuario = loginUsuario($email, $senha);
 
 if ($usuario !== null) {
     $tipo = verificarTipoUsuario($email);
-
     if ($tipo === null || $tipo === false) {
-        $_SESSION['erro_login'] = 'Credenciais inválidas ou Usuario não reconhecido.';
+        // Incrementa as tentativas de login
+        if (!isset($_SESSION['tentativas_login'])) {
+            $_SESSION['tentativas_login'] = 1;
+        } else {
+            $_SESSION['tentativas_login']++;
+        }
+
+        // Verifica se excedeu o limite de tentativas
+        if ($_SESSION['tentativas_login'] >= 5) {
+            $_SESSION['erro_login'] = '⚠️ Detectamos várias tentativas de acesso sem sucesso. 
+        Recomendamos que você refaça seu cadastro. 
+        Se você já possui cadastro e continua enfrentando problemas, por favor, entre em contato com o administrador do sistema.';
+
+            header('Location: ../public/login.php');
+            exit;
+        }
+
+        // Mensagem de erro padrão (para menos de 5 tentativas)
+        $_SESSION['erro_login'] = '❌ Usuário ou senha inválidos. Verifique suas credenciais e tente novamente.';
         header('Location: ../public/login.php');
-        exit();
+        exit;
     }
+
 
     // Redirecionamento por tipo
     if ($tipo == 0) {
@@ -43,8 +60,14 @@ if ($usuario !== null) {
     $_SESSION['nome'] = $usuario['nome'];
 
     if ($resposta) {
+        // Resetar tentativas após login bem-sucedido
+        $_SESSION['tentativas_login'] = 0;
+
         header('Location: ../public/dashboard_usuario.php');
     } else {
+        // Resetar tentativas após login bem-sucedido
+        $_SESSION['tentativas_login'] = 0;
+
         header('Location: ../public/primeira_avaliacao.php');
     }
 
@@ -54,4 +77,3 @@ if ($usuario !== null) {
     header('Location: ../public/login.php');
     exit();
 }
-?>
