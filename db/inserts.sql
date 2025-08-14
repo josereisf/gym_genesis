@@ -533,6 +533,76 @@ INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
   ('Carboidrato e proteína juntos.', 3, 2),
   ('Barra olímpica convencional.', 1, 3);
 
+
+
+
+
+-- 9. Pagamento e pagamento_detalhe
+INSERT INTO `gym_genesis`.`pagamento` 
+(`valor`, `data_pagamento`, `metodo`, `status`)
+VALUES
+  (70.00, '2025-04-18 09:30:00', 'cartao', 'sucesso'),
+  (1000.00, '2025-04-18 09:35:00', 'pix', 'sucesso'),
+  (120.00, '2025-04-19 16:00:00', 'boleto', 'sucesso'),
+  (120.00, '2025-04-19 16:05:00', 'cartao', 'falha'),
+  (120.00, '2025-04-20 18:00:00', 'pix', 'sucesso'),
+  (40.00, '2025-04-20 18:05:00', 'boleto', 'sucesso'),
+  (35.00, '2025-04-21 11:10:00', 'cartao', 'sucesso'),
+  (25.00, '2025-04-21 11:15:00', 'pix', 'sucesso'),
+  (180.00, '2025-04-22 13:30:00', 'boleto', 'sucesso'),
+  (60.00, '2025-04-22 13:35:00', 'cartao', 'sucesso'),
+  (8.00, '2025-04-23 16:30:00', 'pix', 'sucesso'),
+  (85.00, '2025-04-23 16:35:00', 'boleto', 'sucesso'),
+  (30.00, '2025-04-24 18:30:00', 'cartao', 'sucesso'),
+  (15.00, '2025-04-24 18:35:00', 'pix', 'sucesso'),
+  (120.00, '2025-04-25 10:50:00', 'boleto', 'sucesso'),
+  (150.00, '2025-04-25 10:55:00', 'cartao', 'sucesso'),
+  (80.00, '2025-04-26 13:00:00', 'pix', 'sucesso'),
+  (30.00, '2025-04-26 13:05:00', 'boleto', 'sucesso');
+  INSERT INTO `gym_genesis`.`pagamento` 
+(`valor`, `data_pagamento`, `metodo`, `status`)
+VALUES
+  (150.00, '2025-04-20 10:00:00', 'cartao', 'sucesso'),
+  (200.00, '2025-04-21 11:30:00', 'pix', 'sucesso'),
+  (50.00, '2025-04-22 14:00:00', 'boleto', 'falha');
+
+
+INSERT INTO `gym_genesis`.`pagamento_detalhe` 
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+VALUES
+  ('cartao', 'Mastercard', '5678', NULL, NULL, 4),
+  ('pix', NULL, NULL, 'pix-codigo-xyz001', NULL, 5),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000012000', 6),
+  ('cartao', 'Visa', '4321', NULL, NULL, 7),
+  ('pix', NULL, NULL, 'pix-codigo-xyz002', NULL, 8),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000004000', 9),
+  ('cartao', 'Elo', '8765', NULL, NULL, 10),
+  ('pix', NULL, NULL, 'pix-codigo-xyz003', NULL, 11),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000018000', 12),
+  ('cartao', 'Mastercard', '3456', NULL, NULL, 13),
+  ('pix', NULL, NULL, 'pix-codigo-xyz004', NULL, 14),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000008500', 15),
+  ('cartao', 'Visa', '6543', NULL, NULL, 16),
+  ('pix', NULL, NULL, 'pix-codigo-xyz005', NULL, 17),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000012000', 18),
+  ('cartao', 'Elo', '7890', NULL, NULL, 19),
+  ('pix', NULL, NULL, 'pix-codigo-xyz006', NULL, 20),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000008000', 1),
+  ('cartao', 'Mastercard', '0987', NULL, NULL, 2),
+  ('pix', NULL, NULL, 'pix-codigo-xyz007', NULL, 3);
+
+
+-- 9.2. pagamento_detalhe
+INSERT INTO `gym_genesis`.`pagamento_detalhe` 
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+VALUES
+  ('cartao', 'Visa', '1234', NULL, NULL, 1),
+  ('pix', NULL, NULL, 'pix-codigo-xyz987', NULL, 2),
+  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000005000', 3);
+  
+
+
+
 -- 8. Pedido, item_pedido
 INSERT INTO `gym_genesis`.`pedido` 
 (`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
@@ -606,75 +676,6 @@ VALUES
   (1, 1, 2, 50.00),  -- Produto 1, 2 unidades, preço unitário 50
   (2, 3, 1, 100.00), -- Produto 3, 1 unidade, preço unitário 100
   (3, 2, 4, 25.00);  -- Produto 2, 4 unidades, preço unitário 25
-
-
--- 9. Pagamento e pagamento_detalhe
-INSERT INTO `gym_genesis`.`pagamento` 
-(`valor`, `data_pagamento`, `metodo`, `status`)
-VALUES
-  (70.00, '2025-04-18 09:30:00', 'cartao', 'sucesso'),
-  (1000.00, '2025-04-18 09:35:00', 'pix', 'sucesso'),
-  (120.00, '2025-04-19 16:00:00', 'boleto', 'sucesso'),
-  (120.00, '2025-04-19 16:05:00', 'cartao', 'falha'),
-  (120.00, '2025-04-20 18:00:00', 'pix', 'sucesso'),
-  (40.00, '2025-04-20 18:05:00', 'boleto', 'sucesso'),
-  (35.00, '2025-04-21 11:10:00', 'cartao', 'sucesso'),
-  (25.00, '2025-04-21 11:15:00', 'pix', 'sucesso'),
-  (180.00, '2025-04-22 13:30:00', 'boleto', 'sucesso'),
-  (60.00, '2025-04-22 13:35:00', 'cartao', 'sucesso'),
-  (8.00, '2025-04-23 16:30:00', 'pix', 'sucesso'),
-  (85.00, '2025-04-23 16:35:00', 'boleto', 'sucesso'),
-  (30.00, '2025-04-24 18:30:00', 'cartao', 'sucesso'),
-  (15.00, '2025-04-24 18:35:00', 'pix', 'sucesso'),
-  (120.00, '2025-04-25 10:50:00', 'boleto', 'sucesso'),
-  (150.00, '2025-04-25 10:55:00', 'cartao', 'sucesso'),
-  (80.00, '2025-04-26 13:00:00', 'pix', 'sucesso'),
-  (30.00, '2025-04-26 13:05:00', 'boleto', 'sucesso');
-  INSERT INTO `gym_genesis`.`pagamento` 
-(`valor`, `data_pagamento`, `metodo`, `status`)
-VALUES
-  (150.00, '2025-04-20 10:00:00', 'cartao', 'sucesso'),
-  (200.00, '2025-04-21 11:30:00', 'pix', 'sucesso'),
-  (50.00, '2025-04-22 14:00:00', 'boleto', 'falha');
-
-
-INSERT INTO `gym_genesis`.`pagamento_detalhe` 
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
-VALUES
-  ('cartao', 'Mastercard', '5678', NULL, NULL, 4),
-  ('pix', NULL, NULL, 'pix-codigo-xyz001', NULL, 5),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000012000', 6),
-  ('cartao', 'Visa', '4321', NULL, NULL, 7),
-  ('pix', NULL, NULL, 'pix-codigo-xyz002', NULL, 8),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000004000', 9),
-  ('cartao', 'Elo', '8765', NULL, NULL, 10),
-  ('pix', NULL, NULL, 'pix-codigo-xyz003', NULL, 11),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000018000', 12),
-  ('cartao', 'Mastercard', '3456', NULL, NULL, 13),
-  ('pix', NULL, NULL, 'pix-codigo-xyz004', NULL, 14),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000008500', 15),
-  ('cartao', 'Visa', '6543', NULL, NULL, 16),
-  ('pix', NULL, NULL, 'pix-codigo-xyz005', NULL, 17),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000012000', 18),
-  ('cartao', 'Elo', '7890', NULL, NULL, 19),
-  ('pix', NULL, NULL, 'pix-codigo-xyz006', NULL, 20),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000008000', 21),
-  ('cartao', 'Mastercard', '0987', NULL, NULL, 22),
-  ('pix', NULL, NULL, 'pix-codigo-xyz007', NULL, 23);
-
-
--- 9.2. pagamento_detalhe
-INSERT INTO `gym_genesis`.`pagamento_detalhe` 
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
-VALUES
-  ('cartao', 'Visa', '1234', NULL, NULL, 1),
-  ('pix', NULL, NULL, 'pix-codigo-xyz987', NULL, 2),
-  ('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000005000', 3);
-  
-
-
-
-
 
 -- 9. Pagamento e pagamento_detalhe
 
