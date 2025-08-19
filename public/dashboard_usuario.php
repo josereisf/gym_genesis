@@ -28,7 +28,67 @@ if ($resultados && count($resultados) > 0) {
   $dia_fim = $r['data_fim'] ?? null;
   $foto = $r['foto_perfil'] ?? $foto;
   $email = $r['email'] ?? "-";
+  $idmeta = $r['idmeta'];
 }
+
+$metas = listarMetaUsuario($idaluno);
+
+$metasProcessadas = []; // inicializa sempre
+
+if (!empty($metas)) {
+  foreach ($metas as $meta) {
+    // Cálculo do progresso (exemplo, você pode trocar pela sua regra real)
+    $progresso = rand(20, 100);
+
+    // Definição de cores conforme progresso
+    if ($progresso >= 100) {
+      $corBarra = "bg-green-500";
+      $corTexto = "text-green-400";
+    } elseif ($progresso >= 50) {
+      $corBarra = "bg-yellow-400";
+      $corTexto = "text-yellow-400";
+    } else {
+      $corBarra = "bg-red-500";
+      $corTexto = "text-red-400";
+    }
+
+    // Dados formatados (com fallback seguro)
+    $descricao   = !empty($meta['descricao']) ? htmlspecialchars($meta['descricao']) : "-";
+    $inicio      = !empty($meta['data_inicio']) ? date("d/m/Y", strtotime($meta['data_inicio'])) : "-";
+    $limite      = !empty($meta['data_limite']) ? date("d/m/Y", strtotime($meta['data_limite'])) : "-";
+    $status      = !empty($meta['status']) ? ucfirst($meta['status']) : "-";
+    $usuario     = !empty($meta['nome']) ? htmlspecialchars($meta['nome']) : "-";
+
+    // Sempre popula com valores, mesmo se faltarem dados
+    $metasProcessadas[] = [
+      'descricao'   => $descricao,
+      'progresso'   => $progresso ?? 0,
+      'corBarra'    => $corBarra ?? "bg-gray-500",
+      'corTexto'    => $corTexto ?? "text-gray-400",
+      'inicio'      => $inicio,
+      'limite'      => $limite,
+      'status'      => $status,
+      'usuario'     => $usuario
+    ];
+  }
+} else {
+  // Se não houver metas, coloca um item "vazio" para não quebrar a tela
+  $metasProcessadas[] = [
+    'descricao'   => "-",
+    'progresso'   => 0,
+    'corBarra'    => "bg-gray-500",
+    'corTexto'    => "text-gray-400",
+    'inicio'      => "-",
+    'limite'      => "-",
+    'status'      => "-",
+    'usuario'     => "-"
+  ];
+}
+// echo '<pre>';
+// var_dump(
+//   $metas
+// );
+// echo '</pre>';
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
 if ($dia_fim === null || $dia_fim === "-") {
@@ -272,7 +332,7 @@ if ($dia_fim === null || $dia_fim === "-") {
           <!-- PROGRESS CHART -->
           <div class="bg-[#111827] rounded-xl shadow-md p-6">
             <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-semibold text-white">Seu Progresso</h2>
+              <h2 class="text-lg font-semibold text-white">Seu progresso</h2>
               <div class="flex space-x-2">
                 <button
                   class="progress-btn px-3 py-1 text-sm rounded-md bg-green-600 text-white hover:bg-green-700"
@@ -380,56 +440,45 @@ if ($dia_fim === null || $dia_fim === "-") {
           <div class="bg-[#111827] rounded-xl shadow-md p-6">
             <h2 class="text-lg font-semibold text-white mb-4">Metas</h2>
             <div class="space-y-6">
+              <!-- <pre>
+              // ? print_r($metasProcessadas) ?>
+              </pre>; -->
+              <!-- Metas Dinâmicas -->
+              <?php foreach ($metasProcessadas as $meta): ?>
+                <div>
+                  <div class="flex justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-300">
+                      <?= htmlspecialchars($meta['descricao']) ?>
+                    </span>
+                    <span class="text-sm font-medium 
+        <?= $meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400') ?>">
+                      <?= $meta['progresso'] ?>%
+                    </span>
+                  </div>
 
-              <!-- Perda de Peso -->
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="text-sm font-medium text-gray-300">Perda de Peso</span>
-                  <span class="text-sm font-medium text-green-400">75%</span>
-                </div>
-                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                  <div class="bg-green-500 h-2.5 rounded-full" style="width: 75%"></div>
-                </div>
-                <div class="flex justify-between mt-1 text-xs text-gray-400">
-                  <span>Meta: 72kg</span>
-                  <span>Atual: 78.5kg</span>
-                </div>
-              </div>
+                  <div class="w-full bg-gray-700 rounded-full h-2.5">
+                    <div class="
+        <?= $meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500') ?>
+        h-2.5 rounded-full"
+                      style="width: <?= $meta['progresso'] ?>%">
+                    </div>
+                  </div>
 
-              <!-- Frequência Semanal -->
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="text-sm font-medium text-gray-300">Frequência Semanal</span>
-                  <span class="text-sm font-medium text-green-400">100%</span>
-                </div>
-                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                  <div class="bg-green-400 h-2.5 rounded-full" style="width: 100%"></div>
-                </div>
-                <div class="flex justify-between mt-1 text-xs text-gray-400">
-                  <span>Meta: 4 dias</span>
-                  <span>Atual: 4 dias</span>
-                </div>
-              </div>
+                  <div class="flex justify-between mt-1 text-xs text-gray-400">
+                    <span>Início: <?= date("d/m/Y", strtotime($meta['inicio'])) ?></span>
+                    <span>Limite: <?= $meta['limite'] ? date("d/m/Y", strtotime($meta['limite'])) : '—' ?></span>
+                  </div>
 
-              <!-- Ganho Muscular -->
-              <div>
-                <div class="flex justify-between mb-2">
-                  <span class="text-sm font-medium text-gray-300">Ganho Muscular</span>
-                  <span class="text-sm font-medium text-yellow-400">40%</span>
+                  <div class="flex justify-between mt-1 text-xs text-gray-400">
+                    <span>Status: <?= ucfirst($meta['status']) ?></span>
+                    <span>Usuário: <?= htmlspecialchars($meta['usuario']) ?></span>
+                  </div>
                 </div>
-                <div class="w-full bg-gray-700 rounded-full h-2.5">
-                  <div class="bg-yellow-400 h-2.5 rounded-full" style="width: 40%"></div>
-                </div>
-                <div class="flex justify-between mt-1 text-xs text-gray-400">
-                  <span>Meta: +5kg</span>
-                  <span>Atual: +2kg</span>
-                </div>
-              </div>
+              <?php endforeach; ?>
 
               <!-- Botão -->
               <button
                 id="btnAbrirModal"
-
                 class="w-full border border-green-500 text-green-400 hover:bg-green-900/20 py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -447,6 +496,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               </button>
 
             </div>
+
             <!-- Modal -->
             <div
               id="modalForm"
@@ -456,6 +506,7 @@ if ($dia_fim === null || $dia_fim === "-") {
                 <form id="formMeta" class="space-y-4">
                   <input type="hidden" name="idusuario" value="<?= $idaluno ?>" />
                   <input type="hidden" name="status" value="ativa" />
+
                   <div>
                     <label class="block text-gray-300 mb-1" for="descricao">Descrição</label>
                     <textarea
@@ -466,6 +517,7 @@ if ($dia_fim === null || $dia_fim === "-") {
                       class="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-white resize-none"
                       placeholder="Descreva sua meta aqui"></textarea>
                   </div>
+
                   <div>
                     <label class="block text-gray-300 mb-1" for="data_inicio">Data de Início</label>
                     <input
@@ -475,6 +527,7 @@ if ($dia_fim === null || $dia_fim === "-") {
                       required
                       class="w-full rounded-md border border-gray-600 bg-gray-900 px-3 py-2 text-white" />
                   </div>
+
                   <div>
                     <label class="block text-gray-300 mb-1" for="data_limite">Data Limite (opcional)</label>
                     <input
@@ -501,6 +554,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               </div>
             </div>
           </div>
+
 
 
           <!-- Upcoming Classes -->
@@ -738,73 +792,71 @@ if ($dia_fim === null || $dia_fim === "-") {
         }
       });
     });
-
   </script>
-<script>
-  const btnAbrirModal = document.getElementById('btnAbrirModal');
-  const btnFecharModal = document.getElementById('btnFecharModal');
-  const modalForm = document.getElementById('modalForm');
-  const formMeta = document.getElementById('formMeta');
+  <script>
+    const btnAbrirModal = document.getElementById('btnAbrirModal');
+    const btnFecharModal = document.getElementById('btnFecharModal');
+    const modalForm = document.getElementById('modalForm');
+    const formMeta = document.getElementById('formMeta');
 
-  btnAbrirModal.addEventListener('click', () => {
-    modalForm.classList.remove('hidden');
-  });
-
-  btnFecharModal.addEventListener('click', () => {
-    modalForm.classList.add('hidden');
-    formMeta.reset();
-  });
-
-formMeta.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(formMeta);
-
-  try {
-    const res = await fetch('http://localhost:83/public/api/index.php?entidade=meta&acao=cadastrar', {
-      method: 'POST',
-      body: formData,
+    btnAbrirModal.addEventListener('click', () => {
+      modalForm.classList.remove('hidden');
     });
 
-    const texto = await res.text(); // pega a resposta crua
-    console.log('Resposta do servidor:', texto);
-
-    if (!res.ok) {
-      alert(`Erro HTTP: ${res.status}`);
-      return;
-    }
-
-    let data;
-    try {
-      data = JSON.parse(texto); // parse manual
-    } catch (err) {
-      alert('Resposta inválida do servidor, não é JSON.');
-      console.error('Erro ao fazer parse do JSON:', err);
-      return;
-    }
-
-    // Aqui mostro a mensagem que vier do backend, mesmo no sucesso ou erro
-    if (data.mensagem) {
-      alert(data.mensagem);
-    } else if (data.sucesso) {
-      alert('Operação realizada com sucesso!');
-    } else {
-      alert('Resposta inesperada do servidor.');
-    }
-
-    if (data.sucesso) {
+    btnFecharModal.addEventListener('click', () => {
       modalForm.classList.add('hidden');
       formMeta.reset();
+    });
 
-      // Aqui pode atualizar a lista no dashboard se quiser
-    }
-  } catch (err) {
-    alert('Erro ao conectar com o servidor.');
-    console.error(err);
-  }
-});
+    formMeta.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-</script>
+      const formData = new FormData(formMeta);
+
+      try {
+        const res = await fetch('http://localhost:83/public/api/index.php?entidade=meta&acao=cadastrar', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const texto = await res.text(); // pega a resposta crua
+        console.log('Resposta do servidor:', texto);
+
+        if (!res.ok) {
+          alert(`Erro HTTP: ${res.status}`);
+          return;
+        }
+
+        let data;
+        try {
+          data = JSON.parse(texto); // parse manual
+        } catch (err) {
+          alert('Resposta inválida do servidor, não é JSON.');
+          console.error('Erro ao fazer parse do JSON:', err);
+          return;
+        }
+
+        // Aqui mostro a mensagem que vier do backend, mesmo no sucesso ou erro
+        if (data.mensagem) {
+          alert(data.mensagem);
+        } else if (data.sucesso) {
+          alert('Operação realizada com sucesso!');
+        } else {
+          alert('Resposta inesperada do servidor.');
+        }
+
+        if (data.sucesso) {
+          modalForm.classList.add('hidden');
+          formMeta.reset();
+
+          // Aqui pode atualizar a lista no dashboard se quiser
+        }
+      } catch (err) {
+        alert('Erro ao conectar com o servidor.');
+        console.error(err);
+      }
+    });
+  </script>
 
   <script>
     // Progress Chart
