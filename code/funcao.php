@@ -1967,32 +1967,35 @@ function listarPagamentosDetalhados($idpagamento2)
 
   return $lista_pagamento_detalhados;
 }
-
-function listarMetaUsuario($idmeta)
+function listarMetaUsuario($idmeta = null)
 {
   $conexao = conectar();
 
   if ($idmeta !== null) {
-    $sql = " SELECT 
-     u.nome,
-     m.descricao,
-     m.data_inicio,
-     m.data_limite,
-     m.status
-    FROM meta_usuario AS M
-    JOIN usuario AS u ON m.usuario_id = u.idusuario
-    WHERE $idmeta = ?";
+    // Busca apenas a meta específica
+    $sql = "SELECT 
+              u.nome,
+              m.idmeta,
+              m.descricao,
+              m.data_inicio,
+              m.data_limite,
+              m.status
+            FROM meta_usuario AS m
+            JOIN usuario AS u ON m.usuario_id = u.idusuario
+            WHERE u.idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idmeta);
   } else {
-    $sql = " SELECT 
-     u.nome,
-     m.descricao,
-     m.data_inicio,
-     m.data_limite,
-     m.status
-    FROM meta_usuario AS M
-    JOIN usuario AS u ON m.usuario_id = u.idusuario";
+    // Busca todas as metas
+    $sql = "SELECT 
+              u.nome,
+              m.idmeta,
+              m.descricao,
+              m.data_inicio,
+              m.data_limite,
+              m.status
+            FROM meta_usuario AS m
+            JOIN usuario AS u ON m.usuario_id = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2008,6 +2011,7 @@ function listarMetaUsuario($idmeta)
 
   return $lista_meta_usuarios;
 }
+
 
 function listarAvaliacaoFisica($usuarioId)
 {
