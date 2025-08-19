@@ -5,3 +5,4 @@ vendor/composer/installed.php
 /vendor
 composer.json
 /document
+*.zip
