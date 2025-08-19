@@ -14,7 +14,7 @@ $nomes = $_SESSION['nome'] ?? "-";
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
 $foto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg==';
 
-$resultados = listarUsuarioCompleto(3);
+$resultados = listarUsuarioCompleto($idaluno);
 if ($resultados && count($resultados) > 0) {
   $r = $resultados[0]; // Assume apenas um resultado
 
