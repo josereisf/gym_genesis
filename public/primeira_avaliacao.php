@@ -80,7 +80,8 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         <div class="text-center mt-6">
           <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
           <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
-        </div>      </div>
+        </div>
+      </div>
     </div>
 
     <!-- Etapa 3: Objetivo -->
@@ -328,7 +329,7 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
     </div>
 
   </form>
-  <script defer>
+  <!-- <script defer>
     // ===============================
     // VARIÁVEIS GLOBAIS
     // ===============================
@@ -381,37 +382,37 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
     // ===============================
     // FUNÇÃO: Ativar câmera
     // ===============================
-let fotoUsuario = null; // vai guardar o nome da foto (capturada ou padrão)
+    let fotoUsuario = null; // vai guardar o nome da foto (capturada ou padrão)
 
-async function ativarCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true
-    });
-    video.srcObject = stream;
-    video.play();
-  } catch (error) {
-    console.error('Erro ao acessar a câmera:', error);
-    alert('Não foi possível acessar a câmera. Essa etapa será ignorada.');
+    async function ativarCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true
+        });
+        video.srcObject = stream;
+        video.play();
+      } catch (error) {
+        console.error('Erro ao acessar a câmera:', error);
+        console.log('Não foi possível acessar a câmera. Essa etapa será ignorada.');
 
-    // Define a imagem padrão
-    fotoUsuario = "padrao.png";
+        // Define a imagem padrão
+        fotoUsuario = "padrao.png";
 
-    // Oculta a etapa de foto
-    const etapaFoto = document.getElementById("etapa-foto");
-    if (etapaFoto) {
-      etapaFoto.remove(); // ou etapaFoto.classList.add("hidden");
+        // Oculta a etapa de foto
+        const etapaFoto = document.getElementById("etapa-foto");
+        if (etapaFoto) {
+          etapaFoto.remove(); // ou etapaFoto.classList.add("hidden");
+        }
+
+        // Avança automaticamente para a próxima etapa
+        if (etapaAtual < etapas.length - 1) {
+          etapas[etapaAtual].classList.add('hidden');
+          etapaAtual++;
+          etapas[etapaAtual].classList.remove('hidden');
+          atualizarProgresso();
+        }
+      }
     }
-
-    // Avança automaticamente para a próxima etapa
-    if (etapaAtual < etapas.length - 1) {
-      etapas[etapaAtual].classList.add('hidden');
-      etapaAtual++;
-      etapas[etapaAtual].classList.remove('hidden');
-      atualizarProgresso();
-    }
-  }
-}
 
 
     // ===============================
@@ -529,9 +530,9 @@ async function ativarCamera() {
       ];
       campos.forEach(c => localStorage.removeItem(c));
     });
-  </script>
+  </script> -->
 
-
+<script src="./js/primeira_avaliacao.js" defer></script>
 
 </body>
 
