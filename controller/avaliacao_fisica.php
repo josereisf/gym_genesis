@@ -1,26 +1,70 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-$acao = $_GET['acao'];
 
-$idavalaicao = $_POST['idavaliacao'] ?? 0;
-$peso = $_POST['peso'] ?? null;
-$altura = $_POST['altura'] ?? null;
-$imc = $_POST['imc'] ?? null;
-$percentual_gordura = $_POST['percentual_gordura'] ?? null;
-$data_avaliacao = $_POST['da$data_avaliacao'] ?? null;
-$idusuario = $_POST['idusuario'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
+
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$idavaliacao = $input['idavaliacao'] ?? null;
+$peso = $input['peso'] ?? null;
+$altura = $input['altura'] ?? null;
+$imc = $input['imc'] ?? null;
+$percentual_gordura = $input['percentual_gordura'] ?? null;
+$data_avaliacao = $input['data_avaliacao'] ?? null;
+$idusuario = $input['idusuario'] ?? null;
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
 
 switch ($acao) {
     case 'cadastrar':
-        cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
+        if (!$peso || !$altura || !$imc || !$percentual_gordura || !$data_avaliacao || !$idusuario) {
+            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
+        if ($ok) {
+            enviarResposta(true, 'Avaliação física cadastrada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar avaliação física');
+        }
         break;
+
     case 'editar':
-        editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
+        if (!$idavaliacao || !$peso || !$altura || !$imc || !$percentual_gordura || !$data_avaliacao || !$idusuario) {
+            enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
+        if ($ok) {
+            enviarResposta(true, 'Avaliação física editada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar avaliação física');
+        }
         break;
+
     case 'listar':
-        listarAvaliacaoFisica($idavaliacao);
+        $dados = listarAvaliacaoFisica($idavaliacao);
+        if ($dados) {
+            enviarResposta(true, 'Avaliações físicas listadas com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar avaliações físicas');
+        }
         break;
+
     case 'deletar':
-        deletarAvaliacaoFisica($idavaliacao);
+        if (!$idavaliacao) {
+            enviarResposta(false, 'ID da avaliação não informado');
+        }
+        $ok = deletarAvaliacaoFisica($idavaliacao);
+        if ($ok) {
+            enviarResposta(true, 'Avaliação física deletada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar avaliação física');
+        }
         break;
 }
