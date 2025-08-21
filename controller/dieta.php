@@ -1,25 +1,72 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-$acao = $_GET['acao'];
 
-$iddieta = $_POST['iddieta'] ?? 0;
-$descricao = $_POST['descricao'] ?? null;
-$data_inicio = $_POST['data_inicio'] ?? null;
-$data_fim = $_POST['data_fim'] ?? null;
-$idusuario = $_POST['idusuario'] ?? 0;
+header('Content-Type: application/json; charset=utf-8');
 
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$iddieta = $input['iddieta'] ?? null;
+$descricao = $input['descricao'] ?? null;
+$data_inicio = $input['data_inicio'] ?? null;
+$data_fim = $input['data_fim'] ?? null;
+$idusuario = $input['idusuario'] ?? null;
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
 
 switch ($acao) {
     case 'cadastrar':
-        cadastrarDieta($descricao, $data_inicio, $data_fim, $idusuario);
+        if (!$descricao || !$data_inicio || !$data_fim || !$idusuario) {
+            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = cadastrarDieta($descricao, $data_inicio, $data_fim, $idusuario);
+        if ($ok) {
+            enviarResposta(true, 'Dieta cadastrada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar dieta');
+        }
         break;
+
     case 'editar':
-        editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta);
+        if (!$iddieta || !$descricao || !$data_inicio || !$data_fim || !$idusuario) {
+            enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta);
+        if ($ok) {
+            enviarResposta(true, 'Dieta editada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar dieta');
+        }
         break;
+
     case 'listar':
-        listarDietas($iddieta);
+        $dados = listarDietas($iddieta);
+        if ($dados) {
+            enviarResposta(true, 'Dietas listadas com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar dietas');
+        }
         break;
+
     case 'deletar':
-        deletarDieta($iddieta);
+        if (!$iddieta) {
+            enviarResposta(false, 'ID da dieta não informado');
+        }
+        $ok = deletarDieta($iddieta);
+        if ($ok) {
+            enviarResposta(true, 'Dieta deletada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar dieta');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
         break;
 }
