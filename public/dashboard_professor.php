@@ -1,8 +1,24 @@
 <?php
 require_once "../code/funcao.php";
 $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do usuário
+$resultado = listarUsuario($idprofessor);
+$nome = $resultado[0]['nome'];
+function mostrarAlunos($idprofessor)
+{
+  $alunos = listarProfessorAluno($idprofessor);
+  foreach ($alunos as $a) {
+    $idaluno = $a['idaluno'];
+    $horarios = listarAulaAgendadaUsuario($idaluno);
+    $retorno = "{
+                dia: '" . $horarios[0]['dia_semana'] . "',
+                inicio: '" . $horarios[0]['hora_inicio'] . "',
+                fim: '" . $horarios[0]['hora_fim'] . "',
+              }";
+  }
+  return $retorno;
+}
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-br">
 
 <head>
@@ -12,6 +28,13 @@ $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do u
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.js"></script>
+
 </head>
 
 <body class="bg-gray-950 text-white font-sans">
@@ -49,56 +72,11 @@ $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do u
       </header>
 
       <!-- Calendário -->
-      <div class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10 border border-gray-700">
-        <h2 class="text-2xl font-semibold text-indigo-300 mb-6">Agenda de Aulas</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <template
-            <?php
-            echo 'x-for="(item, index) in [';
-            $alunos = listarProfessorAluno($idusuario);
+<div class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10 border border-gray-700">
+  <h2 class="text-2xl font-semibold text-indigo-300 mb-6">Agenda de Aulas</h2>
+  <div id="calendar" class="bg-gray-800 p-3 rounded-2xl"></div>
+</div>
 
-            foreach ($alunos as $a) {
-              $horarios = listarAulaAgendadaUsuario($idusuario);
-              echo "{
-                dia: '" . $horarios['dia_semana'] . "',
-                inicio: '" . $horarios['hora_inicio'] . "',
-                fim: '" . $horarios['hora_fim'] . "',
-                treino: '" . $horarios['treino_tipo'] . " - " . $horarios['treino_desc'] . "',
-                alunos: '" . $horarios['alunos'] . "'
-              },";
-            }
-            echo ']" :key="index"';
-            ?>
-          >
-            <div @click="modal = true; aula = item" class="cursor-pointer bg-gray-800 p-5 rounded-2xl hover:bg-indigo-600 transition shadow-md border border-gray-700">
-              <h3 class="text-lg font-bold text-indigo-200" x-text="item.dia"></h3>
-              <p class="text-sm mt-2 text-gray-300">
-                Horário: <span x-text="item.inicio + ' - ' + item.fim"></span>
-              </p>
-              <p class="text-sm text-gray-300">
-                Treino: <span x-text="item.treino"></span>
-              </p>
-              <p class="text-sm text-gray-300">
-                Alunos: <span x-text="item.alunos"></span>
-              </p>
-            </div>
-          </template>
-        </div>
-
-        <!-- Modal -->
-        <div x-show="modal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50" x-cloak>
-          <div class="bg-gray-900 p-8 rounded-2xl w-full max-w-md shadow-xl border border-indigo-600">
-            <h2 class="text-2xl font-bold mb-4 text-indigo-400">Detalhes da Aula</h2>
-            <p class="mb-2"><strong>Dia:</strong> <span x-text="aula?.dia"></span></p>
-            <p class="mb-2"><strong>Horário:</strong> <span x-text="aula?.inicio + ' - ' + aula?.fim"></span></p>
-            <p class="mb-2"><strong>Treino:</strong> <span x-text="aula?.treino"></span></p>
-            <p class="mb-4"><strong>Alunos:</strong> <span x-text="aula?.alunos"></span></p>
-            <div class="text-right">
-              <button @click="modal = false" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full text-white font-semibold">Fechar</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Tabela de Alunos -->
       <div class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10 border border-gray-700">
@@ -141,6 +119,33 @@ $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do u
       </div>
     </div>
   </div>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let calendarEl = document.getElementById('calendar');
+
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth', // pode trocar para 'timeGridWeek' ou 'listWeek'
+      locale: 'pt-br', // idioma
+      themeSystem: 'standard', 
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,listWeek'
+      },
+      events: <?php echo json_encode(mostrarAlunos($idprofessor)); ?>,
+      eventClick: function(info) {
+        alert(
+          "Treino: " + info.event.title + "\n" +
+          "Dia: " + info.event.start.toLocaleDateString() + "\n" +
+          "Horário: " + info.event.start.toLocaleTimeString() + " - " + (info.event.end ? info.event.end.toLocaleTimeString() : '')
+        );
+      }
+    });
+
+    calendar.render();
+  });
+</script>
+
 </body>
 
 </html>
