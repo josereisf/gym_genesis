@@ -4,7 +4,7 @@ $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do u
 $resultado = listarUsuario($idprofessor);
 $nome = $resultado[0]['nome'];
 ?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -65,7 +65,7 @@ $nome = $resultado[0]['nome'];
             <?php
             echo 'x-for="(item, index) in [';
             $alunos = listarProfessorAluno($idprofessor);
-            
+
             foreach ($alunos as $a) {
               $idaluno = $a['idaluno'];
               $horarios = listarAulaAgendadaUsuario($idaluno);
@@ -80,8 +80,7 @@ $nome = $resultado[0]['nome'];
               },";
             }
             echo ']" :key="index"';
-            ?>
-          >
+            ?>>
             <div @click="modal = true; aula = item" class="cursor-pointer bg-gray-800 p-5 rounded-2xl hover:bg-indigo-600 transition shadow-md border border-gray-700">
               <h3 class="text-lg font-bold text-indigo-200" x-text="item.dia"></h3>
               <p class="text-sm mt-2 text-gray-300">
@@ -96,7 +95,7 @@ $nome = $resultado[0]['nome'];
             </div>
           </template>
         </div>
-                    <!-- Modal -->
+        <!-- Modal -->
         <div x-show="modal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50" x-cloak>
           <div class="bg-gray-900 p-8 rounded-2xl w-full max-w-md shadow-xl border border-indigo-600">
             <h2 class="text-2xl font-bold mb-4 text-indigo-400">Detalhes da Aula</h2>
@@ -146,32 +145,6 @@ $nome = $resultado[0]['nome'];
       </div>
     </div>
   </div>
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    let calendarEl = document.getElementById('calendar');
-
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth', // pode trocar para 'timeGridWeek' ou 'listWeek'
-      locale: 'pt-br', // idioma
-      themeSystem: 'standard', 
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,listWeek'
-      },
-      events: <?php echo json_encode(mostrarAlunos($idprofessor)); ?>,
-      eventClick: function(info) {
-        alert(
-          "Treino: " + info.event.title + "\n" +
-          "Dia: " + info.event.start.toLocaleDateString() + "\n" +
-          "Horário: " + info.event.start.toLocaleTimeString() + " - " + (info.event.end ? info.event.end.toLocaleTimeString() : '')
-        );
-      }
-    });
-
-    calendar.render();
-  });
-</script>
 
 </body>
 
