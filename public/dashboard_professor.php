@@ -119,25 +119,19 @@ $nome = $resultado[0]['nome'];
             <tr>
               <th class="border-b border-gray-700 p-3">Nome</th>
               <th class="border-b border-gray-700 p-3">Objetivo</th>
-              <th class="border-b border-gray-700 p-3">Progresso</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="hover:bg-gray-800">
-              <td class="p-3">João Silva</td>
-              <td class="p-3">Hipertrofia</td>
-              <td class="p-3">60%</td>
-            </tr>
-            <tr class="hover:bg-gray-800">
-              <td class="p-3">Maria Souza</td>
-              <td class="p-3">Perda de Peso</td>
-              <td class="p-3">45%</td>
-            </tr>
-            <tr class="hover:bg-gray-800">
-              <td class="p-3">Carlos Lima</td>
-              <td class="p-3">Condicionamento</td>
-              <td class="p-3">70%</td>
-            </tr>
+            <?php
+            foreach ($alunos AS $a){
+              $idaluno = $a['idaluno'];
+              $meta = listarMetaUsuario($idaluno);
+            echo "<tr class='hover:bg-gray-800'> ";
+            echo "  <td class='p-3'>".$a['nome_aluno']."</td> ";
+            echo "  <td class='p-3'>".$meta[0]['descricao']."</td> ";
+            echo "</tr> ";
+            }
+            ?>
           </tbody>
         </table>
       </div>
