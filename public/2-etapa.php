@@ -83,8 +83,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           echo '<option value="2">Professor</option>';
           echo '</select>';
           echo '<br>';
-        }
-        else {
+        } else {
           echo '<input type="hidden" name="tipo_usuario" value="1">';
         }
         ?>
@@ -156,19 +155,8 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
             type="button"
             class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('senha', this)">
-            <!-- Ícone olho fechado (default) -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                d="M17.94 17.94a10.06 10.06 0 01-11.88 0M1 1l22 22M9.88 9.88A3 3 0 0012 15a3 3 0 002.12-.88M2.1 12a9.94 9.94 0 0119.8 0"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+            <i class="fa-regular fa-eye-slash"></i>
+
           </button>
         </div>
 
@@ -179,19 +167,8 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
             type="button"
             class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('confirmarSenha', this)">
-            <!-- Ícone olho fechado (default) -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                d="M17.94 17.94a10.06 10.06 0 01-11.88 0M1 1l22 22M9.88 9.88A3 3 0 0012 15a3 3 0 002.12-.88M2.1 12a9.94 9.94 0 0119.8 0"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+            <i class="fa-regular fa-eye-slash"></i>
+
           </button>
         </div>
 
