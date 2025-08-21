@@ -6,3 +6,4 @@ vendor/composer/installed.php
 composer.json
 /document
 *.zip
+testes_SH/TestHelloWorld.php
