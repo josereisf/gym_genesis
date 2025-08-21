@@ -3,20 +3,6 @@ require_once "../code/funcao.php";
 $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do usuário
 $resultado = listarUsuario($idprofessor);
 $nome = $resultado[0]['nome'];
-function mostrarAlunos($idprofessor)
-{
-  $alunos = listarProfessorAluno($idprofessor);
-  foreach ($alunos as $a) {
-    $idaluno = $a['idaluno'];
-    $horarios = listarAulaAgendadaUsuario($idaluno);
-    $retorno = "{
-                dia: '" . $horarios[0]['dia_semana'] . "',
-                inicio: '" . $horarios[0]['hora_inicio'] . "',
-                fim: '" . $horarios[0]['hora_fim'] . "',
-              }";
-  }
-  return $retorno;
-}
 ?>
 <!DOCTYPE html> 
 <html lang="pt-br">
@@ -68,7 +54,7 @@ function mostrarAlunos($idprofessor)
       <!-- Header -->
       <header class="flex justify-between items-center mb-10">
         <h1 class="text-4xl font-extrabold text-indigo-400">Painel do Professor</h1>
-        <div class="text-gray-400 text-lg">Bem-vindo(a), Professor 👋</div>
+        <div class="text-gray-400 text-lg">Bem-vindo(a), Professor <?= $nome ?>👋</div>
       </header>
 
       <!-- Calendário -->
@@ -83,10 +69,14 @@ function mostrarAlunos($idprofessor)
             foreach ($alunos as $a) {
               $idaluno = $a['idaluno'];
               $horarios = listarAulaAgendadaUsuario($idaluno);
+              $idtreino = $horarios[0]["treino_idtreino"];
+              $treino = listarTreino($idtreino);
               echo "{
                 dia: '" . $horarios[0]['dia_semana'] . "',
                 inicio: '" . $horarios[0]['hora_inicio'] . "',
                 fim: '" . $horarios[0]['hora_fim'] . "',
+                treino: '" . $treino[0]['tipo'] . "',
+                alunos: '" . $a['nome_aluno'] . "'
               },";
             }
             echo ']" :key="index"';

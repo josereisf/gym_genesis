@@ -1722,8 +1722,15 @@ function listarTreino($idtreino)
 {
   $conexao = conectar();
 
-  if ($idtreino !== null) {
-    $sql = " SELECT * FROM treino WHERE $idtreino = ?";
+  if ($idtreino != null) {
+    $sql = " SELECT 
+    u.nome,
+    t.tipo,
+    t.horario,
+    t.descricao
+    FROM treino as t
+    JOIN usuario as u ON u.idusuario = t.usuario_idusuario 
+    WHERE idtreino = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idtreino);
   } else {
@@ -1855,7 +1862,8 @@ function listarAulaAgendadaUsuario($idusuario)
   ag.data_aula,
   ag.dia_semana,
   ag.hora_inicio,
-  ag.hora_fim 
+  ag.hora_fim,
+  ag.treino_idtreino
   FROM aula_agendada AS ag
   JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
   WHERE idusuario = ?";
