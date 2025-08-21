@@ -70,27 +70,27 @@ function deletarUsuario($idusuario)
 }
 function loginUsuario($email, $senha)
 {
-    $conexao = conectar();
-    $sql = "SELECT idusuario, nome, email, senha FROM usuario WHERE email = ?";
-    $comando = mysqli_prepare($conexao, $sql);
+  $conexao = conectar();
+  $sql = "SELECT idusuario, nome, email, senha FROM usuario WHERE email = ?";
+  $comando = mysqli_prepare($conexao, $sql);
 
-    mysqli_stmt_bind_param($comando, 's', $email);
+  mysqli_stmt_bind_param($comando, 's', $email);
 
-    mysqli_stmt_execute($comando);
+  mysqli_stmt_execute($comando);
 
-    mysqli_stmt_bind_result($comando, $id, $nome, $emailDb, $senhahash);
-    
-    if (mysqli_stmt_fetch($comando)) {
-        if (password_verify($senha, $senhahash)) {
-            return [
-                'id' => $id,
-                'nome' => $nome,
-                'email' => $emailDb
-            ];
-        }
+  mysqli_stmt_bind_result($comando, $id, $nome, $emailDb, $senhahash);
+
+  if (mysqli_stmt_fetch($comando)) {
+    if (password_verify($senha, $senhahash)) {
+      return [
+        'id' => $id,
+        'nome' => $nome,
+        'email' => $emailDb
+      ];
     }
+  }
 
-    return false;
+  return false;
 }
 
 function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
@@ -421,7 +421,7 @@ function listarPlanos($idplano)
   mysqli_stmt_close($comando);
 
   return $lista_planos; // agora retorna array puro
-  
+
 }
 
 function editarMetaUsuario($idmeta, $descricao, $data_inicio, $data_limite, $status)
@@ -521,7 +521,8 @@ function deletarDieta($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function listarDietas($iddieta){
+function listarDietas($iddieta)
+{
   $conexao = conectar();
   if ($iddieta != null) {
     $sql = 'SELECT
@@ -1404,18 +1405,19 @@ function uploadImagem($foto)
 
 function mostrarImagem($caminhoImagem)
 {
-    if (!file_exists($caminhoImagem)) {
-        http_response_code(404);
-        echo "Imagem não encontrada.";
-        exit;
-    }
-
-    header("Content-Type: " . mime_content_type($caminhoImagem));
-    header("Content-Length: " . filesize($caminhoImagem));
-    readfile($caminhoImagem);
+  if (!file_exists($caminhoImagem)) {
+    http_response_code(404);
+    echo "Imagem não encontrada.";
     exit;
+  }
+
+  header("Content-Type: " . mime_content_type($caminhoImagem));
+  header("Content-Length: " . filesize($caminhoImagem));
+  readfile($caminhoImagem);
+  exit;
 }
-function listarProfessorAluno($idprofessor){
+function listarProfessorAluno($idprofessor)
+{
   $conexao = conectar();
   if ($idprofessor != null) {
     $sql = 'SELECT 
@@ -1477,7 +1479,7 @@ function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $da
 
   $comando = mysqli_prepare($conexao, $sql);
 
-mysqli_stmt_bind_param($comando, "ddddsi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
+  mysqli_stmt_bind_param($comando, "ddddsi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -1655,7 +1657,7 @@ function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_g
 
   return $funcionou;
 }
-function editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario)
+function editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario): bool
 {
   $conexao = conectar();
 
@@ -1812,7 +1814,7 @@ function listarAulaAgendada($idaula = null)
     JOIN treino AS t ON ag.treino_idtreino = t.idtreino
     WHERE idaula = ?
     GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_idtreino";
-    
+
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
   } else {
@@ -2015,14 +2017,14 @@ function listarMetaUsuario($idmeta = null)
 
 function listarAvaliacaoFisica($usuarioId)
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    // Se não passou usuário, já retorna falso
-    if ($usuarioId == null) {
-        return false;
-    }
+  // Se não passou usuário, já retorna falso
+  if ($usuarioId == null) {
+    return false;
+  }
 
-    $sql = "SELECT
+  $sql = "SELECT
                 u.nome AS nome_usuario,
                 a.peso,
                 a.altura,
@@ -2035,23 +2037,23 @@ function listarAvaliacaoFisica($usuarioId)
             ORDER BY a.data_avaliacao DESC
             LIMIT 1";  // só pega a avaliação mais recente
 
-    $comando = mysqli_prepare($conexao, $sql);
-    if (!$comando) {
-        // Erro na preparação, pode tratar ou retornar false
-        return false;
-    }
+  $comando = mysqli_prepare($conexao, $sql);
+  if (!$comando) {
+    // Erro na preparação, pode tratar ou retornar false
+    return false;
+  }
 
-    mysqli_stmt_bind_param($comando, "i", $usuarioId);
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
+  mysqli_stmt_bind_param($comando, "i", $usuarioId);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
-    $avaliacao = mysqli_fetch_assoc($resultados);
+  $avaliacao = mysqli_fetch_assoc($resultados);
 
-    mysqli_stmt_close($comando);
-    mysqli_close($conexao);
+  mysqli_stmt_close($comando);
+  mysqli_close($conexao);
 
-    // Retorna o array da avaliação ou false caso não tenha
-    return $avaliacao ?: false;
+  // Retorna o array da avaliação ou false caso não tenha
+  return $avaliacao ?: false;
 }
 
 
@@ -2430,8 +2432,9 @@ function deletarDietaAlimentar($iddieta, $idalimento)
   $sql = "DELETE FROM dieta_alimentar WHERE $iddieta = ? and $idalimento = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "ii", $iddieta, $alimento);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarPlano($idplano)
@@ -2440,8 +2443,9 @@ function deletarPlano($idplano)
   $sql = "DELETE FROM plano WHERE $idplano = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idplano);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou;
 }
 
 function deletarAlimento($idalimento)
@@ -2450,8 +2454,9 @@ function deletarAlimento($idalimento)
   $sql = "DELETE FROM alimento WHERE $idalimento = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idalimento);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarCategoriaProduto($idcategoria)
@@ -2460,8 +2465,9 @@ function deletarCategoriaProduto($idcategoria)
   $sql = "DELETE FROM categoria_produto WHERE $idcategoria = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idcategoria);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarPagamentoDetalhe($idpagaemento2)
@@ -2470,8 +2476,9 @@ function deletarPagamentoDetalhe($idpagaemento2)
   $sql = "DELETE FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idpagaemento2);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarItemPedido($iditem)
@@ -2480,8 +2487,9 @@ function deletarItemPedido($iditem)
   $sql = "DELETE FROM item_pedido WHERE $iditem = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $iditem);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarAulaAgendada($idaula)
@@ -2490,8 +2498,9 @@ function deletarAulaAgendada($idaula)
   $sql = "DELETE FROM aula_agendada WHERE $idaula = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idaula);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarTreino($idtreino)
@@ -2500,8 +2509,9 @@ function deletarTreino($idtreino)
   $sql = "DELETE FROM treino WHERE $idtreino = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idtreino);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarHistoricoTreino($idhistorico)
@@ -2510,8 +2520,9 @@ function deletarHistoricoTreino($idhistorico)
   $sql = "DELETE FROM historico_treino WHERE $idhistorico = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idhistorico);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarPedido($idpedido)
@@ -2520,8 +2531,9 @@ function deletarPedido($idpedido)
   $sql = "DELETE FROM pedido WHERE $idpedido = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idpedido);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function deletarExercicio($idexercicio)
@@ -2530,8 +2542,9 @@ function deletarExercicio($idexercicio)
   $sql = "DELETE FROM exercicio WHERE $idexercicio = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idexercicio);
-  mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
+  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
 function cadastrarCategoriaProduto($nome, $descricao)
@@ -3008,7 +3021,7 @@ function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim,
     echo "Erro na preparação: " . mysqli_error($conexao);
     return false;
   }
-   mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino);
+  mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino);
   $funcionou = mysqli_stmt_execute($comando);
 
   if (!$funcionou) {
@@ -3059,37 +3072,38 @@ function gerarNumeroMatriculaPorTipo($tipo)
 
 function verificarTipoUsuario($email)
 {
-    $conexao = conectar(); // usa sua função de conexão
-    $sql = "SELECT tipo_usuario FROM usuario WHERE email = ?";
-    $comando = mysqli_prepare($conexao, $sql);
+  $conexao = conectar(); // usa sua função de conexão
+  $sql = "SELECT tipo_usuario FROM usuario WHERE email = ?";
+  $comando = mysqli_prepare($conexao, $sql);
 
-    if (!$comando) {
-        die("Erro ao preparar: " . mysqli_error($conexao));
-    }
+  if (!$comando) {
+    die("Erro ao preparar: " . mysqli_error($conexao));
+  }
 
-    mysqli_stmt_bind_param($comando, 's', $email);
-    mysqli_stmt_execute($comando);
-    mysqli_stmt_bind_result($comando, $tipo);
+  mysqli_stmt_bind_param($comando, 's', $email);
+  mysqli_stmt_execute($comando);
+  mysqli_stmt_bind_result($comando, $tipo);
 
-    if (mysqli_stmt_fetch($comando)) {
-        return $tipo;
-    } else {
-        return false; // email não encontrado
-    }
+  if (mysqli_stmt_fetch($comando)) {
+    return $tipo;
+  } else {
+    return false; // email não encontrado
+  }
 }
 
-function listarUsuarioCompleto($id){
+function listarUsuarioCompleto($id)
+{
 
-// Cria conexão
-$conexao = conectar();
+  // Cria conexão
+  $conexao = conectar();
 
-// Checa conexão
-if ($conexao->connect_error) {
+  // Checa conexão
+  if ($conexao->connect_error) {
     die(json_encode(['error' => 'Erro na conexão: ' . $conexao->connect_error]));
-}
+  }
 
-// Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
-$sql = "
+  // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
+  $sql = "
 SELECT
 
     -- USUÁRIO
@@ -3315,90 +3329,141 @@ WHERE
 ";
 
 
-// Executa a query
-$resultado = mysqli_query($conexao, $sql);
+  // Executa a query
+  $resultado = mysqli_query($conexao, $sql);
 
-if (!$resultado) {
+  if (!$resultado) {
     die(json_encode(['error' => 'Erro na query: ' . $conexao->error]));
-}
+  }
 
-// Cria array pra armazenar resultados
-$dados = [];
+  // Cria array pra armazenar resultados
+  $dados = [];
 
-while ($linha = mysqli_fetch_assoc($resultado)) {
+  while ($linha = mysqli_fetch_assoc($resultado)) {
     $dados[] = $linha;
+  }
+
+  // Fecha conexão
+  $conexao = mysqli_close($conexao);
+
+
+  return $dados;
+}
+function atualizarFotoUsuario($imagem, $idusuario)
+{
+  $conexao = conectar();
+  $sql = 'UPDATE usuario SET foto_de_perfil = ? WHERE idusuario = ?';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'si', $imagem, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
 
-// Fecha conexão
-$conexao = mysqli_close($conexao);
+function calcularDataFinal($tipoPlano, $dataInicio = null): string
+{
+  if (!$dataInicio) {
+    $dataInicio = date('Y-m-d'); // se não for passado, pega a data atual
+  }
 
+  $data = new DateTime($dataInicio);
 
-return $dados;
+  switch (strtolower($tipoPlano)) {
+    case 'mensal':
+      $data->modify('+1 month');
+      break;
+    case 'trimestral':
+      $data->modify('+3 months');
+      break;
+    case 'semestral':
+      $data->modify('+6 months');
+      break;
+    case 'anual':
+      $data->modify('+1 year');
+      break;
+    default:
+      throw new Exception("Tipo de plano inválido.");
+  }
 
-}
-function atualizarFotoUsuario($imagem, $idusuario) {
-    $conexao = conectar();
-    $sql = 'UPDATE usuario SET foto_de_perfil = ? WHERE idusuario = ?';
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'si', $imagem, $idusuario);
-
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-}
-
-function calcularDataFinal($tipoPlano, $dataInicio = null): string {
-    if (!$dataInicio) {
-        $dataInicio = date('Y-m-d'); // se não for passado, pega a data atual
-    }
-
-    $data = new DateTime($dataInicio);
-
-    switch (strtolower($tipoPlano)) {
-        case 'mensal':
-            $data->modify('+1 month');
-            break;
-        case 'trimestral':
-            $data->modify('+3 months');
-            break;
-        case 'semestral':
-            $data->modify('+6 months');
-            break;
-        case 'anual':
-            $data->modify('+1 year');
-            break;
-        default:
-            throw new Exception("Tipo de plano inválido.");
-    }
-
-    return $data->format('Y-m-d');
+  return $data->format('Y-m-d');
 }
 
 
 
-function enviarResposta($sucesso, $mensagem, $dados = []): never {
-    echo json_encode([
-        'sucesso' => $sucesso,
-        'mensagem' => $mensagem,
-        'dados' => $dados
-        
-    ], JSON_UNESCAPED_UNICODE);
-    exit;
+function enviarResposta($sucesso, $mensagem, $dados = []): never
+{
+  echo json_encode([
+    'sucesso' => $sucesso,
+    'mensagem' => $mensagem,
+    'dados' => $dados
+
+  ], JSON_UNESCAPED_UNICODE);
+  exit;
 }
 
-function calcularIMC($pesoKg, $alturaCm): string {
-    $alturaMetros = $alturaCm / 100;
+function calcularIMC($pesoKg, $alturaCm): string
+{
+  $alturaMetros = $alturaCm / 100;
 
-    // Validação básica
-    if ($pesoKg <= 0 || $alturaMetros <= 0) {
-        return "Peso e altura devem ser maiores que zero.";
-    }
+  // Validação básica
+  if ($pesoKg <= 0 || $alturaMetros <= 0) {
+    return "Peso e altura devem ser maiores que zero.";
+  }
 
-    // Cálculo do IMC
-    $imc = $pesoKg / ($alturaMetros * $alturaMetros);
+  // Cálculo do IMC
+  $imc = $pesoKg / ($alturaMetros * $alturaMetros);
 
-    // Retorna o IMC com duas casas decimais
-    return number_format($imc, 2);
+  // Retorna o IMC com duas casas decimais
+  return number_format($imc, 2);
+}
+function cadastrarProfessorAluno($idprofessor, $idaluno)
+{
+  $conexao = conectar();
+
+  $sql = "INSERT INTO professor_aluno (idprofessor, idaluno) VALUES (?, ?)";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ii", $idprofessor, $idaluno);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
 }
 
+function editarProfessorAluno($idprofessor_aluno, $idprofessor, $idaluno)
+{
+  $conexao = conectar();
+
+  $sql = "UPDATE professor_aluno SET idprofessor = ?, idaluno = ? WHERE idprofessor_aluno = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "iii", $idprofessor, $idaluno, $idprofessor_aluno);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
+
+
+
+function deletarProfessorAluno($idprofessor_aluno)
+{
+  $conexao = conectar();
+
+  $sql = "DELETE FROM professor_aluno WHERE idprofessor_aluno = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idprofessor_aluno);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $funcionou;
+}
