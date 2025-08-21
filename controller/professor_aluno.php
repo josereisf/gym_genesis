@@ -1,23 +1,70 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-$acao = $_GET['acao'];
 
-$idprofessor_aluno = $_POST['idprofessor_aluno'] ?? 0;
-$idprofessor = $_POST['idprofessor'] ?? null;
-$idaluno = $_POST['idaluno'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
 
-// Funções não encontradas, sugestão de nomes e parâmetros:
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$idprofessor_aluno = $input['idprofessor_aluno'] ?? null;
+$idprofessor = $input['idprofessor'] ?? null;
+$idaluno = $input['idaluno'] ?? null;
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
+
 switch ($acao) {
     case 'cadastrar':
-        // cadastrarProfessorAluno($idprofessor, $idaluno);
+        if (!$idprofessor || !$idaluno) {
+            enviarResposta(false, 'Professor e aluno são obrigatórios');
+        }
+        $ok = cadastrarProfessorAluno($idprofessor, $idaluno);
+        if ($ok) {
+            enviarResposta(true, 'Relação cadastrada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar relação');
+        }
         break;
+
     case 'editar':
-        // editarProfessorAluno($idprofessor_aluno, $idprofessor, $idaluno);
+        if (!$idprofessor_aluno || !$idprofessor || !$idaluno) {
+            enviarResposta(false, 'ID, professor e aluno são obrigatórios');
+        }
+        $ok = editarProfessorAluno($idprofessor_aluno, $idprofessor, $idaluno);
+        if ($ok) {
+            enviarResposta(true, 'Relação editada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar relação');
+        }
         break;
+
     case 'listar':
-        // listarProfessorAluno($idprofessor_aluno);
+        $dados = listarProfessorAluno($idprofessor_aluno);
+        if ($dados) {
+            enviarResposta(true, 'Relações listadas com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar relações');
+        }
         break;
+
     case 'deletar':
-        // deletarProfessorAluno($idprofessor_aluno);
+        if (!$idprofessor_aluno) {
+            enviarResposta(false, 'ID da relação não informado');
+        }
+        $ok = deletarProfessorAluno($idprofessor_aluno);
+        if ($ok) {
+            enviarResposta(true, 'Relação deletada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar relação');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
         break;
 }
