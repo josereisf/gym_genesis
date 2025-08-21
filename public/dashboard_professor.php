@@ -1,22 +1,6 @@
 <?php
 require_once "../code/funcao.php";
 $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do usuário
-$resultado = listarUsuario($idprofessor);
-$nome = $resultado[0]['nome'];
-function mostrarAlunos($idprofessor)
-{
-  $alunos = listarProfessorAluno($idprofessor);
-  foreach ($alunos as $a) {
-    $idaluno = $a['idaluno'];
-    $horarios = listarAulaAgendadaUsuario($idaluno);
-    $retorno = "{
-                dia: '" . $horarios[0]['dia_semana'] . "',
-                inicio: '" . $horarios[0]['hora_inicio'] . "',
-                fim: '" . $horarios[0]['hora_fim'] . "',
-              }";
-  }
-  return $retorno;
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -61,14 +45,31 @@ function mostrarAlunos($idprofessor)
       <!-- Header -->
       <header class="flex justify-between items-center mb-10">
         <h1 class="text-4xl font-extrabold text-indigo-400">Painel do Professor</h1>
-        <div class="text-gray-400 text-lg">Bem-vindo(a), Professor <?= $nome ?></div>
+        <div class="text-gray-400 text-lg">Bem-vindo(a), Professor 👋</div>
       </header>
 
       <!-- Calendário -->
       <div class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10 border border-gray-700">
         <h2 class="text-2xl font-semibold text-indigo-300 mb-6">Agenda de Aulas</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <template x-for="(item, index) in [' <?php $mostrar = mostrarAlunos($idprofessor); echo $mostrar ?>']" :key="index">
+          <template
+            <?php
+            echo 'x-for="(item, index) in [';
+            $alunos = listarProfessorAluno($idusuario);
+
+            foreach ($alunos as $a) {
+              $horarios = listarAulaAgendadaUsuario($idusuario);
+              echo "{
+                dia: '" . $horarios['dia_semana'] . "',
+                inicio: '" . $horarios['hora_inicio'] . "',
+                fim: '" . $horarios['hora_fim'] . "',
+                treino: '" . $horarios['treino_tipo'] . " - " . $horarios['treino_desc'] . "',
+                alunos: '" . $horarios['alunos'] . "'
+              },";
+            }
+            echo ']" :key="index"';
+            ?>
+          >
             <div @click="modal = true; aula = item" class="cursor-pointer bg-gray-800 p-5 rounded-2xl hover:bg-indigo-600 transition shadow-md border border-gray-700">
               <h3 class="text-lg font-bold text-indigo-200" x-text="item.dia"></h3>
               <p class="text-sm mt-2 text-gray-300">
