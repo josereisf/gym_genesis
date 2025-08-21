@@ -1,0 +1,2225 @@
+==== Executando todos os .sh em testes_SH ====
+>> Rodando testes_SH/# 7.sh
+testes_SH/# 7.sh: linha 2: print_sep: comando não encontrado
+========== CUPOM_DESCONTO ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 19: print_sep: comando não encontrado
+========== DIETA_ALIMENTAR ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 36: print_sep: comando não encontrado
+========== DIETA ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 53: print_sep: comando não encontrado
+========== ENDERECO ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 70: print_sep: comando não encontrado
+========== EXERCICIO ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 87: print_sep: comando não encontrado
+========== FORUM ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 104: print_sep: comando não encontrado
+========== FUNCIONARIO ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+testes_SH/# 7.sh: linha 126: print_sep: comando não encontrado
+========== USUARIO ==========
+== CADASTRAR ==
+== LISTAR ==
+== EDITAR ==
+== LISTAR NOVAMENTE ==
+== DELETAR ==
+== LISTAR FINAL ==
+
+>> Rodando testes_SH/teste_endereco.sh
+========== CADASTRAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereço cadastrado com sucesso",
+  "dados": []
+}
+
+
+========== LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereços listados com sucesso",
+  "dados": [
+    {
+      "nome_funcionario": "Felipe Ramos",
+      "cep": "05005000",
+      "rua": "Av. E",
+      "numero": "500",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Santos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Roberto Dias",
+      "cep": "07007000",
+      "rua": "Av. G",
+      "numero": "700",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Sorocaba",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Fernando Alves",
+      "cep": "09009000",
+      "rua": "Av. I",
+      "numero": "900",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "São José dos Campos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Ricardo Lima",
+      "cep": "11011000",
+      "rua": "Av. K",
+      "numero": "1100",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Barueri",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Gustavo Pires",
+      "cep": "13013000",
+      "rua": "Av. M",
+      "numero": "1300",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Diadema",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Marcelo Cunha",
+      "cep": "15015000",
+      "rua": "Av. O",
+      "numero": "1500",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Mogi das Cruzes",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Bruno Ferreira",
+      "cep": "17017000",
+      "rua": "Av. Q",
+      "numero": "1700",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Itapevi",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Mariana Souza",
+      "cep": "19019000",
+      "rua": "Av. S",
+      "numero": "1900",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Jandira",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Renata Farias",
+      "cep": "02002000",
+      "rua": "Av. B",
+      "numero": "200",
+      "complemento": "Apto 10",
+      "bairro": "Jardim",
+      "cidade": "Santa ",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Carlos Mendes",
+      "cep": "12345-678",
+      "rua": "Rua Teste",
+      "numero": "100",
+      "complemento": "Apto 202",
+      "bairro": "Centro",
+      "cidade": "São Paulo",
+      "estado": "SP"
+    }
+  ]
+}
+
+
+========== EDITAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereço editado com sucesso",
+  "dados": []
+}
+
+
+========== LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereços listados com sucesso",
+  "dados": [
+    {
+      "nome_funcionario": "Felipe Ramos",
+      "cep": "05005000",
+      "rua": "Av. E",
+      "numero": "500",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Santos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Roberto Dias",
+      "cep": "07007000",
+      "rua": "Av. G",
+      "numero": "700",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Sorocaba",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Fernando Alves",
+      "cep": "09009000",
+      "rua": "Av. I",
+      "numero": "900",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "São José dos Campos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Ricardo Lima",
+      "cep": "11011000",
+      "rua": "Av. K",
+      "numero": "1100",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Barueri",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Gustavo Pires",
+      "cep": "13013000",
+      "rua": "Av. M",
+      "numero": "1300",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Diadema",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Marcelo Cunha",
+      "cep": "15015000",
+      "rua": "Av. O",
+      "numero": "1500",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Mogi das Cruzes",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Bruno Ferreira",
+      "cep": "17017000",
+      "rua": "Av. Q",
+      "numero": "1700",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Itapevi",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Mariana Souza",
+      "cep": "19019000",
+      "rua": "Av. S",
+      "numero": "1900",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Jandira",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Renata Farias",
+      "cep": "02002000",
+      "rua": "Av. B",
+      "numero": "200",
+      "complemento": "Apto 10",
+      "bairro": "Jardim",
+      "cidade": "Santa ",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Carlos Mendes",
+      "cep": "54321-000",
+      "rua": "Rua Atualizada",
+      "numero": "200",
+      "complemento": "Casa",
+      "bairro": "Bairro Novo",
+      "cidade": "Rio de Janeiro",
+      "estado": "RJ"
+    }
+  ]
+}
+
+
+========== DELETAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereço deletado com sucesso",
+  "dados": []
+}
+
+
+========== LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereços listados com sucesso",
+  "dados": [
+    {
+      "nome_funcionario": "Felipe Ramos",
+      "cep": "05005000",
+      "rua": "Av. E",
+      "numero": "500",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Santos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Roberto Dias",
+      "cep": "07007000",
+      "rua": "Av. G",
+      "numero": "700",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Sorocaba",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Fernando Alves",
+      "cep": "09009000",
+      "rua": "Av. I",
+      "numero": "900",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "São José dos Campos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Ricardo Lima",
+      "cep": "11011000",
+      "rua": "Av. K",
+      "numero": "1100",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Barueri",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Gustavo Pires",
+      "cep": "13013000",
+      "rua": "Av. M",
+      "numero": "1300",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Diadema",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Marcelo Cunha",
+      "cep": "15015000",
+      "rua": "Av. O",
+      "numero": "1500",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Mogi das Cruzes",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Bruno Ferreira",
+      "cep": "17017000",
+      "rua": "Av. Q",
+      "numero": "1700",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Itapevi",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Mariana Souza",
+      "cep": "19019000",
+      "rua": "Av. S",
+      "numero": "1900",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Jandira",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Renata Farias",
+      "cep": "02002000",
+      "rua": "Av. B",
+      "numero": "200",
+      "complemento": "Apto 10",
+      "bairro": "Jardim",
+      "cidade": "Santa ",
+      "estado": "SP"
+    }
+  ]
+}
+
+
+
+>> Rodando testes_SH/teste_geral.sh
+========== EXERCICIO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== EXERCICIO - LISTAR ==========
+
+
+========== EXERCICIO - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== EXERCICIO - LISTAR NOVAMENTE ==========
+
+
+========== EXERCICIO - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== EXERCICIO - LISTAR FINAL ==========
+
+
+========== FORUM - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== FORUM - LISTAR ==========
+
+
+========== FORUM - EDITAR ==========
+
+
+========== FORUM - LISTAR NOVAMENTE ==========
+
+
+========== FORUM - DELETAR ==========
+
+
+========== FORUM - LISTAR FINAL ==========
+
+
+========== FUNCIONARIO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== FUNCIONARIO - LISTAR ==========
+
+
+========== FUNCIONARIO - EDITAR ==========
+
+
+========== FUNCIONARIO - LISTAR NOVAMENTE ==========
+
+
+========== FUNCIONARIO - DELETAR ==========
+
+
+========== FUNCIONARIO - LISTAR FINAL ==========
+
+
+========== HISTORICO_PESO - CADASTRAR ==========
+
+
+========== HISTORICO_PESO - LISTAR ==========
+
+
+========== HISTORICO_PESO - EDITAR ==========
+
+
+========== HISTORICO_PESO - LISTAR NOVAMENTE ==========
+
+
+========== HISTORICO_PESO - DELETAR ==========
+
+
+========== HISTORICO_PESO - LISTAR FINAL ==========
+
+
+========== HISTORICO_TREINO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== HISTORICO_TREINO - LISTAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== HISTORICO_TREINO - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== HISTORICO_TREINO - LISTAR NOVAMENTE ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== HISTORICO_TREINO - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== HISTORICO_TREINO - LISTAR FINAL ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== ITEM_PEDIDO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== ITEM_PEDIDO - LISTAR ==========
+
+
+========== ITEM_PEDIDO - EDITAR ==========
+
+
+========== ITEM_PEDIDO - LISTAR NOVAMENTE ==========
+
+
+========== ITEM_PEDIDO - DELETAR ==========
+
+
+========== ITEM_PEDIDO - LISTAR FINAL ==========
+
+
+========== META - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== META - LISTAR ==========
+{
+  "sucesso": true,
+  "dados": []
+}
+
+
+========== META - EDITAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Meta editada com sucesso"
+}
+
+
+========== META - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "dados": []
+}
+
+
+========== META - DELETAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Meta deletada com sucesso"
+}
+
+
+========== META - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "dados": []
+}
+
+
+========== PAGAMENTO_DETALHE_ASSINATURA - CADASTRAR ==========
+
+
+========== PAGAMENTO_DETALHE_ASSINATURA - LISTAR ==========
+
+
+========== PAGAMENTO_DETALHE_ASSINATURA - EDITAR ==========
+
+
+========== PAGAMENTO_DETALHE_ASSINATURA - LISTAR NOVAMENTE ==========
+
+
+========== PAGAMENTO_DETALHE_ASSINATURA - DELETAR ==========
+
+
+========== PAGAMENTO_DETALHE_ASSINATURA - LISTAR FINAL ==========
+
+
+
+========== PAGAMENTO - LISTAR ==========
+
+
+========== PAGAMENTO - EDITAR ==========
+
+
+========== PAGAMENTO - LISTAR NOVAMENTE ==========
+
+
+========== PAGAMENTO - DELETAR ==========
+
+
+========== PAGAMENTO - LISTAR FINAL ==========
+
+
+========== PLANO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== PLANO - LISTAR ==========
+
+
+========== PLANO - EDITAR ==========
+
+
+========== PLANO - LISTAR NOVAMENTE ==========
+
+
+========== PLANO - DELETAR ==========
+
+
+========== PLANO - LISTAR FINAL ==========
+
+
+========== PRODUTO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== PRODUTO - LISTAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== PRODUTO - EDITAR ==========
+
+
+========== PRODUTO - LISTAR NOVAMENTE ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== PRODUTO - DELETAR ==========
+
+
+========== PRODUTO - LISTAR FINAL ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== PROFESSOR_ALUNO - CADASTRAR ==========
+
+
+========== PROFESSOR_ALUNO - LISTAR ==========
+
+
+========== PROFESSOR_ALUNO - EDITAR ==========
+
+
+========== PROFESSOR_ALUNO - LISTAR NOVAMENTE ==========
+
+
+========== PROFESSOR_ALUNO - DELETAR ==========
+
+
+========== PROFESSOR_ALUNO - LISTAR FINAL ==========
+
+
+========== RECUPERACAO_SENHA - CADASTRAR ==========
+
+
+========== RECUPERACAO_SENHA - LISTAR ==========
+
+
+========== RECUPERACAO_SENHA - EDITAR ==========
+
+
+========== RECUPERACAO_SENHA - LISTAR NOVAMENTE ==========
+
+
+========== RECUPERACAO_SENHA - DELETAR ==========
+
+
+========== RECUPERACAO_SENHA - LISTAR FINAL ==========
+
+
+========== REFEICAO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== REFEICAO - LISTAR ==========
+
+
+========== REFEICAO - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== REFEICAO - LISTAR NOVAMENTE ==========
+
+
+========== REFEICAO - DELETAR ==========
+
+
+========== REFEICAO - LISTAR FINAL ==========
+
+
+========== TREINO_EXERCICIO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== TREINO_EXERCICIO - LISTAR ==========
+
+
+========== TREINO_EXERCICIO - EDITAR ==========
+
+
+========== TREINO_EXERCICIO - LISTAR NOVAMENTE ==========
+
+
+========== TREINO_EXERCICIO - DELETAR ==========
+
+
+========== TREINO_EXERCICIO - LISTAR FINAL ==========
+
+
+========== TREINO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== TREINO - LISTAR ==========
+
+
+========== TREINO - EDITAR ==========
+
+
+========== TREINO - LISTAR NOVAMENTE ==========
+
+
+========== TREINO - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== TREINO - LISTAR FINAL ==========
+
+
+========== USUARIO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== USUARIO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Usuário listado",
+  "dados": [
+    {
+      "idusuario": 1,
+      "nome": "Lucas Oliveira",
+      "senha": "senha4",
+      "email": "lucas@ex.com",
+      "cpf": "11122233344",
+      "data_de_nascimento": "1991-03-15",
+      "telefone": "11911112222",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1004",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 2,
+      "nome": "Fernanda Lima",
+      "senha": "senha5",
+      "email": "fernanda@ex.com",
+      "cpf": "22233344455",
+      "data_de_nascimento": "1988-11-30",
+      "telefone": "11922223333",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1005",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 3,
+      "nome": "Rafael Souza",
+      "senha": "senha6",
+      "email": "rafael@ex.com",
+      "cpf": "33344455566",
+      "data_de_nascimento": "1995-06-25",
+      "telefone": "11933334444",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1006",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 4,
+      "nome": "Juliana Costa",
+      "senha": "senha7",
+      "email": "juliana@ex.com",
+      "cpf": "44455566677",
+      "data_de_nascimento": "1993-09-12",
+      "telefone": "11944445555",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1007",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 5,
+      "nome": "Gabriel Martins",
+      "senha": "senha8",
+      "email": "gabriel@ex.com",
+      "cpf": "55566677788",
+      "data_de_nascimento": "1990-01-20",
+      "telefone": "11955556666",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1008",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 6,
+      "nome": "Patricia Alves",
+      "senha": "senha9",
+      "email": "patricia@ex.com",
+      "cpf": "66677788899",
+      "data_de_nascimento": "1987-04-18",
+      "telefone": "11966667777",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1009",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 7,
+      "nome": "Rodrigo Melo",
+      "senha": "senha10",
+      "email": "rodrigo@ex.com",
+      "cpf": "77788899900",
+      "data_de_nascimento": "1992-07-05",
+      "telefone": "11977778888",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1010",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 8,
+      "nome": "Amanda Ribeiro",
+      "senha": "senha11",
+      "email": "amanda@ex.com",
+      "cpf": "88899900011",
+      "data_de_nascimento": "1994-10-22",
+      "telefone": "11988889999",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1011",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 9,
+      "nome": "Thiago Fernandes",
+      "senha": "senha12",
+      "email": "thiago@ex.com",
+      "cpf": "99900011122",
+      "data_de_nascimento": "1989-02-28",
+      "telefone": "11999990011",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1012",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 10,
+      "nome": "Camila Duarte",
+      "senha": "senha13",
+      "email": "camila@ex.com",
+      "cpf": "00011122233",
+      "data_de_nascimento": "1996-08-14",
+      "telefone": "11900001112",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1013",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 11,
+      "nome": "Vinicius Rocha",
+      "senha": "senha14",
+      "email": "vinicius@ex.com",
+      "cpf": "11122233355",
+      "data_de_nascimento": "1993-12-03",
+      "telefone": "11911112223",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1014",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 12,
+      "nome": "Beatriz Gomes",
+      "senha": "senha15",
+      "email": "beatriz@ex.com",
+      "cpf": "22233344466",
+      "data_de_nascimento": "1991-05-19",
+      "telefone": "11922223334",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1015",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 13,
+      "nome": "Felipe Barros",
+      "senha": "senha16",
+      "email": "felipe@ex.com",
+      "cpf": "33344455577",
+      "data_de_nascimento": "1988-09-27",
+      "telefone": "11933334445",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1016",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 14,
+      "nome": "Larissa Pinto",
+      "senha": "senha17",
+      "email": "larissa@ex.com",
+      "cpf": "44455566688",
+      "data_de_nascimento": "1995-03-11",
+      "telefone": "11944445556",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1017",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 15,
+      "nome": "Bruno Teixeira",
+      "senha": "senha18",
+      "email": "brunot@ex.com",
+      "cpf": "55566677799",
+      "data_de_nascimento": "1992-06-06",
+      "telefone": "11955556667",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1018",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 16,
+      "nome": "Mariana Freitas",
+      "senha": "senha19",
+      "email": "marianaf@ex.com",
+      "cpf": "66677788800",
+      "data_de_nascimento": "1990-12-21",
+      "telefone": "11966667778",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1019",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 17,
+      "nome": "Diego Cardoso",
+      "senha": "senha20",
+      "email": "diego@ex.com",
+      "cpf": "77788899911",
+      "data_de_nascimento": "1987-07-09",
+      "telefone": "11977778889",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1020",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 18,
+      "nome": "Aline Castro",
+      "senha": "senha21",
+      "email": "aline@ex.com",
+      "cpf": "88899900022",
+      "data_de_nascimento": "1994-04-16",
+      "telefone": "11988889910",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1021",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 19,
+      "nome": "Pedro Henrique",
+      "senha": "senha22",
+      "email": "pedro@ex.com",
+      "cpf": "99900011133",
+      "data_de_nascimento": "1991-11-02",
+      "telefone": "11999990012",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1022",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 20,
+      "nome": "Sofia Almeida",
+      "senha": "senha23",
+      "email": "sofia@ex.com",
+      "cpf": "00011122244",
+      "data_de_nascimento": "1996-01-29",
+      "telefone": "11900001113",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1023",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 21,
+      "nome": "Ana Silva",
+      "senha": "senha1",
+      "email": "ana@ex.com",
+      "cpf": "12345678901",
+      "data_de_nascimento": "1990-05-10",
+      "telefone": "11999990000",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1001",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 22,
+      "nome": "Bruno Costa",
+      "senha": "senha2",
+      "email": "bruno@ex.com",
+      "cpf": "98765432100",
+      "data_de_nascimento": "1985-07-22",
+      "telefone": "11988881111",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1002",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 23,
+      "nome": "Carla Pereira",
+      "senha": "senha3",
+      "email": "carla@ex.com",
+      "cpf": "56473829100",
+      "data_de_nascimento": "1992-12-01",
+      "telefone": "11977772222",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1003",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 24,
+      "nome": "Maria",
+      "senha": "$2y$10$c.QpwYiXeqRutV0u3Y3LNOFHChSUYB9YnaoFisLDBiV6NbCR9m0E2",
+      "email": "maria@email.com",
+      "cpf": "12345678900",
+      "data_de_nascimento": "1990-01-01",
+      "telefone": "11999999999",
+      "foto_de_perfil": null,
+      "numero_matricula": "339569984742078",
+      "tipo_usuario": 1
+    }
+  ]
+}
+
+
+========== USUARIO - EDITAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Usuário editado com sucesso",
+  "dados": []
+}
+
+
+========== USUARIO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Usuário listado",
+  "dados": [
+    {
+      "idusuario": 1,
+      "nome": "Lucas Oliveira",
+      "senha": "senha4",
+      "email": "lucas@ex.com",
+      "cpf": "11122233344",
+      "data_de_nascimento": "1991-03-15",
+      "telefone": "11911112222",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1004",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 2,
+      "nome": "Fernanda Lima",
+      "senha": "senha5",
+      "email": "fernanda@ex.com",
+      "cpf": "22233344455",
+      "data_de_nascimento": "1988-11-30",
+      "telefone": "11922223333",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1005",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 3,
+      "nome": "Rafael Souza",
+      "senha": "senha6",
+      "email": "rafael@ex.com",
+      "cpf": "33344455566",
+      "data_de_nascimento": "1995-06-25",
+      "telefone": "11933334444",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1006",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 4,
+      "nome": "Juliana Costa",
+      "senha": "senha7",
+      "email": "juliana@ex.com",
+      "cpf": "44455566677",
+      "data_de_nascimento": "1993-09-12",
+      "telefone": "11944445555",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1007",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 5,
+      "nome": "Gabriel Martins",
+      "senha": "senha8",
+      "email": "gabriel@ex.com",
+      "cpf": "55566677788",
+      "data_de_nascimento": "1990-01-20",
+      "telefone": "11955556666",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1008",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 6,
+      "nome": "Patricia Alves",
+      "senha": "senha9",
+      "email": "patricia@ex.com",
+      "cpf": "66677788899",
+      "data_de_nascimento": "1987-04-18",
+      "telefone": "11966667777",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1009",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 7,
+      "nome": "Rodrigo Melo",
+      "senha": "senha10",
+      "email": "rodrigo@ex.com",
+      "cpf": "77788899900",
+      "data_de_nascimento": "1992-07-05",
+      "telefone": "11977778888",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1010",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 8,
+      "nome": "Amanda Ribeiro",
+      "senha": "senha11",
+      "email": "amanda@ex.com",
+      "cpf": "88899900011",
+      "data_de_nascimento": "1994-10-22",
+      "telefone": "11988889999",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1011",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 9,
+      "nome": "Thiago Fernandes",
+      "senha": "senha12",
+      "email": "thiago@ex.com",
+      "cpf": "99900011122",
+      "data_de_nascimento": "1989-02-28",
+      "telefone": "11999990011",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1012",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 10,
+      "nome": "Camila Duarte",
+      "senha": "senha13",
+      "email": "camila@ex.com",
+      "cpf": "00011122233",
+      "data_de_nascimento": "1996-08-14",
+      "telefone": "11900001112",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1013",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 11,
+      "nome": "Vinicius Rocha",
+      "senha": "senha14",
+      "email": "vinicius@ex.com",
+      "cpf": "11122233355",
+      "data_de_nascimento": "1993-12-03",
+      "telefone": "11911112223",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1014",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 12,
+      "nome": "Beatriz Gomes",
+      "senha": "senha15",
+      "email": "beatriz@ex.com",
+      "cpf": "22233344466",
+      "data_de_nascimento": "1991-05-19",
+      "telefone": "11922223334",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1015",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 13,
+      "nome": "Felipe Barros",
+      "senha": "senha16",
+      "email": "felipe@ex.com",
+      "cpf": "33344455577",
+      "data_de_nascimento": "1988-09-27",
+      "telefone": "11933334445",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1016",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 14,
+      "nome": "Larissa Pinto",
+      "senha": "senha17",
+      "email": "larissa@ex.com",
+      "cpf": "44455566688",
+      "data_de_nascimento": "1995-03-11",
+      "telefone": "11944445556",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1017",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 15,
+      "nome": "Bruno Teixeira",
+      "senha": "senha18",
+      "email": "brunot@ex.com",
+      "cpf": "55566677799",
+      "data_de_nascimento": "1992-06-06",
+      "telefone": "11955556667",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1018",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 16,
+      "nome": "Mariana Freitas",
+      "senha": "senha19",
+      "email": "marianaf@ex.com",
+      "cpf": "66677788800",
+      "data_de_nascimento": "1990-12-21",
+      "telefone": "11966667778",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1019",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 17,
+      "nome": "Diego Cardoso",
+      "senha": "senha20",
+      "email": "diego@ex.com",
+      "cpf": "77788899911",
+      "data_de_nascimento": "1987-07-09",
+      "telefone": "11977778889",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1020",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 18,
+      "nome": "Aline Castro",
+      "senha": "senha21",
+      "email": "aline@ex.com",
+      "cpf": "88899900022",
+      "data_de_nascimento": "1994-04-16",
+      "telefone": "11988889910",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1021",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 19,
+      "nome": "Pedro Henrique",
+      "senha": "senha22",
+      "email": "pedro@ex.com",
+      "cpf": "99900011133",
+      "data_de_nascimento": "1991-11-02",
+      "telefone": "11999990012",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1022",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 20,
+      "nome": "Sofia Almeida",
+      "senha": "senha23",
+      "email": "sofia@ex.com",
+      "cpf": "00011122244",
+      "data_de_nascimento": "1996-01-29",
+      "telefone": "11900001113",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1023",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 21,
+      "nome": "Ana Silva",
+      "senha": "senha1",
+      "email": "ana@ex.com",
+      "cpf": "12345678901",
+      "data_de_nascimento": "1990-05-10",
+      "telefone": "11999990000",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1001",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 22,
+      "nome": "Bruno Costa",
+      "senha": "senha2",
+      "email": "bruno@ex.com",
+      "cpf": "98765432100",
+      "data_de_nascimento": "1985-07-22",
+      "telefone": "11988881111",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1002",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 23,
+      "nome": "Carla Pereira",
+      "senha": "senha3",
+      "email": "carla@ex.com",
+      "cpf": "56473829100",
+      "data_de_nascimento": "1992-12-01",
+      "telefone": "11977772222",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1003",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 24,
+      "nome": "Maria",
+      "senha": "$2y$10$c.QpwYiXeqRutV0u3Y3LNOFHChSUYB9YnaoFisLDBiV6NbCR9m0E2",
+      "email": "maria@email.com",
+      "cpf": "12345678900",
+      "data_de_nascimento": "1990-01-01",
+      "telefone": "11999999999",
+      "foto_de_perfil": null,
+      "numero_matricula": "339569984742078",
+      "tipo_usuario": 1
+    }
+  ]
+}
+
+
+========== USUARIO - DELETAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Usuário deletado com sucesso",
+  "dados": []
+}
+
+
+========== USUARIO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Usuário listado",
+  "dados": [
+    {
+      "idusuario": 1,
+      "nome": "Lucas Oliveira",
+      "senha": "senha4",
+      "email": "lucas@ex.com",
+      "cpf": "11122233344",
+      "data_de_nascimento": "1991-03-15",
+      "telefone": "11911112222",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1004",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 2,
+      "nome": "Fernanda Lima",
+      "senha": "senha5",
+      "email": "fernanda@ex.com",
+      "cpf": "22233344455",
+      "data_de_nascimento": "1988-11-30",
+      "telefone": "11922223333",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1005",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 3,
+      "nome": "Rafael Souza",
+      "senha": "senha6",
+      "email": "rafael@ex.com",
+      "cpf": "33344455566",
+      "data_de_nascimento": "1995-06-25",
+      "telefone": "11933334444",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1006",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 4,
+      "nome": "Juliana Costa",
+      "senha": "senha7",
+      "email": "juliana@ex.com",
+      "cpf": "44455566677",
+      "data_de_nascimento": "1993-09-12",
+      "telefone": "11944445555",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1007",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 5,
+      "nome": "Gabriel Martins",
+      "senha": "senha8",
+      "email": "gabriel@ex.com",
+      "cpf": "55566677788",
+      "data_de_nascimento": "1990-01-20",
+      "telefone": "11955556666",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1008",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 6,
+      "nome": "Patricia Alves",
+      "senha": "senha9",
+      "email": "patricia@ex.com",
+      "cpf": "66677788899",
+      "data_de_nascimento": "1987-04-18",
+      "telefone": "11966667777",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1009",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 7,
+      "nome": "Rodrigo Melo",
+      "senha": "senha10",
+      "email": "rodrigo@ex.com",
+      "cpf": "77788899900",
+      "data_de_nascimento": "1992-07-05",
+      "telefone": "11977778888",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1010",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 8,
+      "nome": "Amanda Ribeiro",
+      "senha": "senha11",
+      "email": "amanda@ex.com",
+      "cpf": "88899900011",
+      "data_de_nascimento": "1994-10-22",
+      "telefone": "11988889999",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1011",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 9,
+      "nome": "Thiago Fernandes",
+      "senha": "senha12",
+      "email": "thiago@ex.com",
+      "cpf": "99900011122",
+      "data_de_nascimento": "1989-02-28",
+      "telefone": "11999990011",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1012",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 10,
+      "nome": "Camila Duarte",
+      "senha": "senha13",
+      "email": "camila@ex.com",
+      "cpf": "00011122233",
+      "data_de_nascimento": "1996-08-14",
+      "telefone": "11900001112",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1013",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 11,
+      "nome": "Vinicius Rocha",
+      "senha": "senha14",
+      "email": "vinicius@ex.com",
+      "cpf": "11122233355",
+      "data_de_nascimento": "1993-12-03",
+      "telefone": "11911112223",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1014",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 12,
+      "nome": "Beatriz Gomes",
+      "senha": "senha15",
+      "email": "beatriz@ex.com",
+      "cpf": "22233344466",
+      "data_de_nascimento": "1991-05-19",
+      "telefone": "11922223334",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1015",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 13,
+      "nome": "Felipe Barros",
+      "senha": "senha16",
+      "email": "felipe@ex.com",
+      "cpf": "33344455577",
+      "data_de_nascimento": "1988-09-27",
+      "telefone": "11933334445",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1016",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 14,
+      "nome": "Larissa Pinto",
+      "senha": "senha17",
+      "email": "larissa@ex.com",
+      "cpf": "44455566688",
+      "data_de_nascimento": "1995-03-11",
+      "telefone": "11944445556",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1017",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 15,
+      "nome": "Bruno Teixeira",
+      "senha": "senha18",
+      "email": "brunot@ex.com",
+      "cpf": "55566677799",
+      "data_de_nascimento": "1992-06-06",
+      "telefone": "11955556667",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1018",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 16,
+      "nome": "Mariana Freitas",
+      "senha": "senha19",
+      "email": "marianaf@ex.com",
+      "cpf": "66677788800",
+      "data_de_nascimento": "1990-12-21",
+      "telefone": "11966667778",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1019",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 17,
+      "nome": "Diego Cardoso",
+      "senha": "senha20",
+      "email": "diego@ex.com",
+      "cpf": "77788899911",
+      "data_de_nascimento": "1987-07-09",
+      "telefone": "11977778889",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1020",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 18,
+      "nome": "Aline Castro",
+      "senha": "senha21",
+      "email": "aline@ex.com",
+      "cpf": "88899900022",
+      "data_de_nascimento": "1994-04-16",
+      "telefone": "11988889910",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1021",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 19,
+      "nome": "Pedro Henrique",
+      "senha": "senha22",
+      "email": "pedro@ex.com",
+      "cpf": "99900011133",
+      "data_de_nascimento": "1991-11-02",
+      "telefone": "11999990012",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1022",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 20,
+      "nome": "Sofia Almeida",
+      "senha": "senha23",
+      "email": "sofia@ex.com",
+      "cpf": "00011122244",
+      "data_de_nascimento": "1996-01-29",
+      "telefone": "11900001113",
+      "foto_de_perfil": "padrao.png",
+      "numero_matricula": "MAT1023",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 21,
+      "nome": "Ana Silva",
+      "senha": "senha1",
+      "email": "ana@ex.com",
+      "cpf": "12345678901",
+      "data_de_nascimento": "1990-05-10",
+      "telefone": "11999990000",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1001",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 22,
+      "nome": "Bruno Costa",
+      "senha": "senha2",
+      "email": "bruno@ex.com",
+      "cpf": "98765432100",
+      "data_de_nascimento": "1985-07-22",
+      "telefone": "11988881111",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1002",
+      "tipo_usuario": 2
+    },
+    {
+      "idusuario": 23,
+      "nome": "Carla Pereira",
+      "senha": "senha3",
+      "email": "carla@ex.com",
+      "cpf": "56473829100",
+      "data_de_nascimento": "1992-12-01",
+      "telefone": "11977772222",
+      "foto_de_perfil": null,
+      "numero_matricula": "MAT1003",
+      "tipo_usuario": 1
+    },
+    {
+      "idusuario": 24,
+      "nome": "Maria",
+      "senha": "$2y$10$c.QpwYiXeqRutV0u3Y3LNOFHChSUYB9YnaoFisLDBiV6NbCR9m0E2",
+      "email": "maria@email.com",
+      "cpf": "12345678900",
+      "data_de_nascimento": "1990-01-01",
+      "telefone": "11999999999",
+      "foto_de_perfil": null,
+      "numero_matricula": "339569984742078",
+      "tipo_usuario": 1
+    }
+  ]
+}
+
+
+
+>> Rodando testes_SH/# test_teste_geral.sh
+========== ALIMENTO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== ALIMENTO - LISTAR ==========
+
+
+========== ALIMENTO - EDITAR ==========
+
+
+========== ALIMENTO - LISTAR NOVAMENTE ==========
+
+
+========== ALIMENTO - DELETAR ==========
+
+
+========== ALIMENTO - LISTAR FINAL ==========
+
+
+========== ASSINATURA - CADASTRAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro no cadastro da assinatura: ID do usuário não informado, ID do plano não informado, Data de término não informada",
+  "dados": []
+}
+
+
+========== ASSINATURA - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Assinaturas listadas com sucesso",
+  "dados": "[]"
+}
+
+
+========== ASSINATURA - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro na edição da assinatura: ID do usuário não informado, ID do plano não informado, Data de término não informada",
+  "dados": []
+}
+
+
+========== ASSINATURA - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Assinaturas listadas com sucesso",
+  "dados": "[]"
+}
+
+
+========== ASSINATURA - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID da assinatura não fornecido",
+  "dados": []
+}
+
+
+========== ASSINATURA - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Assinaturas listadas com sucesso",
+  "dados": "[]"
+}
+
+
+========== AULA_AGENDADA - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AULA_AGENDADA - LISTAR ==========
+
+
+========== AULA_AGENDADA - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AULA_AGENDADA - LISTAR NOVAMENTE ==========
+
+
+========== AULA_AGENDADA - DELETAR ==========
+
+
+========== AULA_AGENDADA - LISTAR FINAL ==========
+
+
+========== AVALIACAO_FISICA - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AVALIACAO_FISICA - LISTAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AVALIACAO_FISICA - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AVALIACAO_FISICA - LISTAR NOVAMENTE ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AVALIACAO_FISICA - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== AVALIACAO_FISICA - LISTAR FINAL ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== CARGO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== CARGO - LISTAR ==========
+
+
+========== CARGO - EDITAR ==========
+
+
+========== CARGO - LISTAR NOVAMENTE ==========
+
+
+========== CARGO - DELETAR ==========
+
+
+========== CARGO - LISTAR FINAL ==========
+
+
+========== CATEGORIA_PRODUTO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== CATEGORIA_PRODUTO - LISTAR ==========
+
+
+========== CATEGORIA_PRODUTO - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== CATEGORIA_PRODUTO - LISTAR NOVAMENTE ==========
+
+
+========== CATEGORIA_PRODUTO - DELETAR ==========
+
+
+========== CATEGORIA_PRODUTO - LISTAR FINAL ==========
+
+
+========== CUPOM_DESCONTO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== CUPOM_DESCONTO - LISTAR ==========
+
+
+========== CUPOM_DESCONTO - EDITAR ==========
+
+
+========== CUPOM_DESCONTO - LISTAR NOVAMENTE ==========
+
+
+========== CUPOM_DESCONTO - DELETAR ==========
+
+
+========== CUPOM_DESCONTO - LISTAR FINAL ==========
+
+
+========== DIETA_ALIMENTAR - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== DIETA_ALIMENTAR - LISTAR ==========
+
+
+========== DIETA_ALIMENTAR - EDITAR ==========
+
+
+========== DIETA_ALIMENTAR - LISTAR NOVAMENTE ==========
+
+
+========== DIETA_ALIMENTAR - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== DIETA_ALIMENTAR - LISTAR FINAL ==========
+
+
+========== DIETA - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== DIETA - LISTAR ==========
+
+
+========== DIETA - EDITAR ==========
+
+
+========== DIETA - LISTAR NOVAMENTE ==========
+
+
+========== DIETA - DELETAR ==========
+
+
+========== DIETA - LISTAR FINAL ==========
+
+
+========== ENDERECO - CADASTRAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereço cadastrado com sucesso",
+  "dados": []
+}
+
+
+========== ENDERECO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereços listados com sucesso",
+  "dados": [
+    {
+      "nome_funcionario": "Felipe Ramos",
+      "cep": "05005000",
+      "rua": "Av. E",
+      "numero": "500",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Santos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Roberto Dias",
+      "cep": "07007000",
+      "rua": "Av. G",
+      "numero": "700",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Sorocaba",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Fernando Alves",
+      "cep": "09009000",
+      "rua": "Av. I",
+      "numero": "900",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "São José dos Campos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Ricardo Lima",
+      "cep": "11011000",
+      "rua": "Av. K",
+      "numero": "1100",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Barueri",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Gustavo Pires",
+      "cep": "13013000",
+      "rua": "Av. M",
+      "numero": "1300",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Diadema",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Marcelo Cunha",
+      "cep": "15015000",
+      "rua": "Av. O",
+      "numero": "1500",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Mogi das Cruzes",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Bruno Ferreira",
+      "cep": "17017000",
+      "rua": "Av. Q",
+      "numero": "1700",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Itapevi",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Mariana Souza",
+      "cep": "19019000",
+      "rua": "Av. S",
+      "numero": "1900",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Jandira",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Renata Farias",
+      "cep": "02002000",
+      "rua": "Av. B",
+      "numero": "200",
+      "complemento": "Apto 10",
+      "bairro": "Jardim",
+      "cidade": "Santa ",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Carlos Mendes",
+      "cep": "12345-678",
+      "rua": "Rua Teste",
+      "numero": "100",
+      "complemento": "Apto 202",
+      "bairro": "Centro",
+      "cidade": "São Paulo",
+      "estado": "SP"
+    }
+  ]
+}
+
+
+========== ENDERECO - EDITAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereço editado com sucesso",
+  "dados": []
+}
+
+
+========== ENDERECO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereços listados com sucesso",
+  "dados": [
+    {
+      "nome_funcionario": "Felipe Ramos",
+      "cep": "05005000",
+      "rua": "Av. E",
+      "numero": "500",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Santos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Roberto Dias",
+      "cep": "07007000",
+      "rua": "Av. G",
+      "numero": "700",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Sorocaba",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Fernando Alves",
+      "cep": "09009000",
+      "rua": "Av. I",
+      "numero": "900",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "São José dos Campos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Ricardo Lima",
+      "cep": "11011000",
+      "rua": "Av. K",
+      "numero": "1100",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Barueri",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Gustavo Pires",
+      "cep": "13013000",
+      "rua": "Av. M",
+      "numero": "1300",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Diadema",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Marcelo Cunha",
+      "cep": "15015000",
+      "rua": "Av. O",
+      "numero": "1500",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Mogi das Cruzes",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Bruno Ferreira",
+      "cep": "17017000",
+      "rua": "Av. Q",
+      "numero": "1700",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Itapevi",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Mariana Souza",
+      "cep": "19019000",
+      "rua": "Av. S",
+      "numero": "1900",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Jandira",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Renata Farias",
+      "cep": "02002000",
+      "rua": "Av. B",
+      "numero": "200",
+      "complemento": "Apto 10",
+      "bairro": "Jardim",
+      "cidade": "Santa ",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Carlos Mendes",
+      "cep": "54321-000",
+      "rua": "Rua Atualizada",
+      "numero": "200",
+      "complemento": "Casa",
+      "bairro": "Bairro Novo",
+      "cidade": "Rio de Janeiro",
+      "estado": "RJ"
+    }
+  ]
+}
+
+
+========== ENDERECO - DELETAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereço deletado com sucesso",
+  "dados": []
+}
+
+
+========== ENDERECO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Endereços listados com sucesso",
+  "dados": [
+    {
+      "nome_funcionario": "Felipe Ramos",
+      "cep": "05005000",
+      "rua": "Av. E",
+      "numero": "500",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Santos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Roberto Dias",
+      "cep": "07007000",
+      "rua": "Av. G",
+      "numero": "700",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Sorocaba",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Fernando Alves",
+      "cep": "09009000",
+      "rua": "Av. I",
+      "numero": "900",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "São José dos Campos",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Ricardo Lima",
+      "cep": "11011000",
+      "rua": "Av. K",
+      "numero": "1100",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Barueri",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Gustavo Pires",
+      "cep": "13013000",
+      "rua": "Av. M",
+      "numero": "1300",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Diadema",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Marcelo Cunha",
+      "cep": "15015000",
+      "rua": "Av. O",
+      "numero": "1500",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Mogi das Cruzes",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Bruno Ferreira",
+      "cep": "17017000",
+      "rua": "Av. Q",
+      "numero": "1700",
+      "complemento": null,
+      "bairro": "Centro",
+      "cidade": "Itapevi",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Mariana Souza",
+      "cep": "19019000",
+      "rua": "Av. S",
+      "numero": "1900",
+      "complemento": null,
+      "bairro": "Vila",
+      "cidade": "Jandira",
+      "estado": "SP"
+    },
+    {
+      "nome_funcionario": "Renata Farias",
+      "cep": "02002000",
+      "rua": "Av. B",
+      "numero": "200",
+      "complemento": "Apto 10",
+      "bairro": "Jardim",
+      "cidade": "Santa ",
+      "estado": "SP"
+    }
+  ]
+}
+
+
+========== EXERCICIO - CADASTRAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== EXERCICIO - LISTAR ==========
+
+
+========== EXERCICIO - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== EXERCICIO - LISTAR NOVAMENTE ==========
+
+
+========== EXERCICIO - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
+
+
+========== EXERCICIO - LISTAR FINAL ==========
+
+
+
+==== Todos os testes foram executados ====
