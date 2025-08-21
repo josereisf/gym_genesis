@@ -1,30 +1,80 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-$acao = $_GET['acao'];
 
-$idproduto = $_POST['idproduto'] ?? 0;
-$nome = $_POST['nome'] ?? null;
-$descricao = $_POST['descricao'] ?? null;
-$preco = $_POST['preco'] ?? null;
-$quantidade_estoque = $_POST['qtd'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
+
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$idproduto = $input['idproduto'] ?? null;
+$nome = $input['nome'] ?? null;
+$descricao = $input['descricao'] ?? null;
+$preco = $input['preco'] ?? null;
+$quantidade_estoque = $input['qtd'] ?? null;
+
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     $imagem = uploadImagem($_FILES['imagem']);
-} elseif (isset($_POST['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
-    $imagem = $_POST['imagem'];
+} elseif (isset($input['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
+    $imagem = $input['imagem'];
 } else {
     $imagem = null;
 }
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
+
 switch ($acao) {
     case 'cadastrar':
-        cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $imagem);
+        if (!$nome || !$descricao || !$preco || !$quantidade_estoque) {
+            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $imagem);
+        if ($ok) {
+            enviarResposta(true, 'Produto cadastrado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar produto');
+        }
         break;
+
     case 'editar':
-        editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoque, $imagem);
+        if (!$idproduto || !$nome || !$descricao || !$preco || !$quantidade_estoque) {
+            enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoque, $imagem);
+        if ($ok) {
+            enviarResposta(true, 'Produto editado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar produto');
+        }
         break;
+
     case 'listar':
-        listarProdutos($idprouto);
+        $dados = listarProdutos($idproduto);
+        if ($dados) {
+            enviarResposta(true, 'Produtos listados com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar produtos');
+        }
         break;
+
     case 'deletar':
-        deletarProduto($idproduto);
+        if (!$idproduto) {
+            enviarResposta(false, 'ID do produto não informado');
+        }
+        $ok = deletarProduto($idproduto);
+        if ($ok) {
+            enviarResposta(true, 'Produto deletado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar produto');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
         break;
 }
