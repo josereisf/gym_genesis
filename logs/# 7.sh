@@ -1,3 +1,5 @@
+BASE_URL="http://localhost:83/public/api/index.php"
+
 # 7. cupom_desconto
 echo "========== CUPOM_DESCONTO =========="
 API_URL="$BASE_URL?entidade=cupom_desconto"

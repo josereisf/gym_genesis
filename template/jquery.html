@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemplo de Vários Plugins jQuery</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .section { margin-bottom: 40px; }
+  </style>
+</head>
+<body>
+
+  <h1>Demo de Plugins jQuery</h1>
+
+  <!-- Date & Time Picker -->
+  <div class="section">
+    <h2>1. Date & Time Picker (Flatpickr)</h2>
+    <input type="text" id="datetime">
+  </div>
+
+  <!-- Carrossel / Slider -->
+  <div class="section">
+    <h2>2. Carrossel (Slick Slider)</h2>
+    <div class="slider">
+      <div><img src="https://cdn.wallpapersafari.com/0/81/XhAIN0.jp"></div>
+      <div><img src="https://cdn.wallpapersafari.com/0/81/XhAIN0.jp"></div>
+      <div><img src="https://cdn.wallpapersafari.com/0/81/XhAIN0.jp"></div>
+    </div>
+  </div>
+
+  <!-- Telefone com máscara e bandeira -->
+  <div class="section">
+    <h2>3. Campo de Telefone Internacional</h2>
+    <input id="phone" type="tel">
+  </div>
+
+  <!-- Lightbox -->
+  <div class="section">
+    <h2>4. Galeria Lightbox</h2>
+    <a href="https://cdn.wallpapersafari.com/0/81/XhAIN0.jpg" data-lightbox="gallery"><img src="https://cdn.wallpapersafari.com/0/81/XhAIN0.jpg" alt="Thumb" style="height: 100px; width: 100px;;"></a>
+
+  </div>
+
+  <!-- Contador animado -->
+  <div class="section">
+    <h2>5. Contador Animado</h2>
+    <span id="counter" style="font-size: 2rem;">0</span>
+  </div>
+
+  <!-- Select com busca e múltipla seleção -->
+  <div class="section">
+    <h2>6. Select com Busca (Select2)</h2>
+    <select id="multiSelect" multiple style="width: 50%;">
+      <option value="apple">Apple</option>
+      <option value="banana">Banana</option>
+      <option value="cherry">Cherry</option>
+    </select>
+  </div>
+
+  <!-- Exportar tabela -->
+  <div class="section">
+    <h2>7. Exportar Tabela para Excel</h2>
+    <button id="export">Exportar</button>
+    <table id="myTable" border="1"><tr><th>Nome</th><th>Idade</th></tr><tr><td>Ana</td><td>28</td></tr><tr><td>Bruno</td><td>34</td></tr></table>
+  </div>
+
+  <!-- Scripts dos Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/counterup2/2.0.7/index.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-table2excel/1.1.2/jquery.table2excel.min.js"></script>
+
+  <script>
+    $(function(){
+      // 1. Date & Time Picker
+      flatpickr("#datetime", { enableTime: true, dateFormat: "d/m/Y H:i" });
+
+      // 2. Slick Slider
+      $('.slider').slick({ dots: true, autoplay: true });
+
+      // 3. Campo Telefone
+      intlTelInput($("#phone")[0], { nationalMode: false });
+
+      // 5. Contador animado
+      $('#counter').text('0').counterUp({ duration: 2000, delay: 16 });
+
+      // 6. Select2
+      $('#multiSelect').select2({ placeholder: "Escolha..." });
+
+      // 7. Exportar tabela
+      $('#export').click(function(){
+        $('#myTable').table2excel({ name: "Dados", filename: "tabela.xls" });
+      });
+    });
+  </script>
+
+</body>
+</html>
