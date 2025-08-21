@@ -1,24 +1,72 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-$acao = $_GET['acao'];
 
-$idpedido = $_POST['idpedido'] ?? 0;
-$usuario_idusuario = $_POST['usuario_idusuario'] ?? null;
-$data_pedido = $_POST['data_pedido'] ?? null;
-$status = $_POST['status'] ?? null;
-$pagamento_idpagamento = $_POST['pagamento_idpagamento'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
+
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$idpedido = $input['idpedido'] ?? null;
+$usuario_idusuario = $input['usuario_idusuario'] ?? null;
+$data_pedido = $input['data_pedido'] ?? null;
+$status = $input['status'] ?? null;
+$pagamento_idpagamento = $input['pagamento_idpagamento'] ?? null;
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
 
 switch ($acao) {
     case 'cadastrar':
-        cadastrarPedido($usuario_idusuario, $data_pedido, $status, $pagamento_idpagamento);
+        if (!$usuario_idusuario || !$data_pedido || !$status || !$pagamento_idpagamento) {
+            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = cadastrarPedido($usuario_idusuario, $data_pedido, $status, $pagamento_idpagamento);
+        if ($ok) {
+            enviarResposta(true, 'Pedido cadastrado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar pedido');
+        }
         break;
+
     case 'editar':
-        editarPedido($idpedido, $usuario_idusuario, $data_pedido, $status);
+        if (!$idpedido || !$usuario_idusuario || !$data_pedido || !$status) {
+            enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = editarPedido($idpedido, $usuario_idusuario, $data_pedido, $status);
+        if ($ok) {
+            enviarResposta(true, 'Pedido editado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar pedido');
+        }
         break;
+
     case 'listar':
-        listarPedidos($idpedido);
+        $dados = listarPedidos($idpedido);
+        if ($dados) {
+            enviarResposta(true, 'Pedidos listados com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar pedidos');
+        }
         break;
+
     case 'deletar':
-        deletarPedido($idpedido);
+        if (!$idpedido) {
+            enviarResposta(false, 'ID do pedido não informado');
+        }
+        $ok = deletarPedido($idpedido);
+        if ($ok) {
+            enviarResposta(true, 'Pedido deletado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar pedido');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
         break;
 }
