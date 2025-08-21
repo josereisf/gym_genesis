@@ -387,20 +387,13 @@ function toggleSenha(id, btn) {
   const isHidden = input.type === "password";
   input.type = isHidden ? "text" : "password";
 
-  // Ícones SVG para olho aberto e fechado
-  const eyeOpen = `
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="12" cy="12" r="3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
-
-  const eyeOff = `
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path d="M17.94 17.94a10.06 10.06 0 01-11.88 0M1 1l22 22M9.88 9.88A3 3 0 0012 15a3 3 0 002.12-.88M2.1 12a9.94 9.94 0 0119.8 0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
+  // Ícones Font Awesome para olho aberto e fechado
+  const eyeOpen = '<i class="fa-regular fa-eye"></i>';
+  const eyeOff = '<i class="fa-regular fa-eye-slash"></i>';
 
   btn.innerHTML = isHidden ? eyeOpen : eyeOff;
 }
+
 //===========================================================================================================================================================================================
 // aqui aplicar mascaraCPf, mascaraTelefone para deixa para o usuario facil de entender e ver oq e como fazer tudo
 function aplicarMascaraCPF(valor) {
