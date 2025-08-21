@@ -1,6 +1,6 @@
-==== Executando todos os .sh em testes_SH ====
->> Rodando testes_SH/# 7.sh
-testes_SH/# 7.sh: linha 2: print_sep: comando não encontrado
+[33m==== Executando todos os .sh em logs ====[0m
+
+>> Rodando logs/# 7.sh
 ========== CUPOM_DESCONTO ==========
 == CADASTRAR ==
 == LISTAR ==
@@ -8,7 +8,6 @@ testes_SH/# 7.sh: linha 2: print_sep: comando não encontrado
 == LISTAR NOVAMENTE ==
 == DELETAR ==
 == LISTAR FINAL ==
-testes_SH/# 7.sh: linha 19: print_sep: comando não encontrado
 ========== DIETA_ALIMENTAR ==========
 == CADASTRAR ==
 == LISTAR ==
@@ -16,7 +15,6 @@ testes_SH/# 7.sh: linha 19: print_sep: comando não encontrado
 == LISTAR NOVAMENTE ==
 == DELETAR ==
 == LISTAR FINAL ==
-testes_SH/# 7.sh: linha 36: print_sep: comando não encontrado
 ========== DIETA ==========
 == CADASTRAR ==
 == LISTAR ==
@@ -24,48 +22,9 @@ testes_SH/# 7.sh: linha 36: print_sep: comando não encontrado
 == LISTAR NOVAMENTE ==
 == DELETAR ==
 == LISTAR FINAL ==
-testes_SH/# 7.sh: linha 53: print_sep: comando não encontrado
-========== ENDERECO ==========
-== CADASTRAR ==
-== LISTAR ==
-== EDITAR ==
-== LISTAR NOVAMENTE ==
-== DELETAR ==
-== LISTAR FINAL ==
-testes_SH/# 7.sh: linha 70: print_sep: comando não encontrado
-========== EXERCICIO ==========
-== CADASTRAR ==
-== LISTAR ==
-== EDITAR ==
-== LISTAR NOVAMENTE ==
-== DELETAR ==
-== LISTAR FINAL ==
-testes_SH/# 7.sh: linha 87: print_sep: comando não encontrado
-========== FORUM ==========
-== CADASTRAR ==
-== LISTAR ==
-== EDITAR ==
-== LISTAR NOVAMENTE ==
-== DELETAR ==
-== LISTAR FINAL ==
-testes_SH/# 7.sh: linha 104: print_sep: comando não encontrado
-========== FUNCIONARIO ==========
-== CADASTRAR ==
-== LISTAR ==
-== EDITAR ==
-== LISTAR NOVAMENTE ==
-== DELETAR ==
-== LISTAR FINAL ==
-testes_SH/# 7.sh: linha 126: print_sep: comando não encontrado
-========== USUARIO ==========
-== CADASTRAR ==
-== LISTAR ==
-== EDITAR ==
-== LISTAR NOVAMENTE ==
-== DELETAR ==
-== LISTAR FINAL ==
+[32m✔ logs/# 7.sh executado com sucesso[0m
 
->> Rodando testes_SH/teste_endereco.sh
+>> Rodando logs/teste_endereco.sh
 ========== CADASTRAR ==========
 {
   "sucesso": true,
@@ -407,65 +366,1294 @@ testes_SH/# 7.sh: linha 126: print_sep: comando não encontrado
 }
 
 
+[32m✔ logs/teste_endereco.sh executado com sucesso[0m
 
->> Rodando testes_SH/teste_geral.sh
+>> Rodando logs/teste_geral.sh
 ========== EXERCICIO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Exercício cadastrado com sucesso",
+  "dados": []
+}
 
 
 ========== EXERCICIO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Exercícios listados com sucesso",
+  "dados": [
+    {
+      "idexercicio": 1,
+      "nome": "Rosca Direta",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para bíceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 2,
+      "nome": "Tríceps Testa",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para tríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 3,
+      "nome": "Leg Press",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 4,
+      "nome": "Flexão",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de flexão de braços",
+      "video_url": null
+    },
+    {
+      "idexercicio": 5,
+      "nome": "Abdominal",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício para abdômen",
+      "video_url": null
+    },
+    {
+      "idexercicio": 6,
+      "nome": "Remada Curvada",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 7,
+      "nome": "Desenvolvimento",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para deltoides",
+      "video_url": null
+    },
+    {
+      "idexercicio": 8,
+      "nome": "Panturrilha",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para panturrilhas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 9,
+      "nome": "Elevação Lateral",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para ombros",
+      "video_url": null
+    },
+    {
+      "idexercicio": 10,
+      "nome": "Prancha",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício de estabilidade",
+      "video_url": null
+    },
+    {
+      "idexercicio": 11,
+      "nome": "Stiff",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para posteriores",
+      "video_url": null
+    },
+    {
+      "idexercicio": 12,
+      "nome": "Pull Over",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 13,
+      "nome": "Crucifixo",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 14,
+      "nome": "Afundo",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para glúteos",
+      "video_url": null
+    },
+    {
+      "idexercicio": 15,
+      "nome": "Voador",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 16,
+      "nome": "Extensão de Pernas",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 17,
+      "nome": "Rosca Martelo",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para antebraço",
+      "video_url": null
+    },
+    {
+      "idexercicio": 18,
+      "nome": "Supino",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de supino reto",
+      "video_url": null
+    },
+    {
+      "idexercicio": 19,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Agachamento livre",
+      "video_url": null
+    },
+    {
+      "idexercicio": 20,
+      "nome": "Puxada na barra",
+      "grupo_muscular": "Costas",
+      "descricao": "Puxada frontal",
+      "video_url": null
+    },
+    {
+      "idexercicio": 21,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 22,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 23,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 24,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 25,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 26,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 27,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 28,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 29,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 30,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 31,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 32,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 33,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 34,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 35,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 36,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 37,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    }
+  ]
+}
 
 
 ========== EXERCICIO - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== EXERCICIO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Exercícios listados com sucesso",
+  "dados": [
+    {
+      "idexercicio": 1,
+      "nome": "Rosca Direta",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para bíceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 2,
+      "nome": "Tríceps Testa",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para tríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 3,
+      "nome": "Leg Press",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 4,
+      "nome": "Flexão",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de flexão de braços",
+      "video_url": null
+    },
+    {
+      "idexercicio": 5,
+      "nome": "Abdominal",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício para abdômen",
+      "video_url": null
+    },
+    {
+      "idexercicio": 6,
+      "nome": "Remada Curvada",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 7,
+      "nome": "Desenvolvimento",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para deltoides",
+      "video_url": null
+    },
+    {
+      "idexercicio": 8,
+      "nome": "Panturrilha",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para panturrilhas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 9,
+      "nome": "Elevação Lateral",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para ombros",
+      "video_url": null
+    },
+    {
+      "idexercicio": 10,
+      "nome": "Prancha",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício de estabilidade",
+      "video_url": null
+    },
+    {
+      "idexercicio": 11,
+      "nome": "Stiff",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para posteriores",
+      "video_url": null
+    },
+    {
+      "idexercicio": 12,
+      "nome": "Pull Over",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 13,
+      "nome": "Crucifixo",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 14,
+      "nome": "Afundo",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para glúteos",
+      "video_url": null
+    },
+    {
+      "idexercicio": 15,
+      "nome": "Voador",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 16,
+      "nome": "Extensão de Pernas",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 17,
+      "nome": "Rosca Martelo",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para antebraço",
+      "video_url": null
+    },
+    {
+      "idexercicio": 18,
+      "nome": "Supino",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de supino reto",
+      "video_url": null
+    },
+    {
+      "idexercicio": 19,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Agachamento livre",
+      "video_url": null
+    },
+    {
+      "idexercicio": 20,
+      "nome": "Puxada na barra",
+      "grupo_muscular": "Costas",
+      "descricao": "Puxada frontal",
+      "video_url": null
+    },
+    {
+      "idexercicio": 21,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 22,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 23,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 24,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 25,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 26,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 27,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 28,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 29,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 30,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 31,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 32,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 33,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 34,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 35,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 36,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 37,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    }
+  ]
+}
 
 
 ========== EXERCICIO - DELETAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID do exercício não informado",
+  "dados": []
+}
 
 
 ========== EXERCICIO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Exercícios listados com sucesso",
+  "dados": [
+    {
+      "idexercicio": 1,
+      "nome": "Rosca Direta",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para bíceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 2,
+      "nome": "Tríceps Testa",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para tríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 3,
+      "nome": "Leg Press",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 4,
+      "nome": "Flexão",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de flexão de braços",
+      "video_url": null
+    },
+    {
+      "idexercicio": 5,
+      "nome": "Abdominal",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício para abdômen",
+      "video_url": null
+    },
+    {
+      "idexercicio": 6,
+      "nome": "Remada Curvada",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 7,
+      "nome": "Desenvolvimento",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para deltoides",
+      "video_url": null
+    },
+    {
+      "idexercicio": 8,
+      "nome": "Panturrilha",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para panturrilhas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 9,
+      "nome": "Elevação Lateral",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para ombros",
+      "video_url": null
+    },
+    {
+      "idexercicio": 10,
+      "nome": "Prancha",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício de estabilidade",
+      "video_url": null
+    },
+    {
+      "idexercicio": 11,
+      "nome": "Stiff",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para posteriores",
+      "video_url": null
+    },
+    {
+      "idexercicio": 12,
+      "nome": "Pull Over",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 13,
+      "nome": "Crucifixo",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 14,
+      "nome": "Afundo",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para glúteos",
+      "video_url": null
+    },
+    {
+      "idexercicio": 15,
+      "nome": "Voador",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 16,
+      "nome": "Extensão de Pernas",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 17,
+      "nome": "Rosca Martelo",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para antebraço",
+      "video_url": null
+    },
+    {
+      "idexercicio": 18,
+      "nome": "Supino",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de supino reto",
+      "video_url": null
+    },
+    {
+      "idexercicio": 19,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Agachamento livre",
+      "video_url": null
+    },
+    {
+      "idexercicio": 20,
+      "nome": "Puxada na barra",
+      "grupo_muscular": "Costas",
+      "descricao": "Puxada frontal",
+      "video_url": null
+    },
+    {
+      "idexercicio": 21,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 22,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 23,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 24,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 25,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 26,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 27,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 28,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 29,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 30,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 31,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 32,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 33,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 34,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 35,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 36,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 37,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    }
+  ]
+}
 
 
 ========== FORUM - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== FORUM - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Tópicos do fórum listados com sucesso",
+  "dados": [
+    {
+      "nome_usuario": "Juliana Costa",
+      "titulo": "Dúvida sobre agachamento",
+      "descricao": "Qual a postura correta?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Gabriel Martins",
+      "titulo": "Suplementação",
+      "descricao": "Creatina é segura?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Patricia Alves",
+      "titulo": "Lesão no ombro",
+      "descricao": "Como evitar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Rodrigo Melo",
+      "titulo": "Treino funcional",
+      "descricao": "Sugestões de exercícios?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Amanda Ribeiro",
+      "titulo": "Cardio em jejum",
+      "descricao": "Vale a pena?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Thiago Fernandes",
+      "titulo": "Dieta flexível",
+      "descricao": "Como montar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Camila Duarte",
+      "titulo": "Equipamento para casa",
+      "descricao": "O que comprar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Vinicius Rocha",
+      "titulo": "Treino para iniciantes",
+      "descricao": "Por onde começar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Beatriz Gomes",
+      "titulo": "Alongamento",
+      "descricao": "Antes ou depois do treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Felipe Barros",
+      "titulo": "Avaliação física",
+      "descricao": "Qual a frequência ideal?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Larissa Pinto",
+      "titulo": "Treino HIIT",
+      "descricao": "Resultados reais?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Bruno Teixeira",
+      "titulo": "Nutrição esportiva",
+      "descricao": "Dicas de pré-treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Mariana Freitas",
+      "titulo": "Treino de core",
+      "descricao": "Exercícios recomendados?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Diego Cardoso",
+      "titulo": "Recuperação muscular",
+      "descricao": "Como acelerar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Aline Castro",
+      "titulo": "Treino de resistência",
+      "descricao": "Como evoluir?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Pedro Henrique",
+      "titulo": "Treino em grupo",
+      "descricao": "Vantagens?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Sofia Almeida",
+      "titulo": "Treino outdoor",
+      "descricao": "Precauções?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "titulo": "Dúvida Treino Peitoral",
+      "descricao": "Como evoluir no supino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Fernanda Lima",
+      "titulo": "Nutrição Pós-Treino",
+      "descricao": "O que comer após o treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Rafael Souza",
+      "titulo": "Equipamentos",
+      "descricao": "Qual melhor barra?",
+      "data_criacao": "2025-08-21 01:04:57"
+    }
+  ]
+}
 
 
 ========== FORUM - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID, título e descrição são obrigatórios",
+  "dados": []
+}
 
 
 ========== FORUM - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Tópicos do fórum listados com sucesso",
+  "dados": [
+    {
+      "nome_usuario": "Juliana Costa",
+      "titulo": "Dúvida sobre agachamento",
+      "descricao": "Qual a postura correta?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Gabriel Martins",
+      "titulo": "Suplementação",
+      "descricao": "Creatina é segura?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Patricia Alves",
+      "titulo": "Lesão no ombro",
+      "descricao": "Como evitar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Rodrigo Melo",
+      "titulo": "Treino funcional",
+      "descricao": "Sugestões de exercícios?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Amanda Ribeiro",
+      "titulo": "Cardio em jejum",
+      "descricao": "Vale a pena?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Thiago Fernandes",
+      "titulo": "Dieta flexível",
+      "descricao": "Como montar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Camila Duarte",
+      "titulo": "Equipamento para casa",
+      "descricao": "O que comprar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Vinicius Rocha",
+      "titulo": "Treino para iniciantes",
+      "descricao": "Por onde começar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Beatriz Gomes",
+      "titulo": "Alongamento",
+      "descricao": "Antes ou depois do treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Felipe Barros",
+      "titulo": "Avaliação física",
+      "descricao": "Qual a frequência ideal?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Larissa Pinto",
+      "titulo": "Treino HIIT",
+      "descricao": "Resultados reais?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Bruno Teixeira",
+      "titulo": "Nutrição esportiva",
+      "descricao": "Dicas de pré-treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Mariana Freitas",
+      "titulo": "Treino de core",
+      "descricao": "Exercícios recomendados?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Diego Cardoso",
+      "titulo": "Recuperação muscular",
+      "descricao": "Como acelerar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Aline Castro",
+      "titulo": "Treino de resistência",
+      "descricao": "Como evoluir?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Pedro Henrique",
+      "titulo": "Treino em grupo",
+      "descricao": "Vantagens?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Sofia Almeida",
+      "titulo": "Treino outdoor",
+      "descricao": "Precauções?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "titulo": "Dúvida Treino Peitoral",
+      "descricao": "Como evoluir no supino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Fernanda Lima",
+      "titulo": "Nutrição Pós-Treino",
+      "descricao": "O que comer após o treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Rafael Souza",
+      "titulo": "Equipamentos",
+      "descricao": "Qual melhor barra?",
+      "data_criacao": "2025-08-21 01:04:57"
+    }
+  ]
+}
 
 
 ========== FORUM - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do tópico não informado",
+  "dados": []
+}
 
 
 ========== FORUM - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Tópicos do fórum listados com sucesso",
+  "dados": [
+    {
+      "nome_usuario": "Juliana Costa",
+      "titulo": "Dúvida sobre agachamento",
+      "descricao": "Qual a postura correta?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Gabriel Martins",
+      "titulo": "Suplementação",
+      "descricao": "Creatina é segura?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Patricia Alves",
+      "titulo": "Lesão no ombro",
+      "descricao": "Como evitar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Rodrigo Melo",
+      "titulo": "Treino funcional",
+      "descricao": "Sugestões de exercícios?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Amanda Ribeiro",
+      "titulo": "Cardio em jejum",
+      "descricao": "Vale a pena?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Thiago Fernandes",
+      "titulo": "Dieta flexível",
+      "descricao": "Como montar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Camila Duarte",
+      "titulo": "Equipamento para casa",
+      "descricao": "O que comprar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Vinicius Rocha",
+      "titulo": "Treino para iniciantes",
+      "descricao": "Por onde começar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Beatriz Gomes",
+      "titulo": "Alongamento",
+      "descricao": "Antes ou depois do treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Felipe Barros",
+      "titulo": "Avaliação física",
+      "descricao": "Qual a frequência ideal?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Larissa Pinto",
+      "titulo": "Treino HIIT",
+      "descricao": "Resultados reais?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Bruno Teixeira",
+      "titulo": "Nutrição esportiva",
+      "descricao": "Dicas de pré-treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Mariana Freitas",
+      "titulo": "Treino de core",
+      "descricao": "Exercícios recomendados?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Diego Cardoso",
+      "titulo": "Recuperação muscular",
+      "descricao": "Como acelerar?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Aline Castro",
+      "titulo": "Treino de resistência",
+      "descricao": "Como evoluir?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Pedro Henrique",
+      "titulo": "Treino em grupo",
+      "descricao": "Vantagens?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Sofia Almeida",
+      "titulo": "Treino outdoor",
+      "descricao": "Precauções?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "titulo": "Dúvida Treino Peitoral",
+      "descricao": "Como evoluir no supino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Fernanda Lima",
+      "titulo": "Nutrição Pós-Treino",
+      "descricao": "O que comer após o treino?",
+      "data_criacao": "2025-08-21 01:04:57"
+    },
+    {
+      "nome_usuario": "Rafael Souza",
+      "titulo": "Equipamentos",
+      "descricao": "Qual melhor barra?",
+      "data_criacao": "2025-08-21 01:04:57"
+    }
+  ]
+}
 
 
 ========== FUNCIONARIO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== FUNCIONARIO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Funcionários listados com sucesso",
+  "dados": "[{\"nome\":\"Recepcionista\",\"email\":\"carlos@ex.com\",\"telefone\":\"11666667777\",\"data_contratacao\":\"2024-02-20\",\"salario\":\"3200.00\",\"cargo_id\":4},{\"nome\":\"Limpeza\",\"email\":\"renata@ex.com\",\"telefone\":\"11777778888\",\"data_contratacao\":\"2023-09-10\",\"salario\":\"4100.00\",\"cargo_id\":5},{\"nome\":\"Manutenção\",\"email\":\"joao@ex.com\",\"telefone\":\"11888889999\",\"data_contratacao\":\"2025-03-05\",\"salario\":\"2800.00\",\"cargo_id\":6},{\"nome\":\"Supervisor\",\"email\":\"simone@ex.com\",\"telefone\":\"11999990000\",\"data_contratacao\":\"2024-04-12\",\"salario\":\"3500.00\",\"cargo_id\":7},{\"nome\":\"Estagiário\",\"email\":\"felipe@ex.com\",\"telefone\":\"11222223333\",\"data_contratacao\":\"2023-10-18\",\"salario\":\"3700.00\",\"cargo_id\":8},{\"nome\":\"Consultor\",\"email\":\"patrician@ex.com\",\"telefone\":\"11333334445\",\"data_contratacao\":\"2025-05-22\",\"salario\":\"3300.00\",\"cargo_id\":9},{\"nome\":\"Diretor\",\"email\":\"roberto@ex.com\",\"telefone\":\"11444445556\",\"data_contratacao\":\"2024-06-30\",\"salario\":\"2900.00\",\"cargo_id\":10},{\"nome\":\"Financeiro\",\"email\":\"julianap@ex.com\",\"telefone\":\"11555556667\",\"data_contratacao\":\"2023-11-25\",\"salario\":\"4200.00\",\"cargo_id\":11},{\"nome\":\"Marketing\",\"email\":\"fernando@ex.com\",\"telefone\":\"11666667788\",\"data_contratacao\":\"2025-07-14\",\"salario\":\"3100.00\",\"cargo_id\":12},{\"nome\":\"TI\",\"email\":\"amandat@ex.com\",\"telefone\":\"11777778899\",\"data_contratacao\":\"2024-08-19\",\"salario\":\"3600.00\",\"cargo_id\":13},{\"nome\":\"Fisioterapeuta\",\"email\":\"ricardo@ex.com\",\"telefone\":\"11888889910\",\"data_contratacao\":\"2023-12-03\",\"salario\":\"4000.00\",\"cargo_id\":14},{\"nome\":\"Psicólogo\",\"email\":\"tatiane@ex.com\",\"telefone\":\"11999990021\",\"data_contratacao\":\"2025-09-27\",\"salario\":\"3400.00\",\"cargo_id\":15},{\"nome\":\"Administrador\",\"email\":\"gustavo@ex.com\",\"telefone\":\"11222223344\",\"data_contratacao\":\"2024-10-05\",\"salario\":\"3800.00\",\"cargo_id\":16},{\"nome\":\"Atendente\",\"email\":\"eliane@ex.com\",\"telefone\":\"11333334456\",\"data_contratacao\":\"2023-01-15\",\"salario\":\"2950.00\",\"cargo_id\":17},{\"nome\":\"Gerente\",\"email\":\"marcelo@ex.com\",\"telefone\":\"11444445567\",\"data_contratacao\":\"2025-02-28\",\"salario\":\"4100.00\",\"cargo_id\":18},{\"nome\":\"Assistente\",\"email\":\"vanessa@ex.com\",\"telefone\":\"11555556678\",\"data_contratacao\":\"2024-03-22\",\"salario\":\"3250.00\",\"cargo_id\":19},{\"nome\":\"Vendedor\",\"email\":\"brunof@ex.com\",\"telefone\":\"11666667789\",\"data_contratacao\":\"2023-04-11\",\"salario\":\"3750.00\",\"cargo_id\":20},{\"nome\":\"Instrutor\",\"email\":\"eduardo@ex.com\",\"telefone\":\"11333334444\",\"data_contratacao\":\"2024-01-15\",\"salario\":\"3000.00\",\"cargo_id\":1},{\"nome\":\"Nutricionista\",\"email\":\"mariana@ex.com\",\"telefone\":\"11444445555\",\"data_contratacao\":\"2023-08-01\",\"salario\":\"4500.00\",\"cargo_id\":2},{\"nome\":\"Personal Trainer\",\"email\":\"paulo@ex.com\",\"telefone\":\"11555556666\",\"data_contratacao\":\"2025-02-10\",\"salario\":\"2500.00\",\"cargo_id\":3}]"
+}
 
 
 ========== FUNCIONARIO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== FUNCIONARIO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Funcionários listados com sucesso",
+  "dados": "[{\"nome\":\"Recepcionista\",\"email\":\"carlos@ex.com\",\"telefone\":\"11666667777\",\"data_contratacao\":\"2024-02-20\",\"salario\":\"3200.00\",\"cargo_id\":4},{\"nome\":\"Limpeza\",\"email\":\"renata@ex.com\",\"telefone\":\"11777778888\",\"data_contratacao\":\"2023-09-10\",\"salario\":\"4100.00\",\"cargo_id\":5},{\"nome\":\"Manutenção\",\"email\":\"joao@ex.com\",\"telefone\":\"11888889999\",\"data_contratacao\":\"2025-03-05\",\"salario\":\"2800.00\",\"cargo_id\":6},{\"nome\":\"Supervisor\",\"email\":\"simone@ex.com\",\"telefone\":\"11999990000\",\"data_contratacao\":\"2024-04-12\",\"salario\":\"3500.00\",\"cargo_id\":7},{\"nome\":\"Estagiário\",\"email\":\"felipe@ex.com\",\"telefone\":\"11222223333\",\"data_contratacao\":\"2023-10-18\",\"salario\":\"3700.00\",\"cargo_id\":8},{\"nome\":\"Consultor\",\"email\":\"patrician@ex.com\",\"telefone\":\"11333334445\",\"data_contratacao\":\"2025-05-22\",\"salario\":\"3300.00\",\"cargo_id\":9},{\"nome\":\"Diretor\",\"email\":\"roberto@ex.com\",\"telefone\":\"11444445556\",\"data_contratacao\":\"2024-06-30\",\"salario\":\"2900.00\",\"cargo_id\":10},{\"nome\":\"Financeiro\",\"email\":\"julianap@ex.com\",\"telefone\":\"11555556667\",\"data_contratacao\":\"2023-11-25\",\"salario\":\"4200.00\",\"cargo_id\":11},{\"nome\":\"Marketing\",\"email\":\"fernando@ex.com\",\"telefone\":\"11666667788\",\"data_contratacao\":\"2025-07-14\",\"salario\":\"3100.00\",\"cargo_id\":12},{\"nome\":\"TI\",\"email\":\"amandat@ex.com\",\"telefone\":\"11777778899\",\"data_contratacao\":\"2024-08-19\",\"salario\":\"3600.00\",\"cargo_id\":13},{\"nome\":\"Fisioterapeuta\",\"email\":\"ricardo@ex.com\",\"telefone\":\"11888889910\",\"data_contratacao\":\"2023-12-03\",\"salario\":\"4000.00\",\"cargo_id\":14},{\"nome\":\"Psicólogo\",\"email\":\"tatiane@ex.com\",\"telefone\":\"11999990021\",\"data_contratacao\":\"2025-09-27\",\"salario\":\"3400.00\",\"cargo_id\":15},{\"nome\":\"Administrador\",\"email\":\"gustavo@ex.com\",\"telefone\":\"11222223344\",\"data_contratacao\":\"2024-10-05\",\"salario\":\"3800.00\",\"cargo_id\":16},{\"nome\":\"Atendente\",\"email\":\"eliane@ex.com\",\"telefone\":\"11333334456\",\"data_contratacao\":\"2023-01-15\",\"salario\":\"2950.00\",\"cargo_id\":17},{\"nome\":\"Gerente\",\"email\":\"marcelo@ex.com\",\"telefone\":\"11444445567\",\"data_contratacao\":\"2025-02-28\",\"salario\":\"4100.00\",\"cargo_id\":18},{\"nome\":\"Assistente\",\"email\":\"vanessa@ex.com\",\"telefone\":\"11555556678\",\"data_contratacao\":\"2024-03-22\",\"salario\":\"3250.00\",\"cargo_id\":19},{\"nome\":\"Vendedor\",\"email\":\"brunof@ex.com\",\"telefone\":\"11666667789\",\"data_contratacao\":\"2023-04-11\",\"salario\":\"3750.00\",\"cargo_id\":20},{\"nome\":\"Instrutor\",\"email\":\"eduardo@ex.com\",\"telefone\":\"11333334444\",\"data_contratacao\":\"2024-01-15\",\"salario\":\"3000.00\",\"cargo_id\":1},{\"nome\":\"Nutricionista\",\"email\":\"mariana@ex.com\",\"telefone\":\"11444445555\",\"data_contratacao\":\"2023-08-01\",\"salario\":\"4500.00\",\"cargo_id\":2},{\"nome\":\"Personal Trainer\",\"email\":\"paulo@ex.com\",\"telefone\":\"11555556666\",\"data_contratacao\":\"2025-02-10\",\"salario\":\"2500.00\",\"cargo_id\":3}]"
+}
 
 
 ========== FUNCIONARIO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do funcionário não informado",
+  "dados": []
+}
 
 
 ========== FUNCIONARIO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Funcionários listados com sucesso",
+  "dados": "[{\"nome\":\"Recepcionista\",\"email\":\"carlos@ex.com\",\"telefone\":\"11666667777\",\"data_contratacao\":\"2024-02-20\",\"salario\":\"3200.00\",\"cargo_id\":4},{\"nome\":\"Limpeza\",\"email\":\"renata@ex.com\",\"telefone\":\"11777778888\",\"data_contratacao\":\"2023-09-10\",\"salario\":\"4100.00\",\"cargo_id\":5},{\"nome\":\"Manutenção\",\"email\":\"joao@ex.com\",\"telefone\":\"11888889999\",\"data_contratacao\":\"2025-03-05\",\"salario\":\"2800.00\",\"cargo_id\":6},{\"nome\":\"Supervisor\",\"email\":\"simone@ex.com\",\"telefone\":\"11999990000\",\"data_contratacao\":\"2024-04-12\",\"salario\":\"3500.00\",\"cargo_id\":7},{\"nome\":\"Estagiário\",\"email\":\"felipe@ex.com\",\"telefone\":\"11222223333\",\"data_contratacao\":\"2023-10-18\",\"salario\":\"3700.00\",\"cargo_id\":8},{\"nome\":\"Consultor\",\"email\":\"patrician@ex.com\",\"telefone\":\"11333334445\",\"data_contratacao\":\"2025-05-22\",\"salario\":\"3300.00\",\"cargo_id\":9},{\"nome\":\"Diretor\",\"email\":\"roberto@ex.com\",\"telefone\":\"11444445556\",\"data_contratacao\":\"2024-06-30\",\"salario\":\"2900.00\",\"cargo_id\":10},{\"nome\":\"Financeiro\",\"email\":\"julianap@ex.com\",\"telefone\":\"11555556667\",\"data_contratacao\":\"2023-11-25\",\"salario\":\"4200.00\",\"cargo_id\":11},{\"nome\":\"Marketing\",\"email\":\"fernando@ex.com\",\"telefone\":\"11666667788\",\"data_contratacao\":\"2025-07-14\",\"salario\":\"3100.00\",\"cargo_id\":12},{\"nome\":\"TI\",\"email\":\"amandat@ex.com\",\"telefone\":\"11777778899\",\"data_contratacao\":\"2024-08-19\",\"salario\":\"3600.00\",\"cargo_id\":13},{\"nome\":\"Fisioterapeuta\",\"email\":\"ricardo@ex.com\",\"telefone\":\"11888889910\",\"data_contratacao\":\"2023-12-03\",\"salario\":\"4000.00\",\"cargo_id\":14},{\"nome\":\"Psicólogo\",\"email\":\"tatiane@ex.com\",\"telefone\":\"11999990021\",\"data_contratacao\":\"2025-09-27\",\"salario\":\"3400.00\",\"cargo_id\":15},{\"nome\":\"Administrador\",\"email\":\"gustavo@ex.com\",\"telefone\":\"11222223344\",\"data_contratacao\":\"2024-10-05\",\"salario\":\"3800.00\",\"cargo_id\":16},{\"nome\":\"Atendente\",\"email\":\"eliane@ex.com\",\"telefone\":\"11333334456\",\"data_contratacao\":\"2023-01-15\",\"salario\":\"2950.00\",\"cargo_id\":17},{\"nome\":\"Gerente\",\"email\":\"marcelo@ex.com\",\"telefone\":\"11444445567\",\"data_contratacao\":\"2025-02-28\",\"salario\":\"4100.00\",\"cargo_id\":18},{\"nome\":\"Assistente\",\"email\":\"vanessa@ex.com\",\"telefone\":\"11555556678\",\"data_contratacao\":\"2024-03-22\",\"salario\":\"3250.00\",\"cargo_id\":19},{\"nome\":\"Vendedor\",\"email\":\"brunof@ex.com\",\"telefone\":\"11666667789\",\"data_contratacao\":\"2023-04-11\",\"salario\":\"3750.00\",\"cargo_id\":20},{\"nome\":\"Instrutor\",\"email\":\"eduardo@ex.com\",\"telefone\":\"11333334444\",\"data_contratacao\":\"2024-01-15\",\"salario\":\"3000.00\",\"cargo_id\":1},{\"nome\":\"Nutricionista\",\"email\":\"mariana@ex.com\",\"telefone\":\"11444445555\",\"data_contratacao\":\"2023-08-01\",\"salario\":\"4500.00\",\"cargo_id\":2},{\"nome\":\"Personal Trainer\",\"email\":\"paulo@ex.com\",\"telefone\":\"11555556666\",\"data_contratacao\":\"2025-02-10\",\"salario\":\"2500.00\",\"cargo_id\":3}]"
+}
 
 
 ========== HISTORICO_PESO - CADASTRAR ==========
@@ -487,46 +1675,462 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== HISTORICO_TREINO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Usuário, treino e data de execução são obrigatórios",
+  "dados": []
+}
 
 
 ========== HISTORICO_TREINO - LISTAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Históricos de treino listados com sucesso",
+  "dados": [
+    {
+      "nome": "Juliana Costa",
+      "tipo": "Força",
+      "data_execucao": "2025-04-13 09:00:00",
+      "observacoes": "Treino intenso"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-14 17:00:00",
+      "observacoes": "Circuito completo"
+    },
+    {
+      "nome": "Patricia Alves",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-15 07:30:00",
+      "observacoes": "Boa performance"
+    },
+    {
+      "nome": "Rodrigo Melo",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-16 19:00:00",
+      "observacoes": "Aumentar carga próxima vez"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-17 08:30:00",
+      "observacoes": "Resistência melhorando"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "tipo": "Força",
+      "data_execucao": "2025-04-18 18:30:00",
+      "observacoes": "Corrida rápida"
+    },
+    {
+      "nome": "Camila Duarte",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-19 10:00:00",
+      "observacoes": "Treino funcional avançado"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-20 20:00:00",
+      "observacoes": "Braços fadigados"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-21 06:30:00",
+      "observacoes": "Treino de pernas completo"
+    },
+    {
+      "nome": "Felipe Barros",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-22 17:30:00",
+      "observacoes": "Elíptico 40min"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "tipo": "Força",
+      "data_execucao": "2025-04-23 09:30:00",
+      "observacoes": "Core fortalecido"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-24 19:30:00",
+      "observacoes": "Circuito intermediário"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-25 08:00:00",
+      "observacoes": "Peitoral evoluindo"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-26 18:00:00",
+      "observacoes": "Ombros cansados"
+    },
+    {
+      "nome": "Aline Castro",
+      "tipo": "Força",
+      "data_execucao": "2025-04-27 07:00:00",
+      "observacoes": "Corrida longa concluída"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-28 20:30:00",
+      "observacoes": "Resistência avançada"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-29 10:30:00",
+      "observacoes": "Circuito básico realizado"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-10 08:00:00",
+      "observacoes": "Sem observações"
+    },
+    {
+      "nome": "Fernanda Lima",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-11 18:00:00",
+      "observacoes": "Melhor tempo"
+    },
+    {
+      "nome": "Rafael Souza",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-12 10:00:00",
+      "observacoes": "Fadiga alta"
+    }
+  ]
+}
 
 
 ========== HISTORICO_TREINO - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID e data de execução são obrigatórios",
+  "dados": []
+}
 
 
 ========== HISTORICO_TREINO - LISTAR NOVAMENTE ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Históricos de treino listados com sucesso",
+  "dados": [
+    {
+      "nome": "Juliana Costa",
+      "tipo": "Força",
+      "data_execucao": "2025-04-13 09:00:00",
+      "observacoes": "Treino intenso"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-14 17:00:00",
+      "observacoes": "Circuito completo"
+    },
+    {
+      "nome": "Patricia Alves",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-15 07:30:00",
+      "observacoes": "Boa performance"
+    },
+    {
+      "nome": "Rodrigo Melo",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-16 19:00:00",
+      "observacoes": "Aumentar carga próxima vez"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-17 08:30:00",
+      "observacoes": "Resistência melhorando"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "tipo": "Força",
+      "data_execucao": "2025-04-18 18:30:00",
+      "observacoes": "Corrida rápida"
+    },
+    {
+      "nome": "Camila Duarte",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-19 10:00:00",
+      "observacoes": "Treino funcional avançado"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-20 20:00:00",
+      "observacoes": "Braços fadigados"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-21 06:30:00",
+      "observacoes": "Treino de pernas completo"
+    },
+    {
+      "nome": "Felipe Barros",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-22 17:30:00",
+      "observacoes": "Elíptico 40min"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "tipo": "Força",
+      "data_execucao": "2025-04-23 09:30:00",
+      "observacoes": "Core fortalecido"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-24 19:30:00",
+      "observacoes": "Circuito intermediário"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-25 08:00:00",
+      "observacoes": "Peitoral evoluindo"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-26 18:00:00",
+      "observacoes": "Ombros cansados"
+    },
+    {
+      "nome": "Aline Castro",
+      "tipo": "Força",
+      "data_execucao": "2025-04-27 07:00:00",
+      "observacoes": "Corrida longa concluída"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-28 20:30:00",
+      "observacoes": "Resistência avançada"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-29 10:30:00",
+      "observacoes": "Circuito básico realizado"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-10 08:00:00",
+      "observacoes": "Sem observações"
+    },
+    {
+      "nome": "Fernanda Lima",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-11 18:00:00",
+      "observacoes": "Melhor tempo"
+    },
+    {
+      "nome": "Rafael Souza",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-12 10:00:00",
+      "observacoes": "Fadiga alta"
+    }
+  ]
+}
 
 
 ========== HISTORICO_TREINO - DELETAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID do histórico de treino não informado",
+  "dados": []
+}
 
 
 ========== HISTORICO_TREINO - LISTAR FINAL ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Históricos de treino listados com sucesso",
+  "dados": [
+    {
+      "nome": "Juliana Costa",
+      "tipo": "Força",
+      "data_execucao": "2025-04-13 09:00:00",
+      "observacoes": "Treino intenso"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-14 17:00:00",
+      "observacoes": "Circuito completo"
+    },
+    {
+      "nome": "Patricia Alves",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-15 07:30:00",
+      "observacoes": "Boa performance"
+    },
+    {
+      "nome": "Rodrigo Melo",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-16 19:00:00",
+      "observacoes": "Aumentar carga próxima vez"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-17 08:30:00",
+      "observacoes": "Resistência melhorando"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "tipo": "Força",
+      "data_execucao": "2025-04-18 18:30:00",
+      "observacoes": "Corrida rápida"
+    },
+    {
+      "nome": "Camila Duarte",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-19 10:00:00",
+      "observacoes": "Treino funcional avançado"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-20 20:00:00",
+      "observacoes": "Braços fadigados"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-21 06:30:00",
+      "observacoes": "Treino de pernas completo"
+    },
+    {
+      "nome": "Felipe Barros",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-22 17:30:00",
+      "observacoes": "Elíptico 40min"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "tipo": "Força",
+      "data_execucao": "2025-04-23 09:30:00",
+      "observacoes": "Core fortalecido"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-24 19:30:00",
+      "observacoes": "Circuito intermediário"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-25 08:00:00",
+      "observacoes": "Peitoral evoluindo"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-26 18:00:00",
+      "observacoes": "Ombros cansados"
+    },
+    {
+      "nome": "Aline Castro",
+      "tipo": "Força",
+      "data_execucao": "2025-04-27 07:00:00",
+      "observacoes": "Corrida longa concluída"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-28 20:30:00",
+      "observacoes": "Resistência avançada"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "tipo": "Resistência",
+      "data_execucao": "2025-04-29 10:30:00",
+      "observacoes": "Circuito básico realizado"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "tipo": "Hipertrofia",
+      "data_execucao": "2025-04-10 08:00:00",
+      "observacoes": "Sem observações"
+    },
+    {
+      "nome": "Fernanda Lima",
+      "tipo": "Funcional",
+      "data_execucao": "2025-04-11 18:00:00",
+      "observacoes": "Melhor tempo"
+    },
+    {
+      "nome": "Rafael Souza",
+      "tipo": "Cardio",
+      "data_execucao": "2025-04-12 10:00:00",
+      "observacoes": "Fadiga alta"
+    }
+  ]
+}
 
 
 ========== ITEM_PEDIDO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== ITEM_PEDIDO - LISTAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar itens do pedido",
+  "dados": []
+}
 
 
 ========== ITEM_PEDIDO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== ITEM_PEDIDO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar itens do pedido",
+  "dados": []
+}
 
 
 ========== ITEM_PEDIDO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do item não informado",
+  "dados": []
+}
 
 
 ========== ITEM_PEDIDO - LISTAR FINAL ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar itens do pedido",
+  "dados": []
+}
 
 
 ========== META - CADASTRAR ==========
@@ -586,79 +2190,1303 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 ========== PAGAMENTO_DETALHE_ASSINATURA - LISTAR FINAL ==========
 
 
+========== PAGAMENTO_DETALHE - CADASTRAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Detalhe do pagamento cadastrado com sucesso",
+  "dados": []
+}
+
+
+========== PAGAMENTO_DETALHE - LISTAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar detalhes do pagamento",
+  "dados": []
+}
+
+
+========== PAGAMENTO_DETALHE - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID, pagamento e tipo são obrigatórios",
+  "dados": []
+}
+
+
+========== PAGAMENTO_DETALHE - LISTAR NOVAMENTE ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar detalhes do pagamento",
+  "dados": []
+}
+
+
+========== PAGAMENTO_DETALHE - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do detalhe do pagamento não informado",
+  "dados": []
+}
+
+
+========== PAGAMENTO_DETALHE - LISTAR FINAL ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar detalhes do pagamento",
+  "dados": []
+}
+
+
+========== PAGAMENTO - CADASTRAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
+
 
 ========== PAGAMENTO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Pagamentos listados com sucesso",
+  "dados": [
+    {
+      "idpagamento": 1,
+      "valor": "70.00",
+      "data_pagamento": "2025-04-18 09:30:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 2,
+      "valor": "1000.00",
+      "data_pagamento": "2025-04-18 09:35:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 3,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-19 16:00:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 4,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-19 16:05:00",
+      "metodo": "cartao",
+      "status": "falha"
+    },
+    {
+      "idpagamento": 5,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-20 18:00:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 6,
+      "valor": "40.00",
+      "data_pagamento": "2025-04-20 18:05:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 7,
+      "valor": "35.00",
+      "data_pagamento": "2025-04-21 11:10:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 8,
+      "valor": "25.00",
+      "data_pagamento": "2025-04-21 11:15:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 9,
+      "valor": "180.00",
+      "data_pagamento": "2025-04-22 13:30:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 10,
+      "valor": "60.00",
+      "data_pagamento": "2025-04-22 13:35:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 11,
+      "valor": "8.00",
+      "data_pagamento": "2025-04-23 16:30:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 12,
+      "valor": "85.00",
+      "data_pagamento": "2025-04-23 16:35:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 13,
+      "valor": "30.00",
+      "data_pagamento": "2025-04-24 18:30:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 14,
+      "valor": "15.00",
+      "data_pagamento": "2025-04-24 18:35:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 15,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-25 10:50:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 16,
+      "valor": "150.00",
+      "data_pagamento": "2025-04-25 10:55:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 17,
+      "valor": "80.00",
+      "data_pagamento": "2025-04-26 13:00:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 18,
+      "valor": "30.00",
+      "data_pagamento": "2025-04-26 13:05:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 19,
+      "valor": "150.00",
+      "data_pagamento": "2025-04-20 10:00:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 20,
+      "valor": "200.00",
+      "data_pagamento": "2025-04-21 11:30:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 21,
+      "valor": "50.00",
+      "data_pagamento": "2025-04-22 14:00:00",
+      "metodo": "boleto",
+      "status": "falha"
+    }
+  ]
+}
 
 
 ========== PAGAMENTO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== PAGAMENTO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Pagamentos listados com sucesso",
+  "dados": [
+    {
+      "idpagamento": 1,
+      "valor": "70.00",
+      "data_pagamento": "2025-04-18 09:30:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 2,
+      "valor": "1000.00",
+      "data_pagamento": "2025-04-18 09:35:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 3,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-19 16:00:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 4,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-19 16:05:00",
+      "metodo": "cartao",
+      "status": "falha"
+    },
+    {
+      "idpagamento": 5,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-20 18:00:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 6,
+      "valor": "40.00",
+      "data_pagamento": "2025-04-20 18:05:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 7,
+      "valor": "35.00",
+      "data_pagamento": "2025-04-21 11:10:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 8,
+      "valor": "25.00",
+      "data_pagamento": "2025-04-21 11:15:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 9,
+      "valor": "180.00",
+      "data_pagamento": "2025-04-22 13:30:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 10,
+      "valor": "60.00",
+      "data_pagamento": "2025-04-22 13:35:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 11,
+      "valor": "8.00",
+      "data_pagamento": "2025-04-23 16:30:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 12,
+      "valor": "85.00",
+      "data_pagamento": "2025-04-23 16:35:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 13,
+      "valor": "30.00",
+      "data_pagamento": "2025-04-24 18:30:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 14,
+      "valor": "15.00",
+      "data_pagamento": "2025-04-24 18:35:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 15,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-25 10:50:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 16,
+      "valor": "150.00",
+      "data_pagamento": "2025-04-25 10:55:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 17,
+      "valor": "80.00",
+      "data_pagamento": "2025-04-26 13:00:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 18,
+      "valor": "30.00",
+      "data_pagamento": "2025-04-26 13:05:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 19,
+      "valor": "150.00",
+      "data_pagamento": "2025-04-20 10:00:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 20,
+      "valor": "200.00",
+      "data_pagamento": "2025-04-21 11:30:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 21,
+      "valor": "50.00",
+      "data_pagamento": "2025-04-22 14:00:00",
+      "metodo": "boleto",
+      "status": "falha"
+    }
+  ]
+}
 
 
 ========== PAGAMENTO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do pagamento não informado",
+  "dados": []
+}
 
 
 ========== PAGAMENTO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Pagamentos listados com sucesso",
+  "dados": [
+    {
+      "idpagamento": 1,
+      "valor": "70.00",
+      "data_pagamento": "2025-04-18 09:30:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 2,
+      "valor": "1000.00",
+      "data_pagamento": "2025-04-18 09:35:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 3,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-19 16:00:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 4,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-19 16:05:00",
+      "metodo": "cartao",
+      "status": "falha"
+    },
+    {
+      "idpagamento": 5,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-20 18:00:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 6,
+      "valor": "40.00",
+      "data_pagamento": "2025-04-20 18:05:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 7,
+      "valor": "35.00",
+      "data_pagamento": "2025-04-21 11:10:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 8,
+      "valor": "25.00",
+      "data_pagamento": "2025-04-21 11:15:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 9,
+      "valor": "180.00",
+      "data_pagamento": "2025-04-22 13:30:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 10,
+      "valor": "60.00",
+      "data_pagamento": "2025-04-22 13:35:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 11,
+      "valor": "8.00",
+      "data_pagamento": "2025-04-23 16:30:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 12,
+      "valor": "85.00",
+      "data_pagamento": "2025-04-23 16:35:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 13,
+      "valor": "30.00",
+      "data_pagamento": "2025-04-24 18:30:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 14,
+      "valor": "15.00",
+      "data_pagamento": "2025-04-24 18:35:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 15,
+      "valor": "120.00",
+      "data_pagamento": "2025-04-25 10:50:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 16,
+      "valor": "150.00",
+      "data_pagamento": "2025-04-25 10:55:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 17,
+      "valor": "80.00",
+      "data_pagamento": "2025-04-26 13:00:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 18,
+      "valor": "30.00",
+      "data_pagamento": "2025-04-26 13:05:00",
+      "metodo": "boleto",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 19,
+      "valor": "150.00",
+      "data_pagamento": "2025-04-20 10:00:00",
+      "metodo": "cartao",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 20,
+      "valor": "200.00",
+      "data_pagamento": "2025-04-21 11:30:00",
+      "metodo": "pix",
+      "status": "sucesso"
+    },
+    {
+      "idpagamento": 21,
+      "valor": "50.00",
+      "data_pagamento": "2025-04-22 14:00:00",
+      "metodo": "boleto",
+      "status": "falha"
+    }
+  ]
+}
+
+
+========== PEDIDO - CADASTRAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Pedido cadastrado com sucesso",
+  "dados": []
+}
+
+
+========== PEDIDO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Pedidos listados com sucesso",
+  "dados": [
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    }
+  ]
+}
+
+
+========== PEDIDO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
+
+
+========== PEDIDO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Pedidos listados com sucesso",
+  "dados": [
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    }
+  ]
+}
+
+
+========== PEDIDO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do pedido não informado",
+  "dados": []
+}
+
+
+========== PEDIDO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Pedidos listados com sucesso",
+  "dados": [
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    },
+    {
+      "nome_usuario": "Lucas Oliveira",
+      "data_pedido": "2025-04-20 15:00:00",
+      "status": "processando",
+      "valor": "70.00"
+    }
+  ]
+}
 
 
 ========== PLANO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Tipo e duração são obrigatórios",
+  "dados": []
+}
 
 
 ========== PLANO - LISTAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar planos",
+  "dados": []
+}
 
 
 ========== PLANO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID, tipo e duração são obrigatórios",
+  "dados": []
+}
 
 
 ========== PLANO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar planos",
+  "dados": []
+}
 
 
 ========== PLANO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do plano não informado",
+  "dados": []
+}
 
 
 ========== PLANO - LISTAR FINAL ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar planos",
+  "dados": []
+}
 
 
 ========== PRODUTO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== PRODUTO - LISTAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Produtos listados com sucesso",
+  "dados": "[{\"idproduto\":1,\"nome\":\"Creatina\",\"descricao\":\"Suplemento para força\",\"preco\":\"120.00\",\"quantidade_estoque\":40,\"imagem\":null},{\"idproduto\":2,\"nome\":\"BCAA\",\"descricao\":\"Aminoácidos essenciais\",\"preco\":\"90.00\",\"quantidade_estoque\":60,\"imagem\":null},{\"idproduto\":3,\"nome\":\"Tênis Running\",\"descricao\":\"Tênis para corrida\",\"preco\":\"250.00\",\"quantidade_estoque\":30,\"imagem\":null},{\"idproduto\":4,\"nome\":\"Shorts Fitness\",\"descricao\":\"Shorts esportivo\",\"preco\":\"70.00\",\"quantidade_estoque\":80,\"imagem\":null},{\"idproduto\":5,\"nome\":\"Barra Olímpica\",\"descricao\":\"Barra para levantamento\",\"preco\":\"500.00\",\"quantidade_estoque\":10,\"imagem\":null},{\"idproduto\":6,\"nome\":\"Luvas de Treino\",\"descricao\":\"Proteção para mãos\",\"preco\":\"40.00\",\"quantidade_estoque\":100,\"imagem\":null},{\"idproduto\":7,\"nome\":\"Boné Esportivo\",\"descricao\":\"Boné para treino\",\"preco\":\"35.00\",\"quantidade_estoque\":50,\"imagem\":null},{\"idproduto\":8,\"nome\":\"Toalha Microfibra\",\"descricao\":\"Toalha leve\",\"preco\":\"25.00\",\"quantidade_estoque\":120,\"imagem\":null},{\"idproduto\":9,\"nome\":\"Shaker 500ml\",\"descricao\":\"Misturador de suplemento\",\"preco\":\"20.00\",\"quantidade_estoque\":90,\"imagem\":null},{\"idproduto\":10,\"nome\":\"Pulseira Smart\",\"descricao\":\"Monitoramento de treino\",\"preco\":\"180.00\",\"quantidade_estoque\":25,\"imagem\":null},{\"idproduto\":11,\"nome\":\"Livro Treino\",\"descricao\":\"Guia de exercícios\",\"preco\":\"60.00\",\"quantidade_estoque\":15,\"imagem\":null},{\"idproduto\":12,\"nome\":\"Snack Proteico\",\"descricao\":\"Lanche saudável\",\"preco\":\"8.00\",\"quantidade_estoque\":200,\"imagem\":null},{\"idproduto\":13,\"nome\":\"Bebida Isotônica\",\"descricao\":\"Reposição de eletrólitos\",\"preco\":\"6.00\",\"quantidade_estoque\":150,\"imagem\":null},{\"idproduto\":14,\"nome\":\"Cinto de Levantamento\",\"descricao\":\"Suporte lombar\",\"preco\":\"85.00\",\"quantidade_estoque\":40,\"imagem\":null},{\"idproduto\":15,\"nome\":\"Faixa Elástica\",\"descricao\":\"Resistência para treino\",\"preco\":\"30.00\",\"quantidade_estoque\":70,\"imagem\":null},{\"idproduto\":16,\"nome\":\"Meia Esportiva\",\"descricao\":\"Meia para treino\",\"preco\":\"15.00\",\"quantidade_estoque\":110,\"imagem\":null},{\"idproduto\":17,\"nome\":\"Bolsa Fitness\",\"descricao\":\"Bolsa para academia\",\"preco\":\"120.00\",\"quantidade_estoque\":20,\"imagem\":null},{\"idproduto\":18,\"nome\":\"Whey Protein\",\"descricao\":\"Proteína concentrada\",\"preco\":\"150.00\",\"quantidade_estoque\":50,\"imagem\":null},{\"idproduto\":19,\"nome\":\"Camiseta Dry Fit\",\"descricao\":\"Tecido respirável\",\"preco\":\"80.00\",\"quantidade_estoque\":200,\"imagem\":null},{\"idproduto\":20,\"nome\":\"Garrafa Squeeze\",\"descricao\":\"Capacidade 700ml\",\"preco\":\"30.00\",\"quantidade_estoque\":100,\"imagem\":null}]"
+}
 
 
 ========== PRODUTO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== PRODUTO - LISTAR NOVAMENTE ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Produtos listados com sucesso",
+  "dados": "[{\"idproduto\":1,\"nome\":\"Creatina\",\"descricao\":\"Suplemento para força\",\"preco\":\"120.00\",\"quantidade_estoque\":40,\"imagem\":null},{\"idproduto\":2,\"nome\":\"BCAA\",\"descricao\":\"Aminoácidos essenciais\",\"preco\":\"90.00\",\"quantidade_estoque\":60,\"imagem\":null},{\"idproduto\":3,\"nome\":\"Tênis Running\",\"descricao\":\"Tênis para corrida\",\"preco\":\"250.00\",\"quantidade_estoque\":30,\"imagem\":null},{\"idproduto\":4,\"nome\":\"Shorts Fitness\",\"descricao\":\"Shorts esportivo\",\"preco\":\"70.00\",\"quantidade_estoque\":80,\"imagem\":null},{\"idproduto\":5,\"nome\":\"Barra Olímpica\",\"descricao\":\"Barra para levantamento\",\"preco\":\"500.00\",\"quantidade_estoque\":10,\"imagem\":null},{\"idproduto\":6,\"nome\":\"Luvas de Treino\",\"descricao\":\"Proteção para mãos\",\"preco\":\"40.00\",\"quantidade_estoque\":100,\"imagem\":null},{\"idproduto\":7,\"nome\":\"Boné Esportivo\",\"descricao\":\"Boné para treino\",\"preco\":\"35.00\",\"quantidade_estoque\":50,\"imagem\":null},{\"idproduto\":8,\"nome\":\"Toalha Microfibra\",\"descricao\":\"Toalha leve\",\"preco\":\"25.00\",\"quantidade_estoque\":120,\"imagem\":null},{\"idproduto\":9,\"nome\":\"Shaker 500ml\",\"descricao\":\"Misturador de suplemento\",\"preco\":\"20.00\",\"quantidade_estoque\":90,\"imagem\":null},{\"idproduto\":10,\"nome\":\"Pulseira Smart\",\"descricao\":\"Monitoramento de treino\",\"preco\":\"180.00\",\"quantidade_estoque\":25,\"imagem\":null},{\"idproduto\":11,\"nome\":\"Livro Treino\",\"descricao\":\"Guia de exercícios\",\"preco\":\"60.00\",\"quantidade_estoque\":15,\"imagem\":null},{\"idproduto\":12,\"nome\":\"Snack Proteico\",\"descricao\":\"Lanche saudável\",\"preco\":\"8.00\",\"quantidade_estoque\":200,\"imagem\":null},{\"idproduto\":13,\"nome\":\"Bebida Isotônica\",\"descricao\":\"Reposição de eletrólitos\",\"preco\":\"6.00\",\"quantidade_estoque\":150,\"imagem\":null},{\"idproduto\":14,\"nome\":\"Cinto de Levantamento\",\"descricao\":\"Suporte lombar\",\"preco\":\"85.00\",\"quantidade_estoque\":40,\"imagem\":null},{\"idproduto\":15,\"nome\":\"Faixa Elástica\",\"descricao\":\"Resistência para treino\",\"preco\":\"30.00\",\"quantidade_estoque\":70,\"imagem\":null},{\"idproduto\":16,\"nome\":\"Meia Esportiva\",\"descricao\":\"Meia para treino\",\"preco\":\"15.00\",\"quantidade_estoque\":110,\"imagem\":null},{\"idproduto\":17,\"nome\":\"Bolsa Fitness\",\"descricao\":\"Bolsa para academia\",\"preco\":\"120.00\",\"quantidade_estoque\":20,\"imagem\":null},{\"idproduto\":18,\"nome\":\"Whey Protein\",\"descricao\":\"Proteína concentrada\",\"preco\":\"150.00\",\"quantidade_estoque\":50,\"imagem\":null},{\"idproduto\":19,\"nome\":\"Camiseta Dry Fit\",\"descricao\":\"Tecido respirável\",\"preco\":\"80.00\",\"quantidade_estoque\":200,\"imagem\":null},{\"idproduto\":20,\"nome\":\"Garrafa Squeeze\",\"descricao\":\"Capacidade 700ml\",\"preco\":\"30.00\",\"quantidade_estoque\":100,\"imagem\":null}]"
+}
 
 
 ========== PRODUTO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do produto não informado",
+  "dados": []
+}
 
 
 ========== PRODUTO - LISTAR FINAL ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Produtos listados com sucesso",
+  "dados": "[{\"idproduto\":1,\"nome\":\"Creatina\",\"descricao\":\"Suplemento para força\",\"preco\":\"120.00\",\"quantidade_estoque\":40,\"imagem\":null},{\"idproduto\":2,\"nome\":\"BCAA\",\"descricao\":\"Aminoácidos essenciais\",\"preco\":\"90.00\",\"quantidade_estoque\":60,\"imagem\":null},{\"idproduto\":3,\"nome\":\"Tênis Running\",\"descricao\":\"Tênis para corrida\",\"preco\":\"250.00\",\"quantidade_estoque\":30,\"imagem\":null},{\"idproduto\":4,\"nome\":\"Shorts Fitness\",\"descricao\":\"Shorts esportivo\",\"preco\":\"70.00\",\"quantidade_estoque\":80,\"imagem\":null},{\"idproduto\":5,\"nome\":\"Barra Olímpica\",\"descricao\":\"Barra para levantamento\",\"preco\":\"500.00\",\"quantidade_estoque\":10,\"imagem\":null},{\"idproduto\":6,\"nome\":\"Luvas de Treino\",\"descricao\":\"Proteção para mãos\",\"preco\":\"40.00\",\"quantidade_estoque\":100,\"imagem\":null},{\"idproduto\":7,\"nome\":\"Boné Esportivo\",\"descricao\":\"Boné para treino\",\"preco\":\"35.00\",\"quantidade_estoque\":50,\"imagem\":null},{\"idproduto\":8,\"nome\":\"Toalha Microfibra\",\"descricao\":\"Toalha leve\",\"preco\":\"25.00\",\"quantidade_estoque\":120,\"imagem\":null},{\"idproduto\":9,\"nome\":\"Shaker 500ml\",\"descricao\":\"Misturador de suplemento\",\"preco\":\"20.00\",\"quantidade_estoque\":90,\"imagem\":null},{\"idproduto\":10,\"nome\":\"Pulseira Smart\",\"descricao\":\"Monitoramento de treino\",\"preco\":\"180.00\",\"quantidade_estoque\":25,\"imagem\":null},{\"idproduto\":11,\"nome\":\"Livro Treino\",\"descricao\":\"Guia de exercícios\",\"preco\":\"60.00\",\"quantidade_estoque\":15,\"imagem\":null},{\"idproduto\":12,\"nome\":\"Snack Proteico\",\"descricao\":\"Lanche saudável\",\"preco\":\"8.00\",\"quantidade_estoque\":200,\"imagem\":null},{\"idproduto\":13,\"nome\":\"Bebida Isotônica\",\"descricao\":\"Reposição de eletrólitos\",\"preco\":\"6.00\",\"quantidade_estoque\":150,\"imagem\":null},{\"idproduto\":14,\"nome\":\"Cinto de Levantamento\",\"descricao\":\"Suporte lombar\",\"preco\":\"85.00\",\"quantidade_estoque\":40,\"imagem\":null},{\"idproduto\":15,\"nome\":\"Faixa Elástica\",\"descricao\":\"Resistência para treino\",\"preco\":\"30.00\",\"quantidade_estoque\":70,\"imagem\":null},{\"idproduto\":16,\"nome\":\"Meia Esportiva\",\"descricao\":\"Meia para treino\",\"preco\":\"15.00\",\"quantidade_estoque\":110,\"imagem\":null},{\"idproduto\":17,\"nome\":\"Bolsa Fitness\",\"descricao\":\"Bolsa para academia\",\"preco\":\"120.00\",\"quantidade_estoque\":20,\"imagem\":null},{\"idproduto\":18,\"nome\":\"Whey Protein\",\"descricao\":\"Proteína concentrada\",\"preco\":\"150.00\",\"quantidade_estoque\":50,\"imagem\":null},{\"idproduto\":19,\"nome\":\"Camiseta Dry Fit\",\"descricao\":\"Tecido respirável\",\"preco\":\"80.00\",\"quantidade_estoque\":200,\"imagem\":null},{\"idproduto\":20,\"nome\":\"Garrafa Squeeze\",\"descricao\":\"Capacidade 700ml\",\"preco\":\"30.00\",\"quantidade_estoque\":100,\"imagem\":null}]"
+}
 
 
 ========== PROFESSOR_ALUNO - CADASTRAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Professor e aluno são obrigatórios",
+  "dados": []
+}
 
 
 ========== PROFESSOR_ALUNO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Relações listadas com sucesso",
+  "dados": [
+    {
+      "idprofessor_aluno": 1,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 2,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 3,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 4,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 5,
+      "idprofessor": 4,
+      "nome_professor": "Juliana Costa",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 6,
+      "idprofessor": 4,
+      "nome_professor": "Juliana Costa",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 7,
+      "idprofessor": 5,
+      "nome_professor": "Gabriel Martins",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 8,
+      "idprofessor": 5,
+      "nome_professor": "Gabriel Martins",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 9,
+      "idprofessor": 6,
+      "nome_professor": "Patricia Alves",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 10,
+      "idprofessor": 6,
+      "nome_professor": "Patricia Alves",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 11,
+      "idprofessor": 7,
+      "nome_professor": "Rodrigo Melo",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 12,
+      "idprofessor": 7,
+      "nome_professor": "Rodrigo Melo",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 13,
+      "idprofessor": 8,
+      "nome_professor": "Amanda Ribeiro",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 14,
+      "idprofessor": 8,
+      "nome_professor": "Amanda Ribeiro",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 15,
+      "idprofessor": 9,
+      "nome_professor": "Thiago Fernandes",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 16,
+      "idprofessor": 9,
+      "nome_professor": "Thiago Fernandes",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 17,
+      "idprofessor": 10,
+      "nome_professor": "Camila Duarte",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 18,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 19,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    }
+  ]
+}
 
 
 ========== PROFESSOR_ALUNO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID, professor e aluno são obrigatórios",
+  "dados": []
+}
 
 
 ========== PROFESSOR_ALUNO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Relações listadas com sucesso",
+  "dados": [
+    {
+      "idprofessor_aluno": 1,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 2,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 3,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 4,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 5,
+      "idprofessor": 4,
+      "nome_professor": "Juliana Costa",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 6,
+      "idprofessor": 4,
+      "nome_professor": "Juliana Costa",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 7,
+      "idprofessor": 5,
+      "nome_professor": "Gabriel Martins",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 8,
+      "idprofessor": 5,
+      "nome_professor": "Gabriel Martins",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 9,
+      "idprofessor": 6,
+      "nome_professor": "Patricia Alves",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 10,
+      "idprofessor": 6,
+      "nome_professor": "Patricia Alves",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 11,
+      "idprofessor": 7,
+      "nome_professor": "Rodrigo Melo",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 12,
+      "idprofessor": 7,
+      "nome_professor": "Rodrigo Melo",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 13,
+      "idprofessor": 8,
+      "nome_professor": "Amanda Ribeiro",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 14,
+      "idprofessor": 8,
+      "nome_professor": "Amanda Ribeiro",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 15,
+      "idprofessor": 9,
+      "nome_professor": "Thiago Fernandes",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 16,
+      "idprofessor": 9,
+      "nome_professor": "Thiago Fernandes",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 17,
+      "idprofessor": 10,
+      "nome_professor": "Camila Duarte",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 18,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 19,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    }
+  ]
+}
 
 
 ========== PROFESSOR_ALUNO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID da relação não informado",
+  "dados": []
+}
 
 
 ========== PROFESSOR_ALUNO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Relações listadas com sucesso",
+  "dados": [
+    {
+      "idprofessor_aluno": 1,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 2,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 3,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 4,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 5,
+      "idprofessor": 4,
+      "nome_professor": "Juliana Costa",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 6,
+      "idprofessor": 4,
+      "nome_professor": "Juliana Costa",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 7,
+      "idprofessor": 5,
+      "nome_professor": "Gabriel Martins",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 8,
+      "idprofessor": 5,
+      "nome_professor": "Gabriel Martins",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 9,
+      "idprofessor": 6,
+      "nome_professor": "Patricia Alves",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 10,
+      "idprofessor": 6,
+      "nome_professor": "Patricia Alves",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 11,
+      "idprofessor": 7,
+      "nome_professor": "Rodrigo Melo",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 12,
+      "idprofessor": 7,
+      "nome_professor": "Rodrigo Melo",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 13,
+      "idprofessor": 8,
+      "nome_professor": "Amanda Ribeiro",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 14,
+      "idprofessor": 8,
+      "nome_professor": "Amanda Ribeiro",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 15,
+      "idprofessor": 9,
+      "nome_professor": "Thiago Fernandes",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 16,
+      "idprofessor": 9,
+      "nome_professor": "Thiago Fernandes",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    },
+    {
+      "idprofessor_aluno": 17,
+      "idprofessor": 10,
+      "nome_professor": "Camila Duarte",
+      "idaluno": 1,
+      "nome_aluno": "Lucas Oliveira"
+    },
+    {
+      "idprofessor_aluno": 18,
+      "idprofessor": 2,
+      "nome_professor": "Fernanda Lima",
+      "idaluno": 2,
+      "nome_aluno": "Fernanda Lima"
+    },
+    {
+      "idprofessor_aluno": 19,
+      "idprofessor": 3,
+      "nome_professor": "Rafael Souza",
+      "idaluno": 3,
+      "nome_aluno": "Rafael Souza"
+    }
+  ]
+}
 
 
 ========== RECUPERACAO_SENHA - CADASTRAR ==========
@@ -680,62 +3508,1428 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== REFEICAO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== REFEICAO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Refeições listadas com sucesso",
+  "dados": [
+    {
+      "nome": "Rodrigo Melo",
+      "descricao": "Dieta mediterrânea",
+      "data_inicio": "2025-07-01",
+      "data_fim": "2025-09-01",
+      "tipo": "Café da manhã",
+      "horario": "07:30:00"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "descricao": "Dieta paleolítica",
+      "data_inicio": "2025-08-05",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "12:15:00"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "descricao": "Dieta DASH",
+      "data_inicio": "2025-09-10",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "19:30:00"
+    },
+    {
+      "nome": "Camila Duarte",
+      "descricao": "Dieta flexível",
+      "data_inicio": "2025-10-01",
+      "data_fim": "2025-12-01",
+      "tipo": "Café da manhã",
+      "horario": "16:00:00"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "descricao": "Dieta vegetariana",
+      "data_inicio": "2025-11-15",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "22:00:00"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "descricao": "Dieta sem glúten",
+      "data_inicio": "2025-12-20",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "17:30:00"
+    },
+    {
+      "nome": "Felipe Barros",
+      "descricao": "Dieta sem lactose",
+      "data_inicio": "2026-01-05",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "20:00:00"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "descricao": "Dieta de hipertrofia",
+      "data_inicio": "2026-02-10",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "08:00:00"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "descricao": "Dieta de manutenção",
+      "data_inicio": "2026-03-01",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "13:00:00"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "descricao": "Dieta detox",
+      "data_inicio": "2026-04-10",
+      "data_fim": "2026-05-10",
+      "tipo": "Jantar",
+      "horario": "20:30:00"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "descricao": "Dieta de reeducação alimentar",
+      "data_inicio": "2026-05-15",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "10:00:00"
+    },
+    {
+      "nome": "Aline Castro",
+      "descricao": "Dieta para atletas",
+      "data_inicio": "2026-06-20",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "15:30:00"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "descricao": "Dieta para emagrecimento",
+      "data_inicio": "2026-07-01",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "21:30:00"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "descricao": "Dieta personalizada",
+      "data_inicio": "2026-08-10",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "18:00:00"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "descricao": "Dieta de ganho de massa",
+      "data_inicio": "2025-01-01",
+      "data_fim": "2025-03-01",
+      "tipo": "Almoço",
+      "horario": "21:00:00"
+    },
+    {
+      "nome": "Juliana Costa",
+      "descricao": "Dieta low carb",
+      "data_inicio": "2025-04-01",
+      "data_fim": "2025-06-01",
+      "tipo": "Café da manhã",
+      "horario": "07:00:00"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "descricao": "Dieta vegana",
+      "data_inicio": "2025-05-10",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "12:00:00"
+    },
+    {
+      "nome": "Patricia Alves",
+      "descricao": "Dieta cetogênica",
+      "data_inicio": "2025-06-15",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "19:00:00"
+    }
+  ]
+}
 
 
 ========== REFEICAO - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== REFEICAO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Refeições listadas com sucesso",
+  "dados": [
+    {
+      "nome": "Rodrigo Melo",
+      "descricao": "Dieta mediterrânea",
+      "data_inicio": "2025-07-01",
+      "data_fim": "2025-09-01",
+      "tipo": "Café da manhã",
+      "horario": "07:30:00"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "descricao": "Dieta paleolítica",
+      "data_inicio": "2025-08-05",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "12:15:00"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "descricao": "Dieta DASH",
+      "data_inicio": "2025-09-10",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "19:30:00"
+    },
+    {
+      "nome": "Camila Duarte",
+      "descricao": "Dieta flexível",
+      "data_inicio": "2025-10-01",
+      "data_fim": "2025-12-01",
+      "tipo": "Café da manhã",
+      "horario": "16:00:00"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "descricao": "Dieta vegetariana",
+      "data_inicio": "2025-11-15",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "22:00:00"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "descricao": "Dieta sem glúten",
+      "data_inicio": "2025-12-20",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "17:30:00"
+    },
+    {
+      "nome": "Felipe Barros",
+      "descricao": "Dieta sem lactose",
+      "data_inicio": "2026-01-05",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "20:00:00"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "descricao": "Dieta de hipertrofia",
+      "data_inicio": "2026-02-10",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "08:00:00"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "descricao": "Dieta de manutenção",
+      "data_inicio": "2026-03-01",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "13:00:00"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "descricao": "Dieta detox",
+      "data_inicio": "2026-04-10",
+      "data_fim": "2026-05-10",
+      "tipo": "Jantar",
+      "horario": "20:30:00"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "descricao": "Dieta de reeducação alimentar",
+      "data_inicio": "2026-05-15",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "10:00:00"
+    },
+    {
+      "nome": "Aline Castro",
+      "descricao": "Dieta para atletas",
+      "data_inicio": "2026-06-20",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "15:30:00"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "descricao": "Dieta para emagrecimento",
+      "data_inicio": "2026-07-01",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "21:30:00"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "descricao": "Dieta personalizada",
+      "data_inicio": "2026-08-10",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "18:00:00"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "descricao": "Dieta de ganho de massa",
+      "data_inicio": "2025-01-01",
+      "data_fim": "2025-03-01",
+      "tipo": "Almoço",
+      "horario": "21:00:00"
+    },
+    {
+      "nome": "Juliana Costa",
+      "descricao": "Dieta low carb",
+      "data_inicio": "2025-04-01",
+      "data_fim": "2025-06-01",
+      "tipo": "Café da manhã",
+      "horario": "07:00:00"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "descricao": "Dieta vegana",
+      "data_inicio": "2025-05-10",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "12:00:00"
+    },
+    {
+      "nome": "Patricia Alves",
+      "descricao": "Dieta cetogênica",
+      "data_inicio": "2025-06-15",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "19:00:00"
+    }
+  ]
+}
 
 
 ========== REFEICAO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID da refeição não informado",
+  "dados": []
+}
 
 
 ========== REFEICAO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Refeições listadas com sucesso",
+  "dados": [
+    {
+      "nome": "Rodrigo Melo",
+      "descricao": "Dieta mediterrânea",
+      "data_inicio": "2025-07-01",
+      "data_fim": "2025-09-01",
+      "tipo": "Café da manhã",
+      "horario": "07:30:00"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "descricao": "Dieta paleolítica",
+      "data_inicio": "2025-08-05",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "12:15:00"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "descricao": "Dieta DASH",
+      "data_inicio": "2025-09-10",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "19:30:00"
+    },
+    {
+      "nome": "Camila Duarte",
+      "descricao": "Dieta flexível",
+      "data_inicio": "2025-10-01",
+      "data_fim": "2025-12-01",
+      "tipo": "Café da manhã",
+      "horario": "16:00:00"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "descricao": "Dieta vegetariana",
+      "data_inicio": "2025-11-15",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "22:00:00"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "descricao": "Dieta sem glúten",
+      "data_inicio": "2025-12-20",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "17:30:00"
+    },
+    {
+      "nome": "Felipe Barros",
+      "descricao": "Dieta sem lactose",
+      "data_inicio": "2026-01-05",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "20:00:00"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "descricao": "Dieta de hipertrofia",
+      "data_inicio": "2026-02-10",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "08:00:00"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "descricao": "Dieta de manutenção",
+      "data_inicio": "2026-03-01",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "13:00:00"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "descricao": "Dieta detox",
+      "data_inicio": "2026-04-10",
+      "data_fim": "2026-05-10",
+      "tipo": "Jantar",
+      "horario": "20:30:00"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "descricao": "Dieta de reeducação alimentar",
+      "data_inicio": "2026-05-15",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "10:00:00"
+    },
+    {
+      "nome": "Aline Castro",
+      "descricao": "Dieta para atletas",
+      "data_inicio": "2026-06-20",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "15:30:00"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "descricao": "Dieta para emagrecimento",
+      "data_inicio": "2026-07-01",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "21:30:00"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "descricao": "Dieta personalizada",
+      "data_inicio": "2026-08-10",
+      "data_fim": null,
+      "tipo": "Café da manhã",
+      "horario": "18:00:00"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "descricao": "Dieta de ganho de massa",
+      "data_inicio": "2025-01-01",
+      "data_fim": "2025-03-01",
+      "tipo": "Almoço",
+      "horario": "21:00:00"
+    },
+    {
+      "nome": "Juliana Costa",
+      "descricao": "Dieta low carb",
+      "data_inicio": "2025-04-01",
+      "data_fim": "2025-06-01",
+      "tipo": "Café da manhã",
+      "horario": "07:00:00"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "descricao": "Dieta vegana",
+      "data_inicio": "2025-05-10",
+      "data_fim": null,
+      "tipo": "Almoço",
+      "horario": "12:00:00"
+    },
+    {
+      "nome": "Patricia Alves",
+      "descricao": "Dieta cetogênica",
+      "data_inicio": "2025-06-15",
+      "data_fim": null,
+      "tipo": "Jantar",
+      "horario": "19:00:00"
+    }
+  ]
+}
 
 
 ========== TREINO_EXERCICIO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== TREINO_EXERCICIO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Treino-exercícios listados com sucesso",
+  "dados": [
+    {
+      "nome": "Flexão",
+      "tipo": "Força",
+      "series": 4,
+      "repeticoes": 12,
+      "carga": "70.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Abdominal",
+      "tipo": "Resistência",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Remada Curvada",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 10,
+      "carga": "50.00",
+      "intervalo_segundos": 90
+    },
+    {
+      "nome": "Desenvolvimento",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 8,
+      "carga": "80.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Panturrilha",
+      "tipo": "Hipertrofia",
+      "series": 3,
+      "repeticoes": 20,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Elevação Lateral",
+      "tipo": "Força",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "60.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Prancha",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 12,
+      "carga": "40.00",
+      "intervalo_segundos": 75
+    },
+    {
+      "nome": "Stiff",
+      "tipo": "Resistência",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Pull Over",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "55.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Crucifixo",
+      "tipo": "Hipertrofia",
+      "series": 5,
+      "repeticoes": 8,
+      "carga": "90.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Afundo",
+      "tipo": "Força",
+      "series": 3,
+      "repeticoes": 20,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Voador",
+      "tipo": "Cardio",
+      "series": 4,
+      "repeticoes": 12,
+      "carga": "65.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Extensão de Pernas",
+      "tipo": "Resistência",
+      "series": 5,
+      "repeticoes": 10,
+      "carga": "45.00",
+      "intervalo_segundos": 90
+    },
+    {
+      "nome": "Rosca Martelo",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 8,
+      "carga": "85.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Rosca Direta",
+      "tipo": "Força",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Tríceps Testa",
+      "tipo": "Cardio",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "75.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Leg Press",
+      "tipo": "Resistência",
+      "series": 5,
+      "repeticoes": 8,
+      "carga": "95.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Rosca Direta",
+      "tipo": "Hipertrofia",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "60.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Leg Press",
+      "tipo": "Funcional",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Tríceps Testa",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 12,
+      "carga": "80.00",
+      "intervalo_segundos": 90
+    }
+  ]
+}
 
 
 ========== TREINO_EXERCICIO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== TREINO_EXERCICIO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Treino-exercícios listados com sucesso",
+  "dados": [
+    {
+      "nome": "Flexão",
+      "tipo": "Força",
+      "series": 4,
+      "repeticoes": 12,
+      "carga": "70.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Abdominal",
+      "tipo": "Resistência",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Remada Curvada",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 10,
+      "carga": "50.00",
+      "intervalo_segundos": 90
+    },
+    {
+      "nome": "Desenvolvimento",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 8,
+      "carga": "80.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Panturrilha",
+      "tipo": "Hipertrofia",
+      "series": 3,
+      "repeticoes": 20,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Elevação Lateral",
+      "tipo": "Força",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "60.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Prancha",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 12,
+      "carga": "40.00",
+      "intervalo_segundos": 75
+    },
+    {
+      "nome": "Stiff",
+      "tipo": "Resistência",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Pull Over",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "55.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Crucifixo",
+      "tipo": "Hipertrofia",
+      "series": 5,
+      "repeticoes": 8,
+      "carga": "90.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Afundo",
+      "tipo": "Força",
+      "series": 3,
+      "repeticoes": 20,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Voador",
+      "tipo": "Cardio",
+      "series": 4,
+      "repeticoes": 12,
+      "carga": "65.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Extensão de Pernas",
+      "tipo": "Resistência",
+      "series": 5,
+      "repeticoes": 10,
+      "carga": "45.00",
+      "intervalo_segundos": 90
+    },
+    {
+      "nome": "Rosca Martelo",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 8,
+      "carga": "85.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Rosca Direta",
+      "tipo": "Força",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Tríceps Testa",
+      "tipo": "Cardio",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "75.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Leg Press",
+      "tipo": "Resistência",
+      "series": 5,
+      "repeticoes": 8,
+      "carga": "95.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Rosca Direta",
+      "tipo": "Hipertrofia",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "60.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Leg Press",
+      "tipo": "Funcional",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Tríceps Testa",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 12,
+      "carga": "80.00",
+      "intervalo_segundos": 90
+    }
+  ]
+}
 
 
 ========== TREINO_EXERCICIO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do treino-exercício não informado",
+  "dados": []
+}
 
 
 ========== TREINO_EXERCICIO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Treino-exercícios listados com sucesso",
+  "dados": [
+    {
+      "nome": "Flexão",
+      "tipo": "Força",
+      "series": 4,
+      "repeticoes": 12,
+      "carga": "70.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Abdominal",
+      "tipo": "Resistência",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Remada Curvada",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 10,
+      "carga": "50.00",
+      "intervalo_segundos": 90
+    },
+    {
+      "nome": "Desenvolvimento",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 8,
+      "carga": "80.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Panturrilha",
+      "tipo": "Hipertrofia",
+      "series": 3,
+      "repeticoes": 20,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Elevação Lateral",
+      "tipo": "Força",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "60.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Prancha",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 12,
+      "carga": "40.00",
+      "intervalo_segundos": 75
+    },
+    {
+      "nome": "Stiff",
+      "tipo": "Resistência",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Pull Over",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "55.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Crucifixo",
+      "tipo": "Hipertrofia",
+      "series": 5,
+      "repeticoes": 8,
+      "carga": "90.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Afundo",
+      "tipo": "Força",
+      "series": 3,
+      "repeticoes": 20,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Voador",
+      "tipo": "Cardio",
+      "series": 4,
+      "repeticoes": 12,
+      "carga": "65.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Extensão de Pernas",
+      "tipo": "Resistência",
+      "series": 5,
+      "repeticoes": 10,
+      "carga": "45.00",
+      "intervalo_segundos": 90
+    },
+    {
+      "nome": "Rosca Martelo",
+      "tipo": "Funcional",
+      "series": 4,
+      "repeticoes": 8,
+      "carga": "85.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Rosca Direta",
+      "tipo": "Força",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 45
+    },
+    {
+      "nome": "Tríceps Testa",
+      "tipo": "Cardio",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "75.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Leg Press",
+      "tipo": "Resistência",
+      "series": 5,
+      "repeticoes": 8,
+      "carga": "95.00",
+      "intervalo_segundos": 120
+    },
+    {
+      "nome": "Rosca Direta",
+      "tipo": "Hipertrofia",
+      "series": 4,
+      "repeticoes": 10,
+      "carga": "60.00",
+      "intervalo_segundos": 60
+    },
+    {
+      "nome": "Leg Press",
+      "tipo": "Funcional",
+      "series": 3,
+      "repeticoes": 15,
+      "carga": null,
+      "intervalo_segundos": 30
+    },
+    {
+      "nome": "Tríceps Testa",
+      "tipo": "Cardio",
+      "series": 5,
+      "repeticoes": 12,
+      "carga": "80.00",
+      "intervalo_segundos": 90
+    }
+  ]
+}
 
 
 ========== TREINO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== TREINO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Treinos listados com sucesso",
+  "dados": [
+    {
+      "nome": "Juliana Costa",
+      "tipo": "Hipertrofia",
+      "horario": "09:00:00",
+      "descricao": "Treino de membros inferiores"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "tipo": "Funcional",
+      "horario": "17:00:00",
+      "descricao": "Circuito funcional"
+    },
+    {
+      "nome": "Patricia Alves",
+      "tipo": "Cardio",
+      "horario": "07:30:00",
+      "descricao": "Bicicleta ergométrica"
+    },
+    {
+      "nome": "Rodrigo Melo",
+      "tipo": "Força",
+      "horario": "19:00:00",
+      "descricao": "Treino de costas"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "tipo": "Resistência",
+      "horario": "08:30:00",
+      "descricao": "Treino de resistência muscular"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "tipo": "Cardio",
+      "horario": "18:30:00",
+      "descricao": "Corrida intervalada"
+    },
+    {
+      "nome": "Camila Duarte",
+      "tipo": "Funcional",
+      "horario": "10:00:00",
+      "descricao": "Treino funcional avançado"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "tipo": "Hipertrofia",
+      "horario": "20:00:00",
+      "descricao": "Treino de braços"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "tipo": "Força",
+      "horario": "06:30:00",
+      "descricao": "Treino de pernas"
+    },
+    {
+      "nome": "Felipe Barros",
+      "tipo": "Cardio",
+      "horario": "17:30:00",
+      "descricao": "Elíptico"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "tipo": "Resistência",
+      "horario": "09:30:00",
+      "descricao": "Treino de core"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "tipo": "Funcional",
+      "horario": "19:30:00",
+      "descricao": "Circuito funcional intermediário"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "tipo": "Hipertrofia",
+      "horario": "08:00:00",
+      "descricao": "Treino de peitoral"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "tipo": "Força",
+      "horario": "18:00:00",
+      "descricao": "Treino de ombros"
+    },
+    {
+      "nome": "Aline Castro",
+      "tipo": "Cardio",
+      "horario": "07:00:00",
+      "descricao": "Corrida longa"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "tipo": "Resistência",
+      "horario": "20:30:00",
+      "descricao": "Treino de resistência avançado"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "tipo": "Funcional",
+      "horario": "10:30:00",
+      "descricao": "Circuito funcional básico"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "tipo": "Força",
+      "horario": "08:00:00",
+      "descricao": "Treino de força peitoral"
+    },
+    {
+      "nome": "Fernanda Lima",
+      "tipo": "Cardio",
+      "horario": "18:00:00",
+      "descricao": "Corrida na esteira"
+    },
+    {
+      "nome": "Rafael Souza",
+      "tipo": "Resistência",
+      "horario": "10:00:00",
+      "descricao": "Circuito full body"
+    }
+  ]
+}
 
 
 ========== TREINO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID, tipo, horário e descrição são obrigatórios",
+  "dados": []
+}
 
 
 ========== TREINO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Treinos listados com sucesso",
+  "dados": [
+    {
+      "nome": "Juliana Costa",
+      "tipo": "Hipertrofia",
+      "horario": "09:00:00",
+      "descricao": "Treino de membros inferiores"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "tipo": "Funcional",
+      "horario": "17:00:00",
+      "descricao": "Circuito funcional"
+    },
+    {
+      "nome": "Patricia Alves",
+      "tipo": "Cardio",
+      "horario": "07:30:00",
+      "descricao": "Bicicleta ergométrica"
+    },
+    {
+      "nome": "Rodrigo Melo",
+      "tipo": "Força",
+      "horario": "19:00:00",
+      "descricao": "Treino de costas"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "tipo": "Resistência",
+      "horario": "08:30:00",
+      "descricao": "Treino de resistência muscular"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "tipo": "Cardio",
+      "horario": "18:30:00",
+      "descricao": "Corrida intervalada"
+    },
+    {
+      "nome": "Camila Duarte",
+      "tipo": "Funcional",
+      "horario": "10:00:00",
+      "descricao": "Treino funcional avançado"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "tipo": "Hipertrofia",
+      "horario": "20:00:00",
+      "descricao": "Treino de braços"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "tipo": "Força",
+      "horario": "06:30:00",
+      "descricao": "Treino de pernas"
+    },
+    {
+      "nome": "Felipe Barros",
+      "tipo": "Cardio",
+      "horario": "17:30:00",
+      "descricao": "Elíptico"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "tipo": "Resistência",
+      "horario": "09:30:00",
+      "descricao": "Treino de core"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "tipo": "Funcional",
+      "horario": "19:30:00",
+      "descricao": "Circuito funcional intermediário"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "tipo": "Hipertrofia",
+      "horario": "08:00:00",
+      "descricao": "Treino de peitoral"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "tipo": "Força",
+      "horario": "18:00:00",
+      "descricao": "Treino de ombros"
+    },
+    {
+      "nome": "Aline Castro",
+      "tipo": "Cardio",
+      "horario": "07:00:00",
+      "descricao": "Corrida longa"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "tipo": "Resistência",
+      "horario": "20:30:00",
+      "descricao": "Treino de resistência avançado"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "tipo": "Funcional",
+      "horario": "10:30:00",
+      "descricao": "Circuito funcional básico"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "tipo": "Força",
+      "horario": "08:00:00",
+      "descricao": "Treino de força peitoral"
+    },
+    {
+      "nome": "Fernanda Lima",
+      "tipo": "Cardio",
+      "horario": "18:00:00",
+      "descricao": "Corrida na esteira"
+    },
+    {
+      "nome": "Rafael Souza",
+      "tipo": "Resistência",
+      "horario": "10:00:00",
+      "descricao": "Circuito full body"
+    }
+  ]
+}
 
 
 ========== TREINO - DELETAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID do treino não informado",
+  "dados": []
+}
 
 
 ========== TREINO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Treinos listados com sucesso",
+  "dados": [
+    {
+      "nome": "Juliana Costa",
+      "tipo": "Hipertrofia",
+      "horario": "09:00:00",
+      "descricao": "Treino de membros inferiores"
+    },
+    {
+      "nome": "Gabriel Martins",
+      "tipo": "Funcional",
+      "horario": "17:00:00",
+      "descricao": "Circuito funcional"
+    },
+    {
+      "nome": "Patricia Alves",
+      "tipo": "Cardio",
+      "horario": "07:30:00",
+      "descricao": "Bicicleta ergométrica"
+    },
+    {
+      "nome": "Rodrigo Melo",
+      "tipo": "Força",
+      "horario": "19:00:00",
+      "descricao": "Treino de costas"
+    },
+    {
+      "nome": "Amanda Ribeiro",
+      "tipo": "Resistência",
+      "horario": "08:30:00",
+      "descricao": "Treino de resistência muscular"
+    },
+    {
+      "nome": "Thiago Fernandes",
+      "tipo": "Cardio",
+      "horario": "18:30:00",
+      "descricao": "Corrida intervalada"
+    },
+    {
+      "nome": "Camila Duarte",
+      "tipo": "Funcional",
+      "horario": "10:00:00",
+      "descricao": "Treino funcional avançado"
+    },
+    {
+      "nome": "Vinicius Rocha",
+      "tipo": "Hipertrofia",
+      "horario": "20:00:00",
+      "descricao": "Treino de braços"
+    },
+    {
+      "nome": "Beatriz Gomes",
+      "tipo": "Força",
+      "horario": "06:30:00",
+      "descricao": "Treino de pernas"
+    },
+    {
+      "nome": "Felipe Barros",
+      "tipo": "Cardio",
+      "horario": "17:30:00",
+      "descricao": "Elíptico"
+    },
+    {
+      "nome": "Larissa Pinto",
+      "tipo": "Resistência",
+      "horario": "09:30:00",
+      "descricao": "Treino de core"
+    },
+    {
+      "nome": "Bruno Teixeira",
+      "tipo": "Funcional",
+      "horario": "19:30:00",
+      "descricao": "Circuito funcional intermediário"
+    },
+    {
+      "nome": "Mariana Freitas",
+      "tipo": "Hipertrofia",
+      "horario": "08:00:00",
+      "descricao": "Treino de peitoral"
+    },
+    {
+      "nome": "Diego Cardoso",
+      "tipo": "Força",
+      "horario": "18:00:00",
+      "descricao": "Treino de ombros"
+    },
+    {
+      "nome": "Aline Castro",
+      "tipo": "Cardio",
+      "horario": "07:00:00",
+      "descricao": "Corrida longa"
+    },
+    {
+      "nome": "Pedro Henrique",
+      "tipo": "Resistência",
+      "horario": "20:30:00",
+      "descricao": "Treino de resistência avançado"
+    },
+    {
+      "nome": "Sofia Almeida",
+      "tipo": "Funcional",
+      "horario": "10:30:00",
+      "descricao": "Circuito funcional básico"
+    },
+    {
+      "nome": "Lucas Oliveira",
+      "tipo": "Força",
+      "horario": "08:00:00",
+      "descricao": "Treino de força peitoral"
+    },
+    {
+      "nome": "Fernanda Lima",
+      "tipo": "Cardio",
+      "horario": "18:00:00",
+      "descricao": "Corrida na esteira"
+    },
+    {
+      "nome": "Rafael Souza",
+      "tipo": "Resistência",
+      "horario": "10:00:00",
+      "descricao": "Circuito full body"
+    }
+  ]
+}
 
 
 ========== USUARIO - CADASTRAR ==========
@@ -1649,25 +5843,55 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 }
 
 
+[32m✔ logs/teste_geral.sh executado com sucesso[0m
 
->> Rodando testes_SH/# test_teste_geral.sh
+>> Rodando logs/# test_teste_geral.sh
 ========== ALIMENTO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== ALIMENTO - LISTAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar alimentos",
+  "dados": []
+}
 
 
 ========== ALIMENTO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== ALIMENTO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar alimentos",
+  "dados": []
+}
 
 
 ========== ALIMENTO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do alimento não informado",
+  "dados": []
+}
 
 
 ========== ALIMENTO - LISTAR FINAL ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar alimentos",
+  "dados": []
+}
 
 
 ========== ASSINATURA - CADASTRAR ==========
@@ -1719,86 +5943,498 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== AULA_AGENDADA - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== AULA_AGENDADA - LISTAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar aulas agendadas",
+  "dados": []
+}
 
 
 ========== AULA_AGENDADA - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== AULA_AGENDADA - LISTAR NOVAMENTE ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar aulas agendadas",
+  "dados": []
+}
 
 
 ========== AULA_AGENDADA - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID da aula agendada não informado",
+  "dados": []
+}
 
 
 ========== AULA_AGENDADA - LISTAR FINAL ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar aulas agendadas",
+  "dados": []
+}
 
 
 ========== AVALIACAO_FISICA - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== AVALIACAO_FISICA - LISTAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar avaliações físicas",
+  "dados": []
+}
 
 
 ========== AVALIACAO_FISICA - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== AVALIACAO_FISICA - LISTAR NOVAMENTE ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar avaliações físicas",
+  "dados": []
+}
 
 
 ========== AVALIACAO_FISICA - DELETAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID da avaliação não informado",
+  "dados": []
+}
 
 
 ========== AVALIACAO_FISICA - LISTAR FINAL ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar avaliações físicas",
+  "dados": []
+}
 
 
 ========== CARGO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Nome e descrição são obrigatórios",
+  "dados": []
+}
 
 
 ========== CARGO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Cargos listados com sucesso",
+  "dados": [
+    {
+      "idcargo": 1,
+      "nome": "Instrutor",
+      "descricao": "Responsável por orientar os alunos"
+    },
+    {
+      "idcargo": 2,
+      "nome": "Nutricionista",
+      "descricao": "Especialista em nutrição"
+    },
+    {
+      "idcargo": 3,
+      "nome": "Personal Trainer",
+      "descricao": "Treinamento personalizado"
+    },
+    {
+      "idcargo": 4,
+      "nome": "Recepcionista",
+      "descricao": "Atendimento na recepção"
+    },
+    {
+      "idcargo": 5,
+      "nome": "Limpeza",
+      "descricao": "Serviços de limpeza"
+    },
+    {
+      "idcargo": 6,
+      "nome": "Manutenção",
+      "descricao": "Cuidados com equipamentos"
+    },
+    {
+      "idcargo": 7,
+      "nome": "Supervisor",
+      "descricao": "Supervisão de setores"
+    },
+    {
+      "idcargo": 8,
+      "nome": "Estagiário",
+      "descricao": "Apoio em diversas áreas"
+    },
+    {
+      "idcargo": 9,
+      "nome": "Consultor",
+      "descricao": "Consultoria especializada"
+    },
+    {
+      "idcargo": 10,
+      "nome": "Diretor",
+      "descricao": "Direção geral"
+    },
+    {
+      "idcargo": 11,
+      "nome": "Financeiro",
+      "descricao": "Gestão financeira"
+    },
+    {
+      "idcargo": 12,
+      "nome": "Marketing",
+      "descricao": "Promoção e divulgação"
+    },
+    {
+      "idcargo": 13,
+      "nome": "TI",
+      "descricao": "Tecnologia da informação"
+    },
+    {
+      "idcargo": 14,
+      "nome": "Fisioterapeuta",
+      "descricao": "Reabilitação física"
+    },
+    {
+      "idcargo": 15,
+      "nome": "Psicólogo",
+      "descricao": "Apoio psicológico"
+    },
+    {
+      "idcargo": 16,
+      "nome": "Administrador",
+      "descricao": "Gestão administrativa"
+    },
+    {
+      "idcargo": 17,
+      "nome": "Atendente",
+      "descricao": "Atendimento ao cliente"
+    },
+    {
+      "idcargo": 18,
+      "nome": "Gerente",
+      "descricao": "Responsável pela supervisão geral da equipe"
+    },
+    {
+      "idcargo": 19,
+      "nome": "Assistente",
+      "descricao": "Apoio nas atividades administrativas"
+    },
+    {
+      "idcargo": 20,
+      "nome": "Vendedor",
+      "descricao": "Responsável pelas vendas e atendimento ao cliente"
+    }
+  ]
+}
 
 
 ========== CARGO - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID, nome e descrição são obrigatórios",
+  "dados": []
+}
 
 
 ========== CARGO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Cargos listados com sucesso",
+  "dados": [
+    {
+      "idcargo": 1,
+      "nome": "Instrutor",
+      "descricao": "Responsável por orientar os alunos"
+    },
+    {
+      "idcargo": 2,
+      "nome": "Nutricionista",
+      "descricao": "Especialista em nutrição"
+    },
+    {
+      "idcargo": 3,
+      "nome": "Personal Trainer",
+      "descricao": "Treinamento personalizado"
+    },
+    {
+      "idcargo": 4,
+      "nome": "Recepcionista",
+      "descricao": "Atendimento na recepção"
+    },
+    {
+      "idcargo": 5,
+      "nome": "Limpeza",
+      "descricao": "Serviços de limpeza"
+    },
+    {
+      "idcargo": 6,
+      "nome": "Manutenção",
+      "descricao": "Cuidados com equipamentos"
+    },
+    {
+      "idcargo": 7,
+      "nome": "Supervisor",
+      "descricao": "Supervisão de setores"
+    },
+    {
+      "idcargo": 8,
+      "nome": "Estagiário",
+      "descricao": "Apoio em diversas áreas"
+    },
+    {
+      "idcargo": 9,
+      "nome": "Consultor",
+      "descricao": "Consultoria especializada"
+    },
+    {
+      "idcargo": 10,
+      "nome": "Diretor",
+      "descricao": "Direção geral"
+    },
+    {
+      "idcargo": 11,
+      "nome": "Financeiro",
+      "descricao": "Gestão financeira"
+    },
+    {
+      "idcargo": 12,
+      "nome": "Marketing",
+      "descricao": "Promoção e divulgação"
+    },
+    {
+      "idcargo": 13,
+      "nome": "TI",
+      "descricao": "Tecnologia da informação"
+    },
+    {
+      "idcargo": 14,
+      "nome": "Fisioterapeuta",
+      "descricao": "Reabilitação física"
+    },
+    {
+      "idcargo": 15,
+      "nome": "Psicólogo",
+      "descricao": "Apoio psicológico"
+    },
+    {
+      "idcargo": 16,
+      "nome": "Administrador",
+      "descricao": "Gestão administrativa"
+    },
+    {
+      "idcargo": 17,
+      "nome": "Atendente",
+      "descricao": "Atendimento ao cliente"
+    },
+    {
+      "idcargo": 18,
+      "nome": "Gerente",
+      "descricao": "Responsável pela supervisão geral da equipe"
+    },
+    {
+      "idcargo": 19,
+      "nome": "Assistente",
+      "descricao": "Apoio nas atividades administrativas"
+    },
+    {
+      "idcargo": 20,
+      "nome": "Vendedor",
+      "descricao": "Responsável pelas vendas e atendimento ao cliente"
+    }
+  ]
+}
 
 
 ========== CARGO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID do cargo não informado",
+  "dados": []
+}
 
 
 ========== CARGO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Cargos listados com sucesso",
+  "dados": [
+    {
+      "idcargo": 1,
+      "nome": "Instrutor",
+      "descricao": "Responsável por orientar os alunos"
+    },
+    {
+      "idcargo": 2,
+      "nome": "Nutricionista",
+      "descricao": "Especialista em nutrição"
+    },
+    {
+      "idcargo": 3,
+      "nome": "Personal Trainer",
+      "descricao": "Treinamento personalizado"
+    },
+    {
+      "idcargo": 4,
+      "nome": "Recepcionista",
+      "descricao": "Atendimento na recepção"
+    },
+    {
+      "idcargo": 5,
+      "nome": "Limpeza",
+      "descricao": "Serviços de limpeza"
+    },
+    {
+      "idcargo": 6,
+      "nome": "Manutenção",
+      "descricao": "Cuidados com equipamentos"
+    },
+    {
+      "idcargo": 7,
+      "nome": "Supervisor",
+      "descricao": "Supervisão de setores"
+    },
+    {
+      "idcargo": 8,
+      "nome": "Estagiário",
+      "descricao": "Apoio em diversas áreas"
+    },
+    {
+      "idcargo": 9,
+      "nome": "Consultor",
+      "descricao": "Consultoria especializada"
+    },
+    {
+      "idcargo": 10,
+      "nome": "Diretor",
+      "descricao": "Direção geral"
+    },
+    {
+      "idcargo": 11,
+      "nome": "Financeiro",
+      "descricao": "Gestão financeira"
+    },
+    {
+      "idcargo": 12,
+      "nome": "Marketing",
+      "descricao": "Promoção e divulgação"
+    },
+    {
+      "idcargo": 13,
+      "nome": "TI",
+      "descricao": "Tecnologia da informação"
+    },
+    {
+      "idcargo": 14,
+      "nome": "Fisioterapeuta",
+      "descricao": "Reabilitação física"
+    },
+    {
+      "idcargo": 15,
+      "nome": "Psicólogo",
+      "descricao": "Apoio psicológico"
+    },
+    {
+      "idcargo": 16,
+      "nome": "Administrador",
+      "descricao": "Gestão administrativa"
+    },
+    {
+      "idcargo": 17,
+      "nome": "Atendente",
+      "descricao": "Atendimento ao cliente"
+    },
+    {
+      "idcargo": 18,
+      "nome": "Gerente",
+      "descricao": "Responsável pela supervisão geral da equipe"
+    },
+    {
+      "idcargo": 19,
+      "nome": "Assistente",
+      "descricao": "Apoio nas atividades administrativas"
+    },
+    {
+      "idcargo": 20,
+      "nome": "Vendedor",
+      "descricao": "Responsável pelas vendas e atendimento ao cliente"
+    }
+  ]
+}
 
 
 ========== CATEGORIA_PRODUTO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Nome e descrição são obrigatórios",
+  "dados": []
+}
 
 
 ========== CATEGORIA_PRODUTO - LISTAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar categorias",
+  "dados": []
+}
 
 
 ========== CATEGORIA_PRODUTO - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID, nome e descrição são obrigatórios",
+  "dados": []
+}
 
 
 ========== CATEGORIA_PRODUTO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar categorias",
+  "dados": []
+}
 
 
 ========== CATEGORIA_PRODUTO - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID da categoria não informado",
+  "dados": []
+}
 
 
 ========== CATEGORIA_PRODUTO - LISTAR FINAL ==========
+{
+  "sucesso": false,
+  "mensagem": "Erro ao listar categorias",
+  "dados": []
+}
 
 
 ========== CUPOM_DESCONTO - CADASTRAR ==========
@@ -1806,57 +6442,527 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== CUPOM_DESCONTO - LISTAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== CUPOM_DESCONTO - EDITAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== CUPOM_DESCONTO - LISTAR NOVAMENTE ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== CUPOM_DESCONTO - DELETAR ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== CUPOM_DESCONTO - LISTAR FINAL ==========
+jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== DIETA_ALIMENTAR - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Refeição, alimento e quantidade são obrigatórios",
+  "dados": []
+}
 
 
 ========== DIETA_ALIMENTAR - LISTAR ==========
 
 
 ========== DIETA_ALIMENTAR - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "Refeição, alimento e quantidade são obrigatórios",
+  "dados": []
+}
 
 
 ========== DIETA_ALIMENTAR - LISTAR NOVAMENTE ==========
 
 
 ========== DIETA_ALIMENTAR - DELETAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID da dieta e alimento são obrigatórios",
+  "dados": []
+}
 
 
 ========== DIETA_ALIMENTAR - LISTAR FINAL ==========
 
 
 ========== DIETA - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "Todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== DIETA - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Dietas listadas com sucesso",
+  "dados": [
+    {
+      "idusuario": 4,
+      "nome_usuario": "Juliana Costa",
+      "descricao": "Dieta low carb",
+      "data_inicio": "2025-04-01",
+      "data_fim": "2025-06-01"
+    },
+    {
+      "idusuario": 5,
+      "nome_usuario": "Gabriel Martins",
+      "descricao": "Dieta vegana",
+      "data_inicio": "2025-05-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 6,
+      "nome_usuario": "Patricia Alves",
+      "descricao": "Dieta cetogênica",
+      "data_inicio": "2025-06-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 7,
+      "nome_usuario": "Rodrigo Melo",
+      "descricao": "Dieta mediterrânea",
+      "data_inicio": "2025-07-01",
+      "data_fim": "2025-09-01"
+    },
+    {
+      "idusuario": 8,
+      "nome_usuario": "Amanda Ribeiro",
+      "descricao": "Dieta paleolítica",
+      "data_inicio": "2025-08-05",
+      "data_fim": null
+    },
+    {
+      "idusuario": 9,
+      "nome_usuario": "Thiago Fernandes",
+      "descricao": "Dieta DASH",
+      "data_inicio": "2025-09-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 10,
+      "nome_usuario": "Camila Duarte",
+      "descricao": "Dieta flexível",
+      "data_inicio": "2025-10-01",
+      "data_fim": "2025-12-01"
+    },
+    {
+      "idusuario": 11,
+      "nome_usuario": "Vinicius Rocha",
+      "descricao": "Dieta vegetariana",
+      "data_inicio": "2025-11-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 12,
+      "nome_usuario": "Beatriz Gomes",
+      "descricao": "Dieta sem glúten",
+      "data_inicio": "2025-12-20",
+      "data_fim": null
+    },
+    {
+      "idusuario": 13,
+      "nome_usuario": "Felipe Barros",
+      "descricao": "Dieta sem lactose",
+      "data_inicio": "2026-01-05",
+      "data_fim": null
+    },
+    {
+      "idusuario": 14,
+      "nome_usuario": "Larissa Pinto",
+      "descricao": "Dieta de hipertrofia",
+      "data_inicio": "2026-02-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 15,
+      "nome_usuario": "Bruno Teixeira",
+      "descricao": "Dieta de manutenção",
+      "data_inicio": "2026-03-01",
+      "data_fim": null
+    },
+    {
+      "idusuario": 16,
+      "nome_usuario": "Mariana Freitas",
+      "descricao": "Dieta detox",
+      "data_inicio": "2026-04-10",
+      "data_fim": "2026-05-10"
+    },
+    {
+      "idusuario": 17,
+      "nome_usuario": "Diego Cardoso",
+      "descricao": "Dieta de reeducação alimentar",
+      "data_inicio": "2026-05-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 18,
+      "nome_usuario": "Aline Castro",
+      "descricao": "Dieta para atletas",
+      "data_inicio": "2026-06-20",
+      "data_fim": null
+    },
+    {
+      "idusuario": 19,
+      "nome_usuario": "Pedro Henrique",
+      "descricao": "Dieta para emagrecimento",
+      "data_inicio": "2026-07-01",
+      "data_fim": null
+    },
+    {
+      "idusuario": 20,
+      "nome_usuario": "Sofia Almeida",
+      "descricao": "Dieta personalizada",
+      "data_inicio": "2026-08-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 1,
+      "nome_usuario": "Lucas Oliveira",
+      "descricao": "Dieta de ganho de massa",
+      "data_inicio": "2025-01-01",
+      "data_fim": "2025-03-01"
+    },
+    {
+      "idusuario": 2,
+      "nome_usuario": "Fernanda Lima",
+      "descricao": "Dieta de definição",
+      "data_inicio": "2025-02-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 3,
+      "nome_usuario": "Rafael Souza",
+      "descricao": "Dieta equilibrada",
+      "data_inicio": "2025-03-01",
+      "data_fim": null
+    }
+  ]
+}
 
 
 ========== DIETA - EDITAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== DIETA - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Dietas listadas com sucesso",
+  "dados": [
+    {
+      "idusuario": 4,
+      "nome_usuario": "Juliana Costa",
+      "descricao": "Dieta low carb",
+      "data_inicio": "2025-04-01",
+      "data_fim": "2025-06-01"
+    },
+    {
+      "idusuario": 5,
+      "nome_usuario": "Gabriel Martins",
+      "descricao": "Dieta vegana",
+      "data_inicio": "2025-05-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 6,
+      "nome_usuario": "Patricia Alves",
+      "descricao": "Dieta cetogênica",
+      "data_inicio": "2025-06-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 7,
+      "nome_usuario": "Rodrigo Melo",
+      "descricao": "Dieta mediterrânea",
+      "data_inicio": "2025-07-01",
+      "data_fim": "2025-09-01"
+    },
+    {
+      "idusuario": 8,
+      "nome_usuario": "Amanda Ribeiro",
+      "descricao": "Dieta paleolítica",
+      "data_inicio": "2025-08-05",
+      "data_fim": null
+    },
+    {
+      "idusuario": 9,
+      "nome_usuario": "Thiago Fernandes",
+      "descricao": "Dieta DASH",
+      "data_inicio": "2025-09-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 10,
+      "nome_usuario": "Camila Duarte",
+      "descricao": "Dieta flexível",
+      "data_inicio": "2025-10-01",
+      "data_fim": "2025-12-01"
+    },
+    {
+      "idusuario": 11,
+      "nome_usuario": "Vinicius Rocha",
+      "descricao": "Dieta vegetariana",
+      "data_inicio": "2025-11-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 12,
+      "nome_usuario": "Beatriz Gomes",
+      "descricao": "Dieta sem glúten",
+      "data_inicio": "2025-12-20",
+      "data_fim": null
+    },
+    {
+      "idusuario": 13,
+      "nome_usuario": "Felipe Barros",
+      "descricao": "Dieta sem lactose",
+      "data_inicio": "2026-01-05",
+      "data_fim": null
+    },
+    {
+      "idusuario": 14,
+      "nome_usuario": "Larissa Pinto",
+      "descricao": "Dieta de hipertrofia",
+      "data_inicio": "2026-02-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 15,
+      "nome_usuario": "Bruno Teixeira",
+      "descricao": "Dieta de manutenção",
+      "data_inicio": "2026-03-01",
+      "data_fim": null
+    },
+    {
+      "idusuario": 16,
+      "nome_usuario": "Mariana Freitas",
+      "descricao": "Dieta detox",
+      "data_inicio": "2026-04-10",
+      "data_fim": "2026-05-10"
+    },
+    {
+      "idusuario": 17,
+      "nome_usuario": "Diego Cardoso",
+      "descricao": "Dieta de reeducação alimentar",
+      "data_inicio": "2026-05-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 18,
+      "nome_usuario": "Aline Castro",
+      "descricao": "Dieta para atletas",
+      "data_inicio": "2026-06-20",
+      "data_fim": null
+    },
+    {
+      "idusuario": 19,
+      "nome_usuario": "Pedro Henrique",
+      "descricao": "Dieta para emagrecimento",
+      "data_inicio": "2026-07-01",
+      "data_fim": null
+    },
+    {
+      "idusuario": 20,
+      "nome_usuario": "Sofia Almeida",
+      "descricao": "Dieta personalizada",
+      "data_inicio": "2026-08-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 1,
+      "nome_usuario": "Lucas Oliveira",
+      "descricao": "Dieta de ganho de massa",
+      "data_inicio": "2025-01-01",
+      "data_fim": "2025-03-01"
+    },
+    {
+      "idusuario": 2,
+      "nome_usuario": "Fernanda Lima",
+      "descricao": "Dieta de definição",
+      "data_inicio": "2025-02-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 3,
+      "nome_usuario": "Rafael Souza",
+      "descricao": "Dieta equilibrada",
+      "data_inicio": "2025-03-01",
+      "data_fim": null
+    }
+  ]
+}
 
 
 ========== DIETA - DELETAR ==========
+{
+  "sucesso": false,
+  "mensagem": "ID da dieta não informado",
+  "dados": []
+}
 
 
 ========== DIETA - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Dietas listadas com sucesso",
+  "dados": [
+    {
+      "idusuario": 4,
+      "nome_usuario": "Juliana Costa",
+      "descricao": "Dieta low carb",
+      "data_inicio": "2025-04-01",
+      "data_fim": "2025-06-01"
+    },
+    {
+      "idusuario": 5,
+      "nome_usuario": "Gabriel Martins",
+      "descricao": "Dieta vegana",
+      "data_inicio": "2025-05-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 6,
+      "nome_usuario": "Patricia Alves",
+      "descricao": "Dieta cetogênica",
+      "data_inicio": "2025-06-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 7,
+      "nome_usuario": "Rodrigo Melo",
+      "descricao": "Dieta mediterrânea",
+      "data_inicio": "2025-07-01",
+      "data_fim": "2025-09-01"
+    },
+    {
+      "idusuario": 8,
+      "nome_usuario": "Amanda Ribeiro",
+      "descricao": "Dieta paleolítica",
+      "data_inicio": "2025-08-05",
+      "data_fim": null
+    },
+    {
+      "idusuario": 9,
+      "nome_usuario": "Thiago Fernandes",
+      "descricao": "Dieta DASH",
+      "data_inicio": "2025-09-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 10,
+      "nome_usuario": "Camila Duarte",
+      "descricao": "Dieta flexível",
+      "data_inicio": "2025-10-01",
+      "data_fim": "2025-12-01"
+    },
+    {
+      "idusuario": 11,
+      "nome_usuario": "Vinicius Rocha",
+      "descricao": "Dieta vegetariana",
+      "data_inicio": "2025-11-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 12,
+      "nome_usuario": "Beatriz Gomes",
+      "descricao": "Dieta sem glúten",
+      "data_inicio": "2025-12-20",
+      "data_fim": null
+    },
+    {
+      "idusuario": 13,
+      "nome_usuario": "Felipe Barros",
+      "descricao": "Dieta sem lactose",
+      "data_inicio": "2026-01-05",
+      "data_fim": null
+    },
+    {
+      "idusuario": 14,
+      "nome_usuario": "Larissa Pinto",
+      "descricao": "Dieta de hipertrofia",
+      "data_inicio": "2026-02-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 15,
+      "nome_usuario": "Bruno Teixeira",
+      "descricao": "Dieta de manutenção",
+      "data_inicio": "2026-03-01",
+      "data_fim": null
+    },
+    {
+      "idusuario": 16,
+      "nome_usuario": "Mariana Freitas",
+      "descricao": "Dieta detox",
+      "data_inicio": "2026-04-10",
+      "data_fim": "2026-05-10"
+    },
+    {
+      "idusuario": 17,
+      "nome_usuario": "Diego Cardoso",
+      "descricao": "Dieta de reeducação alimentar",
+      "data_inicio": "2026-05-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 18,
+      "nome_usuario": "Aline Castro",
+      "descricao": "Dieta para atletas",
+      "data_inicio": "2026-06-20",
+      "data_fim": null
+    },
+    {
+      "idusuario": 19,
+      "nome_usuario": "Pedro Henrique",
+      "descricao": "Dieta para emagrecimento",
+      "data_inicio": "2026-07-01",
+      "data_fim": null
+    },
+    {
+      "idusuario": 20,
+      "nome_usuario": "Sofia Almeida",
+      "descricao": "Dieta personalizada",
+      "data_inicio": "2026-08-10",
+      "data_fim": null
+    },
+    {
+      "idusuario": 1,
+      "nome_usuario": "Lucas Oliveira",
+      "descricao": "Dieta de ganho de massa",
+      "data_inicio": "2025-01-01",
+      "data_fim": "2025-03-01"
+    },
+    {
+      "idusuario": 2,
+      "nome_usuario": "Fernanda Lima",
+      "descricao": "Dieta de definição",
+      "data_inicio": "2025-02-15",
+      "data_fim": null
+    },
+    {
+      "idusuario": 3,
+      "nome_usuario": "Rafael Souza",
+      "descricao": "Dieta equilibrada",
+      "data_inicio": "2025-03-01",
+      "data_fim": null
+    }
+  ]
+}
 
 
 ========== ENDERECO - CADASTRAR ==========
@@ -2201,25 +7307,858 @@ jq: parse error: Invalid numeric literal at line 1, column 4
 
 
 ========== EXERCICIO - CADASTRAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": true,
+  "mensagem": "Exercício cadastrado com sucesso",
+  "dados": []
+}
 
 
 ========== EXERCICIO - LISTAR ==========
+{
+  "sucesso": true,
+  "mensagem": "Exercícios listados com sucesso",
+  "dados": [
+    {
+      "idexercicio": 1,
+      "nome": "Rosca Direta",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para bíceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 2,
+      "nome": "Tríceps Testa",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para tríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 3,
+      "nome": "Leg Press",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 4,
+      "nome": "Flexão",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de flexão de braços",
+      "video_url": null
+    },
+    {
+      "idexercicio": 5,
+      "nome": "Abdominal",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício para abdômen",
+      "video_url": null
+    },
+    {
+      "idexercicio": 6,
+      "nome": "Remada Curvada",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 7,
+      "nome": "Desenvolvimento",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para deltoides",
+      "video_url": null
+    },
+    {
+      "idexercicio": 8,
+      "nome": "Panturrilha",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para panturrilhas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 9,
+      "nome": "Elevação Lateral",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para ombros",
+      "video_url": null
+    },
+    {
+      "idexercicio": 10,
+      "nome": "Prancha",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício de estabilidade",
+      "video_url": null
+    },
+    {
+      "idexercicio": 11,
+      "nome": "Stiff",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para posteriores",
+      "video_url": null
+    },
+    {
+      "idexercicio": 12,
+      "nome": "Pull Over",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 13,
+      "nome": "Crucifixo",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 14,
+      "nome": "Afundo",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para glúteos",
+      "video_url": null
+    },
+    {
+      "idexercicio": 15,
+      "nome": "Voador",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 16,
+      "nome": "Extensão de Pernas",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 17,
+      "nome": "Rosca Martelo",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para antebraço",
+      "video_url": null
+    },
+    {
+      "idexercicio": 18,
+      "nome": "Supino",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de supino reto",
+      "video_url": null
+    },
+    {
+      "idexercicio": 19,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Agachamento livre",
+      "video_url": null
+    },
+    {
+      "idexercicio": 20,
+      "nome": "Puxada na barra",
+      "grupo_muscular": "Costas",
+      "descricao": "Puxada frontal",
+      "video_url": null
+    },
+    {
+      "idexercicio": 21,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 22,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 23,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 24,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 25,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 26,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 27,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 28,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 29,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 30,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 31,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 32,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 33,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 34,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 35,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 36,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 37,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 38,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    }
+  ]
+}
 
 
 ========== EXERCICIO - EDITAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID e todos os campos obrigatórios devem ser preenchidos",
+  "dados": []
+}
 
 
 ========== EXERCICIO - LISTAR NOVAMENTE ==========
+{
+  "sucesso": true,
+  "mensagem": "Exercícios listados com sucesso",
+  "dados": [
+    {
+      "idexercicio": 1,
+      "nome": "Rosca Direta",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para bíceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 2,
+      "nome": "Tríceps Testa",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para tríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 3,
+      "nome": "Leg Press",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 4,
+      "nome": "Flexão",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de flexão de braços",
+      "video_url": null
+    },
+    {
+      "idexercicio": 5,
+      "nome": "Abdominal",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício para abdômen",
+      "video_url": null
+    },
+    {
+      "idexercicio": 6,
+      "nome": "Remada Curvada",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 7,
+      "nome": "Desenvolvimento",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para deltoides",
+      "video_url": null
+    },
+    {
+      "idexercicio": 8,
+      "nome": "Panturrilha",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para panturrilhas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 9,
+      "nome": "Elevação Lateral",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para ombros",
+      "video_url": null
+    },
+    {
+      "idexercicio": 10,
+      "nome": "Prancha",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício de estabilidade",
+      "video_url": null
+    },
+    {
+      "idexercicio": 11,
+      "nome": "Stiff",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para posteriores",
+      "video_url": null
+    },
+    {
+      "idexercicio": 12,
+      "nome": "Pull Over",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 13,
+      "nome": "Crucifixo",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 14,
+      "nome": "Afundo",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para glúteos",
+      "video_url": null
+    },
+    {
+      "idexercicio": 15,
+      "nome": "Voador",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 16,
+      "nome": "Extensão de Pernas",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 17,
+      "nome": "Rosca Martelo",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para antebraço",
+      "video_url": null
+    },
+    {
+      "idexercicio": 18,
+      "nome": "Supino",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de supino reto",
+      "video_url": null
+    },
+    {
+      "idexercicio": 19,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Agachamento livre",
+      "video_url": null
+    },
+    {
+      "idexercicio": 20,
+      "nome": "Puxada na barra",
+      "grupo_muscular": "Costas",
+      "descricao": "Puxada frontal",
+      "video_url": null
+    },
+    {
+      "idexercicio": 21,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 22,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 23,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 24,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 25,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 26,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 27,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 28,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 29,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 30,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 31,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 32,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 33,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 34,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 35,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 36,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 37,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 38,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    }
+  ]
+}
 
 
 ========== EXERCICIO - DELETAR ==========
-jq: parse error: Invalid numeric literal at line 1, column 4
+{
+  "sucesso": false,
+  "mensagem": "ID do exercício não informado",
+  "dados": []
+}
 
 
 ========== EXERCICIO - LISTAR FINAL ==========
+{
+  "sucesso": true,
+  "mensagem": "Exercícios listados com sucesso",
+  "dados": [
+    {
+      "idexercicio": 1,
+      "nome": "Rosca Direta",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para bíceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 2,
+      "nome": "Tríceps Testa",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para tríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 3,
+      "nome": "Leg Press",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 4,
+      "nome": "Flexão",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de flexão de braços",
+      "video_url": null
+    },
+    {
+      "idexercicio": 5,
+      "nome": "Abdominal",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício para abdômen",
+      "video_url": null
+    },
+    {
+      "idexercicio": 6,
+      "nome": "Remada Curvada",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 7,
+      "nome": "Desenvolvimento",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para deltoides",
+      "video_url": null
+    },
+    {
+      "idexercicio": 8,
+      "nome": "Panturrilha",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para panturrilhas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 9,
+      "nome": "Elevação Lateral",
+      "grupo_muscular": "Ombros",
+      "descricao": "Exercício para ombros",
+      "video_url": null
+    },
+    {
+      "idexercicio": 10,
+      "nome": "Prancha",
+      "grupo_muscular": "Core",
+      "descricao": "Exercício de estabilidade",
+      "video_url": null
+    },
+    {
+      "idexercicio": 11,
+      "nome": "Stiff",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para posteriores",
+      "video_url": null
+    },
+    {
+      "idexercicio": 12,
+      "nome": "Pull Over",
+      "grupo_muscular": "Costas",
+      "descricao": "Exercício para dorsais",
+      "video_url": null
+    },
+    {
+      "idexercicio": 13,
+      "nome": "Crucifixo",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 14,
+      "nome": "Afundo",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para glúteos",
+      "video_url": null
+    },
+    {
+      "idexercicio": 15,
+      "nome": "Voador",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício para peitoral",
+      "video_url": null
+    },
+    {
+      "idexercicio": 16,
+      "nome": "Extensão de Pernas",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para quadríceps",
+      "video_url": null
+    },
+    {
+      "idexercicio": 17,
+      "nome": "Rosca Martelo",
+      "grupo_muscular": "Braços",
+      "descricao": "Exercício para antebraço",
+      "video_url": null
+    },
+    {
+      "idexercicio": 18,
+      "nome": "Supino",
+      "grupo_muscular": "Peitoral",
+      "descricao": "Exercício de supino reto",
+      "video_url": null
+    },
+    {
+      "idexercicio": 19,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Agachamento livre",
+      "video_url": null
+    },
+    {
+      "idexercicio": 20,
+      "nome": "Puxada na barra",
+      "grupo_muscular": "Costas",
+      "descricao": "Puxada frontal",
+      "video_url": null
+    },
+    {
+      "idexercicio": 21,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 22,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 23,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 24,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 25,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 26,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 27,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 28,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 29,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 30,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 31,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 32,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 33,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 34,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 35,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 36,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 37,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    },
+    {
+      "idexercicio": 38,
+      "nome": "Agachamento",
+      "grupo_muscular": "Pernas",
+      "descricao": "Exercício para pernas",
+      "video_url": null
+    }
+  ]
+}
 
 
+[32m✔ logs/# test_teste_geral.sh executado com sucesso[0m
 
-==== Todos os testes foram executados ====
+[33m==== Resumo ====[0m
+Total de scripts: 4
+[32mExecutados com sucesso: 4[0m
+[31mFalharam: 0[0m
+[33m==== Todos os testes foram executados ====[0m
