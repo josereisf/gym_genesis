@@ -1,23 +1,70 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
 
-$acao = $_GET['acao'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
 
-$idcategoria = $_POST['idcategoria'] ?? 0;
-$nome = $_POST['nome'] ?? null;
-$descricao = $_POST['descricao'] ?? null;
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$idcategoria = $input['idcategoria'] ?? null;
+$nome = $input['nome'] ?? null;
+$descricao = $input['descricao'] ?? null;
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
 
 switch ($acao) {
     case 'cadastrar':
-        cadastrarCategoriaProduto($nome, $descricao);
+        if (!$nome || !$descricao) {
+            enviarResposta(false, 'Nome e descrição são obrigatórios');
+        }
+        $ok = cadastrarCategoriaProduto($nome, $descricao);
+        if ($ok) {
+            enviarResposta(true, 'Categoria cadastrada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar categoria');
+        }
         break;
+
     case 'editar':
-        editarCategoriaProduto($idcategoria, $nome, $descricao);
+        if (!$idcategoria || !$nome || !$descricao) {
+            enviarResposta(false, 'ID, nome e descrição são obrigatórios');
+        }
+        $ok = editarCategoriaProduto($idcategoria, $nome, $descricao);
+        if ($ok) {
+            enviarResposta(true, 'Categoria editada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar categoria');
+        }
         break;
+
     case 'listar':
-        listarCategoriaProduto($idcategoria);
+        $dados = listarCategoriaProduto($idcategoria);
+        if ($dados) {
+            enviarResposta(true, 'Categorias listadas com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar categorias');
+        }
         break;
+
     case 'deletar':
-        deletarCategoriaProduto($idcategoria);
+        if (!$idcategoria) {
+            enviarResposta(false, 'ID da categoria não informado');
+        }
+        $ok = deletarCategoriaProduto($idcategoria);
+        if ($ok) {
+            enviarResposta(true, 'Categoria deletada com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar categoria');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
         break;
 }
