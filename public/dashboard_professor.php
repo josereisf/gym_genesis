@@ -55,16 +55,15 @@ $idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do u
           <template
             <?php
             echo 'x-for="(item, index) in [';
-            $alunos = listarProfessorAluno($idusuario);
-
+            $alunos = listarProfessorAluno($idprofessor);
+            
             foreach ($alunos as $a) {
-              $horarios = listarAulaAgendadaUsuario($idusuario);
+              $idaluno = $a['idaluno'];
+              $horarios = listarAulaAgendadaUsuario($idaluno);
               echo "{
-                dia: '" . $horarios['dia_semana'] . "',
-                inicio: '" . $horarios['hora_inicio'] . "',
-                fim: '" . $horarios['hora_fim'] . "',
-                treino: '" . $horarios['treino_tipo'] . " - " . $horarios['treino_desc'] . "',
-                alunos: '" . $horarios['alunos'] . "'
+                dia: '" . $horarios[0]['dia_semana'] . "',
+                inicio: '" . $horarios[0]['hora_inicio'] . "',
+                fim: '" . $horarios[0]['hora_fim'] . "',
               },";
             }
             echo ']" :key="index"';
