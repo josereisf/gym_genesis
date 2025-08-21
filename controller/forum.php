@@ -1,24 +1,71 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
 
-$acao = $_GET['acao'] ?? null;
+header('Content-Type: application/json; charset=utf-8');
 
-$idtopico = $_POST['idtopico'] ?? 0;
-$titulo = $_POST['titulo'] ?? null;
-$descricao = $_POST['descricao'] ?? null;
-$usuario_idusuario = $_POST['usuario_idusuario'] ?? null;
+$acao = $_REQUEST['acao'] ?? null;
+
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
+
+$idtopico = $input['idtopico'] ?? null;
+$titulo = $input['titulo'] ?? null;
+$descricao = $input['descricao'] ?? null;
+$usuario_idusuario = $input['usuario_idusuario'] ?? null;
+
+if (!$acao) {
+    enviarResposta(false, 'Ação não informada');
+}
 
 switch ($acao) {
     case 'cadastrar':
-        cadastrarForum($titulo, $descricao, $usuario_idusuario);
+        if (!$titulo || !$descricao || !$usuario_idusuario) {
+            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
+        }
+        $ok = cadastrarForum($titulo, $descricao, $usuario_idusuario);
+        if ($ok) {
+            enviarResposta(true, 'Tópico do fórum cadastrado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar tópico do fórum');
+        }
         break;
+
     case 'editar':
-        editarForum($idtopico, $titulo, $descricao);
+        if (!$idtopico || !$titulo || !$descricao) {
+            enviarResposta(false, 'ID, título e descrição são obrigatórios');
+        }
+        $ok = editarForum($idtopico, $titulo, $descricao);
+        if ($ok) {
+            enviarResposta(true, 'Tópico do fórum editado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao editar tópico do fórum');
+        }
         break;
+
     case 'listar':
-        listarForum($idtopico);
+        $dados = listarForum($idtopico);
+        if ($dados) {
+            enviarResposta(true, 'Tópicos do fórum listados com sucesso', $dados);
+        } else {
+            enviarResposta(false, 'Erro ao listar tópicos do fórum');
+        }
         break;
+
     case 'deletar':
-        deletarForum($idtopico);
+        if (!$idtopico) {
+            enviarResposta(false, 'ID do tópico não informado');
+        }
+        $ok = deletarForum($idtopico);
+        if ($ok) {
+            enviarResposta(true, 'Tópico do fórum deletado com sucesso');
+        } else {
+            enviarResposta(false, 'Erro ao deletar tópico do fórum');
+        }
+        break;
+
+    default:
+        enviarResposta(false, 'Ação inválida');
         break;
 }
