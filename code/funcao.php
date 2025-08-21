@@ -3467,3 +3467,61 @@ function deletarProfessorAluno($idprofessor_aluno)
 
   return $funcionou;
 }
+
+function cadastrarHistoricoPeso($idusuario, $peso) {
+    $conexao = conectar();
+    $sql = "INSERT INTO historico_peso (idusuario, peso) VALUES (?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "id", $idusuario, $peso);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+}
+
+function listarHistoricoPeso($idusuario = null) {
+    $conexao = conectar();
+
+    if ($idusuario) {
+        $sql = "SELECT * FROM historico_peso WHERE idusuario = ? ORDER BY data_registro DESC";
+        $comando = mysqli_prepare($conexao, $sql);
+        mysqli_stmt_bind_param($comando, "i", $idusuario);
+    } else {
+        $sql = "SELECT * FROM historico_peso ORDER BY data_registro DESC";
+        $comando = mysqli_prepare($conexao, $sql);
+    }
+
+    mysqli_stmt_execute($comando);
+    $resultado = mysqli_stmt_get_result($comando);
+    $dados = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $dados;
+}
+
+function editarHistoricoPeso($idhistorico_peso, $peso) {
+    $conexao = conectar();
+    $sql = "UPDATE historico_peso SET peso=? WHERE idhistorico_peso=?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "di", $peso, $idhistorico_peso);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+}
+
+function deletarHistoricoPeso($idhistorico_peso) {
+    $conexao = conectar();
+    $sql = "DELETE FROM historico_peso WHERE idhistorico_peso=?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $idhistorico_peso);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+}
+
