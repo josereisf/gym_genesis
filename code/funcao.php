@@ -1429,7 +1429,7 @@ function listarProfessorAluno($idprofessor)
     FROM professor_aluno AS pf
     JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
     JOIN usuario AS u2 ON pf.idaluno = u2.idusuario
-    WHERE idprofessor=?';
+    WHERE idprofessor = ?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idprofessor);
   } else {
@@ -2360,8 +2360,8 @@ function listarUsuario($idusuario)
 {
   $conexao = conectar();
 
-  if ($idusuario !== null) {
-    $sql = " SELECT * FROM usuario WHERE $idusuario = ?";
+  if ($idusuario != null) {
+    $sql = " SELECT * FROM usuario WHERE idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
