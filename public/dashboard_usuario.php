@@ -8,7 +8,7 @@ if (empty($_SESSION['id'])) {
   exit;
 }
 
-$idaluno = $_SESSION['id'];
+$idaluno = 1;
 $nomes = $_SESSION['nome'] ?? "-";
 
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
@@ -89,6 +89,14 @@ if (!empty($metas)) {
 //   $metas
 // );
 // echo '</pre>';
+$historico_peso = listarHistoricoPeso($idaluno);
+
+if ($historico_peso) {
+    $pesoRecente = $historico_peso[0]['peso'];
+    $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
+    $Diferença = abs($pesoRecente - $pesoAntigo);
+    $porcentagem = ($Diferença / $pesoAntigo) * 100;
+}
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
 if ($dia_fim === null || $dia_fim === "-") {
@@ -124,8 +132,6 @@ if ($dia_fim === null || $dia_fim === "-") {
     $dia_renovacao = "Plano vencido ou não definido";
   }
 }
-
-
 ?>
 
 <html lang="pt-BR">
@@ -205,7 +211,7 @@ if ($dia_fim === null || $dia_fim === "-") {
                 <span class="font-medium group-hover:text-green-900">Configurações</span>
               </a>
 
-              <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50">
+              <a href="../php/saida.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-red-500 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200">
                   <i data-lucide="log-out" class="h-5 w-5 text-red-500 group-hover:text-red-600"></i>
