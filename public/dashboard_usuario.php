@@ -93,10 +93,8 @@ $historico_peso = listarHistoricoPeso($idaluno);
 if ($historico_peso) {
     $pesoRecente = $historico_peso[0]['peso'];
     $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
-    $calculo = abs($pesoRecente - $pesoAntigo);
-    $diferenca = "$calculo kg desde o início";
-}elseif (count($historico_peso) < 2){
-  $diferenca = "Não ha historico de peso";
+    $Diferença = abs($pesoRecente - $pesoAntigo);
+    $porcentagem = ($Diferença / $pesoAntigo) * 100;
 }
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
@@ -285,7 +283,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               <h3 class="text-2xl font-bold text-white mt-1"><?= $perc_gord ?></h3>
               <p class="text-sm text-green-400 mt-1 flex items-center">
                 <i class="fas fa-arrow-up text-green-400 w-4 h-4 mr-1"></i>
-                12% esta semana
+                <?= $porcentagem ?>% esta semana
               </p>
             </div>
             <div class="bg-[#1f2937] p-3 rounded-lg">

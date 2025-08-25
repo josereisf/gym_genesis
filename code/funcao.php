@@ -2042,26 +2042,26 @@ function listarAvaliacaoFisica($usuarioId)
             FROM avaliacao_fisica AS a
             JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
             WHERE a.usuario_idusuario = ?
-            ORDER BY a.data_avaliacao DESC
-            LIMIT 1";  // só pega a avaliação mais recente
+            ORDER BY a.data_avaliacao DESC";  // só pega a avaliação mais recente
 
   $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $usuarioId);
   if (!$comando) {
     // Erro na preparação, pode tratar ou retornar false
     return false;
   }
-
-  mysqli_stmt_bind_param($comando, "i", $usuarioId);
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
-
-  $avaliacao = mysqli_fetch_assoc($resultados);
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
+    $lista_avaliacoes = [];
+  while ($avaliacao = mysqli_fetch_assoc($resultados)) {
+    $lista_avaliacoes[] = $avaliacao;
+  }
 
   mysqli_stmt_close($comando);
   mysqli_close($conexao);
 
   // Retorna o array da avaliação ou false caso não tenha
-  return $avaliacao ?: false;
+  return $lista_avaliacoes ?: false;
 }
 
 
