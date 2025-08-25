@@ -8,7 +8,7 @@ if (empty($_SESSION['id'])) {
   exit;
 }
 
-$idaluno = 1;
+$idaluno = $_SESSION["id"];
 $nomes = $_SESSION['nome'] ?? "-";
 
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
@@ -90,12 +90,13 @@ if (!empty($metas)) {
 // );
 // echo '</pre>';
 $historico_peso = listarHistoricoPeso($idaluno);
-
 if ($historico_peso) {
     $pesoRecente = $historico_peso[0]['peso'];
     $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
-    $Diferença = abs($pesoRecente - $pesoAntigo);
-    $porcentagem = ($Diferença / $pesoAntigo) * 100;
+    $calculo = abs($pesoRecente - $pesoAntigo);
+    $diferenca = "$calculo kg desde o início";
+}elseif (count($historico_peso) < 2){
+  $diferenca = "Não ha historico de peso";
 }
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
@@ -301,7 +302,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               <h3 class="text-2xl font-bold text-white mt-1"><?= $peso ?> KG</h3>
               <p class="text-sm text-green-400 mt-1 flex items-center">
                 <i class="fas fa-arrow-down text-green-400 w-4 h-4 mr-1"></i>
-                2.5 kg desde o início
+                <?= $diferenca ?> 
               </p>
             </div>
             <div class="bg-[#1f2937] p-3 rounded-lg">

@@ -918,3 +918,14 @@ VALUES
   INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (1, 79.50);
 INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (1, 77.80);
 INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (2, 85.00);
+
+INSERT INTO usuario (nome, senha, email, cpf,data_de_nascimento,  telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES ("adm", "$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", "456.498.465-12", "2025-08-19", "(62) 93228-4585", "padrao.png", "929467119175905", 1);
+INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado)
+VALUES (24, NULL, '12345-678', 'Rua das Flores', '100', 'Apto 202', 'Jardim Primavera', 'São Paulo', 'SP');
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario)
+VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 24);
+
+INSERT INTO `gym_genesis`.`assinatura` 
+(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_idplano`)
+VALUES 
+('2025-08-25', '2025-09-24', 24, 1);

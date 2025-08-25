@@ -198,3 +198,10 @@
       ];
       campos.forEach(c => localStorage.removeItem(c));
     });
+
+    $('#formulario').on('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    console.log('Enter bloqueado neste campo');
+  }
+});
