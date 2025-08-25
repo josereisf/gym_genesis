@@ -94,8 +94,15 @@ $historico_peso = listarHistoricoPeso($idaluno);
 if ($historico_peso) {
     $pesoRecente = $historico_peso[0]['peso'];
     $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
-    $Diferença = abs($pesoRecente - $pesoAntigo);
-    $porcentagem = ($Diferença / $pesoAntigo) * 100;
+    $diferenca = abs($pesoRecente - $pesoAntigo);
+}
+$avaliacao_fisica = listarAvaliacaoFisica($idaluno);
+if ($avaliacao_fisica) {
+    $perc_gordRecente = $avaliacao_fisica[0]['percentual_gordura'];
+    $perc_gordAntigo = $avaliacao_fisica[count($avaliacao_fisica) - 1]['percentual_gordura'];
+    $diferenca2 = abs($perc_gordRecente - $perc_gordAntigo);
+    $porcentagem = ($diferenca2 / $pesoAntigo) * 100;
+    $porcentagem = number_format($porcentagem, 1);
 }
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
@@ -284,7 +291,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               <h3 class="text-2xl font-bold text-white mt-1"><?= $perc_gord ?></h3>
               <p class="text-sm text-green-400 mt-1 flex items-center">
                 <i class="fas fa-arrow-up text-green-400 w-4 h-4 mr-1"></i>
-                12% esta semana
+                <?= $porcentagem ?>% esta semana
               </p>
             </div>
             <div class="bg-[#1f2937] p-3 rounded-lg">
