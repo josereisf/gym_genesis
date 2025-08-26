@@ -93,8 +93,21 @@ $historico_peso = listarHistoricoPeso($idaluno);
 if ($historico_peso) {
     $pesoRecente = $historico_peso[0]['peso'];
     $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
-    $Diferença = abs($pesoRecente - $pesoAntigo);
-    $porcentagem = ($Diferença / $pesoAntigo) * 100;
+    $calculo = abs($pesoRecente - $pesoAntigo);
+    $diferenca = "$calculo kg desde o início";
+}elseif (count($historico_peso) < 2){
+  $diferenca = "Não há histórico de peso suficiente.";
+}
+$avaliacao_fisica = listarAvaliacaoFisica($idaluno);
+if ($avaliacao_fisica) {
+    $perc_gordRecente = $avaliacao_fisica[0]['percentual_gordura'];
+    $perc_gordAntigo = $avaliacao_fisica[count($avaliacao_fisica) - 1]['percentual_gordura'];
+    $diferenca2 = abs($perc_gordRecente - $perc_gordAntigo);
+    $porcentagem = ($diferenca2 / $pesoAntigo) * 100;
+    $porcentagem = number_format($porcentagem, 1);
+    $porcentagem2 = "$porcentagem% desde o início";
+  }elseif (count($avaliacao_fisica) < 2){
+    $porcentagem2 = "Não há histórico de calorias suficientes.";
 }
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
@@ -283,7 +296,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               <h3 class="text-2xl font-bold text-white mt-1"><?= $perc_gord ?></h3>
               <p class="text-sm text-green-400 mt-1 flex items-center">
                 <i class="fas fa-arrow-up text-green-400 w-4 h-4 mr-1"></i>
-                <?= $porcentagem ?>% esta semana
+                <?= $porcentagem2 ?>
               </p>
             </div>
             <div class="bg-[#1f2937] p-3 rounded-lg">
@@ -368,65 +381,29 @@ if ($dia_fim === null || $dia_fim === "-") {
             <div class="space-y-4">
 
               <!-- Exercício -->
-              <div class="flex items-center p-3 bg-[#1f2937] rounded-lg">
-                <div class="bg-green-900 p-3 rounded-lg mr-4">
-                  <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Supino Reto</h3>
-                  <p class="text-sm text-gray-400">4 séries x 12 repetições</p>
-                </div>
-                <div class="flex items-center">
-                  <span class="text-sm font-medium text-gray-300 mr-2">30kg</span>
-                  <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />
-                </div>
-              </div>
-
-              <!-- Repita esse bloco para cada exercício: -->
-              <div class="flex items-center p-3 bg-[#1f2937] rounded-lg">
-                <div class="bg-green-900 p-3 rounded-lg mr-4">
-                  <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Crucifixo</h3>
-                  <p class="text-sm text-gray-400">3 séries x 15 repetições</p>
-                </div>
-                <div class="flex items-center">
-                  <span class="text-sm font-medium text-gray-300 mr-2">15kg</span>
-                  <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />
-                </div>
-              </div>
-
-              <!-- Tríceps Corda -->
-              <div class="flex items-center p-3 bg-[#1f2937] rounded-lg">
-                <div class="bg-green-900 p-3 rounded-lg mr-4">
-                  <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Tríceps Corda</h3>
-                  <p class="text-sm text-gray-400">4 séries x 12 repetições</p>
-                </div>
-                <div class="flex items-center">
-                  <span class="text-sm font-medium text-gray-300 mr-2">25kg</span>
-                  <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />
-                </div>
-              </div>
-
-              <!-- Tríceps Francês -->
-              <div class="flex items-center p-3 bg-[#1f2937] rounded-lg">
-                <div class="bg-green-900 p-3 rounded-lg mr-4">
-                  <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Tríceps Francês</h3>
-                  <p class="text-sm text-gray-400">3 séries x 12 repetições</p>
-                </div>
-                <div class="flex items-center">
-                  <span class="text-sm font-medium text-gray-300 mr-2">12kg</span>
-                  <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />
-                </div>
-              </div>
-
+               <?php
+                $treino = listarTreinoUsuario($idaluno);
+                foreach ($treino AS $t){
+                  $exercicio = listarTreinoExercicioTreino($t['idtreino']);
+                  $descricao = $t['descricao'];
+                  $serie = $exercicio[0]['series'];
+                  $repeticao = $exercicio[0]['repeticoes'];
+                  $tempo = $exercicio[0]['intervalo_segundos'];
+              echo '<div class="flex items-center p-3 bg-[#1f2937] rounded-lg">';
+              echo '  <div class="bg-green-900 p-3 rounded-lg mr-4">';
+              echo '    <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>';
+              echo '  </div>';
+              echo '  <div class="flex-1">';
+              echo '    <h3 class="font-medium text-white">'.$descricao.'</h3>';
+              echo '    <p class="text-sm text-gray-400">'.$serie.' séries x '.$repeticao.' repetições</p>';
+              echo '  </div>';
+              echo '  <div class="flex items-center">';
+              echo '    <span class="text-sm font-medium text-gray-300 mr-2">'.$tempo.' segundos</span>';
+              echo '    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />';
+              echo '  </div>';
+              echo '</div>';
+                }
+              ?>
               <!-- Botão final -->
               <button
                 class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">

@@ -929,3 +929,63 @@ INSERT INTO `gym_genesis`.`assinatura`
 (`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_idplano`)
 VALUES 
 ('2025-08-25', '2025-09-24', 24, 1);
+
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES
+  (70.400, 1.75, 22.98, 15.2, '2025-04-11', 24),
+  (72.800, 1.76, 23.51, 16.0, '2025-04-18', 24),
+  (74.600, 1.77, 23.79, 16.8, '2025-04-25', 24),
+  (75.300, 1.78, 23.76, 17.3, '2025-05-02', 24),
+  (76.100, 1.78, 24.01, 17.9, '2025-05-09', 24),
+  (77.400, 1.78, 24.43, 18.5, '2025-05-16', 24),
+  (78.900, 1.78, 24.89, 19.1, '2025-05-23', 24),
+  (80.200, 1.78, 25.30, 19.6, '2025-05-30', 24),
+  (81.500, 1.78, 25.72, 20.2, '2025-06-06', 24),
+  (82.800, 1.78, 26.14, 20.7, '2025-06-13', 24);
+
+INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES
+  (24, 70.40),
+  (24, 72.80),
+  (24, 74.60),
+  (24, 75.30),
+  (24, 76.10),
+  (24, 77.40),
+  (24, 78.90),
+  (24, 80.20),
+  (24, 81.50),
+  (24, 82.80);
+
+INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, status) VALUES
+  (24, 'Ganhar 3kg de massa muscular', '2025-04-01', '2025-07-01', 'ativa'),
+  (24, 'Reduzir percentual de gordura para 15%', '2025-04-01', '2025-08-01', 'ativa'),
+  (24, 'Fazer 10 pull-ups seguidos', '2025-04-01', '2025-09-01', 'ativa'),
+  (24, 'Participar de uma corrida de 10km', '2025-04-01', '2025-10-01', 'ativa'),
+  (24, 'Melhorar flexibilidade', '2025-04-01', '2025-07-15', 'ativa'),
+  (24, 'Manter dieta por 60 dias', '2025-04-01', '2025-06-01', 'ativa'),
+  (24, 'Aumentar carga no agachamento', '2025-04-01', '2025-07-01', 'ativa'),
+  (24, 'Reduzir IMC para 22', '2025-04-01', '2025-08-01', 'ativa'),
+  (24, 'Fazer 5km de bicicleta em 15min', '2025-04-01', '2025-09-01', 'ativa'),
+  (24, 'Treinar 5x por semana', '2025-04-01', '2025-07-01', 'ativa');
+
+  INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
+  ('Hipertrofia', '09:00:00', 'Treino de membros inferiores', 24),
+  ('Funcional', '17:00:00', 'Circuito funcional', 24),
+  ('Cardio', '07:30:00', 'Bicicleta ergométrica', 24),
+  ('Força', '19:00:00', 'Treino de costas', 24),
+  ('Resistência', '08:30:00', 'Treino de resistência muscular', 24),
+  ('Cardio', '18:30:00', 'Corrida intervalada', 24),
+  ('Funcional', '10:00:00', 'Treino funcional avançado', 24),
+  ('Hipertrofia', '20:00:00', 'Treino de braços', 24),
+  ('Força', '06:30:00', 'Treino de pernas', 24),
+  ('Cardio', '17:30:00', 'Elíptico', 24);
+
+  INSERT INTO treino_exercicio (treino_id, exercicio_id, series, repeticoes, carga, intervalo_segundos) VALUES
+  (21, 1, 4, 12, 60.00, 60),
+  (22, 2, 3, 15, NULL, 45),
+  (23, 3, 5, 10, 50.00, 90),
+  (24, 4, 4, 8, 70.00, 120),
+  (25, 5, 3, 20, NULL, 30),
+  (26, 6, 4, 10, 55.00, 60),
+  (27, 7, 5, 12, 40.00, 75),
+  (28, 8, 3, 15, NULL, 45),
+  (29, 9, 4, 10, 65.00, 60),
+  (30, 10, 5, 8, 85.00, 120);

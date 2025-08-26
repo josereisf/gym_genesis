@@ -648,6 +648,33 @@ function listarTreinoExercicio($idtreino2)
 
   return $lista_treinos;
 }
+function listarTreinoExercicioTreino($idtreino)
+{
+  $conexao = conectar();
+  $sql = ' SELECT
+  e.nome,
+  t.tipo,
+  te.series,
+  te.repeticoes,
+  te.carga,
+  te.intervalo_segundos
+  FROM treino_exercicio AS te
+  JOIN treino AS t ON te.treino_id = t.idtreino
+  JOIN exercicio AS e ON te.exercicio_id = e.idexercicio
+  WHERE t.idtreino=?';
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'i', $idtreino);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_treinos = [];
+  while ($treino = mysqli_fetch_assoc($resultados)) {
+    $lista_treinos[] = $treino;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_treinos;
+}
 function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
 {
   $conexao = conectar();
@@ -1758,6 +1785,32 @@ function listarTreino($idtreino)
   mysqli_stmt_close($comando);
   return $lista_treinos;
 }
+function listarTreinoUsuario($idusuario)
+{
+  $conexao = conectar();
+
+  $sql = " SELECT 
+  idtreino,
+  u.nome AS nome,
+  t.tipo,
+  t.horario,
+  t.descricao
+  FROM treino as t
+  JOIN usuario as u ON u.idusuario = t.usuario_idusuario 
+  WHERE idusuario = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idusuario);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_treinos = [];
+  while ($treino = mysqli_fetch_assoc($resultados)) {
+    $lista_treinos[] = $treino;
+  }
+
+  mysqli_stmt_close($comando);
+  return $lista_treinos;
+}
 function listarTreinoTipo($tipo)
 {
   $conexao = conectar();
@@ -1789,7 +1842,7 @@ function cadastrarHistoricoTreino($idusuario, $idtreino, $data_execucao, $observ
   $sql = " INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes) VALUES (?, ?, ?, ?)";
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, "iiss", $usuario_id, $treino_id, $data_execucao, $observacoes);
+  mysqli_stmt_bind_param($comando, "iiss", $idusuario, $idtreino, $data_execucao, $observacoes);
   $funcionou = mysqli_stmt_execute($comando);
 
   $idInserido = null;
