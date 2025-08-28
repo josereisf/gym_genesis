@@ -544,51 +544,24 @@ if ($dia_fim === null || $dia_fim === "-") {
             <h2 class="text-lg font-semibold text-white mb-4">Próximas Aulas</h2>
             <div class="space-y-4">
 
-              <!-- Aula 1 -->
-              <div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">
-                <div class="mr-4 text-center">
-                  <span class="block text-lg font-bold text-green-400">18</span>
-                  <span class="text-xs text-gray-400">JUL</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Spinning</h3>
-                  <p class="text-sm text-gray-400">19:00 - 20:00 • Prof. Ana</p>
-                </div>
-                <button class="text-green-400 hover:text-green-300">
-                  <i class="fas fa-chevron-right text-lg"></i>
-                </button>
-              </div>
-
-              <!-- Aula 2 -->
-              <div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">
-                <div class="mr-4 text-center">
-                  <span class="block text-lg font-bold text-green-400">20</span>
-                  <span class="text-xs text-gray-400">JUL</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Yoga</h3>
-                  <p class="text-sm text-gray-400">18:00 - 19:00 • Prof. Marcos</p>
-                </div>
-                <button class="text-green-400 hover:text-green-300">
-                  <i class="fas fa-chevron-right text-lg"></i>
-                </button>
-              </div>
-
-              <!-- Aula 3 -->
-              <div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">
-                <div class="mr-4 text-center">
-                  <span class="block text-lg font-bold text-green-400">22</span>
-                  <span class="text-xs text-gray-400">JUL</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-medium text-white">Funcional</h3>
-                  <p class="text-sm text-gray-400">20:00 - 21:00 • Prof. Ricardo</p>
-                </div>
-                <button class="text-green-400 hover:text-green-300">
-                  <i class="fas fa-chevron-right text-lg"></i>
-                </button>
-              </div>
-
+               <?php
+               $aula_agendada = listarAulaAgendadaUsuario($idaluno);
+                foreach($aula_agendada AS $a){
+              echo '<div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">';
+              echo '<div class="mr-4 text-center">';
+              echo '<span class="block text-lg font-bold text-green-400">'.$a['data_aula'].'</span>';
+              echo '<span class="text-xs text-gray-400">'.$a['dia_semana'].'</span>';
+              echo '</div>';
+              echo '<div class="flex-1">';
+              echo '<h3 class="font-medium text-white">'.$a['tipo'].'</h3>';
+              echo '<p class="text-sm text-gray-400">'.$a['hora_inicio'].' - '.$a['hora_fim'].'</p>';
+              echo '</div>';
+              echo '<button class="text-green-400 hover:text-green-300">';
+              echo '<i class="fas fa-chevron-right text-lg"></i>';
+              echo '</button>';
+              echo '</div>';
+                }
+                  ?>
               <!-- Botão Agenda Completa -->
               <button class="w-full mt-2 bg-transparent border border-green-500 text-green-400 hover:bg-green-500 hover:text-black py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                 <i class="fas fa-calendar-alt mr-2"></i>

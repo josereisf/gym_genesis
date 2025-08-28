@@ -1911,14 +1911,16 @@ function listarAulaAgendadaUsuario($idusuario)
   $conexao = conectar();
 
   $sql = " SELECT
-  u.nome,
+  u.nome AS nome,
   ag.data_aula,
   ag.dia_semana,
   ag.hora_inicio,
   ag.hora_fim,
-  ag.treino_idtreino
+  ag.treino_idtreino,
+  t.tipo AS tipo
   FROM aula_agendada AS ag
   JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
+  JOIN treino AS t ON ag.treino_idtreino = t.idtreino
   WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idusuario);
