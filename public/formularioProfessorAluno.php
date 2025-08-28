@@ -3,8 +3,10 @@ require_once "../code/funcao.php";
 $idaluno = $_SESSION["id"] ?? 0;
 $professores = listarUsuarioTipo(2);
 $cargo = listarCargo(1);
-$tudojunto = [$professores,$cargo];
-print_r($tudojunto);
+$tudojunto = [
+  'professores' => $professores,
+  'cargo' => $cargo
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
