@@ -2424,13 +2424,34 @@ function listarUsuario($idusuario)
   $conexao = conectar();
 
   if ($idusuario !== null) {
-    $sql = " SELECT * FROM usuario WHERE $idusuario = ?";
+    $sql = " SELECT * FROM usuario WHERE idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
     $sql = " SELECT * FROM usuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_usuarios = [];
+  while ($usuario = mysqli_fetch_assoc($resultados)) {
+    $lista_usuarios[] = $usuario;
+  }
+
+  mysqli_stmt_close($comando);
+
+  return $lista_usuarios;
+}
+function listarUsuarioTipo($tipo)
+{
+  $conexao = conectar();
+
+
+    $sql = " SELECT * FROM usuario WHERE tipo_usuario = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $tipo);
 
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
