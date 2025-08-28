@@ -8,6 +8,13 @@ if (empty($_SESSION['id'])) {
   exit;
 }
 
+if ($_SESSION['tipo'] == 2) {
+  $_SESSION['erro_login'] = "Usuário não permitido!";
+  header('Location: dashboard_professor.php');
+  exit;
+}
+
+
 $idaluno = $_SESSION["id"];
 $nomes = $_SESSION['nome'] ?? "-";
 

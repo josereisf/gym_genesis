@@ -11,7 +11,7 @@ $professores = listarUsuarioTipo(2);
     <title>Document</title>
 </head>
 <body>
-    <form action="api/index.php?entidade=professoraluno&acao=cadastrar" method="get">
+    <form action="api/index.php?entidade=professor_aluno&acao=cadastrar" method="get">
         <label>Professores</label><br>
             <?php
             foreach($professores AS $p){

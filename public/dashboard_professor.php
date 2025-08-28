@@ -1,8 +1,17 @@
 <?php
 require_once "../code/funcao.php";
-$idprofessor = 2; // ID do professor, pode ser dinâmico conforme a sessão do usuário
+require_once "../php/verificarLogado.php";
+
+if ($_SESSION['tipo'] == 1) {
+  $_SESSION['erro_login'] = "Usuário não permitido!";
+  header('Location: dashboard_usuario.php');
+  exit;
+}
+
+$idprofessor = 59; // ID do professor, pode ser dinâmico conforme a sessão do usuário
 $resultado = listarUsuario($idprofessor);
 $nome = $resultado[0]['nome'];
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -64,7 +73,8 @@ $nome = $resultado[0]['nome'];
           <template
             <?php
             echo 'x-for="(item, index) in [';
-            $alunos = listarProfessorAluno($idprofessor);
+            $idaluno = null;
+            $alunos = listarProfessorAluno($idprofessor, $idaluno);
 
             foreach ($alunos as $a) {
               $idaluno = $a['idaluno'];

@@ -58,6 +58,7 @@ if ($usuario !== null) {
     $_SESSION['id'] = $usuarioId;
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $usuario['nome'];
+    $_SESSION['tipo'] = $tipo;
 
     if ($resposta) {
         // Resetar tentativas após login bem-sucedido
