@@ -426,7 +426,9 @@ if ($dia_fim === null || $dia_fim === "-") {
               // ? print_r($metasProcessadas) ?>
               </pre>; -->
               <!-- Metas Dinâmicas -->
-              <?php foreach ($metasProcessadas as $meta): ?>
+              <?php 
+              $metasProcessadas = array_slice($metasProcessadas, 0, 5);
+              foreach ($metasProcessadas as $meta): ?>
                 <div>
                   <div class="flex justify-between mb-2">
                     <span class="text-sm font-medium text-gray-300">
@@ -546,6 +548,7 @@ if ($dia_fim === null || $dia_fim === "-") {
 
                <?php
                $aula_agendada = listarAulaAgendadaUsuario($idaluno);
+               $aula_agendada = array_slice($aula_agendada, 0, 5);
                 foreach($aula_agendada AS $a){
               echo '<div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">';
               echo '<div class="mr-4 text-center">';
