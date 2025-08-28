@@ -313,29 +313,29 @@ $relacionamento = listarProfessorAluno($idprofessor, $idaluno);
         </div>
 
         <!-- Peso -->
-<div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
-    <div class="flex justify-between items-start">
-        <div>
-            <p class="text-sm font-medium text-gray-400">Peso Atual</p>
-            <h3 class="text-2xl font-bold text-white mt-1"><?= $peso ?> KG</h3>
-            <p class="text-sm text-green-400 mt-1 flex items-center">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-sm font-medium text-gray-400">Peso Atual</p>
+              <h3 class="text-2xl font-bold text-white mt-1"><?= $peso ?> KG</h3>
+              <p class="text-sm text-green-400 mt-1 flex items-center">
                 <i class="fas fa-arrow-down text-green-400 w-4 h-4 mr-1"></i>
                 <?= $diferenca ?>
-            </p>
-            <form action="./api/index.php?entidade=historio_peso&acao=cadastrar" method="post">
+              </p>
+              <form action="./api/index.php?entidade=historico_peso&acao=cadastrar" method="post">
                 <input type="hidden" name="idusuario" value="<?= $idaluno ?>">
                 <!-- Input inicialmente oculto -->
                 <div id="input-peso" class="hidden mt-2">
-                    <input type="text" name="novo_peso" class="p-2 rounded-md" placeholder="Digite seu novo peso" required>
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md mt-2">Salvar Peso</button>
+                  <input type="text" name="peso" class="p-2 rounded-md" placeholder="Digite seu novo peso" required>
+                  <button type="submit" class="bg-blue-500 text-white p-2 rounded-md mt-2">Salvar Peso</button>
                 </div>
-            </form>
+              </form>
+            </div>
+            <div class="bg-[#1f2937] p-3 rounded-lg cursor-pointer" onclick="mostrarInput()">
+              <i class="fas fa-weight text-cyan-400 text-xl"></i>
+            </div>
+          </div>
         </div>
-        <div class="bg-[#1f2937] p-3 rounded-lg cursor-pointer" onclick="mostrarInput()">
-            <i class="fas fa-weight text-cyan-400 text-xl"></i>
-        </div>
-    </div>
-</div>
 
 
         <!-- Plano -->
@@ -779,7 +779,7 @@ $relacionamento = listarProfessorAluno($idprofessor, $idaluno);
       </button>
     </div>
   </div>
-<script src="./js/dashboard_usuario.js"></script>
+  <script src="./js/dashboard_usuario.js"></script>
 
 </body>
 
