@@ -1443,34 +1443,52 @@ function mostrarImagem($caminhoImagem)
   readfile($caminhoImagem);
   exit;
 }
-function listarProfessorAluno($idprofessor)
+function listarProfessorAluno($idprofessor, $idaluno)
 {
-  $conexao = conectar();
+    $conexao = conectar();
+
+
   if ($idprofessor != null) {
     $sql = 'SELECT 
-    pf.idprofessor_aluno, 
-    pf.idprofessor, 
-    u1.nome AS nome_professor, 
-    pf.idaluno, 
-    u2.nome AS nome_aluno
+      pf.idprofessor_aluno, 
+      pf.idprofessor, 
+      u1.nome AS nome_professor, 
+      pf.idaluno, 
+      u2.nome AS nome_aluno
     FROM professor_aluno AS pf
     JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
     JOIN usuario AS u2 ON pf.idaluno = u2.idusuario
-    WHERE idprofessor=?';
+    WHERE pf.idprofessor = ?'; 
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idprofessor);
-  } else {
+  }
+  elseif ($idaluno != null) {
+    $sql = "SELECT 
+      pf.idprofessor_aluno, 
+      pf.idprofessor, 
+      u1.nome AS nome_professor, 
+      pf.idaluno, 
+      u2.nome AS nome_aluno
+    FROM professor_aluno AS pf
+    JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
+    JOIN usuario AS u2 ON pf.idaluno = u2.idusuario
+    WHERE pf.idaluno = ?";  
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idaluno);
+  }
+  else {
     $sql = 'SELECT 
-    pf.idprofessor_aluno, 
-    pf.idprofessor, 
-    u1.nome AS nome_professor, 
-    pf.idaluno, 
-    u2.nome AS nome_aluno
+      pf.idprofessor_aluno, 
+      pf.idprofessor, 
+      u1.nome AS nome_professor, 
+      pf.idaluno, 
+      u2.nome AS nome_aluno
     FROM professor_aluno AS pf
     JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
     JOIN usuario AS u2 ON pf.idaluno = u2.idusuario';
     $comando = mysqli_prepare($conexao, $sql);
   }
+
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
 
@@ -1478,10 +1496,13 @@ function listarProfessorAluno($idprofessor)
   while ($prof_al = mysqli_fetch_assoc($resultados)) {
     $lista[] = $prof_al;
   }
+
   mysqli_stmt_close($comando);
 
   return $lista;
 }
+
+
 function deletarPagamento($idpagamento)
 {
   $conexao = conectar();
@@ -3409,7 +3430,8 @@ FROM gym_genesis.usuario u
         ON u.idusuario = rs.usuario_idusuario
 
 WHERE
-    u.idusuario = $id;
+    u.idusuario = $id
+LIMIT 1;
 ";
 
 
