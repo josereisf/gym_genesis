@@ -179,7 +179,7 @@ INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto
 ('Daniel Costa', 'senha60', 'daniel@ex.com', '66677788855', '1988-09-29', '11966667793', 'padrao.png', 'MAT1060', 1);
 
 INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES
-('Fernanda Lima', 'senha5', 'fernanda@ex.com', '22233344455', '1988-11-30', '11922223333', 'padrao.png', 'MAT1005', 2),
+('Fernanda Lima', 'senha5', 'fernandaa@ex.com', '22233344445', '1988-11-30', '11922233333', 'padrao.png', 'MAT1005', 2),
 ('Juliana Costa', 'senha7', 'juliana@ex.com', '44455566677', '1993-09-12', '11944445555', 'padrao.png', 'MAT1007', 2),
 ('Patricia Alves', 'senha9', 'patricia@ex.com', '66677788899', '1987-04-18', '11966667777', 'padrao.png', 'MAT1009', 2),
 ('Amanda Ribeiro', 'senha11', 'amanda@ex.com', '88899900011', '1994-10-22', '11988889999', 'padrao.png', 'MAT1011', 2),
