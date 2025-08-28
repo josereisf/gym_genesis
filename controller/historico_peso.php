@@ -10,15 +10,15 @@ $data_registro = $_POST['data_registro'] ?? null;
 // Funções não encontradas, sugestão de nomes e parâmetros:
 switch ($acao) {
     case 'cadastrar':
-        // cadastrarHistoricoPeso($idusuario, $peso, $data_registro);
+        cadastrarHistoricoPeso($idusuario, $peso, $data_registro);
         break;
     case 'editar':
-        // editarHistoricoPeso($idhistorico_peso, $idusuario, $peso, $data_registro);
+        editarHistoricoPeso($idhistorico_peso, $idusuario, $peso, $data_registro);
         break;
     case 'listar':
-        // listarHistoricoPeso($idhistorico_peso);
+        listarHistoricoPeso($idhistorico_peso);
         break;
     case 'deletar':
-        // deletarHistoricoPeso($idhistorico_peso);
+        deletarHistoricoPeso($idhistorico_peso);
         break;
 }

@@ -91,23 +91,24 @@ if (!empty($metas)) {
 // echo '</pre>';
 $historico_peso = listarHistoricoPeso($idaluno);
 if ($historico_peso) {
-    $pesoRecente = $historico_peso[0]['peso'];
-    $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
-    $calculo = abs($pesoRecente - $pesoAntigo);
-    $diferenca = "$calculo kg desde o início";
-}elseif (count($historico_peso) < 2){
+  $pesoRecente = $historico_peso[0]['peso'];
+  $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
+  $calculo = abs($pesoRecente - $pesoAntigo);
+  $diferenca = "$calculo kg desde o início";
+} elseif (count($historico_peso) < 2) {
   $diferenca = "Não há histórico de peso suficiente.";
 }
+
 $avaliacao_fisica = listarAvaliacaoFisica($idaluno);
 if ($avaliacao_fisica) {
-    $perc_gordRecente = $avaliacao_fisica[0]['percentual_gordura'];
-    $perc_gordAntigo = $avaliacao_fisica[count($avaliacao_fisica) - 1]['percentual_gordura'];
-    $diferenca2 = abs($perc_gordRecente - $perc_gordAntigo);
-    $porcentagem = ($diferenca2 / $pesoAntigo) * 100;
-    $porcentagem = number_format($porcentagem, 1);
-    $porcentagem2 = "$porcentagem% desde o início";
-  }elseif (count($avaliacao_fisica) < 2){
-    $porcentagem2 = "Não há histórico de calorias suficientes.";
+  $perc_gordRecente = $avaliacao_fisica[0]['percentual_gordura'];
+  $perc_gordAntigo = $avaliacao_fisica[count($avaliacao_fisica) - 1]['percentual_gordura'];
+  $diferenca2 = abs($perc_gordRecente - $perc_gordAntigo);
+  $porcentagem = ($diferenca2 / $pesoAntigo) * 100;
+  $porcentagem = number_format($porcentagem, 1);
+  $porcentagem2 = "$porcentagem% desde o início";
+} elseif (count($avaliacao_fisica) < 2) {
+  $porcentagem2 = "Não há histórico de calorias suficientes.";
 }
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
@@ -144,6 +145,11 @@ if ($dia_fim === null || $dia_fim === "-") {
     $dia_renovacao = "Plano vencido ou não definido";
   }
 }
+
+$idprofessor = null;
+$relacionamento = listarProfessorAluno($idprofessor, $idaluno);
+
+
 ?>
 
 <html lang="pt-BR">
@@ -163,6 +169,7 @@ if ($dia_fim === null || $dia_fim === "-") {
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
@@ -306,21 +313,30 @@ if ($dia_fim === null || $dia_fim === "-") {
         </div>
 
         <!-- Peso -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-sm font-medium text-gray-400">Peso Atual</p>
-              <h3 class="text-2xl font-bold text-white mt-1"><?= $peso ?> KG</h3>
-              <p class="text-sm text-green-400 mt-1 flex items-center">
+<div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+    <div class="flex justify-between items-start">
+        <div>
+            <p class="text-sm font-medium text-gray-400">Peso Atual</p>
+            <h3 class="text-2xl font-bold text-white mt-1"><?= $peso ?> KG</h3>
+            <p class="text-sm text-green-400 mt-1 flex items-center">
                 <i class="fas fa-arrow-down text-green-400 w-4 h-4 mr-1"></i>
-                <?= $diferenca ?> 
-              </p>
-            </div>
-            <div class="bg-[#1f2937] p-3 rounded-lg">
-              <i class="fas fa-weight text-cyan-400 text-xl"></i>
-            </div>
-          </div>
+                <?= $diferenca ?>
+            </p>
+            <form action="./api/index.php?entidade=historio_peso&acao=cadastrar" method="post">
+                <input type="hidden" name="idusuario" value="<?= $idaluno ?>">
+                <!-- Input inicialmente oculto -->
+                <div id="input-peso" class="hidden mt-2">
+                    <input type="text" name="novo_peso" class="p-2 rounded-md" placeholder="Digite seu novo peso" required>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md mt-2">Salvar Peso</button>
+                </div>
+            </form>
         </div>
+        <div class="bg-[#1f2937] p-3 rounded-lg cursor-pointer" onclick="mostrarInput()">
+            <i class="fas fa-weight text-cyan-400 text-xl"></i>
+        </div>
+    </div>
+</div>
+
 
         <!-- Plano -->
         <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
@@ -373,42 +389,47 @@ if ($dia_fim === null || $dia_fim === "-") {
           <div class="bg-[#111827] rounded-xl shadow-md p-6">
             <div class="flex justify-between items-center mb-4">
               <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
-              <span class="px-3 py-1 text-sm rounded-full bg-green-800 text-green-200">
-                Treino A - Peito e Tríceps
-              </span>
             </div>
 
             <div class="space-y-4">
 
               <!-- Exercício -->
-               <?php
-                $treino = listarTreinoUsuario($idaluno);
-                foreach ($treino AS $t){
-                  $exercicio = listarTreinoExercicioTreino($t['idtreino']);
-                  $descricao = $t['descricao'];
-                  $serie = $exercicio[0]['series'];
-                  $repeticao = $exercicio[0]['repeticoes'];
-                  $tempo = $exercicio[0]['intervalo_segundos'];
-              echo '<div class="flex items-center p-3 bg-[#1f2937] rounded-lg">';
-              echo '  <div class="bg-green-900 p-3 rounded-lg mr-4">';
-              echo '    <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>';
-              echo '  </div>';
-              echo '  <div class="flex-1">';
-              echo '    <h3 class="font-medium text-white">'.$descricao.'</h3>';
-              echo '    <p class="text-sm text-gray-400">'.$serie.' séries x '.$repeticao.' repetições</p>';
-              echo '  </div>';
-              echo '  <div class="flex items-center">';
-              echo '    <span class="text-sm font-medium text-gray-300 mr-2">'.$tempo.' segundos</span>';
-              echo '    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />';
-              echo '  </div>';
-              echo '</div>';
-                }
+              <?php
+              $treino = listarTreinoUsuario($idaluno);
+              foreach ($treino as $t) {
+                $exercicio = listarTreinoExercicioTreino($t['idtreino']);
+                $descricao = $t['descricao'];
+                $serie = $exercicio[0]['series'];
+                $repeticao = $exercicio[0]['repeticoes'];
+                $tempo = $exercicio[0]['intervalo_segundos'];
+                echo '<div class="flex items-center p-3 bg-[#1f2937] rounded-lg">';
+                echo '  <div class="bg-green-900 p-3 rounded-lg mr-4">';
+                echo '    <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>';
+                echo '  </div>';
+                echo '  <div class="flex-1">';
+                echo '    <h3 class="font-medium text-white">' . $descricao . '</h3>';
+                echo '    <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>';
+                echo '  </div>';
+                echo '  <div class="flex items-center">';
+                echo '    <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . ' segundos</span>';
+                echo '    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />';
+                echo '  </div>';
+                echo '</div>';
+              }
               ?>
               <!-- Botão final -->
-              <button
+              <button id="btnStart"
                 class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                <i data-lucide="check-circle" class="h-5 w-5 mr-2"></i>
-                Concluir Treino
+
+                <?php
+                if (empty($relacionamento)) {
+                  echo '                <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>';
+                  echo "Agende sua aula com Algum Professor";
+                } else {
+                  echo '                <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>';
+                  echo "Concluir Treino";
+                }
+                ?>
               </button>
 
             </div>
@@ -426,7 +447,7 @@ if ($dia_fim === null || $dia_fim === "-") {
               // ? print_r($metasProcessadas) ?>
               </pre>; -->
               <!-- Metas Dinâmicas -->
-              <?php 
+              <?php
               $metasProcessadas = array_slice($metasProcessadas, 0, 5);
               foreach ($metasProcessadas as $meta): ?>
                 <div>
@@ -435,15 +456,15 @@ if ($dia_fim === null || $dia_fim === "-") {
                       <?= htmlspecialchars($meta['descricao']) ?>
                     </span>
                     <span class="text-sm font-medium 
-        <?= $meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400') ?>">
+            <?= $meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400') ?>">
                       <?= $meta['progresso'] ?>%
                     </span>
                   </div>
 
                   <div class="w-full bg-gray-700 rounded-full h-2.5">
                     <div class="
-        <?= $meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500') ?>
-        h-2.5 rounded-full"
+              <?= $meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500') ?>
+              h-2.5 rounded-full"
                       style="width: <?= $meta['progresso'] ?>%">
                     </div>
                   </div>
@@ -546,25 +567,25 @@ if ($dia_fim === null || $dia_fim === "-") {
             <h2 class="text-lg font-semibold text-white mb-4">Próximas Aulas</h2>
             <div class="space-y-4">
 
-               <?php
-               $aula_agendada = listarAulaAgendadaUsuario($idaluno);
-               $aula_agendada = array_slice($aula_agendada, 0, 5);
-                foreach($aula_agendada AS $a){
-              echo '<div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">';
-              echo '<div class="mr-4 text-center">';
-              echo '<span class="block text-lg font-bold text-green-400">'.$a['data_aula'].'</span>';
-              echo '<span class="text-xs text-gray-400">'.$a['dia_semana'].'</span>';
-              echo '</div>';
-              echo '<div class="flex-1">';
-              echo '<h3 class="font-medium text-white">'.$a['tipo'].'</h3>';
-              echo '<p class="text-sm text-gray-400">'.$a['hora_inicio'].' - '.$a['hora_fim'].'</p>';
-              echo '</div>';
-              echo '<button class="text-green-400 hover:text-green-300">';
-              echo '<i class="fas fa-chevron-right text-lg"></i>';
-              echo '</button>';
-              echo '</div>';
-                }
-                  ?>
+              <?php
+              $aula_agendada = listarAulaAgendadaUsuario($idaluno);
+              $aula_agendada = array_slice($aula_agendada, 0, 5);
+              foreach ($aula_agendada as $a) {
+                echo '<div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">';
+                echo '<div class="mr-4 text-center">';
+                echo '<span class="block text-lg font-bold text-green-400">' . $a['data_aula'] . '</span>';
+                echo '<span class="text-xs text-gray-400">' . $a['dia_semana'] . '</span>';
+                echo '</div>';
+                echo '<div class="flex-1">';
+                echo '<h3 class="font-medium text-white">' . $a['tipo'] . '</h3>';
+                echo '<p class="text-sm text-gray-400">' . $a['hora_inicio'] . ' - ' . $a['hora_fim'] . '</p>';
+                echo '</div>';
+                echo '<button class="text-green-400 hover:text-green-300">';
+                echo '<i class="fas fa-chevron-right text-lg"></i>';
+                echo '</button>';
+                echo '</div>';
+              }
+              ?>
               <!-- Botão Agenda Completa -->
               <button class="w-full mt-2 bg-transparent border border-green-500 text-green-400 hover:bg-green-500 hover:text-black py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                 <i class="fas fa-calendar-alt mr-2"></i>
@@ -671,6 +692,30 @@ if ($dia_fim === null || $dia_fim === "-") {
 
   </div>
 
+
+  <!-- Modal (fora do conteúdo principal para controlar blur) -->
+  <div
+    id="modal"
+    class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-[#1e2a3a] rounded-2xl p-8 max-w-sm w-full text-center relative">
+      <button
+        id="btnClose"
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-200 text-2xl font-bold">
+        &times;
+      </button>
+      <h2 class="text-2xl text-white font-bold mb-6">Vemos que você ainda não tem nenhum professor. Deseja agendar com algum para ver quais serão seus treinos?</h2>
+      <div class="flex flex-col space-y-4">
+        <a
+          href="formularioProfessorAluno.php"
+          class="bg-blue-600 hover:bg-blue-700 py-2 rounded-xl font-semibold transition text-white">Sim, Vamos agendar Aula</a>
+        <a
+          href="#"
+          onclick="closeModal()"
+          class="bg-gray-600 hover:bg-gray-700 py-2 rounded-xl font-semibold transition text-white">Não quero Agendar Aula ainda</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Notification Modal -->
   <div
     id="notificationModal"
@@ -734,256 +779,8 @@ if ($dia_fim === null || $dia_fim === "-") {
       </button>
     </div>
   </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const botaoPerfil = document.getElementById("botaoPerfil");
-      const menuPerfil = document.getElementById("menuPerfil");
+<script src="./js/dashboard_usuario.js"></script>
 
-      botaoPerfil.addEventListener("click", () => {
-        menuPerfil.classList.toggle("hidden");
-      });
-
-      // Fecha o menu se clicar fora dele
-      document.addEventListener("click", (event) => {
-        if (!menuPerfil.contains(event.target) && !botaoPerfil.contains(event.target)) {
-          menuPerfil.classList.add("hidden");
-        }
-      });
-    });
-  </script>
-  <script>
-    const btnAbrirModal = document.getElementById('btnAbrirModal');
-    const btnFecharModal = document.getElementById('btnFecharModal');
-    const modalForm = document.getElementById('modalForm');
-    const formMeta = document.getElementById('formMeta');
-
-    btnAbrirModal.addEventListener('click', () => {
-      modalForm.classList.remove('hidden');
-    });
-
-    btnFecharModal.addEventListener('click', () => {
-      modalForm.classList.add('hidden');
-      formMeta.reset();
-    });
-
-    formMeta.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(formMeta);
-
-      try {
-        const res = await fetch('http://localhost:83/public/api/index.php?entidade=meta&acao=cadastrar', {
-          method: 'POST',
-          body: formData,
-        });
-
-        const texto = await res.text(); // pega a resposta crua
-        console.log('Resposta do servidor:', texto);
-
-        if (!res.ok) {
-          alert(`Erro HTTP: ${res.status}`);
-          return;
-        }
-
-        let data;
-        try {
-          data = JSON.parse(texto); // parse manual
-        } catch (err) {
-          alert('Resposta inválida do servidor, não é JSON.');
-          console.error('Erro ao fazer parse do JSON:', err);
-          return;
-        }
-
-        // Aqui mostro a mensagem que vier do backend, mesmo no sucesso ou erro
-        if (data.mensagem) {
-          alert(data.mensagem);
-        } else if (data.sucesso) {
-          alert('Operação realizada com sucesso!');
-        } else {
-          alert('Resposta inesperada do servidor.');
-        }
-
-        if (data.sucesso) {
-          modalForm.classList.add('hidden');
-          formMeta.reset();
-
-          // Aqui pode atualizar a lista no dashboard se quiser
-        }
-      } catch (err) {
-        alert('Erro ao conectar com o servidor.');
-        console.error(err);
-      }
-    });
-  </script>
-
-  <script>
-    // Progress Chart
-    const ctx = document.getElementById("progressChart").getContext("2d");
-    const progressChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
-        datasets: [{
-            label: "Calorias Queimadas",
-            data: [450, 580, 690, 520, 730, 810, 540],
-            borderColor: "rgb(99, 102, 241)",
-            backgroundColor: "rgba(99, 102, 241, 0.1)",
-            tension: 0.3,
-            fill: true,
-          },
-          {
-            label: "Tempo de Treino (min)",
-            data: [45, 60, 75, 55, 80, 90, 60],
-            borderColor: "rgb(16, 185, 129)",
-            backgroundColor: "rgba(16, 185, 129, 0.0)",
-            tension: 0.3,
-            borderDash: [5, 5],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: "top",
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              display: true,
-              color: "rgba(0, 0, 0, 0.05)",
-            },
-          },
-          x: {
-            grid: {
-              display: false,
-            },
-          },
-        },
-      },
-    });
-
-    // Progress Button Handlers
-    const progressBtns = document.querySelectorAll(".progress-btn");
-    progressBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        // Reset all buttons
-        progressBtns.forEach((b) => {
-          b.classList.remove("bg-indigo-600", "text-white");
-          b.classList.add("bg-gray-200", "text-gray-700");
-        });
-
-        // Highlight clicked button
-        btn.classList.remove("bg-gray-200", "text-gray-700");
-        btn.classList.add("bg-indigo-600", "text-white");
-
-        // Update chart data based on period
-        const period = btn.dataset.period;
-        let labels, caloriesData, timeData;
-
-        if (period === "week") {
-          labels = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
-          caloriesData = [450, 580, 690, 520, 730, 810, 540];
-          timeData = [45, 60, 75, 55, 80, 90, 60];
-        } else if (period === "month") {
-          labels = ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
-          caloriesData = [3200, 3800, 4100, 3900];
-          timeData = [320, 380, 410, 390];
-        } else {
-          labels = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"];
-          caloriesData = [12000, 14500, 13800, 15200, 16100, 15800];
-          timeData = [1200, 1450, 1380, 1520, 1610, 1580];
-        }
-
-        progressChart.data.labels = labels;
-        progressChart.data.datasets[0].data = caloriesData;
-        progressChart.data.datasets[1].data = timeData;
-        progressChart.update();
-      });
-    });
-
-    // Notification Modal
-    const notificationBtn = document.getElementById("notificationBtn");
-    const notificationModal = document.getElementById("notificationModal");
-    const closeNotificationBtn = document.getElementById(
-      "closeNotificationBtn"
-    );
-
-    notificationBtn.addEventListener("click", () => {
-      notificationModal.classList.remove("hidden");
-      notificationModal.classList.add("flex");
-    });
-
-    closeNotificationBtn.addEventListener("click", () => {
-      notificationModal.classList.add("hidden");
-      notificationModal.classList.remove("flex");
-    });
-
-    // Close modal when clicking outside
-    notificationModal.addEventListener("click", (e) => {
-      if (e.target === notificationModal) {
-        notificationModal.classList.add("hidden");
-        notificationModal.classList.remove("flex");
-      }
-    });
-
-    function mostrarBotoesAgua() {
-      const botoes = document.getElementById('botoes-agua');
-      botoes.classList.toggle('hidden');
-    }
-  </script>
-  <script>
-    (function() {
-      function c() {
-        var b = a.contentDocument || a.contentWindow.document;
-        if (b) {
-          var d = b.createElement("script");
-          d.innerHTML =
-            "window.__CF$cv$params={r:'94bcd4c1c300e01a',t:'MTc0OTI2NDUxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
-          b.getElementsByTagName("head")[0].appendChild(d);
-        }
-      }
-      if (document.body) {
-        var a = document.createElement("iframe");
-        a.height = 1;
-        a.width = 1;
-        a.style.position = "absolute";
-        a.style.top = 0;
-        a.style.left = 0;
-        a.style.border = "none";
-        a.style.visibility = "hidden";
-        document.body.appendChild(a);
-        if ("loading" !== document.readyState) c();
-        else if (window.addEventListener)
-          document.addEventListener("DOMContentLoaded", c);
-        else {
-          var e = document.onreadystatechange || function() {};
-          document.onreadystatechange = function(b) {
-            e(b);
-            "loading" !== document.readyState &&
-              ((document.onreadystatechange = e), c());
-          };
-        }
-      }
-    })();
-  </script>
-  <script>
-    lucide.createIcons();
-  </script>
-
-  <iframe
-    height="1"
-    width="1"
-    style="
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        border: none;
-        visibility: hidden;
-      "></iframe>
 </body>
 
 </html>
