@@ -1,9 +1,9 @@
 <?php
 require_once "../code/funcao.php";
-if (!empty($SESSION['tipo'] and $SESSION['tipo'] != 3)){
+if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 0) {
     $_SESSION['erro_login'] = "Usuário não permitido!";
-  header('Location: dashboard_usuario.php');
-  exit;
+    header('Location: dashboard_usuario.php');
+    exit;
 }
 if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   $liberado = 1;

@@ -3631,3 +3631,4 @@ function deletarHistoricoPeso($idhistorico_peso) {
     return $funcionou;
 }
 
+

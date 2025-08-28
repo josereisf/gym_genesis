@@ -1,6 +1,7 @@
 <?php
 
 require_once "../code/funcao.php";
+require_once "../php/verificarLogado.php";
 
 if (isset($_GET['iddieta'])){
 $iddieta = $_GET['iddieta'];
