@@ -1,4 +1,6 @@
 <?php
+require_once "../php/verificarLogado.php";
+require_once "../php/verificarPermissaoAdm.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

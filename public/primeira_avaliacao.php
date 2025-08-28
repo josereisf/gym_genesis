@@ -1,6 +1,6 @@
 <?
 
-session_start();
+require_once "../php/verificarLogado.php";
 
 $id = $_SESSION['id']; // Simulando um ID de usuário para testes, remova em produção
 $nome = $_SESSION['nome']; // Simulando um ID de usuário para testes, remova em produção

@@ -1,5 +1,7 @@
 <?php
 require_once '../code/funcao.php';
+require_once "../php/verificarLogado.php";
+require_once "../php/verificarPermissaoAdm.php";
 
 if (isset($_GET['idproduto'])) {
   $idproduto = $_GET['idproduto'];

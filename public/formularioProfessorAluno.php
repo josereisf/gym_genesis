@@ -1,5 +1,8 @@
 <?php
 require_once "../code/funcao.php";
+require_once "../php/verificarLogado.php";
+require_once "../php/verificarPermissaoAdm.php";
+
 $idaluno = $_SESSION["id"] ?? 0;
 $professores = listarUsuarioTipo(2);
 $cargo = listarCargo(1);
