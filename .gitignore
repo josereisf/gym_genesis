@@ -7,3 +7,4 @@ composer.json
 *.zip
 testes_SH/TestHelloWorld.php
 document/trabalho de amanha.txt
+public/uploads/padrao.jpg
