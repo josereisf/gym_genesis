@@ -11,6 +11,21 @@ $cargo = listarCargo(1);
   <title>Carrossel Professores</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body{
+      background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
+      transition: background 0.5s infinite;
+    }
+    @keyframes background{
+      0% {
+        background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
+      }
+      50% {
+        background: linear-gradient(to bottom right, #0d1625, #132237, #1a2f4a);
+      }
+      100% {
+        background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
+      }
+    }
     .carousel-wrapper {
       perspective: 1000px;
     }
@@ -123,7 +138,7 @@ $cargo = listarCargo(1);
 
 </head>
 
-<body class="bg-[#132237] text-white flex flex-col items-center justify-center min-h-screen p-6">
+<body class="bg-gradient-to-br from-[#132237] via-[#1a2f4a] to-[#0d1625] text-white flex flex-col items-center justify-center min-h-screen p-6">
 
   <form action="api/index.php?entidade=professor_aluno&acao=cadastrar" method="post"
     class="flex flex-col items-center space-y-6 w-full max-w-[920px]">
@@ -212,11 +227,11 @@ $cargo = listarCargo(1);
         div.innerHTML = `
   <div class="w-full h-full flex flex-col items-center">
     <!-- Imagem destacada (overlap visual) -->
-    <div class="w-full flex items-center justify-center -mt-6">
+    <div class="w-full flex items-center justify-center">
       <img
-        src="./uploads/${prof.foto_de_perfil ? prof.foto_de_perfil : 'padrao.png'}"
+        src="./uploads/${prof.foto_de_perfil ? prof.foto_de_perfil : 'teste2.png'}"
         alt="${prof.nome}"
-        class="w-28 h-28 object-cover rounded-xl shadow-md border-4 border-white"
+        class="w-20 h-20 object-cover rounded-xl shadow-md border-4 border-white"
         loading="lazy"
       />
     </div>
