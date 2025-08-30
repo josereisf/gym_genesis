@@ -1,12 +1,16 @@
-          <template
-          <?php
-          echo 'x-for="(item, index) in [';
-          $idaula = 0;
-          $horarios = listarAulaAgendada($idaula);
-          foreach ($horarios AS $h){
-            print_r($h);
-            echo "{ dia: '".$h['dia_semana']."', horario: '".$h['hora_inicio']."', alunos: 14, treino: '".$h['hora_fim']."' },";
-          }
-          echo ']" :key="index"';
-          ?>>
-          testar direito
+usuario 1──1 perfil_usuario
+       │
+       ├──N historico_peso
+       ├──N meta_usuario
+       ├──N historico_treino N──1 treino 1──N treino_exercicio N──1 exercicio
+       │                            │
+       │                            └──N aula_agendada
+       │                            └──1 funcionario (professor)
+       ├──N dieta 1──N refeicao N──N alimento (via dieta_alimentar)
+       ├──N assinatura N──1 plano
+       │            └──N pagamento
+       ├──N pagamento
+       ├──N forum 1──N resposta_forum
+       └──N pedido N──N produto (via item_pedido)
+                     ├──1 pagamento
+                     └──1 endereco
