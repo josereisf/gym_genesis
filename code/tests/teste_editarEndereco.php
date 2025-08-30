@@ -1,5 +1,6 @@
 <?php
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 $id = 1;
 $cep = '223';
 $rua = 'rua 3';
@@ -10,6 +11,6 @@ $cidade = 'z';
 $estado = 'mt';
 $tipo = '1';
 
-if (!is_null(editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id))){
+if (!is_null(editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id))) {
     echo 'funcionou';
 }

@@ -1,11 +1,11 @@
 <?php
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 
 $idresposta = 2;
 $funcionou = deletarRespostaForum($idresposta);
-if($funcionou === true){
+if ($funcionou === true) {
     echo "funcionou";
-}else{
+} else {
     echo "nao funcionou";
 }
-?>

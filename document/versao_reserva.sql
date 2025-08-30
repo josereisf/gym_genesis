@@ -257,20 +257,20 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`dieta_alimentar`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`dieta_alimentar` (
-  `alimento_idalimento` INT(11) NOT NULL,
-  `refeicao_idrefeicao` INT(11) NOT NULL,
+  `alimento_id` INT(11) NOT NULL,
+  `refeicao_id` INT(11) NOT NULL,
   `quantidade` VARCHAR(45) NOT NULL,
   `observacao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`alimento_idalimento`, `refeicao_idrefeicao`),
-  INDEX `fk_alimento_has_refeicao_refeicao1_idx` (`refeicao_idrefeicao` ASC) VISIBLE,
-  INDEX `fk_alimento_has_refeicao_alimento1_idx` (`alimento_idalimento` ASC) VISIBLE,
+  PRIMARY KEY (`alimento_id`, `refeicao_id`),
+  INDEX `fk_alimento_has_refeicao_refeicao1_idx` (`refeicao_id` ASC) VISIBLE,
+  INDEX `fk_alimento_has_refeicao_alimento1_idx` (`alimento_id` ASC) VISIBLE,
   CONSTRAINT `fk_alimento_has_refeicao_alimento1`
-    FOREIGN KEY (`alimento_idalimento`)
+    FOREIGN KEY (`alimento_id`)
     REFERENCES `gym_genesis`.`alimento` (`idalimento`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_alimento_has_refeicao_refeicao1`
-    FOREIGN KEY (`refeicao_idrefeicao`)
+    FOREIGN KEY (`refeicao_id`)
     REFERENCES `gym_genesis`.`refeicao` (`idrefeicao`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -448,14 +448,14 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`item_pedido`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`item_pedido` (
-  `pedido_idpedido` INT(11) NOT NULL,
+  `pedido_id` INT(11) NOT NULL,
   `produto_idproduto` INT(11) NOT NULL,
   `quantidade` INT(11) NOT NULL,
   `preco_unitario` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`pedido_idpedido`, `produto_idproduto`),
+  PRIMARY KEY (`pedido_id`, `produto_idproduto`),
   INDEX `fk_pedido_has_produto_produto1_idx` (`produto_idproduto` ASC) VISIBLE,
   CONSTRAINT `fk_pedido_item`
-    FOREIGN KEY (`pedido_idpedido`)
+    FOREIGN KEY (`pedido_id`)
     REFERENCES `gym_genesis`.`pedido` (`idpedido`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,

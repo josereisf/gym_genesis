@@ -1,6 +1,7 @@
 <?php
 
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 $treino_id = 2;
 $exercicio_id = 2;
 $series = 5;

@@ -20,11 +20,11 @@ curl -s "$API_URL&acao=listar" | jq
 echo "========== DIETA_ALIMENTAR =========="
 API_URL="$BASE_URL?entidade=dieta_alimentar"
 echo "== CADASTRAR =="
-curl -s -X POST "$API_URL&acao=cadastrar" -H "Content-Type: application/json" -d '{"alimento_idalimento":1,"refeicao_idrefeicao":1,"quantidade":"200g","observacao":"Proteína para o café da manhã"}' | jq
+curl -s -X POST "$API_URL&acao=cadastrar" -H "Content-Type: application/json" -d '{"alimento_id":1,"refeicao_id":1,"quantidade":"200g","observacao":"Proteína para o café da manhã"}' | jq
 echo "== LISTAR =="
 curl -s "$API_URL&acao=listar" | jq
 echo "== EDITAR =="
-curl -s -X POST "$API_URL&acao=editar" -H "Content-Type: application/json" -d '{"id":1,"alimento_idalimento":2,"refeicao_idrefeicao":2,"quantidade":"150g","observacao":"Carboidrato para o almoço"}' | jq
+curl -s -X POST "$API_URL&acao=editar" -H "Content-Type: application/json" -d '{"id":1,"alimento_id":2,"refeicao_id":2,"quantidade":"150g","observacao":"Carboidrato para o almoço"}' | jq
 echo "== LISTAR NOVAMENTE =="
 curl -s "$API_URL&acao=listar" | jq
 echo "== DELETAR =="

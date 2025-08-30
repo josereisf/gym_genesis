@@ -411,7 +411,7 @@ VALUES
 
 -- 5.3. dieta_alimentar
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
-(`alimento_idalimento`, `refeicao_idrefeicao`, `quantidade`, `observacao`)
+(`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
 VALUES
   (4, 4, '50g', 'Aveia para café da manhã'),
   (5, 5, '120g', 'Salmão grelhado no almoço'),
@@ -435,7 +435,7 @@ VALUES
 
 -- 5.3. dieta_alimento
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
-(`alimento_idalimento`, `refeicao_idrefeicao`, `quantidade`, `observacao`)
+(`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
 VALUES
 (1, 1, '200g', 'Proteína para o café da manhã'),
 (2, 2, '150g', 'Carboidrato para o almoço'),
@@ -675,7 +675,7 @@ VALUES
   (3, '2025-04-17 18:45:00', 'concluído', 3);
 
 INSERT INTO `gym_genesis`.`item_pedido` 
-(`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
+(`pedido_id`, `produto_idproduto`, `quantidade`, `preco_unitario`)
 VALUES
   (4, 4, 1, 70.00),
   (4, 5, 2, 500.00),
@@ -713,7 +713,7 @@ VALUES
   (20, 3, 1, 30.00);
   -- 8.2. item_pedido
 INSERT INTO `gym_genesis`.`item_pedido` 
-(`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
+(`pedido_id`, `produto_idproduto`, `quantidade`, `preco_unitario`)
 VALUES
   (1, 1, 2, 50.00),  -- Produto 1, 2 unidades, preço unitário 50
   (2, 3, 1, 100.00), -- Produto 3, 1 unidade, preço unitário 100

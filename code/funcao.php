@@ -23,14 +23,14 @@ function desconectar($conexao)
 
   mysqli_close($conexao);
 }
-function cadastrarUsuario($nome, $senha, $email, $tipo)
+function cadastrarUsuario($senha, $email, $tipo)
 {
   $conexao = conectar();
   $senhahash = password_hash($senha, PASSWORD_DEFAULT);
-  $sql = 'INSERT INTO usuario (nome, senha, email, tipo_usuario) VALUES (?, ?, ?, ?)';
+  $sql = 'INSERT INTO usuario (senha, email, tipo_usuario) VALUES (?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'sssi', $nome, $senhahash, $email, $tipo);
+  mysqli_stmt_bind_param($comando, 'ssi',  $senhahash, $email, $tipo);
 
   $funcionou = mysqli_stmt_execute($comando);
   $id_usuario = mysqli_insert_id($conexao);
@@ -46,9 +46,9 @@ function cadastrarUsuario($nome, $senha, $email, $tipo)
 function editarUsuario($nome, $senha, $email, $tipo, $idusuario)
 {
   $conexao = conectar();
-  $sql = 'UPDATE usuario SET nome=?, senha=?, email=?, tipo_usuario=? WHERE idusuario=?';
+  $sql = 'UPDATE usuario SET senha=?, email=?, tipo_usuario=? WHERE idusuario=?';
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 'ssssi', $nome, $senha, $email, $tipo, $idusuario);
+  mysqli_stmt_bind_param($comando, 'sssi', $senha, $email, $tipo, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -368,14 +368,14 @@ function deletarAssinatura($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-function cadastrarPlano($tipo, $duracao, $idassinatura)
+function cadastrarPlano($tipo, $duracao)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO plano (tipo, duracao) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO plano (tipo, duracao) VALUES (?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssi', $tipo, $duracao, $idassinatura);
+  mysqli_stmt_bind_param($comando, 'ss', $tipo, $duracao);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -1064,7 +1064,7 @@ function editarDietaAlimentar($idalimento, $idrefeicao, $quantidade, $observacao
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE dieta_alimentar SET quantidade=?, observacao=? WHERE alimento_idalimento=? and refeicao_idrefeicao=?';
+  $sql = ' UPDATE dieta_alimentar SET quantidade=?, observacao=? WHERE alimento_id=? and refeicao_id=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'dsii', $quantidade, $observacao, $idalimento, $idrefeicao);
@@ -1480,7 +1480,7 @@ function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $da
 }
 
 
-function cadastrarPagamentoDetalhe($pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
+function cadastrarPagamentoDetalhe($pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto): bool
 {
   $conexao = conectar();
 
@@ -1646,13 +1646,13 @@ function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_g
 
   return $funcionou;
 }
-function editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario): bool
+function editarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario): bool
 {
   $conexao = conectar();
 
   $sql = "UPDATE item_pedido 
             SET quantidade = ?, preco_unitario = ?
-            WHERE pedido_idpedido = ? AND produto_idproduto = ?";
+            WHERE pedido_id = ? AND produto_id = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -1662,7 +1662,7 @@ function editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $pr
   }
 
   // "i" para int, "d" para double
-  mysqli_stmt_bind_param($comando, "idii", $quantidade, $preco_unitario, $pedido_idpedido, $produto_idproduto);
+  mysqli_stmt_bind_param($comando, "idii", $quantidade, $preco_unitario, $pedido_id, $produto_id);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2276,8 +2276,8 @@ function listarItemPedido($usuario_id): array
             ped.status, 
             ped.data_pedido
         FROM pedido ped
-        JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
-        JOIN produto p ON ip.produto_idproduto = p.idproduto
+        JOIN item_pedido ip ON ped.idpedido = ip.pedido_id
+        JOIN produto p ON ip.produto_id = p.idproduto
         JOIN perfil_usuario pu ON ped.usuario_id = pu.usuario_id
         WHERE ped.usuario_id = ?
         ORDER BY ped.data_pedido DESC
@@ -2294,8 +2294,8 @@ function listarItemPedido($usuario_id): array
             ped.status, 
             ped.data_pedido
         FROM pedido ped
-        JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
-        JOIN produto p ON ip.produto_idproduto = p.idproduto
+        JOIN item_pedido ip ON ped.idpedido = ip.pedido_id
+        JOIN produto p ON ip.produto_id = p.idproduto
         JOIN perfil_usuario pu ON ped.usuario_id = pu.usuario_id
         ORDER BY ped.data_pedido DESC";
     $comando = mysqli_prepare($conexao, $sql);
@@ -2328,8 +2328,8 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
         ped.status, 
         ped.data_pedido
     FROM pedido ped
-    JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
-    JOIN produto p ON ip.produto_idproduto = p.idproduto
+    JOIN item_pedido ip ON ped.idpedido = ip.pedido_id
+    JOIN produto p ON ip.produto_id = p.idproduto
     JOIN usuario u ON ped.usuario_id = pf.idusuario
     WHERE ped.usuario_id = ?
     ";
@@ -2453,7 +2453,7 @@ function listarAssinaturas($idassinatura)
       a.data_fim
     FROM assinatura AS a
     JOIN plano AS p ON a.plano_id = p.idplano
-    JOIN perfil_usuario AS pf ON a.usuario_id = pf.idusuario
+    JOIN perfil_usuario AS pf ON a.usuario_id = pf.usuario_id
     WHERE a.idassinatura = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
@@ -2466,7 +2466,7 @@ function listarAssinaturas($idassinatura)
       a.data_fim
     FROM assinatura AS a
     JOIN plano AS p ON a.plano_id = p.idplano
-    JOIN perfil_usuario AS pf ON a.usuario_id = pf.idusuario";
+    JOIN perfil_usuario AS pf ON a.usuario_id = pf.usuario_id";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2700,14 +2700,14 @@ function cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $image
   return $funcionou;
 }
 
-function cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario)
+function cadastrarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario): bool
 {
   $conexao = conectar();
 
-  $sql = " INSERT INTO item_pedido (pedido_idpedido, produto_idproduto, quantidade, preco_unitario) VALUES (?,?,?,?)";
+  $sql = " INSERT INTO item_pedido (pedido_id, produto_id, quantidade, preco_unitario) VALUES (?,?,?,?)";
 
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "iiid", $pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario);
+  mysqli_stmt_bind_param($comando, "iiid", $pedido_id, $produto_id, $quantidade, $preco_unitario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2720,11 +2720,11 @@ function cadastrarPagamento($usuario_id, $valor, $data_pagamento, $metodo, $stat
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO pagamento (usuario_id, valor, data_pagamento, metodo, status)
-            VALUES (?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO pagamento (valor, data_pagamento, metodo, status)
+            VALUES (?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "idsss", $usuario_id, $valor, $data_pagamento, $metodo, $status);
+  mysqli_stmt_bind_param($comando, "dsss", $valor, $data_pagamento, $metodo, $status);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2895,11 +2895,11 @@ function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_id)
 
   return $funcionou;
 }
-function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observacao)
+function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observacao): bool
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO dieta_alimentar (refeicao_idrefeicao, alimento_idalimento, quantidade, observacao)
+  $sql = "INSERT INTO dieta_alimentar (refeicao_id, alimento_id, quantidade, observacao)
             VALUES (?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2925,7 +2925,7 @@ function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observa
 }
 //
 
-function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem)
+function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem): bool
 {
   $conexao = conectar();
 
@@ -3025,34 +3025,6 @@ function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limit
   }
 
   mysqli_stmt_bind_param($comando, "issss", $usuario_id, $descricao, $data_inicio, $data_limite, $status);
-
-  $funcionou = mysqli_stmt_execute($comando);
-
-  if (!$funcionou) {
-    echo "Erro na execução: " . mysqli_stmt_error($comando);
-  }
-
-  mysqli_stmt_close($comando);
-  desconectar($conexao);
-
-  return $funcionou;
-}
-
-function cadastrarHorario($dia_semana, $hora_inicio, $hora_fim)
-{
-  $conexao = conectar();
-
-  $sql = "INSERT INTO horario (dia_semana, hora_inicio, hora_fim)
-            VALUES (?, ?, ?)";
-
-  $comando = mysqli_prepare($conexao, $sql);
-
-  if (!$comando) {
-    echo "Erro na preparação: " . mysqli_error($conexao);
-    return false;
-  }
-
-  mysqli_stmt_bind_param($comando, "sss", $dia_semana, $hora_inicio, $hora_fim);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -3334,10 +3306,10 @@ FROM gym_genesis.usuario u
         ON d.iddieta = r.dieta_id
 
     LEFT JOIN gym_genesis.dieta_alimentar da 
-        ON r.idrefeicao = da.refeicao_idrefeicao
+        ON r.idrefeicao = da.refeicao_id
 
     LEFT JOIN gym_genesis.alimento al 
-        ON da.alimento_idalimento = al.idalimento
+        ON da.alimento_id = al.idalimento
 
     LEFT JOIN gym_genesis.treino t 
         ON pf.idusuario = t.usuario_id
@@ -3367,10 +3339,10 @@ FROM gym_genesis.usuario u
         ON pf.idusuario = pd.usuario_id
 
     LEFT JOIN gym_genesis.item_pedido ip 
-        ON pd.idpedido = ip.pedido_idpedido
+        ON pd.idpedido = ip.pedido_id
 
     LEFT JOIN gym_genesis.produto pr 
-        ON ip.produto_idproduto = pr.idproduto
+        ON ip.produto_id = pr.idproduto
 
     LEFT JOIN gym_genesis.pagamento pg 
         ON pd.pagamento_id = pg.idpagamento
@@ -3487,9 +3459,9 @@ function calcularIMC($pesoKg, $alturaCm): string
 function cadastrarHistoricoPeso($idusuario, $peso)
 {
   $conexao = conectar();
-  $sql = "INSERT INTO historico_peso (idusuario, peso) VALUES (?, ?)";
+  $sql = "INSERT INTO historico_peso (peso, usuario_id) VALUES (?, ?)";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "id", $idusuario, $peso);
+  mysqli_stmt_bind_param($comando, "di", $peso, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);

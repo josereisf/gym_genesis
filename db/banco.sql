@@ -453,19 +453,19 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `gym_genesis`.`item_pedido`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`item_pedido` (
-  `pedido_idpedido` INT(11) NOT NULL,
-  `produto_idproduto` INT(11) NOT NULL,
+  `pedido_id` INT(11) NOT NULL,
+  `produto_id` INT(11) NOT NULL,
   `quantidade` INT(11) NOT NULL,
   `preco_unitario` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`pedido_idpedido`, `produto_idproduto`),
-  INDEX `fk_pedido_has_produto_produto1_idx` (`produto_idproduto` ASC) VISIBLE,
+  PRIMARY KEY (`pedido_id`, `produto_id`),
+  INDEX `fk_pedido_has_produto_produto1_idx` (`produto_id` ASC) VISIBLE,
   CONSTRAINT `fk_pedido_item`
-    FOREIGN KEY (`pedido_idpedido`)
+    FOREIGN KEY (`pedido_id`)
     REFERENCES `gym_genesis`.`pedido` (`idpedido`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_produto_item`
-    FOREIGN KEY (`produto_idproduto`)
+    FOREIGN KEY (`produto_id`)
     REFERENCES `gym_genesis`.`produto` (`idproduto`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)

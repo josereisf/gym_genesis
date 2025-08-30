@@ -1,10 +1,11 @@
 <?php
 
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 
 
 $idproduto = 1;
 
-if (!is_null(deletarProduto($idproduto))){
+if (!is_null(deletarProduto($idproduto))) {
     echo "funcionou";
 }

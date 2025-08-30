@@ -1,9 +1,10 @@
 <?php
 
 
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
 
-if (!empty($funcao)){
+
+if (!empty($funcao)) {
     echo "funcionou";
 }
 echo '<pre>';

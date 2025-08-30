@@ -1,6 +1,7 @@
 <?php
 
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 
 $idexercicio = 1;
 $nome = 'ska';
@@ -9,6 +10,6 @@ $descricao = 'sem ideia';
 $video_url = '/naoexiste.png';
 
 
-if (!is_null(editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url))){
+if (!is_null(editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url))) {
     echo "funcionou";
 }

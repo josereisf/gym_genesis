@@ -121,7 +121,7 @@ Pedidos feitos na loja virtual.
 
 - `idpedido` (PK), `status_pedido`, `data_pedido`
 - `iditem_pedido` (PK), `quantidade`, `valor_unitario`
-- FK: `usuario_idusuario`, `produto_idproduto`, `pedido_idpedido`
+- FK: `usuario_idusuario`, `produto_id`, `pedido_id`
 
 #### 16. **recomendacao_alimentar** / **dieta_alimento** / **alimento**
 

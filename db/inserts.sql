@@ -632,7 +632,7 @@ VALUES
   (3, '2025-04-17 18:45:00', 'concluído', 3);
 
 INSERT INTO `gym_genesis`.`item_pedido` 
-(`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
+(`pedido_id`, `produto_id`, `quantidade`, `preco_unitario`)
 VALUES
   (4, 4, 1, 70.00),
   (4, 5, 2, 500.00),
@@ -670,7 +670,7 @@ VALUES
   (20, 3, 1, 30.00);
   -- 8.2. item_pedido
 INSERT INTO `gym_genesis`.`item_pedido` 
-(`pedido_idpedido`, `produto_idproduto`, `quantidade`, `preco_unitario`)
+(`pedido_id`, `produto_id`, `quantidade`, `preco_unitario`)
 VALUES
   (1, 1, 2, 50.00),  -- Produto 1, 2 unidades, preço unitário 50
   (2, 3, 1, 100.00), -- Produto 3, 1 unidade, preço unitário 100
@@ -729,20 +729,6 @@ VALUES
 ('2025-05-16', 'Sexta', '20:30:00', '21:30:00', 19),
 ('2025-05-17', 'Sábado', '10:30:00', '11:30:00', 20);
 -- 10.2. aula_agendada
-INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_id`, `treino_id`) 
-VALUES 
-('2025-04-25', 'Sexta', '08:00:00', '09:00:00', 1, 1);
-
-INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_id`, `treino_id`) 
-VALUES 
-('2025-04-27', 'Domingo', '10:00:00', '11:30:00', 2, 2);
-
-INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_id`, `treino_id`) 
-VALUES 
-('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3, 3);
 
 
 
@@ -802,51 +788,51 @@ VALUES ('J1K2L3', 4, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
 
 INSERT INTO usuario ( senha, email, tipo_usuario) VALUES ("$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", 1);
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado)
-VALUES (24, NULL, '12345-678', 'Rua das Flores', '100', 'Apto 202', 'Jardim Primavera', 'São Paulo', 'SP');
+VALUES (21, NULL, '12345-678', 'Rua das Flores', '100', 'Apto 202', 'Jardim Primavera', 'São Paulo', 'SP');
 INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id)
-VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 24);
+VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 21);
 
 INSERT INTO `gym_genesis`.`assinatura` 
 (`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
 VALUES 
-('2025-08-25', '2025-09-24', 24, 1);
+('2025-08-25', '2025-09-21', 21, 1);
 
 INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id) VALUES
-  (70.400, 1.75, 22.98, 15.2, '2025-04-11', 24),
-  (72.800, 1.76, 23.51, 16.0, '2025-04-18', 24),
-  (74.600, 1.77, 23.79, 16.8, '2025-04-25', 24),
-  (75.300, 1.78, 23.76, 17.3, '2025-05-02', 24),
-  (76.100, 1.78, 24.01, 17.9, '2025-05-09', 24),
-  (77.400, 1.78, 24.43, 18.5, '2025-05-16', 24),
-  (78.900, 1.78, 24.89, 19.1, '2025-05-23', 24),
-  (80.200, 1.78, 25.30, 19.6, '2025-05-30', 24),
-  (81.500, 1.78, 25.72, 20.2, '2025-06-06', 24),
-  (82.800, 1.78, 26.14, 20.7, '2025-06-13', 24);
+  (70.400, 1.75, 22.98, 15.2, '2025-04-11', 21),
+  (72.800, 1.76, 23.51, 16.0, '2025-04-18', 21),
+  (74.600, 1.77, 23.79, 16.8, '2025-04-25', 21),
+  (75.300, 1.78, 23.76, 17.3, '2025-05-02', 21),
+  (76.100, 1.78, 21.01, 17.9, '2025-05-09', 21),
+  (77.400, 1.78, 21.43, 18.5, '2025-05-16', 21),
+  (78.900, 1.78, 21.89, 19.1, '2025-05-23', 21),
+  (80.200, 1.78, 25.30, 19.6, '2025-05-30', 21),
+  (81.500, 1.78, 25.72, 20.2, '2025-06-06', 21),
+  (82.800, 1.78, 26.14, 20.7, '2025-06-13', 21);
 
 
 INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, status) VALUES
-  (24, 'Ganhar 3kg de massa muscular', '2025-04-01', '2025-07-01', 'ativa'),
-  (24, 'Reduzir percentual de gordura para 15%', '2025-04-01', '2025-08-01', 'ativa'),
-  (24, 'Fazer 10 pull-ups seguidos', '2025-04-01', '2025-09-01', 'ativa'),
-  (24, 'Participar de uma corrida de 10km', '2025-04-01', '2025-10-01', 'ativa'),
-  (24, 'Melhorar flexibilidade', '2025-04-01', '2025-07-15', 'ativa'),
-  (24, 'Manter dieta por 60 dias', '2025-04-01', '2025-06-01', 'ativa'),
-  (24, 'Aumentar carga no agachamento', '2025-04-01', '2025-07-01', 'ativa'),
-  (24, 'Reduzir IMC para 22', '2025-04-01', '2025-08-01', 'ativa'),
-  (24, 'Fazer 5km de bicicleta em 15min', '2025-04-01', '2025-09-01', 'ativa'),
-  (24, 'Treinar 5x por semana', '2025-04-01', '2025-07-01', 'ativa');
+  (21, 'Ganhar 3kg de massa muscular', '2025-04-01', '2025-07-01', 'ativa'),
+  (21, 'Reduzir percentual de gordura para 15%', '2025-04-01', '2025-08-01', 'ativa'),
+  (21, 'Fazer 10 pull-ups seguidos', '2025-04-01', '2025-09-01', 'ativa'),
+  (21, 'Participar de uma corrida de 10km', '2025-04-01', '2025-10-01', 'ativa'),
+  (21, 'Melhorar flexibilidade', '2025-04-01', '2025-07-15', 'ativa'),
+  (21, 'Manter dieta por 60 dias', '2025-04-01', '2025-06-01', 'ativa'),
+  (21, 'Aumentar carga no agachamento', '2025-04-01', '2025-07-01', 'ativa'),
+  (21, 'Reduzir IMC para 22', '2025-04-01', '2025-08-01', 'ativa'),
+  (21, 'Fazer 5km de bicicleta em 15min', '2025-04-01', '2025-09-01', 'ativa'),
+  (21, 'Treinar 5x por semana', '2025-04-01', '2025-07-01', 'ativa');
 
-  INSERT INTO treino (tipo, horario, descricao, usuario_id) VALUES
-  ('Hipertrofia', '09:00:00', 'Treino de membros inferiores', 24),
-  ('Funcional', '17:00:00', 'Circuito funcional', 24),
-  ('Cardio', '07:30:00', 'Bicicleta ergométrica', 24),
-  ('Força', '19:00:00', 'Treino de costas', 24),
-  ('Resistência', '08:30:00', 'Treino de resistência muscular', 24),
-  ('Cardio', '18:30:00', 'Corrida intervalada', 24),
-  ('Funcional', '10:00:00', 'Treino funcional avançado', 24),
-  ('Hipertrofia', '20:00:00', 'Treino de braços', 24),
-  ('Força', '06:30:00', 'Treino de pernas', 24),
-  ('Cardio', '17:30:00', 'Elíptico', 24);
+  INSERT INTO treino (tipo, horario, descricao, funcionario_id) VALUES
+  ('Hipertrofia', '09:00:00', 'Treino de membros inferiores', 1),
+  ('Funcional', '17:00:00', 'Circuito funcional', 1),
+  ('Cardio', '07:30:00', 'Bicicleta ergométrica', 1),
+  ('Força', '19:00:00', 'Treino de costas', 1),
+  ('Resistência', '08:30:00', 'Treino de resistência muscular', 1),
+  ('Cardio', '18:30:00', 'Corrida intervalada', 1),
+  ('Funcional', '10:00:00', 'Treino funcional avançado', 1),
+  ('Hipertrofia', '20:00:00', 'Treino de braços', 1),
+  ('Força', '06:30:00', 'Treino de pernas', 1),
+  ('Cardio', '17:30:00', 'Elíptico', 1);
 
   INSERT INTO treino_exercicio (treino_id, exercicio_id, series, repeticoes, carga, intervalo_segundos) VALUES
   (21, 1, 4, 12, 60.00, 60),

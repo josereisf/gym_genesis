@@ -1,5 +1,6 @@
 <?php
-require_once '../funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 
 // Dados de teste — certifique-se que esse ID de funcionário já exista
 $idfuncionario = 1;
@@ -17,4 +18,3 @@ if ($resultado) {
 } else {
     echo "Falha ao atualizar funcionário.";
 }
-?>
