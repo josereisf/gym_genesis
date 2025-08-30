@@ -23,14 +23,14 @@ function desconectar($conexao)
 
   mysqli_close($conexao);
 }
-function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo)
+function cadastrarUsuario($nome, $senha, $email, $tipo)
 {
   $conexao = conectar();
   $senhahash = password_hash($senha, PASSWORD_DEFAULT);
-  $sql = 'INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  $sql = 'INSERT INTO usuario (nome, senha, email, tipo_usuario) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssssssi', $nome, $senhahash, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
+  mysqli_stmt_bind_param($comando, 'sssi', $nome, $senhahash, $email, $tipo);
 
   $funcionou = mysqli_stmt_execute($comando);
   $id_usuario = mysqli_insert_id($conexao);
@@ -43,12 +43,12 @@ function cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $i
   ];
 }
 
-function editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario)
+function editarUsuario($nome, $senha, $email, $tipo, $idusuario)
 {
   $conexao = conectar();
-  $sql = 'UPDATE usuario SET nome=?, senha=?, email=?, cpf=?, data_de_nascimento=?, telefone=?, foto_de_perfil=?, numero_matricula=?, tipo_usuario=? WHERE idusuario=?';
+  $sql = 'UPDATE usuario SET nome=?, senha=?, email=?, tipo_usuario=? WHERE idusuario=?';
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 'ssssssssii', $nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario);
+  mysqli_stmt_bind_param($comando, 'ssssi', $nome, $senha, $email, $tipo, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -254,7 +254,6 @@ function listarFuncionarios($idfuncionario)
     f.salario,
     f.cargo_id,
     c.nome AS nome_cargo,
-    f.foto_de_perfil
     FROM funcionario AS f
     JOIN cargo AS c ON c.idcargo = f.cargo_id
     WHERE f.idfuncionario=?;';
@@ -330,7 +329,7 @@ function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO assinatura (data_inicio, data_fim, usuario_idusuario, plano_idplano) VALUES (?, ?, ?, ?)';
+  $sql = 'INSERT INTO assinatura (data_inicio, data_fim, usuario_id, plano_id) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
   // CORRETO: $idusuario vem antes de $idplano
@@ -346,7 +345,7 @@ function renovarAssinatura($idusuario, $data_inicio, $data_fim)
 {
   $conexao = conectar();
 
-  $sql = 'UPDATE assinatura SET data_inicio=?, data_fim=? WHERE usuario_idusuario=?';
+  $sql = 'UPDATE assinatura SET data_inicio=?, data_fim=? WHERE usuario_id=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'ssi', $data_inicio, $data_fim, $idusuario);
@@ -359,7 +358,7 @@ function renovarAssinatura($idusuario, $data_inicio, $data_fim)
 function deletarAssinatura($idusuario)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM assinatura WHERE usuario_idusuario=?";
+  $sql = "DELETE FROM assinatura WHERE usuario_id=?";
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
@@ -452,20 +451,21 @@ function deletarMetaUsuario($idmeta)
   desconectar($conexao);
   return $funcionou;
 }
-function cadastrarTreino($tipo, $horario, $descricao, $idusuario)
+function cadastrarTreino($tipo, $horario, $descricao, $idfuncionario)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES (?, ?, ?, ?)';
+  $sql = 'INSERT INTO treino (tipo, horario, descricao, funcionario_id) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'sssi', $tipo, $horario, $descricao, $idusuario);
+  mysqli_stmt_bind_param($comando, 'sssi', $tipo, $horario, $descricao, $idfuncionario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
 }
+
 function editarTreino($tipo, $horario, $descricao, $idtreino)
 {
   $conexao = conectar();
@@ -484,7 +484,7 @@ function editarTreino($tipo, $horario, $descricao, $idtreino)
 function deletarAvaliacaoFisica($idusuario)
 {
   $conexao = conectar();
-  $sql = " DELETE FROM avaliacao_fisica WHERE usuario_idusuario=?";
+  $sql = " DELETE FROM avaliacao_fisica WHERE usuario_id=?";
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
@@ -498,7 +498,7 @@ function editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta)
 {
   $conexao = conectar();
 
-  $sql = 'UPDATE dieta SET descricao=?, data_inicio=?, data_fim=?, usuario_idusuario=? WHERE iddieta=?';
+  $sql = 'UPDATE dieta SET descricao=?, data_inicio=?, data_fim=?, usuario_id=? WHERE iddieta=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'sssii', $descricao, $data_inicio, $data_fim, $idusuario, $iddieta);
@@ -511,7 +511,7 @@ function editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta)
 function deletarDieta($idusuario)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM dieta WHERE usuario_idusuario=?";
+  $sql = "DELETE FROM dieta WHERE usuario_id=?";
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
@@ -532,7 +532,7 @@ function listarDietas($iddieta)
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
+    JOIN usuario AS u ON d.usuario_id = u.idusuario
     WHERE d.iddieta=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $iddieta);
@@ -544,7 +544,7 @@ function listarDietas($iddieta)
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario';
+    JOIN usuario AS u ON d.usuario_id = u.idusuario';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -569,8 +569,8 @@ function listarDietasUsuario($idusuario)
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
-    WHERE d.usuario_idusuario=?';
+    JOIN usuario AS u ON d.usuario_id = u.idusuario
+    WHERE d.usuario_id=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idusuario);
   } else {
@@ -580,7 +580,7 @@ function listarDietasUsuario($idusuario)
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario';
+    JOIN usuario AS u ON d.usuario_id = u.idusuario';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -719,7 +719,7 @@ function gerenciarVencimento($idusuario, $data_fim)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE assinatura SET data_fim=? WHERE usuario_idusuario=?';
+  $sql = ' UPDATE assinatura SET data_fim=? WHERE usuario_id=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'si', $data_fim, $idusuario);
@@ -755,7 +755,7 @@ function editarCategoriaProduto($idcategoria, $nome, $descricao)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE categoria_produto SET nome=?, descricao=? WHERE usuario_idusuario=?';
+  $sql = ' UPDATE categoria_produto SET nome=?, descricao=? WHERE usuario_id=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'si', $nome, $descricao, $idcategoria);
@@ -775,8 +775,8 @@ function listarPedidos($idpedido)
     p.status,
     pa.valor
     FROM pedido AS p
-    JOIN usuario AS u ON p.usuario_idusuario = u.idusuario
-    JOIN pagamento AS pa ON p.pagamento_idpagamento = pa.idpagamento
+    JOIN usuario AS u ON p.usuario_id = u.idusuario
+    JOIN pagamento AS pa ON p.pagamento_id = pa.idpagamento
     WHERE p.idpedido=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idpedido);
@@ -787,8 +787,8 @@ function listarPedidos($idpedido)
     p.status,
     pa.valor
     FROM pedido AS p
-    JOIN usuario AS u ON p.usuario_idusuario = u.idusuario
-    JOIN pagamento AS pa ON p.pagamento_idpagamento = pa.idpagamento';
+    JOIN usuario AS u ON p.usuario_id = u.idusuario
+    JOIN pagamento AS pa ON p.pagamento_id = pa.idpagamento';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -830,7 +830,7 @@ function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $i
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, usuario_idusuario=?, treino_idtreino=? WHERE idaula=?';
+  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, usuario_id=?, treino_id=? WHERE idaula=?';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'ssssiii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino, $idaula);
@@ -872,7 +872,7 @@ function cadastrarPedido($idusuario, $data_pedido, $status, $idpagamento)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO pedido (usuario_idusuario, data_pedido, status, pagamento_idpagamento) VALUES (?, ?, ?, ?)';
+  $sql = 'INSERT INTO pedido (usuario_id, data_pedido, status, pagamento_id) VALUES (?, ?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'issi', $idusuario, $data_pedido, $status, $idpagamento);
@@ -886,7 +886,7 @@ function cadastrarRespostaForum($mensagem, $idusuario, $idtopico)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO resposta_forum (mensagem, usuario_id, forum_id) VALUES (?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'sii', $mensagem, $idusuario, $idtopico);
@@ -906,7 +906,7 @@ function listarForum($idtopico)
     f.descricao,
     f.data_criacao
     FROM forum AS f
-    JOIN usuario AS u ON f.usuario_idusuario = u.idusuario
+    JOIN usuario AS u ON f.usuario_id = u.idusuario
     WHERE f.idtopico=?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idtopico);
@@ -917,7 +917,7 @@ function listarForum($idtopico)
     f.descricao,
     f.data_criacao
     FROM forum AS f
-    JOIN usuario AS u ON f.usuario_idusuario = idusuario;';
+    JOIN usuario AS u ON f.usuario_id = idusuario;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -931,14 +931,14 @@ function listarForum($idtopico)
 
   return $lista_foruns;
 }
-function cadastrarForum($titulo, $descricao, $usuario_idusuario)
+function cadastrarForum($titulo, $descricao, $usuario_id)
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO forum (titulo, descricao, usuario_id) VALUES (?, ?, ?)';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssi', $titulo, $descricao, $usuario_idusuario);
+  mysqli_stmt_bind_param($comando, 'ssi', $titulo, $descricao, $usuario_id);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -1213,7 +1213,7 @@ function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
 
     // Inserção no banco de dados
     $conexao = conectar();
-    $sql = 'INSERT INTO recuperacao_senha (codigo, tempo_expiracao, usuario_idusuario) VALUES (?, ?, ?)';
+    $sql = 'INSERT INTO recuperacao_senha (codigo, tempo_expiracao, usuario_id) VALUES (?, ?, ?)';
     $comando = mysqli_prepare($conexao, $sql);
 
     mysqli_stmt_bind_param($comando, 'isi', $codigo, $expiracao, $idusuario);
@@ -1281,7 +1281,7 @@ function gerarCodigosDeSegurancaa(array $emails_destinatarios, $idusuario)
 
       // Inserir no banco de dados
       $conexao = conectar();
-      $sql = 'INSERT INTO recuperacao_senha (codigo, tempo_expiracao, usuario_idusuario) VALUES (?, ?, ?)';
+      $sql = 'INSERT INTO recuperacao_senha (codigo, tempo_expiracao, usuario_id) VALUES (?, ?, ?)';
       $comando = mysqli_prepare($conexao, $sql);
       mysqli_stmt_bind_param($comando, 'isi', $codigo, $expiracao, $idusuario);
       mysqli_stmt_execute($comando);
@@ -1310,7 +1310,7 @@ function VerificarCodigo($codigoInserido, $idusuario)
 {
   $conexao = conectar();
 
-  $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_idusuario = ? ORDER BY tempo_expiracao DESC LIMIT 1';
+  $sql = 'SELECT codigo, tempo_expiracao FROM recuperacao_senha WHERE usuario_id = ? ORDER BY tempo_expiracao DESC LIMIT 1';
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
   mysqli_stmt_execute($comando);
@@ -1443,65 +1443,6 @@ function mostrarImagem($caminhoImagem)
   readfile($caminhoImagem);
   exit;
 }
-function listarProfessorAluno($idprofessor, $idaluno)
-{
-    $conexao = conectar();
-
-
-  if ($idprofessor != null) {
-    $sql = 'SELECT 
-      pf.idprofessor_aluno, 
-      pf.idprofessor, 
-      u1.nome AS nome_professor, 
-      pf.idaluno, 
-      u2.nome AS nome_aluno
-    FROM professor_aluno AS pf
-    JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
-    JOIN usuario AS u2 ON pf.idaluno = u2.idusuario
-    WHERE pf.idprofessor = ?'; 
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'i', $idprofessor);
-  }
-  elseif ($idaluno != null) {
-    $sql = "SELECT 
-      pf.idprofessor_aluno, 
-      pf.idprofessor, 
-      u1.nome AS nome_professor, 
-      pf.idaluno, 
-      u2.nome AS nome_aluno
-    FROM professor_aluno AS pf
-    JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
-    JOIN usuario AS u2 ON pf.idaluno = u2.idusuario
-    WHERE pf.idaluno = ?";  
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'i', $idaluno);
-  }
-  else {
-    $sql = 'SELECT 
-      pf.idprofessor_aluno, 
-      pf.idprofessor, 
-      u1.nome AS nome_professor, 
-      pf.idaluno, 
-      u2.nome AS nome_aluno
-    FROM professor_aluno AS pf
-    JOIN usuario AS u1 ON pf.idprofessor = u1.idusuario
-    JOIN usuario AS u2 ON pf.idaluno = u2.idusuario';
-    $comando = mysqli_prepare($conexao, $sql);
-  }
-
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
-
-  $lista = [];
-  while ($prof_al = mysqli_fetch_assoc($resultados)) {
-    $lista[] = $prof_al;
-  }
-
-  mysqli_stmt_close($comando);
-
-  return $lista;
-}
-
 
 function deletarPagamento($idpagamento)
 {
@@ -1523,7 +1464,7 @@ function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $da
 {
   $conexao = conectar();
 
-  $sql = 'INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES (?, ?, ?, ?, ?, ?)';
+  $sql = 'INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id) VALUES (?, ?, ?, ?, ?, ?)';
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -1539,7 +1480,7 @@ function cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $da
 }
 
 
-function cadastrarPagamentoDetalhe($pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
+function cadastrarPagamentoDetalhe($pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
 {
   $conexao = conectar();
 
@@ -1562,7 +1503,7 @@ function cadastrarPagamentoDetalhe($pagamento_idpagamento, $tipo, $bandeira_cart
   }
 
   $sql = 'INSERT INTO pagamento_detalhe 
-            (pagamento_idpagamento, tipo, bandeira_cartao, ultimos_digitos, codigo_pix, linha_digitavel_boleto) 
+            (pagamento_id, tipo, bandeira_cartao, ultimos_digitos, codigo_pix, linha_digitavel_boleto) 
             VALUES (?, ?, ?, ?, ?, ?)';
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -1570,7 +1511,7 @@ function cadastrarPagamentoDetalhe($pagamento_idpagamento, $tipo, $bandeira_cart
   mysqli_stmt_bind_param(
     $comando,
     "isssss",
-    $pagamento_idpagamento,
+    $pagamento_id,
     $tipo,
     $bandeira_cartao,
     $ultimos_digitos,
@@ -1676,12 +1617,12 @@ function deletarRespostaForum($idresposta)
   return $funcionou;
 }
 
-function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario)
+function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_id)
 {
   $conexao = conectar();
 
   $sql = "UPDATE avaliacao_fisica 
-          SET peso = ?, altura = ?, imc = ?, percentual_gordura = ?, data_avaliacao = ?, usuario_idusuario = ? 
+          SET peso = ?, altura = ?, imc = ?, percentual_gordura = ?, data_avaliacao = ?, usuario_id = ? 
           WHERE idavaliacao = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -1692,7 +1633,7 @@ function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_g
   }
 
   // Ordem correta dos parâmetros
-  mysqli_stmt_bind_param($comando, "ddddssi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_idusuario, $idavaliacao);
+  mysqli_stmt_bind_param($comando, "ddddssi", $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_id, $idavaliacao);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -1777,7 +1718,7 @@ function listarTreino($idtreino)
     t.horario,
     t.descricao
     FROM treino as t
-    JOIN usuario as u ON u.idusuario = t.usuario_idusuario 
+    JOIN usuario as u ON u.idusuario = t.usuario_id 
     WHERE idtreino = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idtreino);
@@ -1788,7 +1729,7 @@ function listarTreino($idtreino)
     t.horario,
     t.descricao
     FROM treino as t
-    JOIN usuario as u ON u.idusuario = t.usuario_idusuario
+    JOIN usuario as u ON u.idusuario = t.usuario_id
     
     
     ";
@@ -1817,7 +1758,7 @@ function listarTreinoUsuario($idusuario)
   t.horario,
   t.descricao
   FROM treino as t
-  JOIN usuario as u ON u.idusuario = t.usuario_idusuario 
+  JOIN usuario as u ON u.idusuario = t.usuario_id 
   WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idusuario);
@@ -1841,7 +1782,7 @@ function listarTreinoTipo($tipo)
   t.horario,
   t.descricao
   FROM treino as t
-  JOIN usuario as u ON u.idusuario = t.usuario_idusuario
+  JOIN usuario as u ON u.idusuario = t.usuario_id
   WHERE t.tipo = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "s", $tipo);
@@ -1891,10 +1832,10 @@ function listarAulaAgendada($idaula = null)
       t.descricao AS treino_desc,
       GROUP_CONCAT(u.nome SEPARATOR ', ') AS alunos
     FROM aula_agendada AS ag
-    JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
-    JOIN treino AS t ON ag.treino_idtreino = t.idtreino
+    JOIN usuario AS u ON ag.usuario_id = u.idusuario
+    JOIN treino AS t ON ag.treino_id = t.idtreino
     WHERE idaula = ?
-    GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_idtreino";
+    GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id";
 
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
@@ -1908,9 +1849,9 @@ function listarAulaAgendada($idaula = null)
       t.descricao AS treino_desc,
       GROUP_CONCAT(u.nome SEPARATOR ', ') AS alunos
     FROM aula_agendada AS ag
-    JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
-    JOIN treino AS t ON ag.treino_idtreino = t.idtreino
-    GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_idtreino";
+    JOIN usuario AS u ON ag.usuario_id = u.idusuario
+    JOIN treino AS t ON ag.treino_id = t.idtreino
+    GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id";
 
     $comando = mysqli_prepare($conexao, $sql);
   }
@@ -1937,11 +1878,11 @@ function listarAulaAgendadaUsuario($idusuario)
   ag.dia_semana,
   ag.hora_inicio,
   ag.hora_fim,
-  ag.treino_idtreino,
+  ag.treino_id,
   t.tipo AS tipo
   FROM aula_agendada AS ag
-  JOIN usuario AS u ON ag.usuario_idusuario = u.idusuario
-  JOIN treino AS t ON ag.treino_idtreino = t.idtreino
+  JOIN usuario AS u ON ag.usuario_id = u.idusuario
+  JOIN treino AS t ON ag.treino_id = t.idtreino
   WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idusuario);
@@ -1989,11 +1930,11 @@ function listarPagamentosDetalhados($idpagamento2)
     FROM 
     pagamento p
   JOIN 
-    pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
+    pagamento_detalhe pd ON p.idpagamento = pd.pagamento_id
   JOIN 
-      pedido ped ON p.idpagamento = ped.pagamento_idpagamento
+      pedido ped ON p.idpagamento = ped.pagamento_id
   JOIN 
-      usuario u ON ped.usuario_idusuario = u.idusuario
+      usuario u ON ped.usuario_id = u.idusuario
   JOIN 
       produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
 
@@ -2028,11 +1969,11 @@ function listarPagamentosDetalhados($idpagamento2)
   FROM 
       pagamento p
   JOIN 
-      pagamento_detalhe pd ON p.idpagamento = pd.pagamento_idpagamento
+      pagamento_detalhe pd ON p.idpagamento = pd.pagamento_id
   JOIN 
-      pedido ped ON p.idpagamento = ped.pagamento_idpagamento
+      pedido ped ON p.idpagamento = ped.pagamento_id
   JOIN 
-      usuario u ON ped.usuario_idusuario = u.idusuario
+      usuario u ON ped.usuario_id = u.idusuario
   JOIN 
       produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
 
@@ -2116,8 +2057,8 @@ function listarAvaliacaoFisica($usuarioId)
                 a.percentual_gordura,
                 a.data_avaliacao
             FROM avaliacao_fisica AS a
-            JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
-            WHERE a.usuario_idusuario = ?
+            JOIN usuario AS u ON a.usuario_id = u.idusuario
+            WHERE a.usuario_id = ?
             ORDER BY a.data_avaliacao DESC";  // só pega a avaliação mais recente
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2126,9 +2067,9 @@ function listarAvaliacaoFisica($usuarioId)
     // Erro na preparação, pode tratar ou retornar false
     return false;
   }
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
-    $lista_avaliacoes = [];
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+  $lista_avaliacoes = [];
   while ($avaliacao = mysqli_fetch_assoc($resultados)) {
     $lista_avaliacoes[] = $avaliacao;
   }
@@ -2183,7 +2124,7 @@ function listarRefeicoes($idrefeicao)
     r.horario
     FROM refeicao AS r
     JOIN dieta AS d ON r.dieta_id = d.iddieta
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario
+    JOIN usuario AS u ON d.usuario_id = u.idusuario
     WHERE idrefeicao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idrefeicao);
@@ -2197,7 +2138,7 @@ function listarRefeicoes($idrefeicao)
     r.horario
     FROM refeicao AS r
     JOIN dieta AS d ON r.dieta_id = d.iddieta
-    JOIN usuario AS u ON d.usuario_idusuario = u.idusuario";
+    JOIN usuario AS u ON d.usuario_id = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2276,20 +2217,31 @@ function listarRespostaForum($idresposta)
   if ($idresposta !== null) {
     // Consulta com junção para pegar o nome do usuário ao invés do id
     $sql = "
-     SELECT rf.idresposta, rf.mensagem, rf.data_resposta, u.nome AS nome_usuario, rf.forum_idtopico, f.descricao
-      FROM resposta_forum rf
-      JOIN usuario u ON rf.usuario_idusuario = u.idusuario
-            JOIN forum AS f ON rf.forum_idtopico = f.idtopico
-      WHERE rf.idresposta = ?";
+    SELECT 
+     rf.idresposta, 
+     rf.mensagem, 
+     rf.data_resposta, 
+     u.nome AS nome_usuario, 
+     rf.forum_id, 
+     f.descricao
+    FROM resposta_forum rf
+    JOIN usuario u ON rf.usuario_id = u.idusuario
+    JOIN forum AS f ON rf.forum_id = f.idtopico
+    WHERE rf.idresposta = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idresposta);
   } else {
     // Consulta para pegar todas as respostas com os nomes dos usuários
     $sql = "
-     SELECT rf.idresposta, rf.mensagem, rf.data_resposta, u.nome AS nome_usuario, rf.forum_idtopico, f.descricao
-      FROM resposta_forum rf
-      JOIN usuario u ON rf.usuario_idusuario = u.idusuario
-            JOIN forum AS f ON rf.forum_idtopico = f.idtopico";
+    SELECT 
+     rf.idresposta, 
+     rf.mensagem, 
+     rf.data_resposta, 
+     u.nome AS nome_usuario, 
+     rf.forum_id, f.descricao
+    FROM resposta_forum rf
+    JOIN usuario u ON rf.usuario_id = u.idusuario
+    JOIN forum AS f ON rf.forum_id = f.idtopico";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2326,8 +2278,8 @@ function listarItemPedido($usuario_id): array
         FROM pedido ped
         JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
         JOIN produto p ON ip.produto_idproduto = p.idproduto
-        JOIN usuario u ON ped.usuario_idusuario = u.idusuario
-        WHERE ped.usuario_idusuario = ?
+        JOIN usuario u ON ped.usuario_id = u.idusuario
+        WHERE ped.usuario_id = ?
         ORDER BY ped.data_pedido DESC
     ";
     $comando = mysqli_prepare($conexao, $sql);
@@ -2344,7 +2296,7 @@ function listarItemPedido($usuario_id): array
         FROM pedido ped
         JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
         JOIN produto p ON ip.produto_idproduto = p.idproduto
-        JOIN usuario u ON ped.usuario_idusuario = u.idusuario";
+        JOIN usuario u ON ped.usuario_id = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -2377,8 +2329,8 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
     FROM pedido ped
     JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
     JOIN produto p ON ip.produto_idproduto = p.idproduto
-    JOIN usuario u ON ped.usuario_idusuario = u.idusuario
-    WHERE ped.usuario_idusuario = ?
+    JOIN usuario u ON ped.usuario_id = u.idusuario
+    WHERE ped.usuario_id = ?
     ";
 
   // Filtros dinâmicos para status, data, produto e preço
@@ -2470,9 +2422,9 @@ function listarUsuarioTipo($tipo)
   $conexao = conectar();
 
 
-    $sql = " SELECT * FROM usuario WHERE tipo_usuario = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $tipo);
+  $sql = " SELECT * FROM usuario WHERE tipo_usuario = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $tipo);
 
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
@@ -2499,8 +2451,8 @@ function listarAssinaturas($idassinatura)
       a.data_inicio,
       a.data_fim
     FROM assinatura AS a
-    JOIN plano AS p ON a.plano_idplano = p.idplano
-    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario
+    JOIN plano AS p ON a.plano_id = p.idplano
+    JOIN usuario AS u ON a.usuario_id = u.idusuario
     WHERE a.idassinatura = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
@@ -2512,8 +2464,8 @@ function listarAssinaturas($idassinatura)
       a.data_inicio,
       a.data_fim
     FROM assinatura AS a
-    JOIN plano AS p ON a.plano_idplano = p.idplano
-    JOIN usuario AS u ON a.usuario_idusuario = u.idusuario";
+    JOIN plano AS p ON a.plano_id = p.idplano
+    JOIN usuario AS u ON a.usuario_id = u.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2702,12 +2654,12 @@ function editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoqu
   return $funcionou;
 }
 
-function editarRespostaForum($idresposta, $mensagem, $usuario_idusuario, $forum_idtopico)
+function editarRespostaForum($idresposta, $mensagem, $usuario_id, $forum_id)
 {
   $conexao = conectar();
 
   $sql = "UPDATE resposta_forum 
-          SET mensagem = ?, usuario_idusuario = ?, forum_idtopico = ?
+          SET mensagem = ?, usuario_id = ?, forum_id = ?
           WHERE idresposta = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2718,7 +2670,7 @@ function editarRespostaForum($idresposta, $mensagem, $usuario_idusuario, $forum_
   }
 
   // Ordem correta dos parâmetros
-  mysqli_stmt_bind_param($comando, "ssiii", $mensagem, $data_resposta, $usuario_idusuario, $forum_idtopico, $idresposta);
+  mysqli_stmt_bind_param($comando, "ssiii", $mensagem, $data_resposta, $usuario_id, $forum_id, $idresposta);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2763,15 +2715,15 @@ function cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, 
   return $funcionou;
 }
 
-function cadastrarPagamento($usuario_idusuario, $valor, $data_pagamento, $metodo, $status = 'sucesso')
+function cadastrarPagamento($usuario_id, $valor, $data_pagamento, $metodo, $status = 'sucesso')
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO pagamento (usuario_idusuario, valor, data_pagamento, metodo, status)
+  $sql = "INSERT INTO pagamento (usuario_id, valor, data_pagamento, metodo, status)
             VALUES (?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "idsss", $usuario_idusuario, $valor, $data_pagamento, $metodo, $status);
+  mysqli_stmt_bind_param($comando, "idsss", $usuario_id, $valor, $data_pagamento, $metodo, $status);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2779,12 +2731,12 @@ function cadastrarPagamento($usuario_idusuario, $valor, $data_pagamento, $metodo
 
   return $funcionou;
 }
-function editarPedido($idpedido, $usuario_idusuario, $data_pedido, $status)
+function editarPedido($idpedido, $usuario_id, $data_pedido, $status)
 {
   $conexao = conectar();
 
   $sql = "UPDATE pedido 
-          SET usuario_idusuario = ?, data_pedido = ?, status = ?
+          SET usuario_id = ?, data_pedido = ?, status = ?
           WHERE idpedido = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2795,7 +2747,7 @@ function editarPedido($idpedido, $usuario_idusuario, $data_pedido, $status)
   }
 
   // Ordem correta dos parâmetros
-  mysqli_stmt_bind_param($comando, "issi", $usuario_idusuario, $data_pedido, $status, $idpedido);
+  mysqli_stmt_bind_param($comando, "issi", $usuario_id, $data_pedido, $status, $idpedido);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2856,12 +2808,12 @@ function cadastrarExercicio($nome, $grupo_muscular, $descricao, $video_url)
   return $funcionou;
 }
 
-function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_idusuario)
+function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_id)
 {
   $conexao = conectar();
 
   $sql = "UPDATE assinatura 
-            SET data_inicio = ?, data_fim = ?, usuario_idusuario = ?
+            SET data_inicio = ?, data_fim = ?, usuario_id = ?
             WHERE idassinatura = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2871,8 +2823,8 @@ function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_idusu
     return false;
   }
 
-  // Ordem correta dos parâmetros: data_inicio, data_fim, usuario_idusuario, idassinatura
-  mysqli_stmt_bind_param($comando, "ssii", $data_inicio, $data_fim, $usuario_idusuario, $idassinatura);
+  // Ordem correta dos parâmetros: data_inicio, data_fim, usuario_id, idassinatura
+  mysqli_stmt_bind_param($comando, "ssii", $data_inicio, $data_fim, $usuario_id, $idassinatura);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2885,12 +2837,12 @@ function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_idusu
 
   return $funcionou;
 }
-function editarPagamentoDetalhe($idpagamento2, $pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
+function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
 {
   $conexao = conectar();
 
   $sql = "UPDATE pagamento_detalhe 
-            SET pagamento_idpagamento = ?, tipo = ?, bandeira_cartao = ?, ultimos_digitos = ?, codigo_pix = ?, linha_digitavel_boleto = ?
+            SET pagamento_id = ?, tipo = ?, bandeira_cartao = ?, ultimos_digitos = ?, codigo_pix = ?, linha_digitavel_boleto = ?
             WHERE idpagamento_detalhe = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2900,8 +2852,8 @@ function editarPagamentoDetalhe($idpagamento2, $pagamento_idpagamento, $tipo, $b
     return false;
   }
 
-  // Ordem: pagamento_idpagamento (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
-  mysqli_stmt_bind_param($comando, "isssssi", $pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto, $idpagamento2);
+  // Ordem: pagamento_id (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
+  mysqli_stmt_bind_param($comando, "isssssi", $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto, $idpagamento2);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2914,11 +2866,11 @@ function editarPagamentoDetalhe($idpagamento2, $pagamento_idpagamento, $tipo, $b
 
   return $funcionou;
 }
-function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_idusuario)
+function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_id)
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO dieta (descricao, data_inicio, data_fim, usuario_idusuario)
+  $sql = "INSERT INTO dieta (descricao, data_inicio, data_fim, usuario_id)
             VALUES (?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2928,8 +2880,8 @@ function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_idusuario)
     return false;
   }
 
-  // Ordem dos parâmetros: descricao (s), data_inicio (s), data_fim (s), usuario_idusuario (i)
-  mysqli_stmt_bind_param($comando, "sssi", $descricao, $data_inicio, $data_fim, $usuario_idusuario);
+  // Ordem dos parâmetros: descricao (s), data_inicio (s), data_fim (s), usuario_id (i)
+  mysqli_stmt_bind_param($comando, "sssi", $descricao, $data_inicio, $data_fim, $usuario_id);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2976,7 +2928,7 @@ function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $sala
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, foto_de_perfil)
+  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -2986,7 +2938,7 @@ function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $sala
     return false;
   }
 
-  mysqli_stmt_bind_param($comando, "ssssdis", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
+  mysqli_stmt_bind_param($comando, "ssssdii", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -3213,13 +3165,16 @@ SELECT
 
     -- USUÁRIO
     u.idusuario,
-    u.nome AS nome_usuario,
     u.email,
-    u.cpf,
-    u.telefone,
-    u.foto_de_perfil AS foto_perfil,
-    u.numero_matricula,
+    u.senha,
     u.tipo_usuario,
+
+    -- PERFIL USUÁRIO
+    pu.nome,
+    pu.cpf,
+    pu.data_nascimento,
+    pu.numero_matricula,
+    pu.foto_perfil,
 
     -- ENDEREÇO
     e.cep,
@@ -3357,20 +3312,22 @@ SELECT
 
 FROM gym_genesis.usuario u
 
+    LEFT JOIN gym_genesis.perfil_usuario pu on u.idusuario = pu.usuario_id
+    
     LEFT JOIN gym_genesis.endereco e 
         ON u.idusuario = e.usuario_id
 
     LEFT JOIN gym_genesis.assinatura a 
-        ON u.idusuario = a.usuario_idusuario
+        ON u.idusuario = a.usuario_id
 
     LEFT JOIN gym_genesis.plano p 
-        ON a.plano_idplano = p.idplano
+        ON a.plano_id = p.idplano
 
     LEFT JOIN gym_genesis.avaliacao_fisica af 
-        ON u.idusuario = af.usuario_idusuario
+        ON u.idusuario = af.usuario_id
 
     LEFT JOIN gym_genesis.dieta d 
-        ON u.idusuario = d.usuario_idusuario
+        ON u.idusuario = d.usuario_id
 
     LEFT JOIN gym_genesis.refeicao r 
         ON d.iddieta = r.dieta_id
@@ -3382,7 +3339,7 @@ FROM gym_genesis.usuario u
         ON da.alimento_idalimento = al.idalimento
 
     LEFT JOIN gym_genesis.treino t 
-        ON u.idusuario = t.usuario_idusuario
+        ON u.idusuario = t.usuario_id
 
     LEFT JOIN gym_genesis.treino_exercicio te 
         ON t.idtreino = te.treino_id
@@ -3391,7 +3348,7 @@ FROM gym_genesis.usuario u
         ON te.exercicio_id = ex.idexercicio
 
     LEFT JOIN gym_genesis.aula_agendada aa 
-        ON u.idusuario = aa.usuario_idusuario
+        ON u.idusuario = aa.usuario_id
 
     LEFT JOIN gym_genesis.historico_treino ht 
         ON u.idusuario = ht.usuario_id
@@ -3400,13 +3357,13 @@ FROM gym_genesis.usuario u
         ON u.idusuario = mu.usuario_id
 
     LEFT JOIN gym_genesis.forum f 
-        ON u.idusuario = f.usuario_idusuario
+        ON u.idusuario = f.usuario_id
 
     LEFT JOIN gym_genesis.resposta_forum rf 
-        ON u.idusuario = rf.usuario_idusuario
+        ON u.idusuario = rf.usuario_id
 
     LEFT JOIN gym_genesis.pedido pd 
-        ON u.idusuario = pd.usuario_idusuario
+        ON u.idusuario = pd.usuario_id
 
     LEFT JOIN gym_genesis.item_pedido ip 
         ON pd.idpedido = ip.pedido_idpedido
@@ -3415,10 +3372,10 @@ FROM gym_genesis.usuario u
         ON ip.produto_idproduto = pr.idproduto
 
     LEFT JOIN gym_genesis.pagamento pg 
-        ON pd.pagamento_idpagamento = pg.idpagamento
+        ON pd.pagamento_id = pg.idpagamento
 
     LEFT JOIN gym_genesis.pagamento_detalhe pd2 
-        ON pg.idpagamento = pd2.pagamento_idpagamento
+        ON pg.idpagamento = pd2.pagamento_id
 
     LEFT JOIN gym_genesis.professor_aluno pa 
         ON u.idusuario = pa.idaluno
@@ -3427,7 +3384,7 @@ FROM gym_genesis.usuario u
         ON pa.idprofessor = prof.idusuario
 
     LEFT JOIN gym_genesis.recuperacao_senha rs 
-        ON u.idusuario = rs.usuario_idusuario
+        ON u.idusuario = rs.usuario_id
 
 WHERE
     u.idusuario = $id
@@ -3458,7 +3415,7 @@ LIMIT 1;
 function atualizarFotoUsuario($imagem, $idusuario)
 {
   $conexao = conectar();
-  $sql = 'UPDATE usuario SET foto_de_perfil = ? WHERE idusuario = ?';
+  $sql = 'UPDATE perfil_usuario SET foto_perfil = ? WHERE idusuario = ?';
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'si', $imagem, $idusuario);
 
@@ -3524,111 +3481,65 @@ function calcularIMC($pesoKg, $alturaCm): string
   // Retorna o IMC com duas casas decimais
   return number_format($imc, 2);
 }
-function cadastrarProfessorAluno($idprofessor, $idaluno)
+
+
+function cadastrarHistoricoPeso($idusuario, $peso)
 {
   $conexao = conectar();
-
-  $sql = "INSERT INTO professor_aluno (idprofessor, idaluno) VALUES (?, ?)";
-
+  $sql = "INSERT INTO historico_peso (idusuario, peso) VALUES (?, ?)";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "ii", $idprofessor, $idaluno);
+  mysqli_stmt_bind_param($comando, "id", $idusuario, $peso);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
-
   return $funcionou;
 }
 
-function editarProfessorAluno($idprofessor_aluno, $idprofessor, $idaluno)
+function listarHistoricoPeso($idusuario = null)
 {
   $conexao = conectar();
 
-  $sql = "UPDATE professor_aluno SET idprofessor = ?, idaluno = ? WHERE idprofessor_aluno = ?";
+  if ($idusuario) {
+    $sql = "SELECT * FROM historico_peso WHERE idusuario = ? ORDER BY data_registro DESC";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $idusuario);
+  } else {
+    $sql = "SELECT * FROM historico_peso ORDER BY data_registro DESC";
+    $comando = mysqli_prepare($conexao, $sql);
+  }
 
+  mysqli_stmt_execute($comando);
+  $resultado = mysqli_stmt_get_result($comando);
+  $dados = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $dados;
+}
+
+function editarHistoricoPeso($idhistorico_peso, $peso)
+{
+  $conexao = conectar();
+  $sql = "UPDATE historico_peso SET peso=? WHERE idhistorico_peso=?";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "iii", $idprofessor, $idaluno, $idprofessor_aluno);
+  mysqli_stmt_bind_param($comando, "di", $peso, $idhistorico_peso);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
-
   return $funcionou;
 }
 
-
-
-function deletarProfessorAluno($idprofessor_aluno)
+function deletarHistoricoPeso($idhistorico_peso)
 {
   $conexao = conectar();
-
-  $sql = "DELETE FROM professor_aluno WHERE idprofessor_aluno = ?";
-
+  $sql = "DELETE FROM historico_peso WHERE idhistorico_peso=?";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "i", $idprofessor_aluno);
+  mysqli_stmt_bind_param($comando, "i", $idhistorico_peso);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
-
   return $funcionou;
 }
-
-function cadastrarHistoricoPeso($idusuario, $peso) {
-    $conexao = conectar();
-    $sql = "INSERT INTO historico_peso (idusuario, peso) VALUES (?, ?)";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "id", $idusuario, $peso);
-
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-}
-
-function listarHistoricoPeso($idusuario = null) {
-    $conexao = conectar();
-
-    if ($idusuario) {
-        $sql = "SELECT * FROM historico_peso WHERE idusuario = ? ORDER BY data_registro DESC";
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "i", $idusuario);
-    } else {
-        $sql = "SELECT * FROM historico_peso ORDER BY data_registro DESC";
-        $comando = mysqli_prepare($conexao, $sql);
-    }
-
-    mysqli_stmt_execute($comando);
-    $resultado = mysqli_stmt_get_result($comando);
-    $dados = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $dados;
-}
-
-function editarHistoricoPeso($idhistorico_peso, $peso) {
-    $conexao = conectar();
-    $sql = "UPDATE historico_peso SET peso=? WHERE idhistorico_peso=?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "di", $peso, $idhistorico_peso);
-
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-}
-
-function deletarHistoricoPeso($idhistorico_peso) {
-    $conexao = conectar();
-    $sql = "DELETE FROM historico_peso WHERE idhistorico_peso=?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idhistorico_peso);
-
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-}
-
-

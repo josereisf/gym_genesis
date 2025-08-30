@@ -11,7 +11,7 @@ if (empty($input)) {
 }
 
 $idpagamento2 = $input['idpagamento2'] ?? null;
-$pagamento_idpagamento = $input['pagamento_idpagamento'] ?? null;
+$pagamento_id = $input['pagamento_id'] ?? null;
 $tipo = $input['tipo'] ?? null;
 $bandeira_cartao = $input['bandeira_cartao'] ?? null;
 $ultimos_digitos = $input['ultimos_digitos'] ?? null;
@@ -24,10 +24,10 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        if (!$pagamento_idpagamento || !$tipo) {
+        if (!$pagamento_id || !$tipo) {
             enviarResposta(false, 'Pagamento e tipo são obrigatórios');
         }
-        $ok = cadastrarPagamentoDetalhe($pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto);
+        $ok = cadastrarPagamentoDetalhe($pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto);
         if ($ok) {
             enviarResposta(true, 'Detalhe do pagamento cadastrado com sucesso');
         } else {
@@ -36,10 +36,10 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$idpagamento2 || !$pagamento_idpagamento || !$tipo) {
+        if (!$idpagamento2 || !$pagamento_id || !$tipo) {
             enviarResposta(false, 'ID, pagamento e tipo são obrigatórios');
         }
-        $ok = editarPagamentoDetalhe($idpagamento2, $pagamento_idpagamento, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto);
+        $ok = editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto);
         if ($ok) {
             enviarResposta(true, 'Detalhe do pagamento editado com sucesso');
         } else {

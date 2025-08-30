@@ -79,7 +79,7 @@ $nome = $resultado[0]['nome'];
             foreach ($alunos as $a) {
               $idaluno = $a['idaluno'];
               $horarios = listarAulaAgendadaUsuario($idaluno);
-              $idtreino = $horarios[0]["treino_idtreino"];
+              $idtreino = $horarios[0]["treino_id"];
               $treino = listarTreino($idtreino);
               echo "{
                 dia: '" . $horarios[0]['dia_semana'] . "',
@@ -132,13 +132,13 @@ $nome = $resultado[0]['nome'];
           </thead>
           <tbody>
             <?php
-            foreach ($alunos AS $a){
+            foreach ($alunos as $a) {
               $idaluno = $a['idaluno'];
               $meta = listarMetaUsuario($idaluno);
-            echo "<tr class='hover:bg-gray-800'> ";
-            echo "  <td class='p-3'>".$a['nome_aluno']."</td> ";
-            echo "  <td class='p-3'>".$meta[0]['descricao']."</td> ";
-            echo "</tr> ";
+              echo "<tr class='hover:bg-gray-800'> ";
+              echo "  <td class='p-3'>" . $a['nome_aluno'] . "</td> ";
+              echo "  <td class='p-3'>" . $meta[0]['descricao'] . "</td> ";
+              echo "</tr> ";
             }
             ?>
           </tbody>

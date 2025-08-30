@@ -220,7 +220,7 @@ API_URL="http://localhost:83/public/api/index.php?entidade=pagamento_detalhe"
 echo "========== PAGAMENTO_DETALHE - CADASTRAR =========="
 curl -s -X POST "$API_URL&acao=cadastrar" \
     -H "Content-Type: application/json" \
-    -d '{"tipo":"cartao","bandeira_cartao":"Mastercard","ultimos_digitos":"5678","codigo_pix":null,"linha_digitavel_boleto":null,"pagamento_idpagamento":1}' | jq
+    -d '{"tipo":"cartao","bandeira_cartao":"Mastercard","ultimos_digitos":"5678","codigo_pix":null,"linha_digitavel_boleto":null,"pagamento_id":1}' | jq
 echo -e "\n"
 
 echo "========== PAGAMENTO_DETALHE - LISTAR =========="
@@ -230,7 +230,7 @@ echo -e "\n"
 echo "========== PAGAMENTO_DETALHE - EDITAR =========="
 curl -s -X POST "$API_URL&acao=editar" \
     -H "Content-Type: application/json" \
-    -d '{"id":1,"tipo":"cartao","bandeira_cartao":"Visa","ultimos_digitos":"4321","codigo_pix":null,"linha_digitavel_boleto":null,"pagamento_idpagamento":1}' | jq
+    -d '{"id":1,"tipo":"cartao","bandeira_cartao":"Visa","ultimos_digitos":"4321","codigo_pix":null,"linha_digitavel_boleto":null,"pagamento_id":1}' | jq
 echo -e "\n"
 
 echo "========== PAGAMENTO_DETALHE - LISTAR NOVAMENTE =========="
@@ -281,7 +281,7 @@ API_URL="http://localhost:83/public/api/index.php?entidade=pedido"
 echo "========== PEDIDO - CADASTRAR =========="
 curl -s -X POST "$API_URL&acao=cadastrar" \
     -H "Content-Type: application/json" \
-    -d '{"usuario_idusuario":1,"data_pedido":"2025-04-20 15:00:00","status":"processando","pagamento_idpagamento":1}' | jq
+    -d '{"usuario_idusuario":1,"data_pedido":"2025-04-20 15:00:00","status":"processando","pagamento_id":1}' | jq
 echo -e "\n"
 
 echo "========== PEDIDO - LISTAR =========="
@@ -291,7 +291,7 @@ echo -e "\n"
 echo "========== PEDIDO - EDITAR =========="
 curl -s -X POST "$API_URL&acao=editar" \
     -H "Content-Type: application/json" \
-    -d '{"id":1,"usuario_idusuario":1,"data_pedido":"2025-04-22 16:30:00","status":"enviado","pagamento_idpagamento":1}' | jq
+    -d '{"id":1,"usuario_idusuario":1,"data_pedido":"2025-04-22 16:30:00","status":"enviado","pagamento_id":1}' | jq
 echo -e "\n"
 
 echo "========== PEDIDO - LISTAR NOVAMENTE =========="
