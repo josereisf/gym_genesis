@@ -255,7 +255,7 @@ VALUES
 ('Anual', '365 dias');
 -- 4.1. assinatura (continuação dos 20 inserts)
 INSERT INTO `gym_genesis`.`assinatura` 
-(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_idplano`)
+(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_id`)
 VALUES
 ('2025-05-01', '2025-06-01', 4, 1),
 ('2025-05-15', '2025-08-15', 5, 2),
@@ -278,7 +278,7 @@ VALUES
 -- 4.1. assinatura
 -- Inserção de assinaturas vinculadas a usuários e planos
 INSERT INTO `gym_genesis`.`assinatura`
-(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_idplano`)
+(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_id`)
 VALUES
 ('2025-04-01', '2025-07-01', 1, 1), -- Usuário 1, Plano Mensal
 ('2025-03-15', '2025-06-15', 2, 2), -- Usuário 2, Plano Trimestral
@@ -507,7 +507,7 @@ INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
 
 
 -- 7.2. resposta_forum (continuação dos 20 inserts)
-INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
+INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
   ('Mantenha a coluna neutra.', 5, 4),
   ('Sim, creatina é segura para a maioria.', 6, 5),
   ('Fortaleça o manguito rotador.', 7, 6),
@@ -528,7 +528,7 @@ INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
 -- 7.1. forum
 
 -- 7.2. resposta_forum
-INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
+INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
   ('Tente aumentar 2kg por semana.', 2, 1),
   ('Carboidrato e proteína juntos.', 3, 2),
   ('Barra olímpica convencional.', 1, 3);
@@ -568,7 +568,7 @@ VALUES
 
 
 INSERT INTO `gym_genesis`.`pagamento_detalhe` 
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
   ('cartao', 'Mastercard', '5678', NULL, NULL, 4),
   ('pix', NULL, NULL, 'pix-codigo-xyz001', NULL, 5),
@@ -594,7 +594,7 @@ VALUES
 
 -- 9.2. pagamento_detalhe
 INSERT INTO `gym_genesis`.`pagamento_detalhe` 
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
   ('cartao', 'Visa', '1234', NULL, NULL, 1),
   ('pix', NULL, NULL, 'pix-codigo-xyz987', NULL, 2),
@@ -605,7 +605,7 @@ VALUES
 
 -- 8. Pedido, item_pedido
 INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
+(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_id`)
 VALUES
   (4, '2025-04-18 09:00:00', 'processando', 4),
   (5, '2025-04-19 15:30:00', 'enviado', 5),
@@ -626,7 +626,7 @@ VALUES
   (20, '2025-05-04 15:20:00', 'enviado', 20);
   -- 8.1. pedido
 INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
+(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_id`)
 VALUES
   (1, '2025-04-15 14:00:00', 'processando', 1),
   (2, '2025-04-16 10:30:00', 'enviado', 2),
@@ -714,7 +714,7 @@ VALUES
 -- Inserindo registros na tabela pagamento_detalhe_assinatura
 -- Supondo que os IDs gerados automaticamente para os pagamentos acima foram 1, 2 e 3
 INSERT INTO `gym_genesis`.`pagamento_detalhe_assinatura`
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
 ('cartao', 'Mastercard', '5678', NULL, NULL, 4),
 ('pix', NULL, NULL, 'pix-codigo-abc124', NULL, 5),
@@ -734,7 +734,7 @@ VALUES
 ('cartao', 'Elo', '7890', NULL, NULL, 19),
 ('pix', NULL, NULL, 'pix-codigo-abc129', NULL, 20);
 INSERT INTO `gym_genesis`.`pagamento_detalhe_assinatura`
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
 ('cartao', 'Visa', '1234', NULL, NULL, 1),
 ('pix', NULL, NULL, 'pix-codigo-abc123', NULL, 2),
@@ -768,7 +768,7 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
 
 -- 10.2. aula_agendada (continuação dos 20 inserts)
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
 VALUES 
 ('2025-05-01', 'Quinta', '09:00:00', '10:00:00', 4, 4),
 ('2025-05-02', 'Sexta', '17:00:00', '18:00:00', 5, 5),
@@ -789,17 +789,17 @@ VALUES
 ('2025-05-17', 'Sábado', '10:30:00', '11:30:00', 20, 20);
 -- 10.2. aula_agendada
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
 VALUES 
 ('2025-04-25', 'Sexta', '08:00:00', '09:00:00', 1, 1);
 
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
 VALUES 
 ('2025-04-27', 'Domingo', '10:00:00', '11:30:00', 2, 2);
 
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
 VALUES 
 ('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3, 3);
 
@@ -926,7 +926,7 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
 VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 24);
 
 INSERT INTO `gym_genesis`.`assinatura` 
-(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_idplano`)
+(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_id`)
 VALUES 
 ('2025-08-25', '2025-09-24', 24, 1);
 
@@ -990,7 +990,7 @@ INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, statu
   (29, 9, 4, 10, 65.00, 60),
   (30, 10, 5, 8, 85.00, 120);
 
-INSERT INTO `gym_genesis`.`aula_agendada` (`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_idtreino`) VALUES 
+INSERT INTO `gym_genesis`.`aula_agendada` (`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) VALUES 
 ('2025-05-18', 'Domingo', '08:00:00', '09:00:00', 24, 3),
 ('2025-05-19', 'Segunda', '17:30:00', '18:30:00', 24, 7),
 ('2025-05-20', 'Terça', '07:00:00', '08:00:00', 24, 12),
