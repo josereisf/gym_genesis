@@ -1,5 +1,5 @@
 <?php
-require_once "../funcao.php"; // ajuste o caminho conforme necessário
+require_once "funcao.php"; // ajuste o caminho conforme necessário
 
 // Coletar dados do formulário
 $usuario_id = $_GET['usuario_id'] ?? null;

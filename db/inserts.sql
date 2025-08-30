@@ -137,28 +137,38 @@ INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao,
 
 -- 2. Usuario e tabelas dependentes diretas
 -- 2.1. usuario (20 inserts)
-INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES
-('Lucas Oliveira', 'senha4', 'lucas@ex.com', '11122233344', '1991-03-15', '11911112222', 'padrao.png', 'MAT1004', 1),
-('Fernanda Lima', 'senha5', 'fernanda@ex.com', '22233344455', '1988-11-30', '11922223333', 'padrao.png', 'MAT1005', 2),
-('Rafael Souza', 'senha6', 'rafael@ex.com', '33344455566', '1995-06-25', '11933334444', 'padrao.png', 'MAT1006', 1),
-('Juliana Costa', 'senha7', 'juliana@ex.com', '44455566677', '1993-09-12', '11944445555', 'padrao.png', 'MAT1007', 2),
-('Gabriel Martins', 'senha8', 'gabriel@ex.com', '55566677788', '1990-01-20', '11955556666', 'padrao.png', 'MAT1008', 1),
-('Patricia Alves', 'senha9', 'patricia@ex.com', '66677788899', '1987-04-18', '11966667777', 'padrao.png', 'MAT1009', 2),
-('Rodrigo Melo', 'senha10', 'rodrigo@ex.com', '77788899900', '1992-07-05', '11977778888', 'padrao.png', 'MAT1010', 1),
-('Amanda Ribeiro', 'senha11', 'amanda@ex.com', '88899900011', '1994-10-22', '11988889999', 'padrao.png', 'MAT1011', 2),
-('Thiago Fernandes', 'senha12', 'thiago@ex.com', '99900011122', '1989-02-28', '11999990011', 'padrao.png', 'MAT1012', 1),
-('Camila Duarte', 'senha13', 'camila@ex.com', '00011122233', '1996-08-14', '11900001112', 'padrao.png', 'MAT1013', 2),
-('Vinicius Rocha', 'senha14', 'vinicius@ex.com', '11122233355', '1993-12-03', '11911112223', 'padrao.png', 'MAT1014', 1),
-('Beatriz Gomes', 'senha15', 'beatriz@ex.com', '22233344466', '1991-05-19', '11922223334', 'padrao.png', 'MAT1015', 2),
-('Felipe Barros', 'senha16', 'felipe@ex.com', '33344455577', '1988-09-27', '11933334445', 'padrao.png', 'MAT1016', 1),
-('Larissa Pinto', 'senha17', 'larissa@ex.com', '44455566688', '1995-03-11', '11944445556', 'padrao.png', 'MAT1017', 2),
-('Bruno Teixeira', 'senha18', 'brunot@ex.com', '55566677799', '1992-06-06', '11955556667', 'padrao.png', 'MAT1018', 1),
-('Mariana Freitas', 'senha19', 'marianaf@ex.com', '66677788800', '1990-12-21', '11966667778', 'padrao.png', 'MAT1019', 2),
-('Diego Cardoso', 'senha20', 'diego@ex.com', '77788899911', '1987-07-09', '11977778889', 'padrao.png', 'MAT1020', 1),
-('Aline Castro', 'senha21', 'aline@ex.com', '88899900022', '1994-04-16', '11988889910', 'padrao.png', 'MAT1021', 2),
-('Pedro Henrique', 'senha22', 'pedro@ex.com', '99900011133', '1991-11-02', '11999990012', 'padrao.png', 'MAT1022', 1),
-('Sofia Almeida', 'senha23', 'sofia@ex.com', '00011122244', '1996-01-29', '11900001113', 'padrao.png', 'MAT1023', 2);
-
+INSERT INTO usuario (senha, email, tipo_usuario) VALUES
+('senha4', 'lucas@ex.com', 1),
+('senha5', 'fernanda@ex.com', 2),
+('senha6', 'rafael@ex.com', 1),
+('senha7', 'juliana@ex.com', 2),
+('senha8', 'gabriel@ex.com', 1),
+('senha9', 'patricia@ex.com', 2),
+('senha10', 'rodrigo@ex.com', 1),
+('senha11', 'amanda@ex.com', 2),
+('senha12', 'thiago@ex.com', 1),
+('senha13', 'camila@ex.com', 2),
+('senha14', 'vinicius@ex.com', 1),
+('senha15', 'beatriz@ex.com', 2),
+('senha16', 'felipe@ex.com', 1),
+('senha17', 'larissa@ex.com', 2),
+('senha18', 'brunot@ex.com', 1),
+('senha19', 'marianaf@ex.com', 2),
+('senha20', 'diego@ex.com', 1),
+('senha21', 'aline@ex.com', 2),
+('senha22', 'pedro@ex.com', 1),
+('senha23', 'sofia@ex.com', 2);
+INSERT INTO perfil_usuario (usuario_id, nome, cpf, data_nascimento, numero_matricula, foto_perfil) VALUES
+  (1, 'Lucas Silva', '123.456.789-01', '1990-05-10', 'MAT2025001', NULL),
+  (2, 'Fernanda Souza', '234.567.890-12', '1988-08-22', 'MAT2025002', NULL),
+  (3, 'Rafael Costa', '345.678.901-23', '1995-03-15', 'MAT2025003', NULL),
+  (4, 'Juliana Lima', '456.789.012-34', '1992-12-01', 'MAT2025004', NULL),
+  (5, 'Gabriel Rocha', '567.890.123-45', '1987-07-19', 'MAT2025005', NULL),
+  (6, 'Patricia Nunes', '678.901.234-56', '1993-11-30', 'MAT2025006', NULL),
+  (7, 'Rodrigo Alves', '789.012.345-67', '1991-02-25', 'MAT2025007', NULL),
+  (8, 'Amanda Torres', '890.123.456-78', '1996-09-14', 'MAT2025008', NULL),
+  (9, 'Thiago Martins', '901.234.567-89', '1989-04-07', 'MAT2025009', NULL),
+  (10, 'Camila Prado', '012.345.678-90', '1994-06-21', 'MAT2025010', NULL);
 -- 2.2. cupom_desconto (20 inserts)
 INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_validade, quantidade_uso, tipo) VALUES
 ('PROMO15', 15.00, NULL, '2025-12-31', 50, 'percentual'),
@@ -181,44 +191,33 @@ INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_va
 ('FIXO45', NULL, 45.00, '2025-06-05', 7, 'fixo'),
 ('PROMO60', 60.00, NULL, '2025-09-05', 2, 'percentual'),
 ('FIXO60', NULL, 60.00, '2025-08-05', 1, 'fixo');
--- 2.1. usuario
-INSERT INTO usuario (nome, senha, email, cpf, data_de_nascimento, telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES
-  ('Ana Silva',     'senha1', 'ana@ex.com',  '12345678901', '1990-05-10', '11999990000', NULL, 'MAT1001', 1),
-  ('Bruno Costa',   'senha2', 'bruno@ex.com','98765432100', '1985-07-22', '11988881111', NULL, 'MAT1002', 2),
-  ('Carla Pereira', 'senha3', 'carla@ex.com','56473829100', '1992-12-01', '11977772222', NULL, 'MAT1003', 1);
 
--- 2.2. cupom_desconto
-INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_validade, quantidade_uso, tipo) VALUES
-  ('PROMO10', 10.00, NULL, '2025-12-31', 100, 'percentual'),
-  ('FIXO20', NULL, 20.00, '2025-06-30', 50, 'fixo'),
-  ('PROMO5', 5.00, NULL, '2025-09-30', 200, 'percentual');
 
 -- 3. Funcionário e endereço
 -- 3.1. funcionario (continuação dos 20 inserts)
-INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id) VALUES
-  ('Carlos Mendes', 'carlos@ex.com', '11666667777', '2024-02-20', 3200.00, 4),
-  ('Renata Farias', 'renata@ex.com', '11777778888', '2023-09-10', 4100.00, 5),
-  ('João Batista', 'joao@ex.com', '11888889999', '2025-03-05', 2800.00, 6),
-  ('Simone Lopes', 'simone@ex.com', '11999990000', '2024-04-12', 3500.00, 7),
-  ('Felipe Ramos', 'felipe@ex.com', '11222223333', '2023-10-18', 3700.00, 8),
-  ('Patricia Nunes', 'patrician@ex.com', '11333334445', '2025-05-22', 3300.00, 9),
-  ('Roberto Dias', 'roberto@ex.com', '11444445556', '2024-06-30', 2900.00, 10),
-  ('Juliana Prado', 'julianap@ex.com', '11555556667', '2023-11-25', 4200.00, 11),
-  ('Fernando Alves', 'fernando@ex.com', '11666667788', '2025-07-14', 3100.00, 12),
-  ('Amanda Torres', 'amandat@ex.com', '11777778899', '2024-08-19', 3600.00, 13),
-  ('Ricardo Lima', 'ricardo@ex.com', '11888889910', '2023-12-03', 4000.00, 14),
-  ('Tatiane Souza', 'tatiane@ex.com', '11999990021', '2025-09-27', 3400.00, 15),
-  ('Gustavo Pires', 'gustavo@ex.com', '11222223344', '2024-10-05', 3800.00, 16),
-  ('Eliane Rocha', 'eliane@ex.com', '11333334456', '2023-01-15', 2950.00, 17),
-  ('Marcelo Cunha', 'marcelo@ex.com', '11444445567', '2025-02-28', 4100.00, 18),
-  ('Vanessa Martins', 'vanessa@ex.com', '11555556678', '2024-03-22', 3250.00, 19),
-  ('Bruno Ferreira', 'brunof@ex.com', '11666667789', '2023-04-11', 3750.00, 20);
-
+INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
+  ('Carlos Mendes', 'carlos@ex.com', '11666667777', '2024-02-20', 3200.00, 4, 1),
+  ('Renata Farias', 'renata@ex.com', '11777778888', '2023-09-10', 4100.00, 5, 2),
+  ('João Batista', 'joao@ex.com', '11888889999', '2025-03-05', 2800.00, 6, 3),
+  ('Simone Lopes', 'simone@ex.com', '11999990000', '2024-04-12', 3500.00, 7, 4),
+  ('Felipe Ramos', 'felipe@ex.com', '11222223333', '2023-10-18', 3700.00, 8, 5),
+  ('Patricia Nunes', 'patrician@ex.com', '11333334445', '2025-05-22', 3300.00, 9, 6),
+  ('Roberto Dias', 'roberto@ex.com', '11444445556', '2024-06-30', 2900.00, 10, 7),
+  ('Juliana Prado', 'julianap@ex.com', '11555556667', '2023-11-25', 4200.00, 11, 8),
+  ('Fernando Alves', 'fernando@ex.com', '11666667788', '2025-07-14', 3100.00, 12, 9),
+  ('Amanda Torres', 'amandat@ex.com', '11777778899', '2024-08-19', 3600.00, 13, 10),
+  ('Ricardo Lima', 'ricardo@ex.com', '11888889910', '2023-12-03', 4000.00, 14, 11),
+  ('Tatiane Souza', 'tatiane@ex.com', '11999990021', '2025-09-27', 3400.00, 15, 12),
+  ('Gustavo Pires', 'gustavo@ex.com', '11222223344', '2024-10-05', 3800.00, 16, 13),
+  ('Eliane Rocha', 'eliane@ex.com', '11333334456', '2023-01-15', 2950.00, 17, 14),
+  ('Marcelo Cunha', 'marcelo@ex.com', '11444445567', '2025-02-28', 4100.00, 18, 15),
+  ('Vanessa Martins', 'vanessa@ex.com', '11555556678', '2024-03-22', 3250.00, 19, 16),
+  ('Bruno Ferreira', 'brunof@ex.com', '11666667789', '2023-04-11', 3750.00, 20, 17);
 -- 3.1. funcionario
-INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id) VALUES
-  ('Eduardo Lima', 'eduardo@ex.com', '11333334444', '2024-01-15', 3000.00, 1),
-  ('Mariana Souza','mariana@ex.com','11444445555', '2023-08-01', 4500.00, 2),
-  ('Paulo Rocha',  'paulo@ex.com',  '11555556666', '2025-02-10', 2500.00, 3);
+INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
+  ('Eduardo Lima', 'eduardo@ex.com', '11333334444', '2024-01-15', 3000.00, 1, 18),
+  ('Mariana Souza','mariana@ex.com','11444445555', '2023-08-01', 4500.00, 2, 19),
+  ('Paulo Rocha',  'paulo@ex.com',  '11555556666', '2025-02-10', 2500.00, 3, 20);
 
 -- 3.2. endereco (continuação dos 20 inserts)
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado) VALUES
@@ -255,7 +254,7 @@ VALUES
 ('Anual', '365 dias');
 -- 4.1. assinatura (continuação dos 20 inserts)
 INSERT INTO `gym_genesis`.`assinatura` 
-(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_id`)
+(`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
 VALUES
 ('2025-05-01', '2025-06-01', 4, 1),
 ('2025-05-15', '2025-08-15', 5, 2),
@@ -278,7 +277,7 @@ VALUES
 -- 4.1. assinatura
 -- Inserção de assinaturas vinculadas a usuários e planos
 INSERT INTO `gym_genesis`.`assinatura`
-(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_id`)
+(`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
 VALUES
 ('2025-04-01', '2025-07-01', 1, 1), -- Usuário 1, Plano Mensal
 ('2025-03-15', '2025-06-15', 2, 2), -- Usuário 2, Plano Trimestral
@@ -311,7 +310,7 @@ VALUES
 
 -- 5.1. dieta
 INSERT INTO `gym_genesis`.`dieta` 
-(`descricao`, `data_inicio`, `data_fim`, `usuario_idusuario`) 
+(`descricao`, `data_inicio`, `data_fim`, `usuario_id`) 
 VALUES
   ('Dieta low carb', '2025-04-01', '2025-06-01', 4),
   ('Dieta vegana', '2025-05-10', NULL, 5),
@@ -333,7 +332,7 @@ VALUES
 
   -- 5.1. dieta
 INSERT INTO `gym_genesis`.`dieta` 
-(`descricao`, `data_inicio`, `data_fim`, `usuario_idusuario`) 
+(`descricao`, `data_inicio`, `data_fim`, `usuario_id`) 
 VALUES
   ('Dieta de ganho de massa', '2025-01-01', '2025-03-01', 1),
   ('Dieta de definição', '2025-02-15', NULL, 2),
@@ -369,7 +368,7 @@ VALUES
 
 -- 5.3. dieta_alimentar
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
-(`alimento_idalimento`, `refeicao_idrefeicao`, `quantidade`, `observacao`)
+(`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
 VALUES
   (4, 4, '50g', 'Aveia para café da manhã'),
   (5, 5, '120g', 'Salmão grelhado no almoço'),
@@ -393,7 +392,7 @@ VALUES
 
 -- 5.3. dieta_alimento
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
-(`alimento_idalimento`, `refeicao_idrefeicao`, `quantidade`, `observacao`)
+(`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
 VALUES
 (1, 1, '200g', 'Proteína para o café da manhã'),
 (2, 2, '150g', 'Carboidrato para o almoço'),
@@ -402,7 +401,7 @@ VALUES
 
 -- 6. Treino, treino_exercicio e historico_treino
 -- 6.1. treino (continuação dos 20 inserts)
-INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
+INSERT INTO treino (tipo, horario, descricao, funcionario_id) VALUES
   ('Hipertrofia', '09:00:00', 'Treino de membros inferiores', 4),
   ('Funcional', '17:00:00', 'Circuito funcional', 5),
   ('Cardio', '07:30:00', 'Bicicleta ergométrica', 6),
@@ -420,7 +419,7 @@ INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
   ('Cardio', '07:00:00', 'Corrida longa', 18),
   ('Resistência', '20:30:00', 'Treino de resistência avançado', 19),
   ('Funcional', '10:30:00', 'Circuito funcional básico', 20);
-  INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
+  INSERT INTO treino (tipo, horario, descricao, funcionario_id) VALUES
   ('Força', '08:00:00', 'Treino de força peitoral', 1),
   ('Cardio','18:00:00', 'Corrida na esteira',      2),
   ('Resistência','10:00:00', 'Circuito full body',   3);
@@ -482,7 +481,7 @@ INSERT INTO historico_treino (usuario_id, treino_id, data_execucao, observacoes)
 
 -- 7. Forum, resposta_forum
 -- 7.1. forum (continuação dos 20 inserts)
-INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
+INSERT INTO forum (titulo, descricao, usuario_id) VALUES
   ('Dúvida sobre agachamento', 'Qual a postura correta?', 4),
   ('Suplementação', 'Creatina é segura?', 5),
   ('Lesão no ombro', 'Como evitar?', 6),
@@ -500,14 +499,14 @@ INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
   ('Treino de resistência', 'Como evoluir?', 18),
   ('Treino em grupo', 'Vantagens?', 19),
   ('Treino outdoor', 'Precauções?', 20);
-  INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
+  INSERT INTO forum (titulo, descricao, usuario_id) VALUES
   ('Dúvida Treino Peitoral', 'Como evoluir no supino?', 1),
   ('Nutrição Pós-Treino',    'O que comer após o treino?', 2),
   ('Equipamentos',           'Qual melhor barra?', 3);
 
 
 -- 7.2. resposta_forum (continuação dos 20 inserts)
-INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
+INSERT INTO resposta_forum (mensagem, usuario_id, forum_id) VALUES
   ('Mantenha a coluna neutra.', 5, 4),
   ('Sim, creatina é segura para a maioria.', 6, 5),
   ('Fortaleça o manguito rotador.', 7, 6),
@@ -528,7 +527,7 @@ INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
 -- 7.1. forum
 
 -- 7.2. resposta_forum
-INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
+INSERT INTO resposta_forum (mensagem, usuario_id, forum_id) VALUES
   ('Tente aumentar 2kg por semana.', 2, 1),
   ('Carboidrato e proteína juntos.', 3, 2),
   ('Barra olímpica convencional.', 1, 3);
@@ -605,7 +604,7 @@ VALUES
 
 -- 8. Pedido, item_pedido
 INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_id`)
+(`usuario_id`, `data_pedido`, `status`, `pagamento_id`)
 VALUES
   (4, '2025-04-18 09:00:00', 'processando', 4),
   (5, '2025-04-19 15:30:00', 'enviado', 5),
@@ -626,7 +625,7 @@ VALUES
   (20, '2025-05-04 15:20:00', 'enviado', 20);
   -- 8.1. pedido
 INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_id`)
+(`usuario_id`, `data_pedido`, `status`, `pagamento_id`)
 VALUES
   (1, '2025-04-15 14:00:00', 'processando', 1),
   (2, '2025-04-16 10:30:00', 'enviado', 2),
@@ -682,67 +681,9 @@ VALUES
 -- 9.1. pagamento
 
 
-
-INSERT INTO `gym_genesis`.`pagamento_assinatura` 
-(`valor`, `data_pagamento`, `metodo`, `status`, `assinatura_idassinatura`)
-VALUES
-(99.90, NOW(), 'cartao', 'sucesso', 4),
-(79.90, NOW(), 'pix', 'sucesso', 5),
-(59.90, NOW(), 'boleto', 'falha', 6),
-(89.90, NOW(), 'cartao', 'sucesso', 7),
-(69.90, NOW(), 'pix', 'sucesso', 8),
-(49.90, NOW(), 'boleto', 'falha', 9),
-(109.90, NOW(), 'cartao', 'sucesso', 10),
-(89.90, NOW(), 'pix', 'sucesso', 11),
-(69.90, NOW(), 'boleto', 'falha', 12),
-(119.90, NOW(), 'cartao', 'sucesso', 13),
-(99.90, NOW(), 'pix', 'sucesso', 14),
-(79.90, NOW(), 'boleto', 'falha', 15),
-(129.90, NOW(), 'cartao', 'sucesso', 16),
-(109.90, NOW(), 'pix', 'sucesso', 17),
-(89.90, NOW(), 'boleto', 'falha', 18),
-(139.90, NOW(), 'cartao', 'sucesso', 19),
-(119.90, NOW(), 'pix', 'sucesso', 20);
-
-INSERT INTO `gym_genesis`.`pagamento_assinatura` 
-(`valor`, `data_pagamento`, `metodo`, `status`, `assinatura_idassinatura`)
-VALUES
-(99.90, NOW(), 'cartao', 'sucesso', 1),
-(79.90, NOW(), 'pix', 'sucesso', 2),
-(59.90, NOW(), 'boleto', 'falha', 3);
-
--- Inserindo registros na tabela pagamento_detalhe_assinatura
--- Supondo que os IDs gerados automaticamente para os pagamentos acima foram 1, 2 e 3
-INSERT INTO `gym_genesis`.`pagamento_detalhe_assinatura`
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
-VALUES
-('cartao', 'Mastercard', '5678', NULL, NULL, 4),
-('pix', NULL, NULL, 'pix-codigo-abc124', NULL, 5),
-('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000005990', 6),
-('cartao', 'Visa', '4321', NULL, NULL, 7),
-('pix', NULL, NULL, 'pix-codigo-abc125', NULL, 8),
-('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000004990', 9),
-('cartao', 'Elo', '8765', NULL, NULL, 10),
-('pix', NULL, NULL, 'pix-codigo-abc126', NULL, 11),
-('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000006990', 12),
-('cartao', 'Mastercard', '3456', NULL, NULL, 13),
-('pix', NULL, NULL, 'pix-codigo-abc127', NULL, 14),
-('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000007990', 15),
-('cartao', 'Visa', '6543', NULL, NULL, 16),
-('pix', NULL, NULL, 'pix-codigo-abc128', NULL, 17),
-('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000008990', 18),
-('cartao', 'Elo', '7890', NULL, NULL, 19),
-('pix', NULL, NULL, 'pix-codigo-abc129', NULL, 20);
-INSERT INTO `gym_genesis`.`pagamento_detalhe_assinatura`
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
-VALUES
-('cartao', 'Visa', '1234', NULL, NULL, 1),
-('pix', NULL, NULL, 'pix-codigo-abc123', NULL, 2),
-('boleto', NULL, NULL, NULL, '34191.79001 01043.510047 91020.150008 6 89370000005990', 3);
-
 -- 10. Avaliacao fisica e Aula agendada
 -- 10.1. avaliacao_fisica (continuação dos 20 inserts)
-INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id) VALUES
   (72.000, 1.78, 22.72, 16.00, '2025-04-04', 4),
   (68.500, 1.70, 23.72, 17.50, '2025-04-05', 5),
   (90.200, 1.85, 26.36, 21.00, '2025-04-06', 6),
@@ -761,45 +702,45 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
   (67.900, 1.72, 22.93, 15.50, '2025-04-19', 19),
   (80.500, 1.85, 23.52, 18.50, '2025-04-20', 20);
   -- 10.1. avaliacao_fisica
-INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id) VALUES
   (70.500, 1.75, 23.02, 15.00, '2025-04-01', 1),
   (85.000, 1.80, 26.23, 20.00, '2025-04-02', 2),
   (60.300, 1.65, 22.04, 18.00, '2025-04-03', 3);
 
 -- 10.2. aula_agendada (continuação dos 20 inserts)
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `treino_id`) 
 VALUES 
-('2025-05-01', 'Quinta', '09:00:00', '10:00:00', 4, 4),
-('2025-05-02', 'Sexta', '17:00:00', '18:00:00', 5, 5),
-('2025-05-03', 'Sábado', '07:30:00', '08:30:00', 6, 6),
-('2025-05-04', 'Domingo', '19:00:00', '20:00:00', 7, 7),
-('2025-05-05', 'Segunda', '08:30:00', '09:30:00', 8, 8),
-('2025-05-06', 'Terça', '18:30:00', '19:30:00', 9, 9),
-('2025-05-07', 'Quarta', '10:00:00', '11:00:00', 10, 10),
-('2025-05-08', 'Quinta', '20:00:00', '21:00:00', 11, 11),
-('2025-05-09', 'Sexta', '06:30:00', '07:30:00', 12, 12),
-('2025-05-10', 'Sábado', '17:30:00', '18:30:00', 13, 13),
-('2025-05-11', 'Domingo', '09:30:00', '10:30:00', 14, 14),
-('2025-05-12', 'Segunda', '19:30:00', '20:30:00', 15, 15),
-('2025-05-13', 'Terça', '08:00:00', '09:00:00', 16, 16),
-('2025-05-14', 'Quarta', '18:00:00', '19:00:00', 17, 17),
-('2025-05-15', 'Quinta', '07:00:00', '08:00:00', 18, 18),
-('2025-05-16', 'Sexta', '20:30:00', '21:30:00', 19, 19),
-('2025-05-17', 'Sábado', '10:30:00', '11:30:00', 20, 20);
+('2025-05-01', 'Quinta', '09:00:00', '10:00:00', 4),
+('2025-05-02', 'Sexta', '17:00:00', '18:00:00', 5),
+('2025-05-03', 'Sábado', '07:30:00', '08:30:00', 6),
+('2025-05-04', 'Domingo', '19:00:00', '20:00:00', 7),
+('2025-05-05', 'Segunda', '08:30:00', '09:30:00', 8),
+('2025-05-06', 'Terça', '18:30:00', '19:30:00', 9),
+('2025-05-07', 'Quarta', '10:00:00', '11:00:00', 10),
+('2025-05-08', 'Quinta', '20:00:00', '21:00:00', 11),
+('2025-05-09', 'Sexta', '06:30:00', '07:30:00', 12),
+('2025-05-10', 'Sábado', '17:30:00', '18:30:00', 13),
+('2025-05-11', 'Domingo', '09:30:00', '10:30:00', 14),
+('2025-05-12', 'Segunda', '19:30:00', '20:30:00', 15),
+('2025-05-13', 'Terça', '08:00:00', '09:00:00', 16),
+('2025-05-14', 'Quarta', '18:00:00', '19:00:00', 17),
+('2025-05-15', 'Quinta', '07:00:00', '08:00:00', 18),
+('2025-05-16', 'Sexta', '20:30:00', '21:30:00', 19),
+('2025-05-17', 'Sábado', '10:30:00', '11:30:00', 20);
 -- 10.2. aula_agendada
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_id`, `treino_id`) 
 VALUES 
 ('2025-04-25', 'Sexta', '08:00:00', '09:00:00', 1, 1);
 
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_id`, `treino_id`) 
 VALUES 
 ('2025-04-27', 'Domingo', '10:00:00', '11:30:00', 2, 2);
 
 INSERT INTO `gym_genesis`.`aula_agendada` 
-(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) 
+(`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_id`, `treino_id`) 
 VALUES 
 ('2025-04-29', 'Terça', '17:00:00', '18:00:00', 3, 3);
 
@@ -833,30 +774,12 @@ INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, statu
   (2, 'Correr 5km em 30min',   '2025-04-01', '2025-06-01', 'ativa'),
   (3, 'Aumentar força no supino','2025-04-01','2025-07-01', 'ativa');
 
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (3, 60.30);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (4, 72.00);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (5, 68.50);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (6, 90.20);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (7, 65.80);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (8, 74.30);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (9, 82.70);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (10, 59.90);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (11, 77.40);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (12, 63.20);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (13, 88.60);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (14, 70.80);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (15, 79.90);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (16, 61.50);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (17, 85.30);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (18, 73.70);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (19, 67.90);
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (20, 80.50);
 
 
 
 
 -- 12. Recuperação de senha
-INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
+INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_id`, `tempo_expiracao`)
 VALUES ('J1K2L3', 4, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
   ('M4N5O6', 5, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
   ('P7Q8R9', 6, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
@@ -877,60 +800,18 @@ VALUES ('J1K2L3', 4, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
 
 
 
-
-INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
-VALUES ('A1B2C3', 1, DATE_ADD(NOW(), INTERVAL 1 HOUR));
-
-INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
-VALUES ('D4E5F6', 2, DATE_ADD(NOW(), INTERVAL 1 HOUR));
-
-INSERT INTO `gym_genesis`.`recuperacao_senha` (`codigo`, `usuario_idusuario`, `tempo_expiracao`)
-VALUES ('G7H8I9', 3, DATE_ADD(NOW(), INTERVAL 1 HOUR));
-
-
-
-
--- 13. Professor e Aluno
-
-
-
-INSERT INTO professor_aluno (idprofessor, idaluno)
-VALUES
-  (2, 1),  
-  (2, 3),  
-  (3, 1),  
-  (3, 2),  
-  (4, 1),  
-  (4, 2),  
-  (5, 1),  
-  (5, 3),  
-  (6, 1),  
-  (6, 2),  
-  (7, 1),  
-  (7, 3),  
-  (8, 1),  
-  (8, 2),  
-  (9, 1),  
-  (9, 3), 
-  (10, 1),
-  (2, 2),  
-  (3, 3); 
-  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (1, 79.50);
-INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (1, 77.80);
-INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (2, 85.00);
-
-INSERT INTO usuario (nome, senha, email, cpf,data_de_nascimento,  telefone, foto_de_perfil, numero_matricula, tipo_usuario) VALUES ("adm", "$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", "456.498.465-12", "2025-08-19", "(62) 93228-4585", "padrao.png", "929467119175905", 1);
+INSERT INTO usuario ( senha, email, tipo_usuario) VALUES ("$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", 1);
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado)
 VALUES (24, NULL, '12345-678', 'Rua das Flores', '100', 'Apto 202', 'Jardim Primavera', 'São Paulo', 'SP');
-INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario)
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id)
 VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 24);
 
 INSERT INTO `gym_genesis`.`assinatura` 
-(`data_inicio`, `data_fim`, `usuario_idusuario`, `plano_id`)
+(`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
 VALUES 
 ('2025-08-25', '2025-09-24', 24, 1);
 
-INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_idusuario) VALUES
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id) VALUES
   (70.400, 1.75, 22.98, 15.2, '2025-04-11', 24),
   (72.800, 1.76, 23.51, 16.0, '2025-04-18', 24),
   (74.600, 1.77, 23.79, 16.8, '2025-04-25', 24),
@@ -942,17 +823,6 @@ INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avalia
   (81.500, 1.78, 25.72, 20.2, '2025-06-06', 24),
   (82.800, 1.78, 26.14, 20.7, '2025-06-13', 24);
 
-INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES
-  (24, 70.40),
-  (24, 72.80),
-  (24, 74.60),
-  (24, 75.30),
-  (24, 76.10),
-  (24, 77.40),
-  (24, 78.90),
-  (24, 80.20),
-  (24, 81.50),
-  (24, 82.80);
 
 INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, status) VALUES
   (24, 'Ganhar 3kg de massa muscular', '2025-04-01', '2025-07-01', 'ativa'),
@@ -966,7 +836,7 @@ INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, statu
   (24, 'Fazer 5km de bicicleta em 15min', '2025-04-01', '2025-09-01', 'ativa'),
   (24, 'Treinar 5x por semana', '2025-04-01', '2025-07-01', 'ativa');
 
-  INSERT INTO treino (tipo, horario, descricao, usuario_idusuario) VALUES
+  INSERT INTO treino (tipo, horario, descricao, usuario_id) VALUES
   ('Hipertrofia', '09:00:00', 'Treino de membros inferiores', 24),
   ('Funcional', '17:00:00', 'Circuito funcional', 24),
   ('Cardio', '07:30:00', 'Bicicleta ergométrica', 24),
@@ -990,14 +860,36 @@ INSERT INTO meta_usuario (usuario_id, descricao, data_inicio, data_limite, statu
   (29, 9, 4, 10, 65.00, 60),
   (30, 10, 5, 8, 85.00, 120);
 
-INSERT INTO `gym_genesis`.`aula_agendada` (`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `usuario_idusuario`, `treino_id`) VALUES 
-('2025-05-18', 'Domingo', '08:00:00', '09:00:00', 24, 3),
-('2025-05-19', 'Segunda', '17:30:00', '18:30:00', 24, 7),
-('2025-05-20', 'Terça', '07:00:00', '08:00:00', 24, 12),
-('2025-05-21', 'Quarta', '19:00:00', '20:00:00', 24, 5),
-('2025-05-22', 'Quinta', '09:30:00', '10:30:00', 24, 18),
-('2025-05-23', 'Sexta', '06:00:00', '07:00:00', 24, 9),
-('2025-05-24', 'Sábado', '16:00:00', '17:00:00', 24, 14),
-('2025-05-25', 'Domingo', '10:00:00', '11:00:00', 24, 2),
-('2025-05-26', 'Segunda', '18:30:00', '19:30:00', 24, 16),
-('2025-05-27', 'Terça', '07:30:00', '08:30:00', 24, 20);
+INSERT INTO `gym_genesis`.`aula_agendada` (`data_aula`, `dia_semana`, `hora_inicio`, `hora_fim`, `treino_id`) VALUES 
+('2025-05-18', 'Domingo', '08:00:00', '09:00:00', 10),
+('2025-05-19', 'Segunda', '17:30:00', '18:30:00', 10),
+('2025-05-20', 'Terça', '07:00:00', '08:00:00', 10),
+('2025-05-21', 'Quarta', '19:00:00', '20:00:00', 10),
+('2025-05-22', 'Quinta', '09:30:00', '10:30:00', 10),
+('2025-05-23', 'Sexta', '06:00:00', '07:00:00', 10),
+('2025-05-10', 'Sábado', '16:00:00', '17:00:00', 10),
+('2025-05-25', 'Domingo', '10:00:00', '11:00:00', 10),
+('2025-05-26', 'Segunda', '18:30:00', '19:30:00', 10),
+('2025-05-27', 'Terça', '07:30:00', '08:30:00', 10);
+
+INSERT INTO historico_peso (peso, data_registro, usuario_id) VALUES
+  (78.50, '2025-08-01 08:00:00', 1),
+  (77.80, '2025-08-15 08:00:00', 1),
+  (85.20, '2025-08-01 09:00:00', 2),
+  (84.90, '2025-08-15 09:00:00', 2),
+  (92.00, '2025-08-01 10:00:00', 3),
+  (91.50, '2025-08-15 10:00:00', 3),
+  (70.00, '2025-08-01 07:30:00', 4),
+  (69.80, '2025-08-15 07:30:00', 4),
+  (68.00, '2025-08-01 08:15:00', 5),
+  (67.50, '2025-08-15 08:15:00', 5),
+  (80.00, '2025-08-01 09:45:00', 6),
+  (79.60, '2025-08-15 09:45:00', 6),
+  (75.00, '2025-08-01 10:30:00', 7),
+  (74.80, '2025-08-15 10:30:00', 7),
+  (82.00, '2025-08-01 11:00:00', 8),
+  (81.70, '2025-08-15 11:00:00', 8),
+  (90.00, '2025-08-01 11:30:00', 9),
+  (89.50, '2025-08-15 11:30:00', 9),
+  (65.00, '2025-08-01 12:00:00', 10),
+  (64.80, '2025-08-15 12:00:00', 10);

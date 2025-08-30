@@ -327,10 +327,9 @@ if (isset($_GET['tabela'])) {
         <option value="item_pedido">item_pedido</option>
         <option value="meta_usuario">meta_usuario</option>
         <option value="pagamento">pagamento</option>
-        <option value="pagamento_assinatura">pagamento_assinatura</option>
         <option value="pagamento_detalhe">pagamento_detalhe</option>
-        <option value="pagamento_detalhe_assinatura">pagamento_detalhe_assinatura</option>
         <option value="pedido">pedido</option>
+        <option value="perfil_usuario">perfil_usuario</option>
         <option value="plano">plano</option>
         <option value="produto">produto</option>
         <option value="recuperacao_senha">recuperacao_senha</option>

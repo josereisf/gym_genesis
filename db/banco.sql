@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`assinatura` (
   CONSTRAINT `fk_assinatura_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `gym_genesis`.`usuario` (`idusuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`endereco` (
   `bairro` VARCHAR(50) NULL DEFAULT NULL,
   `cidade` VARCHAR(50) NULL DEFAULT NULL,
   `estado` VARCHAR(2) NULL DEFAULT NULL,
-  `usuario_id` INT(11) NOT NULL,
+  `usuario_id` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`idendereco`),
   INDEX `funcionario_id` (`funcionario_id` ASC) VISIBLE,
   INDEX `fk_endereco_usuario1_idx` (`usuario_id` ASC) VISIBLE,
@@ -311,8 +311,8 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`endereco` (
   CONSTRAINT `fk_endereco_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `gym_genesis`.`usuario` (`idusuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -415,13 +415,13 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pedido` (
   `idpedido` INT(11) NOT NULL AUTO_INCREMENT,
   `data_pedido` DATETIME NOT NULL,
   `status` ENUM('processando', 'enviado', 'concluído') NULL DEFAULT 'processando',
-  `pagamento_idpagamento` INT(11) NOT NULL,
+  `pagamento_id` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
   PRIMARY KEY (`idpedido`),
-  INDEX `fk_pedido_pagamento1_idx` (`pagamento_idpagamento` ASC) VISIBLE,
+  INDEX `fk_pedido_pagamento1_idx` (`pagamento_id` ASC) VISIBLE,
   INDEX `fk_pedido_usuario1_idx` (`usuario_id` ASC) VISIBLE,
   CONSTRAINT `fk_pedido_pagamento1`
-    FOREIGN KEY (`pagamento_idpagamento`)
+    FOREIGN KEY (`pagamento_id`)
     REFERENCES `gym_genesis`.`pagamento` (`idpagamento`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -504,11 +504,11 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento_detalhe` (
   `ultimos_digitos` VARCHAR(4) NULL DEFAULT NULL,
   `codigo_pix` VARCHAR(255) NULL DEFAULT NULL,
   `linha_digitavel_boleto` VARCHAR(255) NULL DEFAULT NULL,
-  `pagamento_idpagamento` INT(11) NOT NULL,
+  `pagamento_id` INT(11) NOT NULL,
   PRIMARY KEY (`idpagamento2`),
-  INDEX `fk_pagamento_detalhe_pagamento1_idx` (`pagamento_idpagamento` ASC) VISIBLE,
+  INDEX `fk_pagamento_detalhe_pagamento1_idx` (`pagamento_id` ASC) VISIBLE,
   CONSTRAINT `fk_pagamento_detalhe_pagamento1`
-    FOREIGN KEY (`pagamento_idpagamento`)
+    FOREIGN KEY (`pagamento_id`)
     REFERENCES `gym_genesis`.`pagamento` (`idpagamento`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -566,10 +566,10 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`resposta_forum` (
   `idresposta` INT(11) NOT NULL AUTO_INCREMENT,
   `mensagem` TEXT NOT NULL,
   `data_resposta` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
-  `forum_idtopico` INT(11) NOT NULL,
+  `forum_id` INT(11) NOT NULL,
   `usuario_id` INT(11) NOT NULL,
   PRIMARY KEY (`idresposta`),
-  INDEX `forum_idtopico` (`forum_idtopico` ASC) VISIBLE,
+  INDEX `forum_id` (`forum_id` ASC) VISIBLE,
   INDEX `fk_resposta_forum_usuario1_idx` (`usuario_id` ASC) VISIBLE,
   CONSTRAINT `fk_resposta_forum_usuario1`
     FOREIGN KEY (`usuario_id`)
@@ -577,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`resposta_forum` (
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `resposta_forum_ibfk_2`
-    FOREIGN KEY (`forum_idtopico`)
+    FOREIGN KEY (`forum_id`)
     REFERENCES `gym_genesis`.`forum` (`idtopico`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
@@ -613,3 +613,6 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- DROP DATABASE IF EXISTS `gym_genesis` ;

@@ -152,7 +152,7 @@ function listarEnderecos($tipo)
   $conexao = conectar();
   if ($tipo == null) {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     f.nome AS nome_funcionario,
     e.cep,
     e.rua,
@@ -162,18 +162,18 @@ function listarEnderecos($tipo)
     e.cidade,
     e.estado 
     FROM endereco AS e 
-    LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario 
+    LEFT JOIN perfil_usuario AS pf ON e.usuario_id = pf.idusuario 
     LEFT JOIN funcionario AS f ON e.funcionario_id = f.idfuncionario;';
     $comando = mysqli_prepare($conexao, $sql);
   } elseif ($tipo == 1) {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     e.cep, e.rua, e.numero,
     e.complemento, e.bairro,
     e.cidade,
     e.estado
     FROM endereco AS e
-    LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario
+    LEFT JOIN perfil_usuario AS pf ON e.usuario_id = pf.idusuario
     WHERE e.usuario_id IS NOT NULL;';
     $comando = mysqli_prepare($conexao, $sql);
   } else {
@@ -205,7 +205,7 @@ function listarEnderecosID($id, $tipo)
 {
   $conexao = conectar();
   if ($tipo == 1) {
-    $sql = ' SELECT u.nome AS nome_usuario,
+    $sql = ' SELECT pf.nome AS nome_usuario,
     e.cep,
     e.rua,
     e.numero,
@@ -214,7 +214,7 @@ function listarEnderecosID($id, $tipo)
     e.cidade,
     e.estado
     FROM endereco AS e
-    LEFT JOIN usuario AS u ON e.usuario_id = u.idusuario
+    LEFT JOIN perfil_usuario AS pf ON e.usuario_id = pf.idusuario
     WHERE e.usuario_id=?;';
   } else {
     $sql = ' SELECT f.nome AS nome_funcionario,
@@ -527,24 +527,24 @@ function listarDietas($iddieta)
   if ($iddieta != null) {
     $sql = 'SELECT
     idusuario,
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     d.descricao,
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.idusuario
     WHERE d.iddieta=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $iddieta);
   } else {
     $sql = ' SELECT
     idusuario,
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     d.descricao,
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_id = u.idusuario';
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.idusuario';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -564,23 +564,23 @@ function listarDietasUsuario($idusuario)
   $conexao = conectar();
   if ($idusuario != null) {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     d.descricao,
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.idusuario
     WHERE d.usuario_id=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idusuario);
   } else {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     d.descricao,
     d.data_inicio,
     d.data_fim
     FROM dieta AS d
-    JOIN usuario AS u ON d.usuario_id = u.idusuario';
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.idusuario';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -770,24 +770,24 @@ function listarPedidos($idpedido)
   $conexao = conectar();
   if ($idpedido != null) {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     p.data_pedido,
     p.status,
     pa.valor
     FROM pedido AS p
-    JOIN usuario AS u ON p.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON p.usuario_id = pf.idusuario
     JOIN pagamento AS pa ON p.pagamento_id = pa.idpagamento
     WHERE p.idpedido=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idpedido);
   } else {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     p.data_pedido,
     p.status,
     pa.valor
     FROM pedido AS p
-    JOIN usuario AS u ON p.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON p.usuario_id = pf.idusuario
     JOIN pagamento AS pa ON p.pagamento_id = pa.idpagamento';
     $comando = mysqli_prepare($conexao, $sql);
   }
@@ -901,23 +901,23 @@ function listarForum($idtopico)
   $conexao = conectar();
   if ($idtopico != null) {
     $sql = ' SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     f.titulo,
     f.descricao,
     f.data_criacao
     FROM forum AS f
-    JOIN usuario AS u ON f.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON f.usuario_id = pf.idusuario
     WHERE f.idtopico=?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idtopico);
   } else {
     $sql = 'SELECT
-    u.nome AS nome_usuario,
+    pf.nome AS nome_usuario,
     f.titulo,
     f.descricao,
     f.data_criacao
     FROM forum AS f
-    JOIN usuario AS u ON f.usuario_id = idusuario;';
+    JOIN perfil_usuario AS pf ON f.usuario_id = idusuario;';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -950,24 +950,24 @@ function listarHistoricoTreino($idhistorico)
   $conexao = conectar();
   if ($idhistorico != null) {
     $sql = 'SELECT
-    u.nome,
+    pf.nome,
     t.tipo,
     ht.data_execucao,
     ht.observacoes
     FROM historico_treino AS ht
-    JOIN usuario AS u ON ht.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON ht.usuario_id = pf.idusuario
     JOIN treino AS t ON ht.treino_id = t.idtreino
     WHERE idhistorico=?';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idhistorico);
   } else {
     $sql = 'SELECT
-    u.nome,
+    pf.nome,
     t.tipo,
     ht.data_execucao,
     ht.observacoes
     FROM historico_treino AS ht
-    JOIN usuario AS u ON ht.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON ht.usuario_id = pf.idusuario
     JOIN treino AS t ON ht.treino_id = t.idtreino';
     $comando = mysqli_prepare($conexao, $sql);
   }
@@ -1713,23 +1713,23 @@ function listarTreino($idtreino)
 
   if ($idtreino != null) {
     $sql = " SELECT 
-    u.nome,
+    pf.nome,
     t.tipo,
     t.horario,
     t.descricao
     FROM treino as t
-    JOIN usuario as u ON u.idusuario = t.usuario_id 
+    JOIN perfil_usuario AS pf ON pf.idusuario = t.usuario_id 
     WHERE idtreino = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idtreino);
   } else {
     $sql = " SELECT 
-    u.nome,
+    pf.nome,
     t.tipo,
     t.horario,
     t.descricao
     FROM treino as t
-    JOIN usuario as u ON u.idusuario = t.usuario_id
+    JOIN perfil_usuario AS pf ON pf.idusuario = t.usuario_id
     
     
     ";
@@ -1753,12 +1753,12 @@ function listarTreinoUsuario($idusuario)
 
   $sql = " SELECT 
   idtreino,
-  u.nome AS nome,
+  pf.nome AS nome,
   t.tipo,
   t.horario,
   t.descricao
   FROM treino as t
-  JOIN usuario as u ON u.idusuario = t.usuario_id 
+  JOIN perfil_usuario AS pf ON pf.idusuario = t.usuario_id 
   WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idusuario);
@@ -1777,12 +1777,12 @@ function listarTreinoTipo($tipo)
 {
   $conexao = conectar();
   $sql = "SELECT 
-  u.nome,
+  pf.nome,
   t.tipo,
   t.horario,
   t.descricao
   FROM treino as t
-  JOIN usuario as u ON u.idusuario = t.usuario_id
+  JOIN perfil_usuario AS pf ON pf.idusuario = t.usuario_id
   WHERE t.tipo = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "s", $tipo);
@@ -1830,9 +1830,9 @@ function listarAulaAgendada($idaula = null)
       ag.hora_fim,
       t.tipo AS treino_tipo,
       t.descricao AS treino_desc,
-      GROUP_CONCAT(u.nome SEPARATOR ', ') AS alunos
+      GROUP_CONCAT(pf.nome SEPARATOR ', ') AS alunos
     FROM aula_agendada AS ag
-    JOIN usuario AS u ON ag.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON ag.usuario_id = pf.idusuario
     JOIN treino AS t ON ag.treino_id = t.idtreino
     WHERE idaula = ?
     GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id";
@@ -1847,9 +1847,9 @@ function listarAulaAgendada($idaula = null)
       ag.hora_fim,
       t.tipo AS treino_tipo,
       t.descricao AS treino_desc,
-      GROUP_CONCAT(u.nome SEPARATOR ', ') AS alunos
+      GROUP_CONCAT(pf.nome SEPARATOR ', ') AS alunos
     FROM aula_agendada AS ag
-    JOIN usuario AS u ON ag.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON ag.usuario_id = pf.idusuario
     JOIN treino AS t ON ag.treino_id = t.idtreino
     GROUP BY ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id";
 
@@ -1873,7 +1873,7 @@ function listarAulaAgendadaUsuario($idusuario)
   $conexao = conectar();
 
   $sql = " SELECT
-  u.nome AS nome,
+  pf.nome AS nome,
   ag.data_aula,
   ag.dia_semana,
   ag.hora_inicio,
@@ -1881,7 +1881,7 @@ function listarAulaAgendadaUsuario($idusuario)
   ag.treino_id,
   t.tipo AS tipo
   FROM aula_agendada AS ag
-  JOIN usuario AS u ON ag.usuario_id = u.idusuario
+  JOIN perfil_usuario AS pf ON ag.usuario_id = pf.idusuario
   JOIN treino AS t ON ag.treino_id = t.idtreino
   WHERE idusuario = ?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -1919,8 +1919,8 @@ function listarPagamentosDetalhados($idpagamento2)
     ped.idpedido,
     ped.data_pedido,
     ped.status AS pedido_status,
-    u.idusuario,
-    u.nome AS usuario_nome,
+    pf.idusuario,
+    pf.nome AS usuario_nome,
     u.email AS usuario_email,
     u.telefone AS usuario_telefone,
     prod.idproduto,
@@ -1934,7 +1934,7 @@ function listarPagamentosDetalhados($idpagamento2)
   JOIN 
       pedido ped ON p.idpagamento = ped.pagamento_id
   JOIN 
-      usuario u ON ped.usuario_id = u.idusuario
+      usuario u ON ped.usuario_id = pf.idusuario
   JOIN 
       produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
 
@@ -1958,8 +1958,8 @@ function listarPagamentosDetalhados($idpagamento2)
       ped.idpedido,
       ped.data_pedido,
       ped.status AS pedido_status,
-      u.idusuario,
-      u.nome AS usuario_nome,
+      pf.idusuario,
+      pf.nome AS usuario_nome,
       u.email AS usuario_email,
       u.telefone AS usuario_telefone,
       prod.idproduto,
@@ -1973,7 +1973,7 @@ function listarPagamentosDetalhados($idpagamento2)
   JOIN 
       pedido ped ON p.idpagamento = ped.pagamento_id
   JOIN 
-      usuario u ON ped.usuario_id = u.idusuario
+      usuario u ON ped.usuario_id = pf.idusuario
   JOIN 
       produto prod ON ped.idpedido = prod.idproduto -- Esse JOIN pode variar dependendo de como os produtos estão relacionados aos pedidos
 
@@ -2001,28 +2001,28 @@ function listarMetaUsuario($idmeta = null)
   if ($idmeta !== null) {
     // Busca apenas a meta específica
     $sql = "SELECT 
-              u.nome,
+              pf.nome,
               m.idmeta,
               m.descricao,
               m.data_inicio,
               m.data_limite,
               m.status
             FROM meta_usuario AS m
-            JOIN usuario AS u ON m.usuario_id = u.idusuario
-            WHERE u.idusuario = ?";
+            JOIN perfil_usuario AS pf ON m.usuario_id = pf.idusuario
+            WHERE pf.idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idmeta);
   } else {
     // Busca todas as metas
     $sql = "SELECT 
-              u.nome,
+              pf.nome,
               m.idmeta,
               m.descricao,
               m.data_inicio,
               m.data_limite,
               m.status
             FROM meta_usuario AS m
-            JOIN usuario AS u ON m.usuario_id = u.idusuario";
+            JOIN perfil_usuario AS pf ON m.usuario_id = pf.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2050,14 +2050,14 @@ function listarAvaliacaoFisica($usuarioId)
   }
 
   $sql = "SELECT
-                u.nome AS nome_usuario,
+                pf.nome AS nome_usuario,
                 a.peso,
                 a.altura,
                 a.imc,
                 a.percentual_gordura,
                 a.data_avaliacao
             FROM avaliacao_fisica AS a
-            JOIN usuario AS u ON a.usuario_id = u.idusuario
+            JOIN perfil_usuario AS pf ON a.usuario_id = pf.idusuario
             WHERE a.usuario_id = ?
             ORDER BY a.data_avaliacao DESC";  // só pega a avaliação mais recente
 
@@ -2116,7 +2116,7 @@ function listarRefeicoes($idrefeicao)
 
   if ($idrefeicao !== null) {
     $sql = " SELECT 
-    u.nome,
+    pf.nome,
     d.descricao,
     d.data_inicio,
     d.data_fim,
@@ -2124,13 +2124,13 @@ function listarRefeicoes($idrefeicao)
     r.horario
     FROM refeicao AS r
     JOIN dieta AS d ON r.dieta_id = d.iddieta
-    JOIN usuario AS u ON d.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.idusuario
     WHERE idrefeicao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idrefeicao);
   } else {
     $sql = " SELECT 
-    u.nome,
+    pf.nome,
     d.descricao,
     d.data_inicio,
     d.data_fim,
@@ -2138,7 +2138,7 @@ function listarRefeicoes($idrefeicao)
     r.horario
     FROM refeicao AS r
     JOIN dieta AS d ON r.dieta_id = d.iddieta
-    JOIN usuario AS u ON d.usuario_id = u.idusuario";
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -2221,11 +2221,11 @@ function listarRespostaForum($idresposta)
      rf.idresposta, 
      rf.mensagem, 
      rf.data_resposta, 
-     u.nome AS nome_usuario, 
+     pf.nome AS nome_usuario, 
      rf.forum_id, 
      f.descricao
     FROM resposta_forum rf
-    JOIN usuario u ON rf.usuario_id = u.idusuario
+    JOIN usuario u ON rf.usuario_id = pf.idusuario
     JOIN forum AS f ON rf.forum_id = f.idtopico
     WHERE rf.idresposta = ?";
     $comando = mysqli_prepare($conexao, $sql);
@@ -2237,10 +2237,10 @@ function listarRespostaForum($idresposta)
      rf.idresposta, 
      rf.mensagem, 
      rf.data_resposta, 
-     u.nome AS nome_usuario, 
+     pf.nome AS nome_usuario, 
      rf.forum_id, f.descricao
     FROM resposta_forum rf
-    JOIN usuario u ON rf.usuario_id = u.idusuario
+    JOIN usuario u ON rf.usuario_id = pf.idusuario
     JOIN forum AS f ON rf.forum_id = f.idtopico";
     $comando = mysqli_prepare($conexao, $sql);
   }
@@ -2269,7 +2269,7 @@ function listarItemPedido($usuario_id): array
     $sql = "
         SELECT 
             ped.idpedido, 
-            u.nome AS usuario_nome, 
+            ppf.nome AS usuario_nome, 
             p.nome AS produto_nome, 
             ip.quantidade, 
             ip.preco_unitario, 
@@ -2278,7 +2278,7 @@ function listarItemPedido($usuario_id): array
         FROM pedido ped
         JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
         JOIN produto p ON ip.produto_idproduto = p.idproduto
-        JOIN usuario u ON ped.usuario_id = u.idusuario
+        JOIN perfil_usuario pu ON ped.usuario_id = pu.usuario_id
         WHERE ped.usuario_id = ?
         ORDER BY ped.data_pedido DESC
     ";
@@ -2287,7 +2287,7 @@ function listarItemPedido($usuario_id): array
   } else {
     $sql = "    SELECT 
             ped.idpedido, 
-            u.nome AS usuario_nome, 
+            ppf.nome AS usuario_nome, 
             p.nome AS produto_nome, 
             ip.quantidade, 
             ip.preco_unitario, 
@@ -2296,7 +2296,8 @@ function listarItemPedido($usuario_id): array
         FROM pedido ped
         JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
         JOIN produto p ON ip.produto_idproduto = p.idproduto
-        JOIN usuario u ON ped.usuario_id = u.idusuario";
+        JOIN perfil_usuario pu ON ped.usuario_id = pu.usuario_id
+        ORDER BY ped.data_pedido DESC";
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -2320,7 +2321,7 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
   $sql = "
     SELECT 
         ped.idpedido, 
-        u.nome AS usuario_nome, 
+        pf.nome AS usuario_nome, 
         p.nome AS produto_nome, 
         ip.quantidade, 
         ip.preco_unitario, 
@@ -2329,7 +2330,7 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
     FROM pedido ped
     JOIN item_pedido ip ON ped.idpedido = ip.pedido_idpedido
     JOIN produto p ON ip.produto_idproduto = p.idproduto
-    JOIN usuario u ON ped.usuario_id = u.idusuario
+    JOIN usuario u ON ped.usuario_id = pf.idusuario
     WHERE ped.usuario_id = ?
     ";
 
@@ -2445,27 +2446,27 @@ function listarAssinaturas($idassinatura)
 
   if ($idassinatura !== null) {
     $sql = "SELECT 
-      u.nome,
+      pf.nome,
       p.tipo,
       p.duracao,
       a.data_inicio,
       a.data_fim
     FROM assinatura AS a
     JOIN plano AS p ON a.plano_id = p.idplano
-    JOIN usuario AS u ON a.usuario_id = u.idusuario
+    JOIN perfil_usuario AS pf ON a.usuario_id = pf.idusuario
     WHERE a.idassinatura = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
   } else {
     $sql = "SELECT 
-      u.nome,
+      pf.nome,
       p.tipo,
       p.duracao,
       a.data_inicio,
       a.data_fim
     FROM assinatura AS a
     JOIN plano AS p ON a.plano_id = p.idplano
-    JOIN usuario AS u ON a.usuario_id = u.idusuario";
+    JOIN perfil_usuario AS pf ON a.usuario_id = pf.idusuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -3065,12 +3066,12 @@ function cadastrarHorario($dia_semana, $hora_inicio, $hora_fim)
   return $funcionou;
 }
 
-function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino)
+function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino)
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO aula_agendada (data_aula, dia_semana, hora_inicio, hora_fim, idusuario, idtreino)
-            VALUES (?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO aula_agendada (data_aula, dia_semana, hora_inicio, hora_fim, treino_id)
+            VALUES (?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -3078,7 +3079,7 @@ function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim,
     echo "Erro na preparação: " . mysqli_error($conexao);
     return false;
   }
-  mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino);
+  mysqli_stmt_bind_param($comando, 'ssssi', $data_aula, $dia_semana, $hora_inicio, $hora_fim,  $idtreino);
   $funcionou = mysqli_stmt_execute($comando);
 
   if (!$funcionou) {
@@ -3170,7 +3171,7 @@ SELECT
     u.tipo_usuario,
 
     -- PERFIL USUÁRIO
-    pu.nome,
+    ppf.nome,
     pu.cpf,
     pu.data_nascimento,
     pu.numero_matricula,
@@ -3312,22 +3313,22 @@ SELECT
 
 FROM gym_genesis.usuario u
 
-    LEFT JOIN gym_genesis.perfil_usuario pu on u.idusuario = pu.usuario_id
+    LEFT JOIN gym_genesis.perfil_usuario pu on pf.idusuario = pu.usuario_id
     
     LEFT JOIN gym_genesis.endereco e 
-        ON u.idusuario = e.usuario_id
+        ON pf.idusuario = e.usuario_id
 
     LEFT JOIN gym_genesis.assinatura a 
-        ON u.idusuario = a.usuario_id
+        ON pf.idusuario = a.usuario_id
 
     LEFT JOIN gym_genesis.plano p 
         ON a.plano_id = p.idplano
 
     LEFT JOIN gym_genesis.avaliacao_fisica af 
-        ON u.idusuario = af.usuario_id
+        ON pf.idusuario = af.usuario_id
 
     LEFT JOIN gym_genesis.dieta d 
-        ON u.idusuario = d.usuario_id
+        ON pf.idusuario = d.usuario_id
 
     LEFT JOIN gym_genesis.refeicao r 
         ON d.iddieta = r.dieta_id
@@ -3339,7 +3340,7 @@ FROM gym_genesis.usuario u
         ON da.alimento_idalimento = al.idalimento
 
     LEFT JOIN gym_genesis.treino t 
-        ON u.idusuario = t.usuario_id
+        ON pf.idusuario = t.usuario_id
 
     LEFT JOIN gym_genesis.treino_exercicio te 
         ON t.idtreino = te.treino_id
@@ -3348,22 +3349,22 @@ FROM gym_genesis.usuario u
         ON te.exercicio_id = ex.idexercicio
 
     LEFT JOIN gym_genesis.aula_agendada aa 
-        ON u.idusuario = aa.usuario_id
+        ON pf.idusuario = aa.usuario_id
 
     LEFT JOIN gym_genesis.historico_treino ht 
-        ON u.idusuario = ht.usuario_id
+        ON pf.idusuario = ht.usuario_id
 
     LEFT JOIN gym_genesis.meta_usuario mu 
-        ON u.idusuario = mu.usuario_id
+        ON pf.idusuario = mu.usuario_id
 
     LEFT JOIN gym_genesis.forum f 
-        ON u.idusuario = f.usuario_id
+        ON pf.idusuario = f.usuario_id
 
     LEFT JOIN gym_genesis.resposta_forum rf 
-        ON u.idusuario = rf.usuario_id
+        ON pf.idusuario = rf.usuario_id
 
     LEFT JOIN gym_genesis.pedido pd 
-        ON u.idusuario = pd.usuario_id
+        ON pf.idusuario = pd.usuario_id
 
     LEFT JOIN gym_genesis.item_pedido ip 
         ON pd.idpedido = ip.pedido_idpedido
@@ -3378,16 +3379,16 @@ FROM gym_genesis.usuario u
         ON pg.idpagamento = pd2.pagamento_id
 
     LEFT JOIN gym_genesis.professor_aluno pa 
-        ON u.idusuario = pa.idaluno
+        ON pf.idusuario = pa.idaluno
 
     LEFT JOIN gym_genesis.usuario prof 
         ON pa.idprofessor = prof.idusuario
 
     LEFT JOIN gym_genesis.recuperacao_senha rs 
-        ON u.idusuario = rs.usuario_id
+        ON pf.idusuario = rs.usuario_id
 
 WHERE
-    u.idusuario = $id
+    pf.idusuario = $id
 LIMIT 1;
 ";
 

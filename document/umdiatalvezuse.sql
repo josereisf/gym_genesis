@@ -549,7 +549,7 @@ INSERT INTO forum (titulo, descricao, usuario_idusuario) VALUES
 
 
 -- 7.2. resposta_forum (continuação dos 20 inserts)
-INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
+INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
   ('Mantenha a coluna neutra.', 5, 4),
   ('Sim, creatina é segura para a maioria.', 6, 5),
   ('Fortaleça o manguito rotador.', 7, 6),
@@ -570,7 +570,7 @@ INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
 -- 7.1. forum
 
 -- 7.2. resposta_forum
-INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_idtopico) VALUES
+INSERT INTO resposta_forum (mensagem, usuario_idusuario, forum_id) VALUES
   ('Tente aumentar 2kg por semana.', 2, 1),
   ('Carboidrato e proteína juntos.', 3, 2),
   ('Barra olímpica convencional.', 1, 3);
@@ -610,7 +610,7 @@ VALUES
 
 
 INSERT INTO `gym_genesis`.`pagamento_detalhe` 
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
   ('cartao', 'Mastercard', '5678', NULL, NULL, 4),
   ('pix', NULL, NULL, 'pix-codigo-xyz001', NULL, 5),
@@ -636,7 +636,7 @@ VALUES
 
 -- 9.2. pagamento_detalhe
 INSERT INTO `gym_genesis`.`pagamento_detalhe` 
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
   ('cartao', 'Visa', '1234', NULL, NULL, 1),
   ('pix', NULL, NULL, 'pix-codigo-xyz987', NULL, 2),
@@ -647,7 +647,7 @@ VALUES
 
 -- 8. Pedido, item_pedido
 INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
+(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_id`)
 VALUES
   (4, '2025-04-18 09:00:00', 'processando', 4),
   (5, '2025-04-19 15:30:00', 'enviado', 5),
@@ -668,7 +668,7 @@ VALUES
   (20, '2025-05-04 15:20:00', 'enviado', 20);
   -- 8.1. pedido
 INSERT INTO `gym_genesis`.`pedido` 
-(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_idpagamento`)
+(`usuario_idusuario`, `data_pedido`, `status`, `pagamento_id`)
 VALUES
   (1, '2025-04-15 14:00:00', 'processando', 1),
   (2, '2025-04-16 10:30:00', 'enviado', 2),
@@ -756,7 +756,7 @@ VALUES
 -- Inserindo registros na tabela pagamento_detalhe_assinatura
 -- Supondo que os IDs gerados automaticamente para os pagamentos acima foram 1, 2 e 3
 INSERT INTO `gym_genesis`.`pagamento_detalhe_assinatura`
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
 ('cartao', 'Mastercard', '5678', NULL, NULL, 4),
 ('pix', NULL, NULL, 'pix-codigo-abc124', NULL, 5),
@@ -776,7 +776,7 @@ VALUES
 ('cartao', 'Elo', '7890', NULL, NULL, 19),
 ('pix', NULL, NULL, 'pix-codigo-abc129', NULL, 20);
 INSERT INTO `gym_genesis`.`pagamento_detalhe_assinatura`
-(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_idpagamento`)
+(`tipo`, `bandeira_cartao`, `ultimos_digitos`, `codigo_pix`, `linha_digitavel_boleto`, `pagamento_id`)
 VALUES
 ('cartao', 'Visa', '1234', NULL, NULL, 1),
 ('pix', NULL, NULL, 'pix-codigo-abc123', NULL, 2),
