@@ -1,5 +1,6 @@
 <?php
-require_once "../funcao.php";
+require_once __DIR__ . '/../funcao.php';
+
 $idaula = 0;
 $horarios = listarAulaAgendada($idaula);
 $classData = array();

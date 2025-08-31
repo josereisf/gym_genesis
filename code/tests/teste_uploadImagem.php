@@ -1,5 +1,5 @@
 <?php
-require_once('../funcao.php');
+require_once __DIR__ . '/../funcao.php';;
 
 ini_set('upload_max_filesize', '20M');
 ini_set('post_max_size', '20M');
@@ -12,6 +12,7 @@ $resultado = uploadImagem($foto, $target_dir);
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <title>Resultado do Upload</title>
@@ -74,6 +75,7 @@ $resultado = uploadImagem($foto, $target_dir);
     }
   </style>
 </head>
+
 <body>
 
   <div class="mensagem">
@@ -89,4 +91,5 @@ $resultado = uploadImagem($foto, $target_dir);
   </div>
 
 </body>
+
 </html>

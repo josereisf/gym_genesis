@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../funcao.php';
 
-$email = "bruno@ex.com";
+$email = "acabate@gmail.com";
 $tipo = verificarTipoUsuario($email);
 
 if ($tipo) {

@@ -76,20 +76,19 @@ function deletarUsuario($idusuario)
 function loginUsuario($email, $senha)
 {
   $conexao = conectar();
-  $sql = "SELECT idusuario, nome, email, senha FROM usuario WHERE email = ?";
+  $sql = "SELECT idusuario, email, senha FROM usuario WHERE email = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 's', $email);
 
   mysqli_stmt_execute($comando);
 
-  mysqli_stmt_bind_result($comando, $id, $nome, $emailDb, $senhahash);
+  mysqli_stmt_bind_result($comando, $id, $emailDb, $senhahash);
 
   if (mysqli_stmt_fetch($comando)) {
     if (password_verify($senha, $senhahash)) {
       return [
         'id' => $id,
-        'nome' => $nome,
         'email' => $emailDb
       ];
     }
@@ -1894,37 +1893,37 @@ function listarAulaAgendada($idaula = null)
 }
 
 
-function listarAulaAgendadaUsuario($idusuario)
-{
-  $conexao = conectar();
+// function listarAulaAgendadaUsuario($idusuario)
+// {
+//   $conexao = conectar();
 
-  $sql = " SELECT
-  pf.nome AS nome,
-  ag.data_aula,
-  ag.dia_semana,
-  ag.hora_inicio,
-  ag.hora_fim,
-  ag.treino_id,
-  t.tipo AS tipo
-  FROM aula_agendada AS ag
-  JOIN perfil_usuario AS pf ON ag.usuario_id = pf.usuario_id
-  JOIN treino AS t ON ag.treino_id = t.idtreino
-  WHERE idusuario = ?";
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "i", $idusuario);
+//   $sql = " SELECT
+//   pf.nome AS nome,
+//   ag.data_aula,
+//   ag.dia_semana,
+//   ag.hora_inicio,
+//   ag.hora_fim,
+//   ag.treino_id,
+//   t.tipo AS tipo
+//   FROM aula_agendada AS ag
+//   JOIN perfil_usuario AS pf ON ag.usuario_id = pf.usuario_id
+//   JOIN treino AS t ON ag.treino_id = t.idtreino
+//   WHERE idusuario = ?";
+//   $comando = mysqli_prepare($conexao, $sql);
+//   mysqli_stmt_bind_param($comando, "i", $idusuario);
 
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
+//   mysqli_stmt_execute($comando);
+//   $resultados = mysqli_stmt_get_result($comando);
 
-  $lista_aula_agendadas = [];
-  while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
-    $lista_aula_agendadas[] = $aula_agendada;
-  }
+//   $lista_aula_agendadas = [];
+//   while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
+//     $lista_aula_agendadas[] = $aula_agendada;
+//   }
 
-  mysqli_stmt_close($comando);
+//   mysqli_stmt_close($comando);
 
-  return $lista_aula_agendadas;
-}
+//   return $lista_aula_agendadas;
+// }
 
 function listarPagamentosDetalhados($idpagamento = null)
 {
@@ -3186,11 +3185,11 @@ SELECT
     u.tipo_usuario,
 
     -- PERFIL USUÁRIO
-    ppf.nome,
-    pu.cpf,
-    pu.data_nascimento,
-    pu.numero_matricula,
-    pu.foto_perfil,
+    pf.nome,
+    pf.cpf,
+    pf.data_nascimento,
+    pf.numero_matricula,
+    pf.foto_perfil,
 
     -- ENDEREÇO
     e.cep,
@@ -3260,13 +3259,6 @@ SELECT
     ex.nome AS nome_exercicio,
     ex.grupo_muscular,
 
-    -- AULA AGENDADA
-    aa.idaula,
-    aa.data_aula,
-    aa.dia_semana,
-    aa.hora_inicio,
-    aa.hora_fim,
-
     -- HISTÓRICO DE TREINO
     ht.idhistorico,
     ht.data_execucao,
@@ -3317,9 +3309,6 @@ SELECT
     pd2.bandeira_cartao,
     pd2.ultimos_digitos,
 
-    -- PROFESSOR DO ALUNO
-    pa.idprofessor_aluno,
-    prof.nome AS nome_professor,
 
     -- RECUPERAÇÃO DE SENHA
     rs.idrecuperacao_senha,
@@ -3328,7 +3317,7 @@ SELECT
 
 FROM gym_genesis.usuario u
 
-    LEFT JOIN gym_genesis.perfil_usuario pu on pf.usuario_id = pu.usuario_id
+    LEFT JOIN gym_genesis.perfil_usuario pf on pf.usuario_id = pf.usuario_id
     
     LEFT JOIN gym_genesis.endereco e 
         ON pf.usuario_id = e.usuario_id
@@ -3355,7 +3344,7 @@ FROM gym_genesis.usuario u
         ON da.alimento_id = al.idalimento
 
     LEFT JOIN gym_genesis.treino t 
-        ON pf.usuario_id = t.usuario_id
+        ON pf.usuario_id = t.funcionario_id
 
     LEFT JOIN gym_genesis.treino_exercicio te 
         ON t.idtreino = te.treino_id
@@ -3363,8 +3352,6 @@ FROM gym_genesis.usuario u
     LEFT JOIN gym_genesis.exercicio ex 
         ON te.exercicio_id = ex.idexercicio
 
-    LEFT JOIN gym_genesis.aula_agendada aa 
-        ON pf.usuario_id = aa.usuario_id
 
     LEFT JOIN gym_genesis.historico_treino ht 
         ON pf.usuario_id = ht.usuario_id
@@ -3392,12 +3379,6 @@ FROM gym_genesis.usuario u
 
     LEFT JOIN gym_genesis.pagamento_detalhe pd2 
         ON pg.idpagamento = pd2.pagamento_id
-
-    LEFT JOIN gym_genesis.professor_aluno pa 
-        ON pf.usuario_id = pa.idaluno
-
-    LEFT JOIN gym_genesis.usuario prof 
-        ON pa.idprofessor = prof.idusuario
 
     LEFT JOIN gym_genesis.recuperacao_senha rs 
         ON pf.usuario_id = rs.usuario_id
@@ -3431,7 +3412,7 @@ LIMIT 1;
 function atualizarFotoUsuario($imagem, $idusuario)
 {
   $conexao = conectar();
-  $sql = 'UPDATE perfil_usuario SET foto_perfil = ? WHERE idusuario = ?';
+  $sql = 'UPDATE perfil_usuario SET foto_perfil = ? WHERE usuario_id = ?';
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'si', $imagem, $idusuario);
 

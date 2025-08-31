@@ -1,10 +1,10 @@
 <?php
 
-require_once('../funcao.php');
+require_once __DIR__ . '/../funcao.php';;
 
-$email = '1223@yahoo.com';
-$senha = '123';
+$email = 'acabate@gmail.com';
+$senha = '$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6';
 
-if (!is_null($resul = loginUsuario($email, $senha))){
+if (!is_null($resul = loginUsuario($email, $senha))) {
     echo $resul;
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once('../funcao.php');
+require_once __DIR__ . '/../funcao.php';;
 $nome = 'jao1';
 $senha = '123';
 $email = '1223@yahoo.com';
@@ -11,7 +11,6 @@ $foto_perfil = 'js';
 $numero_matricula = 22133;
 $tipo = 1;
 
-if (!is_null(cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo))){
+if (!is_null(cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $foto_perfil, $numero_matricula, $tipo))) {
     echo "funcionou";
 }
-
