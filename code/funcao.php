@@ -856,14 +856,14 @@ function listarProdutos($idproduto)
   return $lista;
 }
 
-function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $idaula)
+function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino,$funcionario_id, $idaula)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, treino_id=? WHERE idaula=?';
+  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, treino_id=?, funcionario_id=? WHERE idaula=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $idaula);
+  mysqli_stmt_bind_param($comando, 'ssssiiii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino,$funcionario_id, $idaula);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -3080,12 +3080,12 @@ function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limit
   return $funcionou;
 }
 
-function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino)
+function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino,$funcionario_id)
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO aula_agendada (data_aula, dia_semana, hora_inicio, hora_fim, treino_id)
-            VALUES (?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO aula_agendada (data_aula, dia_semana, hora_inicio, hora_fim, treino_id, funcionario_id)
+            VALUES (?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -3093,7 +3093,7 @@ function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim,
     echo "Erro na preparação: " . mysqli_error($conexao);
     return false;
   }
-  mysqli_stmt_bind_param($comando, 'ssssi', $data_aula, $dia_semana, $hora_inicio, $hora_fim,  $idtreino);
+  mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim,  $idtreino, $funcionario_id);
   $funcionou = mysqli_stmt_execute($comando);
 
   if (!$funcionou) {
