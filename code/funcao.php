@@ -1858,15 +1858,18 @@ function listarAulaAgendada($idaula = null)
                 ag.hora_inicio,
                 ag.hora_fim,
                 t.tipo AS treino_tipo,
-                t.descricao AS treino_desc
+                t.descricao AS treino_desc,
+                f.idfuncionario,
+                f.nome AS professor_nome
             FROM aula_agendada AS ag
-            LEFT JOIN treino AS t ON ag.treino_id = t.idtreino";
+            LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
+            LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario";
 
     if ($idaula !== null) {
         $sql .= " WHERE ag.idaula = ?";
     }
 
-    $sql .= " GROUP BY ag.idaula, ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id, t.tipo, t.descricao";
+    $sql .= " GROUP BY ag.idaula, ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id, t.tipo, t.descricao, f.idfuncionario, f.nome";
 
     $comando = mysqli_prepare($conexao, $sql);
     if (!$comando) {
@@ -1893,37 +1896,47 @@ function listarAulaAgendada($idaula = null)
 }
 
 
-// function listarAulaAgendadaUsuario($idusuario)
-// {
-//   $conexao = conectar();
+function listarAulaAgendadaUsuario($idusuario)
+{
+    $conexao = conectar();
 
-//   $sql = " SELECT
-//   pf.nome AS nome,
-//   ag.data_aula,
-//   ag.dia_semana,
-//   ag.hora_inicio,
-//   ag.hora_fim,
-//   ag.treino_id,
-//   t.tipo AS tipo
-//   FROM aula_agendada AS ag
-//   JOIN perfil_usuario AS pf ON ag.usuario_id = pf.usuario_id
-//   JOIN treino AS t ON ag.treino_id = t.idtreino
-//   WHERE idusuario = ?";
-//   $comando = mysqli_prepare($conexao, $sql);
-//   mysqli_stmt_bind_param($comando, "i", $idusuario);
+    $sql = "SELECT
+                ag.idaula,
+                ag.data_aula,
+                ag.dia_semana,
+                ag.hora_inicio,
+                ag.hora_fim,
+                t.tipo AS treino_tipo,
+                t.descricao AS treino_desc,
+                f.idfuncionario,
+                f.nome AS professor_nome
+            FROM aula_usuario AS au
+            JOIN aula_agendada AS ag ON au.idaula = ag.idaula
+            LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
+            LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario
+            WHERE au.usuario_id = ?";
 
-//   mysqli_stmt_execute($comando);
-//   $resultados = mysqli_stmt_get_result($comando);
+    $comando = mysqli_prepare($conexao, $sql);
+    if (!$comando) {
+        echo "Erro na preparação: " . mysqli_error($conexao);
+        return [];
+    }
 
-//   $lista_aula_agendadas = [];
-//   while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
-//     $lista_aula_agendadas[] = $aula_agendada;
-//   }
+    mysqli_stmt_bind_param($comando, "i", $idusuario);
 
-//   mysqli_stmt_close($comando);
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
 
-//   return $lista_aula_agendadas;
-// }
+    $lista_aula_agendadas = [];
+    while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
+        $lista_aula_agendadas[] = $aula_agendada;
+    }
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+
+    return $lista_aula_agendadas;
+}
 
 function listarPagamentosDetalhados($idpagamento = null)
 {

@@ -10,6 +10,7 @@ $hora_inicio = '02:32:42';
 $hora_fim = '02:39:42';
 $idaula = 1;
 $idtreino = 1;
+$funcionario_id = 1;
 
 if (!empty((editarAulaAgendada(
     $data_aula,
@@ -17,6 +18,7 @@ if (!empty((editarAulaAgendada(
     $hora_inicio,
     $hora_fim,
     $idtreino,
+    $funcionario_id,
     $idaula
 )))) {
     echo "funcionou";
