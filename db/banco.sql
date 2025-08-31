@@ -524,6 +524,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`perfil_usuario` (
   `usuario_id` INT(11) NOT NULL,
   `nome` VARCHAR(70) NOT NULL,
   `cpf` VARCHAR(15) NOT NULL,
+  `telefone` VARCHAR(20) NULL DEFAULT NULL,
   `data_nascimento` VARCHAR(45) NOT NULL,
   `numero_matricula` VARCHAR(20) NOT NULL,
   `foto_perfil` LONGTEXT NULL,
@@ -615,4 +616,4 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
--- DROP DATABASE IF EXISTS `gym_genesis` ;
+--  DROP DATABASE IF EXISTS `gym_genesis` ;

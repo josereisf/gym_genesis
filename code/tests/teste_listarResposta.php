@@ -8,6 +8,6 @@ $mensagem = 'asfESDGATJSfdhd';
 $idusuario = 1;
 $idtopico = 1;
 
-if (!empty(cadastrarRespostaForum($mensagem, $idusuario, $idtopico))) {
-    echo "funcionou";
-}
+$resultado = listarRespostaForum($idtopico);
+
+var_dump($resultado);

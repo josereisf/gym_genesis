@@ -1,5 +1,6 @@
 <?php
-require_once '../../code/funcao.php';
+require_once __DIR__ . '/../funcao.php';
+
 
 $idpagamento = 1;
 $idcupom = 1;

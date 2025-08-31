@@ -8,6 +8,6 @@ $iddieta = 1;
 $tipo = 'Almoço';
 $horario = '04:20:12';
 
-if (!empty(cadastrarRefeicao($iddieta, $tipo, $horario))) {
-    echo "funcionou";
-}
+$resultado = listarRefeicoes($iddieta);
+
+var_dump($resultado);

@@ -158,17 +158,17 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
 ('senha21', 'aline@ex.com', 2),
 ('senha22', 'pedro@ex.com', 1),
 ('senha23', 'sofia@ex.com', 2);
-INSERT INTO perfil_usuario (usuario_id, nome, cpf, data_nascimento, numero_matricula, foto_perfil) VALUES
-  (1, 'Lucas Silva', '123.456.789-01', '1990-05-10', 'MAT2025001', NULL),
-  (2, 'Fernanda Souza', '234.567.890-12', '1988-08-22', 'MAT2025002', NULL),
-  (3, 'Rafael Costa', '345.678.901-23', '1995-03-15', 'MAT2025003', NULL),
-  (4, 'Juliana Lima', '456.789.012-34', '1992-12-01', 'MAT2025004', NULL),
-  (5, 'Gabriel Rocha', '567.890.123-45', '1987-07-19', 'MAT2025005', NULL),
-  (6, 'Patricia Nunes', '678.901.234-56', '1993-11-30', 'MAT2025006', NULL),
-  (7, 'Rodrigo Alves', '789.012.345-67', '1991-02-25', 'MAT2025007', NULL),
-  (8, 'Amanda Torres', '890.123.456-78', '1996-09-14', 'MAT2025008', NULL),
-  (9, 'Thiago Martins', '901.234.567-89', '1989-04-07', 'MAT2025009', NULL),
-  (10, 'Camila Prado', '012.345.678-90', '1994-06-21', 'MAT2025010', NULL);
+INSERT INTO perfil_usuario (usuario_id, nome, cpf, telefone, data_nascimento, numero_matricula, foto_perfil) VALUES
+  (1, 'Lucas Silva', '123.456.789-01', '11987654321', '1990-05-10', 'MAT2025001', NULL),
+  (2, 'Fernanda Souza', '234.567.890-12', '11876543210', '1988-08-22', 'MAT2025002', NULL),
+  (3, 'Rafael Costa', '345.678.901-23', '11765432109', '1995-03-15', 'MAT2025003', NULL),
+  (4, 'Juliana Lima', '456.789.012-34', '11654321098', '1992-12-01', 'MAT2025004', NULL),
+  (5, 'Gabriel Rocha', '567.890.123-45', '11543210987', '1987-07-19', 'MAT2025005', NULL),
+  (6, 'Patricia Nunes', '678.901.234-56', '11432109876', '1993-11-30', 'MAT2025006', NULL),
+  (7, 'Rodrigo Alves', '789.012.345-67', '11321098765', '1991-02-25', 'MAT2025007', NULL),
+  (8, 'Amanda Torres', '890.123.456-78', '11210987654', '1996-09-14', 'MAT2025008', NULL),
+  (9, 'Thiago Martins', '901.234.567-89', '11109876543', '1989-04-07', 'MAT2025009', NULL),
+  (10, 'Camila Prado', '012.345.678-90', '11098765432', '1994-06-21', 'MAT2025010', NULL);
 -- 2.2. cupom_desconto (20 inserts)
 INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_validade, quantidade_uso, tipo) VALUES
 ('PROMO15', 15.00, NULL, '2025-12-31', 50, 'percentual'),

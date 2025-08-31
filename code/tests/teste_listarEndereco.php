@@ -12,6 +12,6 @@ $cidade = 'z';
 $estado = 'mt';
 $tipo = '1';
 
-if (!is_null(cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo))) {
-    echo 'funcionou';
-}
+$resultado = listarEnderecos($id);
+
+var_dump($resultado);   

@@ -10,10 +10,6 @@ $percentual_gordura = 18.2;
 $data_avaliacao     = '2025-09-01';
 $idusuario          = 1;
 
-$resultado = cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
+$resultado = listarAvaliacaoFisica($idusuario);
 
-if ($resultado) {
-    echo "✅ Avaliação física cadastrada com sucesso!";
-} else {
-    echo "❌ Falha ao cadastrar avaliação física.";
-}
+var_dump($resultado);
