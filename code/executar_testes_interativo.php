@@ -33,6 +33,16 @@ foreach ($arquivos as $arquivo) {
 
 <h1 class="text-3xl font-bold mb-6 text-center">Executar Testes PHP</h1>
 
+<!-- Card de contador -->
+<div id="contador-card" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded-xl shadow hidden">
+    <p>Executando <span id="contador">0</span> testes...</p>
+</div>
+
+<div class="flex justify-center mb-6">
+    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+            onclick="executarTodos()">Executar Todos</button>
+</div>
+
 <div class="space-y-4">
 <?php foreach ($categorias as $cat => $files): ?>
     <?php if (count($files) > 0): ?>
@@ -73,8 +83,14 @@ function toggleCategoria(id) {
     }
 }
 
+// Contador global
+let contadorTestes = 0;
+
 // Executar teste via AJAX
 function executarTeste(arquivo) {
+    contadorTestes++;
+    atualizarContador();
+
     const saida = document.getElementById('saida-' + arquivo);
     saida.textContent = "Executando...";
     saida.classList.remove('text-red-500');
@@ -86,7 +102,6 @@ function executarTeste(arquivo) {
     })
     .then(response => response.text())
     .then(data => {
-        // Detecta erros simples do PHP na saída
         if (data.toLowerCase().includes('error') || data.toLowerCase().includes('warning')) {
             saida.classList.add('text-red-500');
         }
@@ -95,7 +110,33 @@ function executarTeste(arquivo) {
     .catch(err => {
         saida.classList.add('text-red-500');
         saida.textContent = "Erro ao executar o teste: " + err;
+    })
+    .finally(() => {
+        contadorTestes--;
+        atualizarContador();
     });
+}
+
+// Atualiza o card do contador
+function atualizarContador() {
+    const card = document.getElementById('contador-card');
+    const span = document.getElementById('contador');
+    if (contadorTestes > 0) {
+        card.classList.remove('hidden');
+        span.textContent = contadorTestes;
+    } else {
+        card.classList.add('hidden');
+        span.textContent = 0;
+    }
+}
+
+// Executar todos os testes de uma vez
+function executarTodos() {
+    <?php foreach ($categorias as $cat => $files): ?>
+        <?php foreach ($files as $arquivo): ?>
+            executarTeste('<?= htmlspecialchars($arquivo) ?>');
+        <?php endforeach; ?>
+    <?php endforeach; ?>
 }
 </script>
 
