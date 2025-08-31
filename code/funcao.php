@@ -3165,7 +3165,6 @@ function listarUsuarioCompleto($id)
   // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
   $sql = "
 SELECT
-
     -- USUÁRIO
     u.idusuario,
     u.email,
@@ -3182,7 +3181,7 @@ SELECT
     -- ENDEREÇO
     e.cep,
     e.rua,
-    e.numero,
+    e.numero AS numero_endereco,
     e.complemento,
     e.bairro,
     e.cidade,
@@ -3190,13 +3189,13 @@ SELECT
 
     -- ASSINATURA
     a.idassinatura,
-    a.data_inicio,
-    a.data_fim,
+    a.data_inicio AS assinatura_inicio,
+    a.data_fim AS assinatura_fim,
 
     -- PLANO
     p.idplano,
     p.tipo AS tipo_plano,
-    p.duracao,
+    p.duracao AS duracao_plano,
 
     -- AVALIAÇÃO FÍSICA
     af.idavaliacao,
@@ -3204,18 +3203,18 @@ SELECT
     af.altura,
     af.imc,
     af.percentual_gordura,
-    af.data_avaliacao,
+    af.data_avaliacao AS avaliacao_data,
 
     -- DIETA
     d.iddieta,
     d.descricao AS descricao_dieta,
-    d.data_inicio,
-    d.data_fim,
+    d.data_inicio AS dieta_inicio,
+    d.data_fim AS dieta_fim,
 
     -- REFEIÇÃO
     r.idrefeicao,
     r.tipo AS tipo_refeicao,
-    r.horario,
+    r.horario AS horario_refeicao,
 
     -- ALIMENTO
     al.idalimento,
@@ -3226,8 +3225,8 @@ SELECT
     al.gorduras,
 
     -- DIETA_ALIMENTAR
-    da.quantidade,
-    da.observacao,
+    da.quantidade AS quantidade_alimento,
+    da.observacao AS observacao_alimento,
 
     -- TREINO
     t.idtreino,
@@ -3249,47 +3248,47 @@ SELECT
 
     -- HISTÓRICO DE TREINO
     ht.idhistorico,
-    ht.data_execucao,
-    ht.observacoes,
+    ht.data_execucao AS historico_data,
+    ht.observacoes AS historico_observacoes,
 
     -- METAS DO USUÁRIO
     mu.idmeta,
     mu.descricao AS descricao_meta,
-    mu.data_inicio,
-    mu.data_limite,
-    mu.status,
+    mu.data_inicio AS meta_inicio,
+    mu.data_limite AS meta_limite,
+    mu.status AS meta_status,
 
     -- FÓRUM
     f.idtopico,
-    f.titulo,
+    f.titulo AS titulo_topico,
     f.descricao AS descricao_topico,
-    f.data_criacao,
+    f.data_criacao AS topico_data,
 
     -- RESPOSTAS DO FÓRUM
     rf.idresposta,
     rf.mensagem,
-    rf.data_resposta,
+    rf.data_resposta AS resposta_data,
 
     -- PEDIDO
     pd.idpedido,
-    pd.data_pedido,
+    pd.data_pedido AS pedido_data,
     pd.status AS status_pedido,
 
     -- ITEM DO PEDIDO
     ip.quantidade AS quantidade_produto,
-    ip.preco_unitario,
+    ip.preco_unitario AS preco_unitario_produto,
 
     -- PRODUTO
     pr.idproduto,
     pr.nome AS nome_produto,
     pr.descricao AS descricao_produto,
-    pr.preco,
+    pr.preco AS preco_produto,
 
     -- PAGAMENTO
     pg.idpagamento,
-    pg.valor,
-    pg.data_pagamento,
-    pg.metodo,
+    pg.valor AS pagamento_valor,
+    pg.data_pagamento AS pagamento_data,
+    pg.metodo AS pagamento_metodo,
     pg.status AS status_pagamento,
 
     -- DETALHE DE PAGAMENTO
@@ -3297,83 +3296,39 @@ SELECT
     pd2.bandeira_cartao,
     pd2.ultimos_digitos,
 
-
     -- RECUPERAÇÃO DE SENHA
     rs.idrecuperacao_senha,
-    rs.codigo,
+    rs.codigo AS codigo_recuperacao,
     rs.tempo_expiracao
 
 FROM gym_genesis.usuario u
 
-    LEFT JOIN gym_genesis.perfil_usuario pf on pf.usuario_id = pf.usuario_id
-    
-    LEFT JOIN gym_genesis.endereco e 
-        ON pf.usuario_id = e.usuario_id
+    LEFT JOIN gym_genesis.perfil_usuario pf ON u.idusuario = pf.usuario_id
+    LEFT JOIN gym_genesis.endereco e ON pf.usuario_id = e.usuario_id
+    LEFT JOIN gym_genesis.assinatura a ON pf.usuario_id = a.usuario_id
+    LEFT JOIN gym_genesis.plano p ON a.plano_id = p.idplano
+    LEFT JOIN gym_genesis.avaliacao_fisica af ON pf.usuario_id = af.usuario_id
+    LEFT JOIN gym_genesis.dieta d ON pf.usuario_id = d.usuario_id
+    LEFT JOIN gym_genesis.refeicao r ON d.iddieta = r.dieta_id
+    LEFT JOIN gym_genesis.dieta_alimentar da ON r.idrefeicao = da.refeicao_id
+    LEFT JOIN gym_genesis.alimento al ON da.alimento_id = al.idalimento
+    LEFT JOIN gym_genesis.treino t ON pf.usuario_id = t.funcionario_id
+    LEFT JOIN gym_genesis.treino_exercicio te ON t.idtreino = te.treino_id
+    LEFT JOIN gym_genesis.exercicio ex ON te.exercicio_id = ex.idexercicio
+    LEFT JOIN gym_genesis.historico_treino ht ON pf.usuario_id = ht.usuario_id
+    LEFT JOIN gym_genesis.meta_usuario mu ON pf.usuario_id = mu.usuario_id
+    LEFT JOIN gym_genesis.forum f ON pf.usuario_id = f.usuario_id
+    LEFT JOIN gym_genesis.resposta_forum rf ON pf.usuario_id = rf.usuario_id
+    LEFT JOIN gym_genesis.pedido pd ON pf.usuario_id = pd.usuario_id
+    LEFT JOIN gym_genesis.item_pedido ip ON pd.idpedido = ip.pedido_id
+    LEFT JOIN gym_genesis.produto pr ON ip.produto_id = pr.idproduto
+    LEFT JOIN gym_genesis.pagamento pg ON pd.pagamento_id = pg.idpagamento
+    LEFT JOIN gym_genesis.pagamento_detalhe pd2 ON pg.idpagamento = pd2.pagamento_id
+    LEFT JOIN gym_genesis.recuperacao_senha rs ON pf.usuario_id = rs.usuario_id
 
-    LEFT JOIN gym_genesis.assinatura a 
-        ON pf.usuario_id = a.usuario_id
-
-    LEFT JOIN gym_genesis.plano p 
-        ON a.plano_id = p.idplano
-
-    LEFT JOIN gym_genesis.avaliacao_fisica af 
-        ON pf.usuario_id = af.usuario_id
-
-    LEFT JOIN gym_genesis.dieta d 
-        ON pf.usuario_id = d.usuario_id
-
-    LEFT JOIN gym_genesis.refeicao r 
-        ON d.iddieta = r.dieta_id
-
-    LEFT JOIN gym_genesis.dieta_alimentar da 
-        ON r.idrefeicao = da.refeicao_id
-
-    LEFT JOIN gym_genesis.alimento al 
-        ON da.alimento_id = al.idalimento
-
-    LEFT JOIN gym_genesis.treino t 
-        ON pf.usuario_id = t.funcionario_id
-
-    LEFT JOIN gym_genesis.treino_exercicio te 
-        ON t.idtreino = te.treino_id
-
-    LEFT JOIN gym_genesis.exercicio ex 
-        ON te.exercicio_id = ex.idexercicio
-
-
-    LEFT JOIN gym_genesis.historico_treino ht 
-        ON pf.usuario_id = ht.usuario_id
-
-    LEFT JOIN gym_genesis.meta_usuario mu 
-        ON pf.usuario_id = mu.usuario_id
-
-    LEFT JOIN gym_genesis.forum f 
-        ON pf.usuario_id = f.usuario_id
-
-    LEFT JOIN gym_genesis.resposta_forum rf 
-        ON pf.usuario_id = rf.usuario_id
-
-    LEFT JOIN gym_genesis.pedido pd 
-        ON pf.usuario_id = pd.usuario_id
-
-    LEFT JOIN gym_genesis.item_pedido ip 
-        ON pd.idpedido = ip.pedido_id
-
-    LEFT JOIN gym_genesis.produto pr 
-        ON ip.produto_id = pr.idproduto
-
-    LEFT JOIN gym_genesis.pagamento pg 
-        ON pd.pagamento_id = pg.idpagamento
-
-    LEFT JOIN gym_genesis.pagamento_detalhe pd2 
-        ON pg.idpagamento = pd2.pagamento_id
-
-    LEFT JOIN gym_genesis.recuperacao_senha rs 
-        ON pf.usuario_id = rs.usuario_id
-
-WHERE
-    pf.usuario_id = $id
+WHERE pf.usuario_id = $id
 LIMIT 1;
+;
 ";
 
 

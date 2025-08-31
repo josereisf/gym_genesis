@@ -98,27 +98,31 @@ $diferenca = "Não há histórico de peso suficiente.";
 $icone = ""; // ícone da seta
 $cor = "";   // cor da seta e do texto
 
-if ($historico_peso && count($historico_peso) >= 2) {
+if (!empty($historico_peso) && count($historico_peso) >= 2) {
+    // Pega o peso mais recente e o mais antigo
     $pesoRecente = $historico_peso[0]['peso'];
-    $pesoAntigo = $historico_peso[count($historico_peso) - 1]['peso'];
+    $pesoAntigo  = $historico_peso[count($historico_peso) - 1]['peso'];
+
     $calculo = $pesoRecente - $pesoAntigo;
 
     if ($calculo > 0) {
-        // Ganhou peso
         $icone = "fas fa-arrow-up";
         $cor = "text-red-500";
         $diferenca = "Você ganhou " . abs($calculo) . " kg desde o início";
     } elseif ($calculo < 0) {
-        // Perdeu peso
         $icone = "fas fa-arrow-down";
         $cor = "text-green-400";
         $diferenca = "Você perdeu " . abs($calculo) . " kg desde o início";
     } else {
-        // Peso igual
         $icone = "fas fa-arrows-alt-h";
         $cor = "text-gray-400";
         $diferenca = "Sem alteração de peso desde o início";
     }
+} else {
+    // Quando não há histórico suficiente
+    $icone = "fas fa-arrows-alt-h";
+    $cor = "text-gray-400";
+    $diferenca = "Não há histórico de peso suficiente.";
 }
 
 $avaliacao_fisica = listarAvaliacaoFisica($idaluno);
