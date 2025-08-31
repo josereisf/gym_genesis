@@ -370,6 +370,9 @@ VALUES
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
 (`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
 VALUES
+  (1, 1, '200g', 'Proteína para o café da manhã'),
+  (2, 2, '150g', 'Carboidrato para o almoço'),
+  (3, 3, '100g', 'Fibras para o jantar'),
   (4, 4, '50g', 'Aveia para café da manhã'),
   (5, 5, '120g', 'Salmão grelhado no almoço'),
   (6, 6, '80g', 'Brócolis no jantar'),
@@ -386,17 +389,6 @@ VALUES
   (17, 17, '110g', 'Banana pré-treino'),
   (18, 18, '140g', 'Peito de frango pós-treino');
 
-
-
-
-
--- 5.3. dieta_alimento
-INSERT INTO `gym_genesis`.`dieta_alimentar` 
-(`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
-VALUES
-(1, 1, '200g', 'Proteína para o café da manhã'),
-(2, 2, '150g', 'Carboidrato para o almoço'),
-(3, 3, '100g', 'Fibras para o jantar');
 
 
 -- 6. Treino, treino_exercicio e historico_treino

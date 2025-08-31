@@ -24,7 +24,7 @@ switch ($acao) {
         if (!$tipo || !$duracao) {
             enviarResposta(false, 'Tipo e duração são obrigatórios');
         }
-        $ok = cadastrarPlano($tipo, $duracao, $idassinatura);
+        $ok = cadastrarPlano($tipo, $duracao);
         if ($ok) {
             enviarResposta(true, 'Plano cadastrado com sucesso');
         } else {

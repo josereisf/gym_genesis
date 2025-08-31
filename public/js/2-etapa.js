@@ -1,425 +1,470 @@
 //===========================================================================================================================================================================================
 // essa parte aqui do codigo e o que faz funcionar o formulario por completo o botao de ir par ao proximo e de nao ir ao proximo
-let currentStep = 1;
-const totalSteps = 3;
+let currentStep = 1
+const totalSteps = 3
 
-const form = document.getElementById("multiStepForm");
-const steps = form.querySelectorAll(".step");
-const labels = document.querySelectorAll(".step-label");
-const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
+const form = document.getElementById('multiStepForm')
+const steps = form.querySelectorAll('.step')
+const labels = document.querySelectorAll('.step-label')
+const nextBtn = document.getElementById('nextBtn')
+const prevBtn = document.getElementById('prevBtn')
 
 function showStep(step) {
   steps.forEach((el, i) => {
-    el.classList.toggle("hidden", i !== step - 1);
-  });
+    el.classList.toggle('hidden', i !== step - 1)
+  })
 
   labels.forEach((label) => {
-    label.classList.toggle(
-      "active",
-      parseInt(label.dataset.step) === step
-    );
-  });
+    label.classList.toggle('active', parseInt(label.dataset.step) === step)
+  })
 
-  prevBtn.style.display = step === 1 ? "none" : "inline-block";
-  nextBtn.textContent = step === totalSteps ? "Finalizar" : "Próximo";
+  prevBtn.style.display = step === 1 ? 'none' : 'inline-block'
+  nextBtn.textContent = step === totalSteps ? 'Finalizar' : 'Próximo'
 }
 
-nextBtn.addEventListener("click", async () => {
+nextBtn.addEventListener('click', async () => {
   if (currentStep < totalSteps) {
-    currentStep++;
-    showStep(currentStep);
+    currentStep++
+    showStep(currentStep)
   } else {
-    await enviarFormulario(); // Chama a função principal
+    await enviarFormulario() // Chama a função principal
   }
-});
+})
 
-showStep(currentStep);
+showStep(currentStep)
 
 // ================= FUNÇÕES DE ENVIO =================
-
-async function usuario(nome, senha, email, cpf, data, telefone) {
+async function usuario(senha, email) {
   try {
-    const response = await fetch('http://localhost:83/public/api/index.php?entidade=usuario&acao=cadastrar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome, 
-        senha, 
-        email, 
-        cpf,
-        data_nascimento: data,
-        telefone,
-        imagem: null,
-        tipo: 1
-      })
-    });
+    const response = await fetch(
+      'http://localhost:83/public/api/index.php?entidade=usuario&acao=cadastrar',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          senha,
+          email,
+          tipo: 1,
+        }),
+      }
+    )
 
     // Primeiro, verifica se a requisição deu certo
-    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`)
 
     // Lê a resposta como texto cru
-    const textoBruto = await response.text();
-    console.log("Resposta bruta da API:", textoBruto);
+    const textoBruto = await response.text()
+    console.log('Resposta bruta da API:', textoBruto)
 
     // Tenta converter pra JSON
     try {
-      const json = JSON.parse(textoBruto);
-      return json;
+      const json = JSON.parse(textoBruto)
+      return json
     } catch (erroDeParse) {
-      console.error("Erro ao fazer JSON.parse. A resposta não é um JSON válido.");
-      throw erroDeParse;
+      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
+      throw erroDeParse
     }
-
   } catch (error) {
-    console.error('Erro ao cadastrar usuário:', error);
-    throw error;
+    console.error('Erro ao cadastrar usuário:', error)
+    throw error
+  }
+}
+
+async function perfil_usuario(idusuario, nome, cpf, data, telefone) {
+  try {
+    const response = await fetch(
+      'http://localhost:83/public/api/index.php?entidade=perfil_usuario&acao=cadastrar',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idusuario,
+          nome,
+          senha,
+          email,
+          cpf,
+          data_nascimento: data,
+          telefone,
+          imagem: null,
+          tipo: 1
+        }),
+      }
+    )
+
+    // Primeiro, verifica se a requisição deu certo
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`)
+
+    // Lê a resposta como texto cru
+    const textoBruto = await response.text()
+    console.log('Resposta bruta da API:', textoBruto)
+
+    // Tenta converter pra JSON
+    try {
+      const json = JSON.parse(textoBruto)
+      return json
+    } catch (erroDeParse) {
+      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
+      throw erroDeParse
+    }
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error)
+    throw error
   }
 }
 
 async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, cidade, estado) {
   try {
-    const response = await fetch('http://localhost:83/public/api/index.php?entidade=endereco&acao=cadastrar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id,           // ID do usuário ou funcionário
-        tipo,         // tipo = 1 (usuário), 2 (funcionário), etc.
-        cep,
-        rua,
-        numero,
-        complemento,
-        bairro,
-        cidade,
-        estado
-      })
-    });
+    const response = await fetch(
+      'http://localhost:83/public/api/index.php?entidade=endereco&acao=cadastrar',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id, // ID do usuário ou funcionário
+          tipo, // tipo = 1 (usuário), 2 (funcionário), etc.
+          cep,
+          rua,
+          numero,
+          complemento,
+          bairro,
+          cidade,
+          estado,
+        }),
+      }
+    )
 
-    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
-    return await response.json();
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`)
+    return await response.json()
   } catch (error) {
-    console.error('Erro ao cadastrar endereço:', error);
-    throw error;
+    console.error('Erro ao cadastrar endereço:', error)
+    throw error
   }
 }
 
 async function enviarAssinatura(idusuario, idplano) {
   try {
     // Gera a data atual no formato YYYY-MM-DD
-    const dataAtual = new Date().toISOString().split('T')[0];
+    const dataAtual = new Date().toISOString().split('T')[0]
 
-    const response = await fetch('http://localhost:83/public/api/index.php?entidade=assinatura&acao=cadastrar', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        idusuario: idusuario,
-        idplano: idplano,
-        
-      })
-    });
+    const response = await fetch(
+      'http://localhost:83/public/api/index.php?entidade=assinatura&acao=cadastrar',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          idusuario: idusuario,
+          idplano: idplano,
+        }),
+      }
+    )
 
     if (!response.ok) {
-      throw new Error(`Erro na requisição: ${response.status}`);
+      throw new Error(`Erro na requisição: ${response.status}`)
     }
 
-    const resultado = await response.json();
-    return resultado;
-
+    const resultado = await response.json()
+    return resultado
   } catch (error) {
-    console.error('Erro ao cadastrar assinatura:', error.message);
-    throw error;
+    console.error('Erro ao cadastrar assinatura:', error.message)
+    throw error
   }
 }
 
 async function enviarFormulario() {
-  // Captura os valores dos campos do formulário
-  const nome = document.getElementById('nome').value;
-  const data = document.getElementById('data').value;
-  const telefone = document.getElementById('telefone').value;
-  const email = document.getElementById('email').value;
-  const cpf = document.getElementById('cpf').value;
-  const senha = document.getElementById('senha').value;
-  const cep = document.getElementById('cep').value;
-  const rua = document.getElementById('rua').value;
-  const numero = document.getElementById('numero').value;
-  const complemento = document.getElementById('complemento').value;
-  const bairro = document.getElementById('bairro').value;
-  const cidade = document.getElementById('cidade').value;
-  const estado = document.getElementById('estado').value;
-  const plano = parseInt(document.getElementById('plano').value); // Certifique-se que é um número
+  const nome = document.getElementById('nome').value
+  const data = document.getElementById('data').value
+  const telefone = document.getElementById('telefone').value
+  const email = document.getElementById('email').value
+  const cpf = document.getElementById('cpf').value
+  const senha = document.getElementById('senha').value
+  const cep = document.getElementById('cep').value
+  const rua = document.getElementById('rua').value
+  const numero = document.getElementById('numero').value
+  const complemento = document.getElementById('complemento').value
+  const bairro = document.getElementById('bairro').value
+  const cidade = document.getElementById('cidade').value
+  const estado = document.getElementById('estado').value
+  const plano = parseInt(document.getElementById('plano').value)
 
   try {
-    // 1. Cadastra o usuário
-    const respostaUsuario = await usuario(nome, senha, email, cpf, data, telefone);
-    console.log("Usuário cadastrado:", respostaUsuario);
-
+    // 1. Cadastra (Usuario)
+    const respostaUsuario = await usuario(senha, email)
     if (!respostaUsuario.sucesso || !respostaUsuario.dados?.id) {
-      throw new Error("Erro ao cadastrar usuário.");
+      throw new Error('Erro ao cadastrar usuário.')
+    }
+    const idUsuario = respostaUsuario.dados.id
+
+
+    // 2. Cadastra (perfil completo)
+    const respostaPerfilUsuario = await perfil_usuario(
+      idUsuario,
+      nome, 
+      cpf, 
+      data, 
+      telefone
+    )
+    if (!respostaPerfilUsuario.sucesso) {
+      throw new Error('Erro ao cadastrar usuário.')
     }
 
-    const idUsuario = respostaUsuario.dados.id;
-
-    // 2. Cadastra o endereço
-    const respostaEndereco = await enviarEndereco(idUsuario, 1, cep, rua, numero, complemento, bairro, cidade, estado);
-    console.log("Endereço cadastrado:", respostaEndereco);
-
+    // 3. Cadastra endereço
+    const respostaEndereco = await enviarEndereco(
+      idUsuario,
+      1,
+      cep,
+      rua,
+      numero,
+      complemento,
+      bairro,
+      cidade,
+      estado
+    )
     if (!respostaEndereco.sucesso) {
-      throw new Error("Erro ao cadastrar endereço.");
+      throw new Error('Erro ao cadastrar endereço.')
     }
 
-    // 3. Cadastra a assinatura com o plano selecionado
-    const respostaAssinatura = await enviarAssinatura(idUsuario, plano);
-    console.log("Assinatura cadastrada:", respostaAssinatura);
-
+    // 4. Cadastra assinatura
+    const respostaAssinatura = await enviarAssinatura(
+      idUsuario, 
+      plano
+    )
     if (!respostaAssinatura.sucesso) {
-      throw new Error("Erro ao cadastrar assinatura.");
+      throw new Error('Erro ao cadastrar assinatura.')
     }
 
-    // ✅ Tudo certo: limpa formulário e redireciona
-    alert("Cadastro realizado com sucesso!");
-
-    const form = document.querySelector('form'); // Garante que o form será resetado
-    if (form) form.reset();
-
-    window.location.href = "http://localhost:83/public/login.php";
-
+    // ✅ Sucesso
+    alert('Cadastro realizado com sucesso!')
+    document.querySelector('form')?.reset()
+    window.location.href = 'http://localhost:83/public/login.php'
   } catch (error) {
-    console.error("Erro no envio do formulário:", error);
-    alert("Erro ao cadastrar: " + error.message);
+    console.error('Erro no envio do formulário:', error)
+    alert('Erro ao cadastrar: ' + error.message)
   }
 }
 
-
-
-
-prevBtn.addEventListener("click", () => {
+prevBtn.addEventListener('click', () => {
   if (currentStep > 1) {
-    currentStep--;
-    showStep(currentStep);
+    currentStep--
+    showStep(currentStep)
   }
-});
+})
 
-showStep(currentStep);
-
+showStep(currentStep)
 
 //===========================================================================================================================================================================================
 // aqui começar a validação geral  com nome email cpf e por ai vai...
-const nomeInput = document.getElementById("nome");
-const emailInput = document.getElementById("email");
-const cpfInput = document.getElementById("cpf");
-const telefoneInput = document.getElementById("telefone");
+const nomeInput = document.getElementById('nome')
+const emailInput = document.getElementById('email')
+const cpfInput = document.getElementById('cpf')
+const telefoneInput = document.getElementById('telefone')
 
 if (cpfInput) {
-  cpfInput.addEventListener("input", function () {
-    this.value = aplicarMascaraCPF(this.value);
-  });
+  cpfInput.addEventListener('input', function () {
+    this.value = aplicarMascaraCPF(this.value)
+  })
 }
 
 function showError(input, message) {
-  const errorMsg = input.nextElementSibling;
-  errorMsg.textContent = message;
-  errorMsg.classList.remove("hidden");
-  input.classList.add("border-red-500", "animate-shake");
-  input.classList.remove("border-green-500");
-  setTimeout(() => input.classList.remove("animate-shake"), 500);
+  const errorMsg = input.nextElementSibling
+  errorMsg.textContent = message
+  errorMsg.classList.remove('hidden')
+  input.classList.add('border-red-500', 'animate-shake')
+  input.classList.remove('border-green-500')
+  setTimeout(() => input.classList.remove('animate-shake'), 500)
 }
 
 function showSuccess(input) {
-  const errorMsg = input.nextElementSibling;
-  errorMsg.classList.add("hidden");
-  errorMsg.textContent = "";
-  input.classList.remove("border-red-500");
-  input.classList.add("border-green-500");
+  const errorMsg = input.nextElementSibling
+  errorMsg.classList.add('hidden')
+  errorMsg.textContent = ''
+  input.classList.remove('border-red-500')
+  input.classList.add('border-green-500')
 }
 
 // Validações simples
 
 function validateNome() {
-  const val = nomeInput.value.trim();
+  const val = nomeInput.value.trim()
   if (val.length < 3) {
-    showError(nomeInput, "Nome deve ter pelo menos 3 caracteres");
-    return false;
+    showError(nomeInput, 'Nome deve ter pelo menos 3 caracteres')
+    return false
   }
-  showSuccess(nomeInput);
-  return true;
+  showSuccess(nomeInput)
+  return true
 }
 
 function validateEmail() {
-  const val = emailInput.value.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const val = emailInput.value.trim()
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailRegex.test(val)) {
-    showError(emailInput, "Email inválido");
-    return false;
+    showError(emailInput, 'Email inválido')
+    return false
   }
-  showSuccess(emailInput);
-  return true;
+  showSuccess(emailInput)
+  return true
 }
 
 function validateCPF() {
-  const val = cpfInput.value.replace(/\D/g, ""); // só números
+  const val = cpfInput.value.replace(/\D/g, '') // só números
   if (val.length !== 11) {
-    showError(cpfInput, "CPF deve ter 11 números");
-    return false;
+    showError(cpfInput, 'CPF deve ter 11 números')
+    return false
   }
   // Pode implementar validação real de CPF aqui depois
-  showSuccess(cpfInput);
-  return true;
+  showSuccess(cpfInput)
+  return true
 }
 
 function validateTelefone() {
-  const val = telefoneInput.value.replace(/\D/g, "");
+  const val = telefoneInput.value.replace(/\D/g, '')
   if (val.length < 10) {
-    showError(telefoneInput, "Telefone deve ter ao menos 10 dígitos");
-    return false;
+    showError(telefoneInput, 'Telefone deve ter ao menos 10 dígitos')
+    return false
   }
-  showSuccess(telefoneInput);
-  return true;
+  showSuccess(telefoneInput)
+  return true
 }
 
 // Eventos
 
-[nomeInput, emailInput, cpfInput, telefoneInput].forEach((input) => {
-  input.addEventListener("blur", () => {
+;[nomeInput, emailInput, cpfInput, telefoneInput].forEach((input) => {
+  input.addEventListener('blur', () => {
     switch (input.id) {
-      case "nome":
-        validateNome();
-        break;
-      case "email":
-        validateEmail();
-        break;
-      case "cpf":
-        validateCPF();
-        break;
-      case "telefone":
-        validateTelefone();
-        break;
+      case 'nome':
+        validateNome()
+        break
+      case 'email':
+        validateEmail()
+        break
+      case 'cpf':
+        validateCPF()
+        break
+      case 'telefone':
+        validateTelefone()
+        break
     }
-  });
-});
+  })
+})
 
 //===========================================================================================================================================================================================
 // Elementos do DOM
-const cepInput = document.getElementById("cep");
-const ruaInput = document.getElementById("rua");
-const numeroInput = document.getElementById("numero");
-const complementoInput = document.getElementById("complemento");
-const bairroInput = document.getElementById("bairro");
-const cidadeInput = document.getElementById("cidade");
-const estadoInput = document.getElementById("estado");
+const cepInput = document.getElementById('cep')
+const ruaInput = document.getElementById('rua')
+const numeroInput = document.getElementById('numero')
+const complementoInput = document.getElementById('complemento')
+const bairroInput = document.getElementById('bairro')
+const cidadeInput = document.getElementById('cidade')
+const estadoInput = document.getElementById('estado')
 
 // Funções de tratamento de erro visual
 function showFieldError(input, message) {
-  const errEl = input.nextElementSibling;
-  errEl.textContent = message;
-  errEl.classList.remove("hidden");
-  input.classList.add("border-red-500");
+  const errEl = input.nextElementSibling
+  errEl.textContent = message
+  errEl.classList.remove('hidden')
+  input.classList.add('border-red-500')
 }
 
 function clearFieldError(input) {
-  const errEl = input.nextElementSibling;
-  errEl.textContent = "";
-  errEl.classList.add("hidden");
-  input.classList.remove("border-red-500");
+  const errEl = input.nextElementSibling
+  errEl.textContent = ''
+  errEl.classList.add('hidden')
+  input.classList.remove('border-red-500')
 }
 
 // Bloqueia/desbloqueia os campos de endereço
 function lockAddressFields() {
-  ruaInput.disabled = true;
-  numeroInput.disabled = true;
-  complementoInput.disabled = true;
-  bairroInput.disabled = true;
+  ruaInput.disabled = true
+  numeroInput.disabled = true
+  complementoInput.disabled = true
+  bairroInput.disabled = true
 }
 
 function unlockAddressFields() {
-  ruaInput.disabled = false;
-  numeroInput.disabled = false;
-  complementoInput.disabled = false;
-  bairroInput.disabled = false;
+  ruaInput.disabled = false
+  numeroInput.disabled = false
+  complementoInput.disabled = false
+  bairroInput.disabled = false
 }
 
 // Função principal: busca endereço via CEP
 async function buscaEnderecoPorCep(cep) {
   try {
-    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-    const data = await response.json();
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    const data = await response.json()
 
     if (data.erro) {
-      showFieldError(cepInput, "CEP não encontrado.");
-      return;
+      showFieldError(cepInput, 'CEP não encontrado.')
+      return
     }
 
-    ruaInput.value = data.logradouro || "";
-    bairroInput.value = data.bairro || "";
-    cidadeInput.value = data.localidade || "";
-    estadoInput.value = data.uf || "";
+    ruaInput.value = data.logradouro || ''
+    bairroInput.value = data.bairro || ''
+    cidadeInput.value = data.localidade || ''
+    estadoInput.value = data.uf || ''
 
-    unlockAddressFields();
-    clearFieldError(cepInput);
+    unlockAddressFields()
+    clearFieldError(cepInput)
   } catch (error) {
-    showFieldError(cepInput, "Erro ao buscar o CEP.");
-    console.error(error);
+    showFieldError(cepInput, 'Erro ao buscar o CEP.')
+    console.error(error)
   }
 }
 
 // Evento de blur no campo de CEP
-cepInput.addEventListener("blur", () => {
-  const cep = cepInput.value.replace(/\D/g, "");
+cepInput.addEventListener('blur', () => {
+  const cep = cepInput.value.replace(/\D/g, '')
   if (cep.length !== 8) {
-    showFieldError(cepInput, "CEP inválido! Deve ter 8 números.");
-    return;
+    showFieldError(cepInput, 'CEP inválido! Deve ter 8 números.')
+    return
   }
 
-  clearFieldError(cepInput);
-  buscaEnderecoPorCep(cep);
-});
+  clearFieldError(cepInput)
+  buscaEnderecoPorCep(cep)
+})
 
 // Inicializa com os campos bloqueados
-lockAddressFields();
-
-
+lockAddressFields()
 
 //===========================================================================================================================================================================================
 // aqui e o que faz os olhos da senha se mexerem e mudares suas formas...
 function toggleSenha(id, btn) {
-  const input = document.getElementById(id);
-  const isHidden = input.type === "password";
-  input.type = isHidden ? "text" : "password";
+  const input = document.getElementById(id)
+  const isHidden = input.type === 'password'
+  input.type = isHidden ? 'text' : 'password'
 
   // Ícones Font Awesome para olho aberto e fechado
-  const eyeOpen = '<i class="fa-regular fa-eye"></i>';
-  const eyeOff = '<i class="fa-regular fa-eye-slash"></i>';
+  const eyeOpen = '<i class="fa-regular fa-eye"></i>'
+  const eyeOff = '<i class="fa-regular fa-eye-slash"></i>'
 
-  btn.innerHTML = isHidden ? eyeOpen : eyeOff;
+  btn.innerHTML = isHidden ? eyeOpen : eyeOff
 }
 
 //===========================================================================================================================================================================================
 // aqui aplicar mascaraCPf, mascaraTelefone para deixa para o usuario facil de entender e ver oq e como fazer tudo
 function aplicarMascaraCPF(valor) {
   return valor
-    .replace(/\D/g, "") // Remove tudo que não for número
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    .replace(/\D/g, '') // Remove tudo que não for número
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
 }
 
 function aplicarMascaraTelefone(valor) {
   return valor
-    .replace(/\D/g, "")
-    .replace(/^(\d{2})(\d)/, "($1) $2")
-    .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+    .replace(/\D/g, '')
+    .replace(/^(\d{2})(\d)/, '($1) $2')
+    .replace(/(\d{5})(\d{1,4})$/, '$1-$2')
 }
 
 // Aplica a máscara enquanto o usuário digita
-document.getElementById("cpf").addEventListener("input", function (e) {
-  this.value = aplicarMascaraCPF(this.value);
-});
+document.getElementById('cpf').addEventListener('input', function (e) {
+  this.value = aplicarMascaraCPF(this.value)
+})
 
-document
-  .getElementById("telefone")
-  .addEventListener("input", function (e) {
-    this.value = aplicarMascaraTelefone(this.value);
-  });
-this.value = aplicarMascaraCPF(this.value).substring(0, 14);
+document.getElementById('telefone').addEventListener('input', function (e) {
+  this.value = aplicarMascaraTelefone(this.value)
+})
+this.value = aplicarMascaraCPF(this.value).substring(0, 14)
 //=================================================================================================================================================================

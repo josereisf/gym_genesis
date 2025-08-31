@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`alimento` (
   `foto_de_perfil` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`idalimento`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -48,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`plano` (
   `duracao` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idplano`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -63,7 +61,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`usuario` (
   PRIMARY KEY (`idusuario`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -90,7 +87,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`assinatura` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 42
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -103,7 +99,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`cargo` (
   `descricao` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`idcargo`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -134,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`funcionario` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -155,7 +149,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 31
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -184,7 +177,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`aula_agendada` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 28
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -227,7 +219,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`avaliacao_fisica` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 32
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -240,7 +231,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`categoria_produto` (
   `descricao` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`idcategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -258,7 +248,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`cupom_desconto` (
   PRIMARY KEY (`idcupom`),
   UNIQUE INDEX `codigo` (`codigo` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -279,7 +268,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`dieta` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -299,7 +287,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`refeicao` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -354,7 +341,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`endereco` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -369,7 +355,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`exercicio` (
   `video_url` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`idexercicio`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -390,7 +375,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`forum` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -410,7 +394,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`historico_peso` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -435,7 +418,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`historico_treino` (
     FOREIGN KEY (`treino_id`)
     REFERENCES `gym_genesis`.`treino` (`idtreino`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -450,7 +432,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento` (
   `status` ENUM('sucesso', 'falha', 'reembolsado') NULL DEFAULT 'sucesso',
   PRIMARY KEY (`idpagamento`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -477,7 +458,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pedido` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -493,7 +473,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`produto` (
   `imagem` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`idproduto`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -539,7 +518,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`meta_usuario` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 31
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -562,7 +540,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento_detalhe` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 24
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -588,7 +565,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`perfil_usuario` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -608,7 +584,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`recuperacao_senha` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -634,7 +609,6 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`resposta_forum` (
     REFERENCES `gym_genesis`.`forum` (`idtopico`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -661,10 +635,11 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`treino_exercicio` (
     FOREIGN KEY (`exercicio_id`)
     REFERENCES `gym_genesis`.`exercicio` (`idexercicio`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 31
 DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+--  DROP database gym_genesis;

@@ -15,7 +15,7 @@ $data_aula = $input['data_aula'] ?? null;
 $dia_semana = $input['dia_semana'] ?? null;
 $hora_inicio = $input['hora_inicio'] ?? null;
 $hora_fim = $input['hora_fim'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
+$idfuncionario = $input['idfuncionario'] ?? null;
 $idtreino = $input['idtreino'] ?? null;
 
 if (!$acao) {
@@ -24,10 +24,10 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        if (!$data_aula || !$dia_semana || !$hora_inicio || !$hora_fim || !$idusuario || !$idtreino) {
+        if (!$data_aula || !$dia_semana || !$hora_inicio || !$hora_fim || !$idfuncionario || !$idtreino) {
             enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
         }
-        $ok = cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino);
+        $ok = cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idfuncionario, $idtreino);
         if ($ok) {
             enviarResposta(true, 'Aula agendada cadastrada com sucesso');
         } else {
@@ -36,10 +36,10 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$idaula || !$data_aula || !$dia_semana || !$hora_inicio || !$hora_fim || !$idusuario || !$idtreino) {
+        if (!$idaula || !$data_aula || !$dia_semana || !$hora_inicio || !$hora_fim || !$idfuncionario || !$idtreino) {
             enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
         }
-        $ok = editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino, $idaula);
+        $ok = editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idfuncionario, $idtreino, $idaula);
         if ($ok) {
             enviarResposta(true, 'Aula agendada editada com sucesso');
         } else {

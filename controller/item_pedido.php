@@ -11,7 +11,7 @@ if (empty($input)) {
 }
 
 $iditem = $input['iditem'] ?? null;
-$pedido_idpedido = $input['pedido_idpedido'] ?? null;
+$pedido_id = $input['pedido_id'] ?? null;
 $produto_idproduto = $input['produto_idproduto'] ?? null;
 $quantidade = $input['quantidade'] ?? null;
 $preco_unitario = $input['preco_unitario'] ?? null;
@@ -22,10 +22,10 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        if (!$pedido_idpedido || !$produto_idproduto || !$quantidade || !$preco_unitario) {
+        if (!$pedido_id || !$produto_idproduto || !$quantidade || !$preco_unitario) {
             enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
         }
-        $ok = cadastrarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario);
+        $ok = cadastrarItemPedido($pedido_id, $produto_idproduto, $quantidade, $preco_unitario);
         if ($ok) {
             enviarResposta(true, 'Item do pedido cadastrado com sucesso');
         } else {
@@ -34,10 +34,10 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$iditem || !$pedido_idpedido || !$produto_idproduto || !$quantidade || !$preco_unitario) {
+        if (!$iditem || !$pedido_id || !$produto_idproduto || !$quantidade || !$preco_unitario) {
             enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
         }
-        $ok = editarItemPedido($pedido_idpedido, $produto_idproduto, $quantidade, $preco_unitario);
+        $ok = editarItemPedido($pedido_id, $produto_idproduto, $quantidade, $preco_unitario);
         if ($ok) {
             enviarResposta(true, 'Item do pedido editado com sucesso');
         } else {
@@ -46,7 +46,7 @@ switch ($acao) {
         break;
 
     case 'listar':
-        $dados = listarItemPedido($pedido_idpedido);
+        $dados = listarItemPedido($pedido_id);
         if ($dados) {
             enviarResposta(true, 'Itens do pedido listados com sucesso', $dados);
         } else {

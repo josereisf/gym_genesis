@@ -54,7 +54,8 @@ if ($usuario !== null) {
     // Tipo padrão (aluno)
     $usuarioId = $usuario['id'];
     $resposta = listarAvaliacaoFisica($usuarioId);
-
+    $usuario = listarPerfilUsuario($usuarioId);
+    $usuario['nome'] = $usuario[0]['nome'];
     $_SESSION['id'] = $usuarioId;
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $usuario['nome'];

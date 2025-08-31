@@ -4,7 +4,7 @@ require_once __DIR__ . '/../funcao.php';
 
 header('Content-Type: application/json');
 
-$idplano = 1;
+$idplano = null;
 $data_inicio = date('Y-m-d');
 
 // Retorna algo como: [ [ "idplano" => 1, "tipo" => "Mensal", "duracao" => "30 dias" ] ]

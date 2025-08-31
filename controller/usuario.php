@@ -10,14 +10,10 @@ $acao = $_GET['acao'] ?? null;
 $input = json_decode(file_get_contents('php://input'), true);
 
 $idusuario = $input['idusuario'] ?? 0;
-$nome = $input['nome'] ?? null;
 $senha = $input['senha'] ?? null;
 $email = $input['email'] ?? null;
-$cpf = $input['cpf'] ?? null;
-$data_nasc = $input['data_nascimento'] ?? null;
-$telefone = $input['telefone'] ?? null;
 $tipo = $input['tipo'] ?? null;
-$numero_matricula = gerarNumeroMatriculaPorTipo($tipo);
+
 
 // Supondo que a imagem vai vir como string base64 no JSON, trate aqui
 $imagem = $input['imagem'] ?? null;
@@ -29,7 +25,7 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        $resultado = cadastrarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo);
+        $resultado = cadastrarUsuario($senha, $email, $tipo);
     
     if ($resultado['success'] == true) {
         enviarResposta(true, 'Usuário cadastrado com sucesso', ['id' => $resultado['id']]);
@@ -39,7 +35,7 @@ switch ($acao) {
     break;
 
     case 'editar':
-        $funcionou = editarUsuario($nome, $senha, $email, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $tipo, $idusuario);
+        $funcionou = editarUsuario($senha, $email, $tipo, $idusuario);
         if ($funcionou) {
             enviarResposta(true, 'Usuário editado com sucesso');
         } else {

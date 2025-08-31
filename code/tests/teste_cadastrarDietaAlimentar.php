@@ -3,8 +3,8 @@
 require_once __DIR__ . '/../funcao.php';
 
 
-$idrefeicao = 2;
-$idalimento = 6;
+$idrefeicao = 1;
+$idalimento = 18;
 $quantidade = 100;
 $observacao = "Sem glúten";
 
