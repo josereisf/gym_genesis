@@ -159,16 +159,26 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
 ('senha22', 'pedro@ex.com', 1),
 ('senha23', 'sofia@ex.com', 2);
 INSERT INTO perfil_usuario (usuario_id, nome, cpf, telefone, data_nascimento, numero_matricula, foto_perfil) VALUES
-  (1, 'Lucas Silva', '123.456.789-01', '11987654321', '1990-05-10', 'MAT2025001', NULL),
-  (2, 'Fernanda Souza', '234.567.890-12', '11876543210', '1988-08-22', 'MAT2025002', NULL),
-  (3, 'Rafael Costa', '345.678.901-23', '11765432109', '1995-03-15', 'MAT2025003', NULL),
-  (4, 'Juliana Lima', '456.789.012-34', '11654321098', '1992-12-01', 'MAT2025004', NULL),
-  (5, 'Gabriel Rocha', '567.890.123-45', '11543210987', '1987-07-19', 'MAT2025005', NULL),
-  (6, 'Patricia Nunes', '678.901.234-56', '11432109876', '1993-11-30', 'MAT2025006', NULL),
-  (7, 'Rodrigo Alves', '789.012.345-67', '11321098765', '1991-02-25', 'MAT2025007', NULL),
-  (8, 'Amanda Torres', '890.123.456-78', '11210987654', '1996-09-14', 'MAT2025008', NULL),
-  (9, 'Thiago Martins', '901.234.567-89', '11109876543', '1989-04-07', 'MAT2025009', NULL),
-  (10, 'Camila Prado', '012.345.678-90', '11098765432', '1994-06-21', 'MAT2025010', NULL);
+  (1, 'Lucas Silva', '123.456.789-01', '11987654321', '1990-05-10', 'MAT2025001', 'padrao.png'),
+  (2, 'Fernanda Souza', '234.567.890-12', '11876543210', '1988-08-22', 'MAT2025002', 'padrao.png'),
+  (3, 'Rafael Costa', '345.678.901-23', '11765432109', '1995-03-15', 'MAT2025003', 'padrao.png'),
+  (4, 'Juliana Lima', '456.789.012-34', '11654321098', '1992-12-01', 'MAT2025004', 'padrao.png'),
+  (5, 'Gabriel Rocha', '567.890.123-45', '11543210987', '1987-07-19', 'MAT2025005', 'padrao.png'),
+  (6, 'Patricia Nunes', '678.901.234-56', '11432109876', '1993-11-30', 'MAT2025006', 'padrao.png'),
+  (7, 'Rodrigo Alves', '789.012.345-67', '11321098765', '1991-02-25', 'MAT2025007', 'padrao.png'),
+  (8, 'Amanda Torres', '890.123.456-78', '11210987654', '1996-09-14', 'MAT2025008', 'padrao.png'),
+  (9, 'Thiago Martins', '901.234.567-89', '11109876543', '1989-04-07', 'MAT2025009', 'padrao.png'),
+  (10, 'Camila Prado', '012.345.678-90', '11098765432', '1994-06-21', 'MAT2025010', 'padrao.png'),
+  (11, 'Mariana Oliveira', '123.111.222-33', '11912345678', '1992-01-12', 'MAT2025011', 'padrao.png'),
+  (12, 'Bruno Ferreira', '234.222.333-44', '11923456789', '1990-09-03', 'MAT2025012', 'padrao.png'),
+  (13, 'Carolina Mendes', '345.333.444-55', '11934567890', '1996-05-25', 'MAT2025013', 'padrao.png'),
+  (14, 'Diego Ramos', '456.444.555-66', '11945678901', '1987-11-17', 'MAT2025014', 'padrao.png'),
+  (15, 'Larissa Duarte', '567.555.666-77', '11956789012', '1993-03-08', 'MAT2025015', 'padrao.png'),
+  (16, 'Felipe Barros', '678.666.777-88', '11967890123', '1989-07-19', 'MAT2025016', 'padrao.png'),
+  (17, 'Renata Carvalho', '789.777.888-99', '11978901234', '1991-02-22', 'MAT2025017', 'padrao.png'),
+  (18, 'André Gonçalves', '890.888.999-00', '11989012345', '1994-06-14', 'MAT2025018', 'padrao.png'),
+  (19, 'Beatriz Lima', '901.999.000-11', '11990123456', '1992-10-30', 'MAT2025019', 'padrao.png'),
+  (20, 'Marcelo Pinto', '012.000.111-22', '11901234567', '1988-12-05', 'MAT2025020', 'padrao.png');
 -- 2.2. cupom_desconto (20 inserts)
 INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_validade, quantidade_uso, tipo) VALUES
 ('PROMO15', 15.00, NULL, '2025-12-31', 50, 'percentual'),

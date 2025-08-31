@@ -1,7 +1,24 @@
 <?php
 require_once "../code/funcao.php";
+$idaluno = $_SESSION["id"] ?? 0;
+
 $professores = listarUsuarioTipo(2);
-$cargo = listarCargo(1);
+
+$tudojunto = [];
+
+foreach ($professores as $prof) {
+  $id = $prof['idusuario'];
+
+  $perfil = listarPerfilUsuario($id);
+
+  $cargo = listarCargo($id);
+
+  $tudojunto[] = [
+    'usuario' => $prof,
+    'perfil' => $perfil,
+    'cargo' => $cargo
+  ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,21 +28,25 @@ $cargo = listarCargo(1);
   <title>Carrossel Professores</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body{
+    body {
       background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
       transition: background 0.5s infinite;
     }
-    @keyframes background{
+
+    @keyframes background {
       0% {
         background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
       }
+
       50% {
         background: linear-gradient(to bottom right, #0d1625, #132237, #1a2f4a);
       }
+
       100% {
         background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
       }
     }
+
     .carousel-wrapper {
       perspective: 1000px;
     }
@@ -123,9 +144,11 @@ $cargo = listarCargo(1);
     button:disabled {
       opacity: 0.9;
     }
-    .fa-solid{
+
+    .fa-solid {
       color: black;
     }
+
     /* responsividade simples: reduzir espaçamento lateral em telas pequenas */
     @media (max-width: 480px) {
       .card {
@@ -176,13 +199,12 @@ $cargo = listarCargo(1);
       class="px-6 py-2 bg-gray-400 text-white rounded-xl shadow-md cursor-not-allowed transition-colors">
       Confirmar Professor
     </button>
+
+
   </form>
 
   <script>
-    const professores = <?php echo json_encode($professores); ?>;
-    const cargo = <?php echo json_encode($cargo[0]['descricao'] ?? 'Professor'); ?>;
-    const nome_cargo = <?php echo json_encode($cargo[0]['nome'] ?? 'Professor'); ?>;
-
+    const professores = <?php echo json_encode($tudojunto); ?>;
 
     let currentIndex = 0;
     let selectedId = ""; // armazena seleção persistente
@@ -208,11 +230,16 @@ $cargo = listarCargo(1);
       carousel.innerHTML = "";
 
       // índices vizinhos (não circular): se estiver no início/fim, não exibe left/right
-      professores.forEach((prof, index) => {
+      professores.forEach((profObj, index) => {
+        const prof = profObj.usuario;
+        const perfil = (profObj.perfil && profObj.perfil[0]) || {}; // agora pegando o índice 0
+        const cargo = (profObj.cargo && profObj.cargo[0]?.descricao) || "Professor";
+        const nome_cargo = (profObj.cargo && profObj.cargo[0]?.nome) || "Professor";
+
         const div = document.createElement("div");
         div.className = "card";
 
-        // Decide posição sem "wrap" circular
+        // Decide posição
         if (index === currentIndex) {
           div.classList.add("center");
         } else if (index === currentIndex - 1) {
@@ -223,85 +250,78 @@ $cargo = listarCargo(1);
           div.classList.add("hidden-card");
         }
 
-        // Conteúdo
         div.innerHTML = `
-  <div class="w-full h-full flex flex-col items-center">
-    <!-- Imagem destacada (overlap visual) -->
-    <div class="w-full flex items-center justify-center">
-      <img
-        src="./uploads/${prof.foto_de_perfil ? prof.foto_de_perfil : 'teste2.png'}"
-        alt="${prof.nome}"
-        class="w-20 h-20 object-cover rounded-xl shadow-md border-4 border-white"
-        loading="lazy"
-      />
+    <div class="w-full h-full flex flex-col items-center">
+      <div class="w-full flex items-center justify-center">
+        <img
+          src="./uploads/${perfil.foto_perfil ? perfil.foto_perfil : 'padrao.png'}"
+          alt="${perfil.nome || 'Professor'}"
+          class="w-20 h-20 object-cover rounded-xl shadow-md border-4 border-white"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="mt-2 text-center px-4">
+        <h2 class="text-lg font-semibold text-gray-900 leading-tight">
+          ${perfil.nome || "Sem Nome"}
+        </h2>
+
+        <div class="mt-2 flex items-center justify-center gap-2">
+          <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
+            ${nome_cargo}
+          </span>
+        </div>
+
+        <div class="mt-3 text-sm text-gray-700 space-y-2 text-left">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-envelope text-gray-500 w-4 h-4"></i>
+            <a href="mailto:${prof.email}" class="truncate" title="${prof.email}">
+              ${prof.email}
+            </a>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-phone text-gray-500"></i>
+            <a href="tel:${perfil.telefone}" class="truncate" title="${perfil.telefone}">
+              ${perfil.telefone}
+            </a>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-briefcase text-gray-500"></i>
+            <span class="text-gray-600">${cargo}</span>
+          </div>
+        </div>
+
+        <div class="mt-4 flex gap-3 justify-center">
+          <button type="button" class="px-3 py-1 bg-white text-gray-800 rounded-md text-sm shadow-md hover:shadow-lg transition">
+            Ver perfil
+          </button>
+
+          <button type="button"
+                  class="px-3 py-1 bg-green-600 text-white rounded-md text-sm shadow-md hover:bg-green-700 transition select-btn"
+                  data-id="${prof.idusuario}">
+            Selecionar
+          </button>
+        </div>
+      </div>
     </div>
+  `;
 
-    <!-- Conteúdo principal -->
-    <div class="mt-2 text-center px-4">
-      <h2 class="text-lg font-semibold text-gray-900 leading-tight">${prof.nome}</h2>
-
-      <!-- Badges: cargo + matrícula -->
-      <div class="mt-2 flex items-center justify-center gap-2">
-        <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
-          ${nome_cargo}
-        </span>
-      </div>
-
-      <!-- Detalhes (email, telefone, cargo) -->
-      <div class="mt-3 text-sm text-gray-700 space-y-2 text-left">
-        <div class="flex items-center gap-2">
-          <!-- ícone email -->
-         <i class="fa-solid fa-envelope text-gray-500 w-4 h-4"></i>
-
-          <a href="mailto:${prof.email}" class="truncate" title="${prof.email}">${prof.email}</a>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <!-- ícone telefone -->
-          <i class="fa-solid fa-phone text-gray-500"></i>
-          <a href="tel:${prof.telefone}" class="truncate" title="${prof.telefone}">${prof.telefone}</a>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <!-- ícone cargo/briefcase -->
-         <i class="fa-solid fa-briefcase text-gray-500"></i>
-          <span class="text-gray-600">${cargo}</span>
-        </div>
-      </div>
-
-      <!-- Ações -->
-      <div class="mt-4 flex gap-3 justify-center">
-        <button type="button" class="px-3 py-1 bg-white text-gray-800 rounded-md text-sm shadow-md hover:shadow-lg transition">
-          Ver perfil
-        </button>
-
-        <button type="button" class="px-3 py-1 bg-green-600 text-white rounded-md text-sm shadow-md hover:bg-green-700 transition select-btn"
-                data-id="${prof.idusuario}">
-          Selecionar
-        </button>
-      </div>
-    </div>
-  </div>
-`;
-
-
-        // marca visual se for o selecionado (persistente)
+        // Seleção
         if (String(prof.idusuario) === String(selectedId)) {
           div.classList.add("selected");
         }
 
-        // só liga os handlers no card central (clicável)
         if (index === currentIndex) {
-          // clique normal -> selecionar
           div.addEventListener("click", () => {
             selectedId = String(prof.idusuario);
             inputHidden.value = selectedId;
-            resumo.textContent = `Você selecionou: ${prof.nome}`;
+            resumo.textContent = `Você selecionou: ${perfil.nome}`;
             updateSubmitState();
-            renderCards(); // re-render para atualizar classes (selected)
+            renderCards();
           });
 
-          // duplo clique -> desselecionar
           div.addEventListener("dblclick", () => {
             if (String(selectedId) === String(prof.idusuario)) {
               selectedId = "";

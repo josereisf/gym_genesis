@@ -1,12 +1,27 @@
 <?php
 require_once "../code/funcao.php";
 $idaluno = $_SESSION["id"] ?? 0;
-$professores = listarUsuarioTipo(2);
-$cargo = listarCargo(1);
-$tudojunto = [
-  'professores' => $professores,
-  'cargo' => $cargo
-];
+
+$professores = listarUsuarioTipo(2); 
+
+$tudojunto = [];
+
+foreach ($professores as $prof) {
+    $id = $prof['idusuario']; 
+    
+    $perfil = listarPerfilUsuario($id);
+
+    $cargo = listarCargo($id);
+
+    $tudojunto[] = [
+        'usuario' => $prof,
+        'perfil' => $perfil,
+        'cargo' => $cargo
+    ];
+}
+// echo"<pre>";
+// var_dump($tudojunto);
+// echo"</pre>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,32 +51,37 @@ $tudojunto = [
           <th class="px-4 py-3 text-left">Ação</th>
         </tr>
       </thead>
-      <tbody id="professorTable" class="divide-y divide-gray-200 text-gray-800">
-        <?php
-        foreach ($tudojunto['professores'] as $professor) {
-          echo "
-            <tr id='professor-" . $professor['idusuario'] . "' class='hover:bg-gray-50 transition-colors'>
-              <td class='px-4 py-3'>
-                <img src='./uploads/" . ($professor['foto_de_perfil'] ?: "padrao.png") . "' 
-                     alt='" . $professor['nome'] . "' 
+<tbody id="professorTable" class="divide-y divide-gray-200 text-gray-800">
+<?php
+foreach ($tudojunto as $item) {
+    $usuario = $item['usuario'];
+    $perfil = $item['perfil'][0] ?? []; // se não tiver perfil, retorna array vazio
+    $cargo = $item['cargo'][0]['descricao'] ?? 'Sem cargo'; // se não tiver cargo, valor padrão
+
+    echo "
+        <tr id='professor-" . $usuario['idusuario'] . "' class='hover:bg-gray-50 transition-colors'>
+            <td class='px-4 py-3'>
+                <img src='./uploads/" . ($perfil['foto_perfil'] ?: "padrao.png") . "' 
+                     alt='" . ($perfil['nome'] ?? $usuario['email']) . "' 
                      class='w-12 h-12 rounded-full object-cover' />
-              </td>
-              <td class='px-4 py-3 font-semibold'>" . $professor['nome'] . "</td>
-              <td class='px-4 py-3'>" . $professor['email'] . "</td>
-              <td class='px-4 py-3'>" . $professor['telefone'] . "</td>
-              <td class='px-4 py-3 text-sm text-gray-600'>" . $tudojunto['cargo'][0]['descricao'] . "</td>
-              <td class='px-4 py-3'>
+            </td>
+            <td class='px-4 py-3 font-semibold'>" . ($perfil['nome'] ?? $usuario['email']) . "</td>
+            <td class='px-4 py-3'>" . $usuario['email'] . "</td>
+            <td class='px-4 py-3'>" . ($perfil['telefone'] ?? '-') . "</td>
+            <td class='px-4 py-3 text-sm text-gray-600'>" . $cargo . "</td>
+            <td class='px-4 py-3'>
                 <button type='button' 
-                        onclick='selectProfessor(" . $professor['idusuario'] . ")' 
+                        onclick='selectProfessor(" . $usuario['idusuario'] . ")' 
                         class='px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg'>
-                  Selecionar
+                    Selecionar
                 </button>
-              </td>
-            </tr>
-          ";
-        }
-        ?>
-      </tbody>
+            </td>
+        </tr>
+    ";
+}
+?>
+</tbody>
+
     </table>
   </div>
 
