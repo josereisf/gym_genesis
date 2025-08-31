@@ -8,6 +8,6 @@ $duracao = '2 anos';
 $idassinatura = 1;
 
 
-if (!is_null(cadastrarPlano($tipo, $duracao, $idassinatura))) {
-    echo "funcionou";
+if (!is_null(deletarPlano($idassinatura))) {
+    echo "Plano deletado com sucesso.";
 }

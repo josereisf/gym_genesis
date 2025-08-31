@@ -43,12 +43,12 @@ function cadastrarUsuario($senha, $email, $tipo)
   ];
 }
 
-function editarUsuario($nome, $senha, $email, $tipo, $idusuario)
+function editarUsuario($senha, $email, $tipo, $idusuario)
 {
   $conexao = conectar();
   $sql = 'UPDATE usuario SET senha=?, email=?, tipo_usuario=? WHERE idusuario=?';
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 'sssi', $senha, $email, $tipo, $idusuario);
+  mysqli_stmt_bind_param($comando, 'ssii', $senha, $email, $tipo, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -63,8 +63,13 @@ function deletarUsuario($idusuario)
 
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
 
-  $funcionou = mysqli_stmt_execute($comando);
-  mysqli_stmt_close($comando);
+ try {
+        $funcionou = mysqli_stmt_execute($comando);
+    } catch (mysqli_sql_exception $e) {
+        // Usa a função traduzirErroMySQL para mostrar mensagem amigável
+        echo "❌ " . traduzirErroMySQL($e->getCode());
+        $funcionou = false;
+    }  mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
 }
@@ -293,7 +298,13 @@ function deletarFuncionario($idfuncionario)
 
   mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
 
-  $funcionou = mysqli_stmt_execute($comando);
+   try {
+        $funcionou = mysqli_stmt_execute($comando);
+    } catch (mysqli_sql_exception $e) {
+        // Usa a função traduzirErroMySQL para mostrar mensagem amigável
+        echo "❌ " . traduzirErroMySQL($e->getCode());
+        $funcionou = false;
+    }
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
@@ -312,19 +323,39 @@ function editarCargo($idcargo, $nome, $descricao)
   desconectar($conexao);
   return $funcionou;
 }
-function deletarCargo($idcargo)
+function deletarCargo($idcargo): bool
 {
-  $conexao = conectar();
-  $sql = "DELETE FROM cargo WHERE idcargo=?";
-  $comando = mysqli_prepare($conexao, $sql);
+    $conexao = conectar();
 
-  mysqli_stmt_bind_param($comando, 'i', $idcargo);
+    $sql = "DELETE FROM cargo WHERE idcargo = ?";
+    $comando = mysqli_prepare($conexao, $sql);
 
-  $funcionou = mysqli_stmt_execute($comando);
-  mysqli_stmt_close($comando);
-  desconectar($conexao);
-  return $funcionou;
+    if (!$comando) {
+        echo "Erro na preparação: " . mysqli_error($conexao);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($comando, "i", $idcargo);
+
+    try {
+        $funcionou = mysqli_stmt_execute($comando);
+    } catch (mysqli_sql_exception $e) {
+        // Código 1451 = erro de chave estrangeira (Cannot delete or update parent row)
+        if ($e->getCode() == 1451) {
+            echo "❌ Não é possível excluir: este cargo está associado a outros registros.";
+            $funcionou = false;
+        } else {
+            echo "Erro inesperado: " . $e->getMessage();
+            $funcionou = false;
+        }
+    }
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+
+    return $funcionou;
 }
+
 function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
 {
   $conexao = conectar();
@@ -826,14 +857,14 @@ function listarProdutos($idproduto)
   return $lista;
 }
 
-function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino, $idaula)
+function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $idaula)
 {
   $conexao = conectar();
 
-  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, usuario_id=?, treino_id=? WHERE idaula=?';
+  $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, treino_id=? WHERE idaula=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssiii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idusuario, $idtreino, $idaula);
+  mysqli_stmt_bind_param($comando, 'ssssii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $idaula);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -1681,7 +1712,7 @@ function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contr
   $conexao = conectar();
 
   $sql = "UPDATE funcionario 
-            SET nome = ?, email = ?, telefone = ?, data_contratacao = ?, salario = ?, cargo_id = ?, foto_de_perfil=?
+            SET nome = ?, email = ?, telefone = ?, data_contratacao = ?, salario = ?, cargo_id = ?, usuario_id=?
             WHERE idfuncionario = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -1705,7 +1736,6 @@ function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contr
 
   return $funcionou;
 }
-
 
 function listarTreino($idtreino)
 {
@@ -2155,31 +2185,41 @@ function listarRefeicoes($idrefeicao)
   return $lista_refeicaos;
 }
 
-function listarAlimentos($idalimento)
+function listarAlimentos($idalimento = null)
 {
-  $conexao = conectar();
+    $conexao = conectar();
 
-  if ($idalimento != null) {
-    $sql = " SELECT * FROM alimento WHERE idalimento = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idalimento);
-  } else {
-    $sql = " SELECT * FROM alimento";
-    $comando = mysqli_prepare($conexao, $sql);
-  }
+    if ($idalimento !== null) {
+        $sql = "SELECT * FROM alimento WHERE idalimento = ?";
+        $comando = mysqli_prepare($conexao, $sql);
+        if (!$comando) {
+            echo "Erro na preparação: " . mysqli_error($conexao);
+            return [];
+        }
+        mysqli_stmt_bind_param($comando, "i", $idalimento);
+    } else {
+        $sql = "SELECT * FROM alimento";
+        $comando = mysqli_prepare($conexao, $sql);
+        if (!$comando) {
+            echo "Erro na preparação: " . mysqli_error($conexao);
+            return [];
+        }
+    }
 
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
 
-  $lista_alimentos = [];
-  while ($alimento = mysqli_fetch_assoc($resultados)) {
-    $lista_alimentos[] = $alimento;
-  }
+    $lista_alimentos = [];
+    while ($alimento = mysqli_fetch_assoc($resultados)) {
+        $lista_alimentos[] = $alimento;
+    }
 
-  mysqli_stmt_close($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
 
-  return $lista_alimentos;
+    return $lista_alimentos;
 }
+
 
 function listarCategoriaProduto($idcategoria)
 {
@@ -2531,9 +2571,9 @@ function deletarCategoriaProduto($idcategoria)
 function deletarPagamentoDetalhe($idpagaemento2)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM pagamento_detalhado WHERE $idpagaemento2 = ?";
+  $sql = "DELETE FROM pagamento_detalhe WHERE idpagamento2 = ?";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "i", $idpagaemento2);
+  mysqli_stmt_bind_param($comando, "i", $idpagamento2);
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
@@ -2594,16 +2634,35 @@ function deletarPedido($idpedido)
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
 
-function deletarExercicio($idexercicio)
+function deletarExercicio($idexercicio): bool
 {
-  $conexao = conectar();
-  $sql = "DELETE FROM exercicio WHERE $idexercicio = ?";
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "i", $idexercicio);
-  $funcionou = mysqli_stmt_execute($comando);
-  mysqli_stmt_close($comando);
-  return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
+    $conexao = conectar();
+
+    // Corrigindo o SQL: o campo da tabela deve estar à esquerda
+    $sql = "DELETE FROM exercicio WHERE idexercicio = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+
+    if (!$comando) {
+        echo "Erro na preparação: " . mysqli_error($conexao);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($comando, "i", $idexercicio);
+
+    try {
+        $funcionou = mysqli_stmt_execute($comando);
+    } catch (mysqli_sql_exception $e) {
+        // Usa a função traduzirErroMySQL para mostrar mensagem amigável
+        echo "❌ " . traduzirErroMySQL($e->getCode());
+        $funcionou = false;
+    }
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+
+    return $funcionou;
 }
+
 
 function cadastrarCategoriaProduto($nome, $descricao)
 {
@@ -2671,7 +2730,7 @@ function editarRespostaForum($idresposta, $mensagem, $usuario_id, $forum_id)
   }
 
   // Ordem correta dos parâmetros
-  mysqli_stmt_bind_param($comando, "ssiii", $mensagem, $data_resposta, $usuario_id, $forum_id, $idresposta);
+  mysqli_stmt_bind_param($comando, "siii", $mensagem, $usuario_id, $forum_id, $idresposta);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2838,35 +2897,51 @@ function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_id)
 
   return $funcionou;
 }
-function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto)
+function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto): bool
 {
-  $conexao = conectar();
+    $conexao = conectar();
 
-  $sql = "UPDATE pagamento_detalhe 
-            SET pagamento_id = ?, tipo = ?, bandeira_cartao = ?, ultimos_digitos = ?, codigo_pix = ?, linha_digitavel_boleto = ?
-            WHERE idpagamento_detalhe = ?";
+    $sql = "UPDATE pagamento_detalhe 
+               SET pagamento_id = ?, 
+                   tipo = ?, 
+                   bandeira_cartao = ?, 
+                   ultimos_digitos = ?, 
+                   codigo_pix = ?, 
+                   linha_digitavel_boleto = ?
+             WHERE idpagamento2 = ?";
 
-  $comando = mysqli_prepare($conexao, $sql);
+    $comando = mysqli_prepare($conexao, $sql);
 
-  if (!$comando) {
-    echo "Erro na preparação: " . mysqli_error($conexao);
-    return false;
-  }
+    if (!$comando) {
+        echo "Erro na preparação: " . mysqli_error($conexao);
+        return false;
+    }
 
-  // Ordem: pagamento_id (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
-  mysqli_stmt_bind_param($comando, "isssssi", $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto, $idpagamento2);
+    // Ordem: pagamento_id (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
+    mysqli_stmt_bind_param(
+        $comando,
+        "isssssi",
+        $pagamento_id,
+        $tipo,
+        $bandeira_cartao,
+        $ultimos_digitos,
+        $codigo_pix,
+        $linha_digitavel_boleto,
+        $idpagamento2
+    );
 
-  $funcionou = mysqli_stmt_execute($comando);
+    $funcionou = mysqli_stmt_execute($comando);
 
-  if (!$funcionou) {
-    echo "Erro na execução: " . mysqli_stmt_error($comando);
-  }
+    if (!$funcionou) {
+        echo "Erro na execução: " . mysqli_stmt_error($comando);
+    }
 
-  mysqli_stmt_close($comando);
-  desconectar($conexao);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
 
-  return $funcionou;
+    return $funcionou;
 }
+
 function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_id)
 {
   $conexao = conectar();
@@ -3515,4 +3590,89 @@ function deletarHistoricoPeso($idhistorico_peso)
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
+}
+function deletarCupomDesconto($idcupom)
+{
+  $conexao = conectar();
+  $sql = "DELETE FROM cupom_desconto WHERE idcupom=?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idcupom);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+
+
+function traduzirErroMySQL(int $codigoErro): string
+{
+    $erros = [
+        // Erros de conexão e autenticação
+        1044 => "Acesso negado: usuário não tem permissão para acessar o banco de dados especificado.",
+        1045 => "Falha na autenticação: usuário ou senha do banco de dados inválidos.",
+        1049 => "Banco de dados não encontrado. Verifique o nome no arquivo de configuração.",
+        2002 => "Erro de conexão: servidor MySQL não encontrado ou inacessível.",
+        2003 => "Não foi possível conectar ao servidor MySQL na porta especificada.",
+        2005 => "Servidor MySQL desconhecido. Verifique o endereço do host.",
+        2006 => "Servidor MySQL desconheceu a conexão.",
+        2013 => "Conexão perdida com o servidor MySQL durante a consulta.",
+        2017 => "O servidor MySQL foi reiniciado e a conexão foi perdida.",
+        
+        // Erros de sintaxe e consulta
+        1054 => "Coluna desconhecida na consulta. Confirme se os nomes das colunas estão corretos.",
+        1064 => "Erro de sintaxe SQL. Verifique a consulta para erros de digitação.",
+        1146 => "Tabela não encontrada. Verifique se a tabela existe no banco.",
+        1051 => "Tabela desconhecida. A tabela referenciada não existe.",
+        1052 => "Coluna ambígua na cláusula WHERE/ORDER BY.",
+        1053 => "Servidor desligado durante a consulta.",
+        
+        // Erros de integridade e constraints
+        1062 => "Tentativa de inserir um valor duplicado em um campo único (UNIQUE).",
+        1216 => "Não é possível adicionar ou atualizar: chave estrangeira violada.",
+        1217 => "Não é possível excluir ou atualizar: chave estrangeira violada.",
+        1364 => "Campo obrigatório não informado. Preencha todos os campos obrigatórios.",
+        1451 => "Não é possível excluir: existem registros relacionados em outra tabela.",
+        1452 => "Não é possível inserir/atualizar: chave estrangeira inválida (registro pai não existe).",
+        
+        // Erros de dados e tamanhos
+        1406 => "Valor muito grande para a coluna. Reduza o tamanho do texto ou número.",
+        1264 => "Valor fora do intervalo para a coluna. Número muito grande ou pequeno.",
+        1265 => "Dados truncados para a coluna. Valor não corresponde ao tipo esperado.",
+        1366 => "Valor incorreto para a coluna. Tipo de dado incompatível.",
+        
+        // Erros de privilégios e permissões
+        1044 => "Acesso negado ao banco de dados para o usuário.",
+        1142 => "Acesso negado: usuário não tem privilégios para executar esta operação.",
+        1227 => "Acesso negado: você precisa do privilégio SUPER para esta operação.",
+        
+        // Erros de deadlock e transações
+        1205 => "Timeout de lock excedido. Tente a operação novamente.",
+        1213 => "Deadlock encontrado. Transação foi revertida.",
+        1317 => "Consulta abortada durante a execução.",
+        
+        // Erros de servidor e configuração
+        1040 => "Muitas conexões. Servidor atingiu o limite máximo de conexões.",
+        2002 => "Não foi possível conectar ao servidor MySQL.",
+        2003 => "Servidor MySQL não está respondendo.",
+        2017 => "Conexão com o servidor MySQL foi perdida.",
+        
+        // Erros de armazenamento e tabelas
+        1016 => "Não é possível abrir o arquivo da tabela.",
+        1030 => "Erro de armazenamento: disco cheio ou problema de permissões.",
+        1037 => "Memória insuficiente. Servidor está sem memória.",
+        1038 => "Memória insuficiente para ordenação.",
+        
+        // Erros de grupo e replicação
+        1041 => "Memória insuficiente no servidor.",
+        1042 => "Endereço do host inválido.",
+        1043 => "Protocolo de comunicação inválido.",
+        
+        // Outros erros comuns
+        1292 => "Valor de data/hora incorreto.",
+        1365 => "Divisão por zero na consulta.",
+        1396 => "Operação falhou para o usuário. Pode não existir ou ter privilégios insuficientes.",
+    ];
+
+    return $erros[$codigoErro] ?? "Erro inesperado no banco de dados (código: $codigoErro).";
 }

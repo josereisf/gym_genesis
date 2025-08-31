@@ -3,19 +3,12 @@ require_once __DIR__ . '/../funcao.php';
 
 
 // Dados de exemplo para o teste
-$nome = 'Banana';
-$calorias = 89;
-$carboidratos = 23;
-$proteinas = 1.1;
-$gorduras = 0.3;
-$porcao = '100g';
-$categoria = 'Fruta';
-$imagem = 'banana.jpg';
+$id = 1;
 
-$resultado = cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
+$resultado = deletarAlimento($id);
 
 if ($resultado) {
-    echo "Cadastro de alimento realizado com sucesso!";
+    echo "Deleção de alimento realizado com sucesso!";
 } else {
-    echo "Falha ao cadastrar alimento.";
+    echo "Falha ao deletar alimento.";
 }

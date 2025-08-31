@@ -9,6 +9,6 @@ $descricao = 'fazer 2 milhões de vezes';
 $idusuario = 1;
 
 
-if (!is_null(cadastrarTreino($tipo, $horario, $descricao, $idusuario))) {
-    echo "funcionou";
+if (!is_null(deletarTreino($idusuario))) {
+    echo "Treino deletado com sucesso.";
 }

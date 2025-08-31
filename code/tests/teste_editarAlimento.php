@@ -3,6 +3,7 @@ require_once __DIR__ . '/../funcao.php';
 
 
 // Dados de exemplo para o teste
+$idalimento = 1; // ID do alimento que você deseja editar
 $nome = 'Banana';
 $calorias = 89;
 $carboidratos = 23;
@@ -12,10 +13,10 @@ $porcao = '100g';
 $categoria = 'Fruta';
 $imagem = 'banana.jpg';
 
-$resultado = cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
+$resultado = editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
 
 if ($resultado) {
-    echo "Cadastro de alimento realizado com sucesso!";
+    echo "Edição de alimento realizada com sucesso!";
 } else {
-    echo "Falha ao cadastrar alimento.";
+    echo "Falha ao editar alimento.";
 }

@@ -16,7 +16,7 @@ if ($funcionou === true) {
     echo "Deu tudo certo<br>";
 
     $conexao = conectar();
-    $sql = "SELECT * FROM item_pedido WHERE pedido_id = '$pedido_id' AND produto_idproduto = '$produto_idproduto'";
+    $sql = "SELECT * FROM item_pedido WHERE pedido_id = '$pedido_id' AND produto_id = '$produto_idproduto'";
     $resultado = mysqli_query($conexao, $sql);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {

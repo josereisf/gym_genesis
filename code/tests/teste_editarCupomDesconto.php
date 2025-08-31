@@ -5,7 +5,7 @@ require_once __DIR__ . '/../funcao.php';
 
 
 $idcupom = 1;
-$codigo = '234';
+$codigo = '35';
 $percentual_desconto = 3;
 $valor_desconto = 12.40;
 $data_validade = '2031-05-03';

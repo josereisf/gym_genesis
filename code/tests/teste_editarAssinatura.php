@@ -5,13 +5,13 @@ require_once __DIR__ . '/../funcao.php';
 // Dados de exemplo para o teste
 $data_inicio = '2025-08-30';
 $data_fim = '2025-09-30';
-$idplano = 1;
 $idusuario = 1;
+$idassinatura = 1;
 
-$resultado = cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario);
+$resultado = editarAssinatura($idassinatura, $data_inicio, $data_fim,  $idusuario);
 
 if ($resultado) {
-    echo "Cadastro de assinatura realizado com sucesso!";
+    echo "Edição de assinatura realizada com sucesso!";
 } else {
-    echo "Falha ao cadastrar assinatura.";
+    echo "Falha ao editar assinatura.";
 }

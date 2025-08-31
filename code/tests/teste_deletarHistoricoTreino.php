@@ -2,31 +2,12 @@
 
 require_once __DIR__ . '/../funcao.php';
 
-$usuario_id = 2;
-$treino_id = 2;
-$data_execucao = date("Y-m-d"); // data atual no formato 'YYYY-MM-DD'
-$observacoes = "Treino realizado com sucesso."; // observação descritiva
+$id = 1;
 
-$idInserido = cadastrarHistoricoTreino($usuario_id, $treino_id, $data_execucao, $observacoes);
+$resposta = deletarHistoricoTreino($id);
 
-if ($idInserido !== null) {
-    echo "Deu tudo certo! ID inserido: $idInserido<br>";
-
-    $conexao = conectar();
-    $sql = "SELECT * FROM historico_treino WHERE idhistorico = $idInserido";
-    $resultado = mysqli_query($conexao, $sql);
-
-    if ($resultado && mysqli_num_rows($resultado) > 0) {
-        while ($linha = mysqli_fetch_assoc($resultado)) {
-            echo "<pre>";
-            print_r($linha);
-            echo "</pre>";
-        }
-    } else {
-        echo "Nenhum dado encontrado.";
-    }
-
-    desconectar($conexao);
+if ($resposta) {
+    echo "Histórico de treino deletado com sucesso.";
 } else {
-    echo "Algo de errado não está certo.";
+    echo "Falha ao deletar o histórico de treino.";
 }
