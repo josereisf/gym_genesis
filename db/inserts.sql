@@ -86,25 +86,7 @@ INSERT INTO exercicio (nome, grupo_muscular, descricao, video_url) VALUES
   ('Extensão de Pernas', 'Pernas', 'Exercício para quadríceps', NULL),
   ('Rosca Martelo', 'Braços', 'Exercício para antebraço', NULL);
 
--- 1.6. alimento (já existe 3, adicionando mais 17)
-INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao, categoria) VALUES
-  ('Maçã', 52.00, 14.00, 0.30, 0.20, '100g', 'Fruta'),
-  ('Ovo', 155.00, 1.10, 13.00, 11.00, '100g', 'Proteína'),
-  ('Batata Doce', 86.00, 20.00, 1.60, 0.10, '100g', 'Carboidrato'),
-  ('Aveia', 389.00, 66.00, 17.00, 7.00, '100g', 'Carboidrato'),
-  ('Salmão', 208.00, 0.00, 20.00, 13.00, '100g', 'Proteína'),
-  ('Brócolis', 34.00, 7.00, 2.80, 0.40, '100g', 'Vegetal'),
-  ('Iogurte', 61.00, 4.70, 3.50, 3.30, '100g', 'Laticínio'),
-  ('Pão Integral', 247.00, 41.00, 8.80, 3.40, '100g', 'Carboidrato'),
-  ('Amêndoa', 579.00, 22.00, 21.00, 50.00, '100g', 'Oleaginosas'),
-  ('Leite', 42.00, 5.00, 3.40, 1.00, '100g', 'Laticínio'),
-  ('Peixe', 206.00, 0.00, 22.00, 12.00, '100g', 'Proteína'),
-  ('Frango Grelhado', 165.00, 0.00, 31.00, 3.60, '100g', 'Proteína'),
-  ('Arroz Branco', 130.00, 28.00, 2.70, 0.30, '100g', 'Carboidrato'),
-  ('Quinoa', 120.00, 21.00, 4.10, 1.90, '100g', 'Carboidrato'),
-  ('Batata Inglesa', 77.00, 17.00, 2.00, 0.10, '100g', 'Carboidrato'),
-  ('Cenoura', 41.00, 10.00, 0.90, 0.20, '100g', 'Vegetal'),
-  ('Abacate', 160.00, 9.00, 2.00, 15.00, '100g', 'Fruta');
+
 
 -- 1.2. cargo
 INSERT INTO `gym_genesis`.`cargo` 
@@ -162,6 +144,26 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
 ('senha21', 'andre.goncalves@ex.com', 1),
 ('senha22', 'beatriz.lima@ex.com', 1),
 ('senha23', 'marcelo.pinto@ex.com', 1);
+
+-- 1.6. alimento (já existe 3, adicionando mais 17)
+INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao, categoria) VALUES
+  ('Maçã', 52.00, 14.00, 0.30, 0.20, '100g', 'Fruta'),
+  ('Ovo', 155.00, 1.10, 13.00, 11.00, '100g', 'Proteína'),
+  ('Batata Doce', 86.00, 20.00, 1.60, 0.10, '100g', 'Carboidrato'),
+  ('Aveia', 389.00, 66.00, 17.00, 7.00, '100g', 'Carboidrato'),
+  ('Salmão', 208.00, 0.00, 20.00, 13.00, '100g', 'Proteína'),
+  ('Brócolis', 34.00, 7.00, 2.80, 0.40, '100g', 'Vegetal'),
+  ('Iogurte', 61.00, 4.70, 3.50, 3.30, '100g', 'Laticínio'),
+  ('Pão Integral', 247.00, 41.00, 8.80, 3.40, '100g', 'Carboidrato'),
+  ('Amêndoa', 579.00, 22.00, 21.00, 50.00, '100g', 'Oleaginosas'),
+  ('Leite', 42.00, 5.00, 3.40, 1.00, '100g', 'Laticínio'),
+  ('Peixe', 206.00, 0.00, 22.00, 12.00, '100g', 'Proteína'),
+  ('Frango Grelhado', 165.00, 0.00, 31.00, 3.60, '100g', 'Proteína'),
+  ('Arroz Branco', 130.00, 28.00, 2.70, 0.30, '100g', 'Carboidrato'),
+  ('Quinoa', 120.00, 21.00, 4.10, 1.90, '100g', 'Carboidrato'),
+  ('Batata Inglesa', 77.00, 17.00, 2.00, 0.10, '100g', 'Carboidrato'),
+  ('Cenoura', 41.00, 10.00, 0.90, 0.20, '100g', 'Vegetal'),
+  ('Abacate', 160.00, 9.00, 2.00, 15.00, '100g', 'Fruta');
 
 INSERT INTO usuario ( senha, email, tipo_usuario) VALUES ("$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", 1);
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado)
