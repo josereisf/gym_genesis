@@ -163,6 +163,12 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
 ('senha22', 'beatriz.lima@ex.com', 1),
 ('senha23', 'marcelo.pinto@ex.com', 1);
 
+INSERT INTO usuario ( senha, email, tipo_usuario) VALUES ("$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", 1);
+INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado)
+VALUES (21, NULL, '12345-678', 'Rua das Flores', '100', 'Apto 202', 'Jardim Primavera', 'São Paulo', 'SP');
+INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id)
+VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 21);
+
 INSERT INTO perfil_usuario (usuario_id, nome, cpf, telefone, data_nascimento, numero_matricula, foto_perfil) VALUES
   (1, 'Lucas Silva', '123.456.789-01', '11987654321', '1990-05-10', 'MAT2025001', 'padrao.png'),
   (2, 'Fernanda Souza', '234.567.890-12', '11876543210', '1988-08-22', 'MAT2025002', 'padrao.png'),
@@ -231,55 +237,78 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
   ('senha39', 'eduardo@ex.com', 2),
   ('senha40', 'mariana@ex.com', 2),
   ('senha41', 'paulo@ex.com', 2);
-  
-INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
-  ('Carlos Mendes', 'carlos@ex.com', '11666667777', '2024-02-20', 3200.00, 4, 1),
-  ('Renata Farias', 'renata@ex.com', '11777778888', '2023-09-10', 4100.00, 5, 2),
-  ('João Batista', 'joao@ex.com', '11888889999', '2025-03-05', 2800.00, 6, 3),
-  ('Simone Lopes', 'simone@ex.com', '11999990000', '2024-04-12', 3500.00, 7, 4),
-  ('Felipe Ramos', 'felipe@ex.com', '11222223333', '2023-10-18', 3700.00, 8, 5),
-  ('Patricia Nunes', 'patrician@ex.com', '11333334445', '2025-05-22', 3300.00, 9, 6),
-  ('Roberto Dias', 'roberto@ex.com', '11444445556', '2024-06-30', 2900.00, 10, 7),
-  ('Juliana Prado', 'julianap@ex.com', '11555556667', '2023-11-25', 4200.00, 11, 8),
-  ('Fernando Alves', 'fernando@ex.com', '11666667788', '2025-07-14', 3100.00, 12, 9),
-  ('Amanda Torres', 'amandat@ex.com', '11777778899', '2024-08-19', 3600.00, 13, 10),
-  ('Ricardo Lima', 'ricardo@ex.com', '11888889910', '2023-12-03', 4000.00, 14, 11),
-  ('Tatiane Souza', 'tatiane@ex.com', '11999990021', '2025-09-27', 3400.00, 15, 12),
-  ('Gustavo Pires', 'gustavo@ex.com', '11222223344', '2024-10-05', 3800.00, 16, 13),
-  ('Eliane Rocha', 'eliane@ex.com', '11333334456', '2023-01-15', 2950.00, 17, 14),
-  ('Marcelo Cunha', 'marcelo@ex.com', '11444445567', '2025-02-28', 4100.00, 18, 15),
-  ('Vanessa Martins', 'vanessa@ex.com', '11555556678', '2024-03-22', 3250.00, 19, 16),
-  ('Bruno Ferreira', 'brunof@ex.com', '11666667789', '2023-04-11', 3750.00, 20, 17);
--- 3.1. funcionario
-INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
-  ('Eduardo Lima', 'eduardo@ex.com', '11333334444', '2024-01-15', 3000.00, 1, 18),
-  ('Mariana Souza','mariana@ex.com','11444445555', '2023-08-01', 4500.00, 2, 19),
-  ('Paulo Rocha',  'paulo@ex.com',  '11555556666', '2025-02-10', 2500.00, 3, 20);
+
+-- Inserts para a tabela funcionario, removendo o email e alterando o usuario_id para começar a partir de 21
+INSERT INTO funcionario (nome, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
+  ('Carlos Mendes', '11666667777', '2024-02-20', 3200.00, 4, 21),
+  ('Renata Farias', '11777778888', '2023-09-10', 4100.00, 5, 22),
+  ('João Batista', '11888889999', '2025-03-05', 2800.00, 6, 23),
+  ('Simone Lopes', '11999990000', '2024-04-12', 3500.00, 7, 24),
+  ('Felipe Ramos', '11222223333', '2023-10-18', 3700.00, 8, 25),
+  ('Patricia Nunes', '11333334445', '2025-05-22', 3300.00, 9, 26),
+  ('Roberto Dias', '11444445556', '2024-06-30', 2900.00, 10, 27),
+  ('Juliana Prado', '11555556667', '2023-11-25', 4200.00, 11, 28),
+  ('Fernando Alves', '11666667788', '2025-07-14', 3100.00, 12, 29),
+  ('Amanda Torres', '11777778899', '2024-08-19', 3600.00, 13, 30),
+  ('Ricardo Lima', '11888889910', '2023-12-03', 4000.00, 14, 31),
+  ('Tatiane Souza', '11999990021', '2025-09-27', 3400.00, 15, 32),
+  ('Gustavo Pires', '11222223344', '2024-10-05', 3800.00, 16, 33),
+  ('Eliane Rocha', '11333334456', '2023-01-15', 2950.00, 17, 34),
+  ('Marcelo Cunha', '11444445567', '2025-02-28', 4100.00, 18, 35),
+  ('Vanessa Martins', '11555556678', '2024-03-22', 3250.00, 19, 36),
+  ('Bruno Ferreira', '11666667789', '2023-04-11', 3750.00, 20, 37);
+
+-- Inserts para mais 3 funcionários
+INSERT INTO funcionario (nome, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
+  ('Eduardo Lima', '11333334444', '2024-01-15', 3000.00, 1, 38),
+  ('Mariana Souza', '11444445555', '2023-08-01', 4500.00, 2, 39),
+  ('Paulo Rocha', '11555556666', '2025-02-10', 2500.00, 3, 40);
 
 -- 3.2. endereco (continuação dos 20 inserts)
+-- Endereços para os usuários (usuario_id de 1 a 20) com funcionario_id como NULL e CEPS reais
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado) VALUES
-  (4, NULL, '04004000', 'Rua D', '400', 'Casa', 'Bairro Novo', 'Campinas', 'SP'),
-  (NULL, 5, '05005000', 'Av. E', '500', NULL, 'Centro', 'Santos', 'SP'),
-  (6, NULL, '06006000', 'Rua F', '600', 'Apto 2', 'Jardim', 'Guarulhos', 'SP'),
-  (NULL, 7, '07007000', 'Av. G', '700', NULL, 'Vila', 'Sorocaba', 'SP'),
-  (8, NULL, '08008000', 'Rua H', '800', 'Casa 1', 'Bairro Alto', 'Ribeirão Preto', 'SP'),
-  (NULL, 9, '09009000', 'Av. I', '900', NULL, 'Centro', 'São José dos Campos', 'SP'),
-  (10, NULL, '10010000', 'Rua J', '1000', 'Apto 3', 'Jardim', 'Taubaté', 'SP'),
-  (NULL, 11, '11011000', 'Av. K', '1100', NULL, 'Vila', 'Barueri', 'SP'),
-  (12, NULL, '12012000', 'Rua L', '1200', 'Casa', 'Bairro Novo', 'Osasco', 'SP'),
-  (NULL, 13, '13013000', 'Av. M', '1300', NULL, 'Centro', 'Diadema', 'SP'),
-  (14, NULL, '14014000', 'Rua N', '1400', 'Apto 4', 'Jardim', 'Carapicuíba', 'SP'),
-  (NULL, 15, '15015000', 'Av. O', '1500', NULL, 'Vila', 'Mogi das Cruzes', 'SP'),
-  (16, NULL, '16016000', 'Rua P', '1600', 'Casa 2', 'Bairro Alto', 'Suzano', 'SP'),
-  (NULL, 17, '17017000', 'Av. Q', '1700', NULL, 'Centro', 'Itapevi', 'SP'),
-  (18, NULL, '18018000', 'Rua R', '1800', 'Apto 5', 'Jardim', 'Cotia', 'SP'),
-  (NULL, 19, '19019000', 'Av. S', '1900', NULL, 'Vila', 'Jandira', 'SP'),
-  (20, NULL, '20020000', 'Rua T', '2000', 'Casa', 'Bairro Novo', 'Santana de Parnaíba', 'SP');
--- 3.2. endereco
+  (1, NULL, '01001000', 'Rua A', '100', 'Apto 5', 'Centro', 'São Paulo', 'SP'),  -- São Paulo, SP
+  (2, NULL, '04032000', 'Av. B', '200', 'Apto 10', 'Jardim', 'Santa', 'SP'),  -- Campinas, SP
+  (3, NULL, '11002000', 'Rua C', '300', 'Apto 9', 'Vila', 'Ubatuba', 'SP'),  -- Ubatuba, SP
+  (4, NULL, '04004000', 'Rua D', '400', 'Casa', 'Bairro Novo', 'Campinas', 'SP'),  -- Campinas, SP
+  (5, NULL, '11013000', 'Av. E', '500', NULL, 'Centro', 'Santos', 'SP'),  -- Santos, SP
+  (6, NULL, '07065000', 'Rua F', '600', 'Apto 2', 'Jardim', 'Guarulhos', 'SP'),  -- Guarulhos, SP
+  (7, NULL, '18086000', 'Av. G', '700', NULL, 'Vila', 'Sorocaba', 'SP'),  -- Sorocaba, SP
+  (8, NULL, '14090000', 'Rua H', '800', 'Casa 1', 'Bairro Alto', 'Ribeirão Preto', 'SP'),  -- Ribeirão Preto, SP
+  (9, NULL, '12211000', 'Av. I', '900', NULL, 'Centro', 'São José dos Campos', 'SP'),  -- São José dos Campos, SP
+  (10, NULL, '12030000', 'Rua J', '1000', 'Apto 3', 'Jardim', 'Taubaté', 'SP'),  -- Taubaté, SP
+  (11, NULL, '06422000', 'Av. K', '1100', NULL, 'Vila', 'Barueri', 'SP'),  -- Barueri, SP
+  (12, NULL, '06230000', 'Rua L', '1200', 'Casa', 'Bairro Novo', 'Osasco', 'SP'),  -- Osasco, SP
+  (13, NULL, '09910000', 'Av. M', '1300', NULL, 'Centro', 'Diadema', 'SP'),  -- Diadema, SP
+  (14, NULL, '06322000', 'Rua N', '1400', 'Apto 4', 'Jardim', 'Carapicuíba', 'SP'),  -- Carapicuíba, SP
+  (15, NULL, '08730000', 'Av. O', '1500', NULL, 'Vila', 'Mogi das Cruzes', 'SP'),  -- Mogi das Cruzes, SP
+  (16, NULL, '08690000', 'Rua P', '1600', 'Casa 2', 'Bairro Alto', 'Suzano', 'SP'),  -- Suzano, SP
+  (17, NULL, '18135000', 'Av. Q', '1700', NULL, 'Centro', 'Itapevi', 'SP'),  -- Itapevi, SP
+  (18, NULL, '06714000', 'Rua R', '1800', 'Apto 5', 'Jardim', 'Cotia', 'SP'),  -- Cotia, SP
+  (19, NULL, '13232000', 'Av. S', '1900', NULL, 'Vila', 'Jandira', 'SP'),  -- Jandira, SP
+  (20, NULL, '06520000', 'Rua T', '2000', 'Casa', 'Bairro Novo', 'Santana de Parnaíba', 'SP');  -- Santana de Parnaíba, SP
+
 INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado) VALUES
-  (1, NULL, '01001000', 'Rua A', '100', "Apto 5", 'Centro', 'São Paulo', 'SP'),
-  (NULL, 2, '02002000', 'Av. B',  '200', 'Apto 10', 'Jardim', 'Santa ', 'SP'),
-  (NULL, 1, '03003000', 'Rua C', '300', "Apto 9", 'Vila', 'Ubatuba', 'SP');
+  (NULL, 1, '01001000', 'Rua A', '100', 'Apto 5', 'Centro', 'São Paulo', 'SP'),  -- São Paulo, SP
+  (NULL, 2, '04032000', 'Av. B', '200', 'Apto 10', 'Jardim', 'Santa', 'SP'),  -- Campinas, SP
+  (NULL, 3, '11002000', 'Rua C', '300', 'Apto 9', 'Vila', 'Ubatuba', 'SP'),  -- Ubatuba, SP
+  (NULL, 4, '04004000', 'Rua D', '400', 'Casa', 'Bairro Novo', 'Campinas', 'SP'),  -- Campinas, SP
+  (NULL, 5, '11013000', 'Av. E', '500', NULL, 'Centro', 'Santos', 'SP'),  -- Santos, SP
+  (NULL, 6, '07065000', 'Rua F', '600', 'Apto 2', 'Jardim', 'Guarulhos', 'SP'),  -- Guarulhos, SP
+  (NULL, 7, '18086000', 'Av. G', '700', NULL, 'Vila', 'Sorocaba', 'SP'),  -- Sorocaba, SP
+  (NULL, 8, '14090000', 'Rua H', '800', 'Casa 1', 'Bairro Alto', 'Ribeirão Preto', 'SP'),  -- Ribeirão Preto, SP
+  (NULL, 9, '12211000', 'Av. I', '900', NULL, 'Centro', 'São José dos Campos', 'SP'),  -- São José dos Campos, SP
+  (NULL, 10, '12030000', 'Rua J', '1000', 'Apto 3', 'Jardim', 'Taubaté', 'SP'),  -- Taubaté, SP
+  (NULL, 11, '06422000', 'Av. K', '1100', NULL, 'Vila', 'Barueri', 'SP'),  -- Barueri, SP
+  (NULL, 12, '06230000', 'Rua L', '1200', 'Casa', 'Bairro Novo', 'Osasco', 'SP'),  -- Osasco, SP
+  (NULL, 13, '09910000', 'Av. M', '1300', NULL, 'Centro', 'Diadema', 'SP'),  -- Diadema, SP
+  (NULL, 14, '06322000', 'Rua N', '1400', 'Apto 4', 'Jardim', 'Carapicuíba', 'SP'),  -- Carapicuíba, SP
+  (NULL, 15, '08730000', 'Av. O', '1500', NULL, 'Vila', 'Mogi das Cruzes', 'SP'),  -- Mogi das Cruzes, SP
+  (NULL, 16, '08690000', 'Rua P', '1600', 'Casa 2', 'Bairro Alto', 'Suzano', 'SP'),  -- Suzano, SP
+  (NULL, 17, '18135000', 'Av. Q', '1700', NULL, 'Centro', 'Itapevi', 'SP'),  -- Itapevi, SP
+  (NULL, 18, '06714000', 'Rua R', '1800', 'Apto 5', 'Jardim', 'Cotia', 'SP'),  -- Cotia, SP
+  (NULL, 19, '13232000', 'Av. S', '1900', NULL, 'Vila', 'Jandira', 'SP'),  -- Jandira, SP
+  (NULL, 20, '06520000', 'Rua T', '2000', 'Casa', 'Bairro Novo', 'Santana de Parnaíba', 'SP');  -- Santana de Parnaíba, SP
 
 -- 4. Assinatura e plano
 -- 4.2. plano
@@ -289,56 +318,30 @@ VALUES
 ('Mensal', '30 dias'),
 ('Trimestral', '90 dias'),
 ('Anual', '365 dias');
--- 4.1. assinatura (continuação dos 20 inserts)
-INSERT INTO `gym_genesis`.`assinatura` 
-(`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
-VALUES
-('2025-05-01', '2025-06-01', 4, 1),
-('2025-05-15', '2025-08-15', 5, 2),
-('2025-06-10', '2026-06-10', 6, 3),
-('2025-07-01', '2025-08-01', 7, 1),
-('2025-07-15', '2025-10-15', 8, 2),
-('2025-08-10', '2026-08-10', 9, 3),
-('2025-09-01', '2025-10-01', 10, 1),
-('2025-09-15', '2025-12-15', 11, 2),
-('2025-10-10', '2026-10-10', 12, 3),
-('2025-11-01', '2025-12-01', 13, 1),
-('2025-11-15', '2026-02-15', 14, 2),
-('2025-12-10', '2026-12-10', 15, 3),
-('2026-01-01', '2026-02-01', 16, 1),
-('2026-01-15', '2026-04-15', 17, 2),
-('2026-02-10', '2027-02-10', 18, 3),
-('2026-03-01', '2026-04-01', 19, 1),
-('2026-03-15', '2026-06-15', 20, 2);
 
--- 4.1. assinatura
--- Inserção de assinaturas vinculadas a usuários e planos
-INSERT INTO `gym_genesis`.`assinatura`
+INSERT INTO `gym_genesis`.`assinatura` 
 (`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
 VALUES
 ('2025-04-01', '2025-07-01', 1, 1), -- Usuário 1, Plano Mensal
 ('2025-03-15', '2025-06-15', 2, 2), -- Usuário 2, Plano Trimestral
 ('2025-04-10', '2026-04-10', 3, 3), -- Usuário 3, Plano Anual
-('2025-05-01', '2025-06-01', 4, 1),
-('2025-05-15', '2025-08-15', 5, 2),
-('2025-06-10', '2026-06-10', 6, 3),
-('2025-07-01', '2025-08-01', 7, 1),
-('2025-07-15', '2025-10-15', 8, 2),
-('2025-08-10', '2026-08-10', 9, 3),
-('2025-09-01', '2025-10-01', 10, 1),
-('2025-09-15', '2025-12-15', 11, 2),
-('2025-10-10', '2026-10-10', 12, 3),
-('2025-11-01', '2025-12-01', 13, 1),
-('2025-11-15', '2026-02-15', 14, 2),
-('2025-12-10', '2026-12-10', 15, 3),
-('2026-01-01', '2026-02-01', 16, 1),
-('2026-01-15', '2026-04-15', 17, 2),
-('2026-02-10', '2027-02-10', 18, 3),
-('2026-03-01', '2026-04-01', 19, 1),
-('2026-03-15', '2026-06-15', 20, 2),
-('2025-04-01', '2025-07-01', 1, 1), -- Usuário 1, Plano Mensal
-('2025-03-15', '2025-06-15', 2, 2), -- Usuário 2, Plano Trimestral
-('2025-04-10', '2026-04-10', 3, 3); -- Usuário 3, Plano Anual
+('2025-05-01', '2025-06-01', 4, 1), -- Usuário 4, Plano Mensal
+('2025-05-15', '2025-08-15', 5, 2), -- Usuário 5, Plano Trimestral
+('2025-06-10', '2026-06-10', 6, 3), -- Usuário 6, Plano Anual
+('2025-07-01', '2025-08-01', 7, 1), -- Usuário 7, Plano Mensal
+('2025-07-15', '2025-10-15', 8, 2), -- Usuário 8, Plano Trimestral
+('2025-08-10', '2026-08-10', 9, 3), -- Usuário 9, Plano Anual
+('2025-09-01', '2025-10-01', 10, 1), -- Usuário 10, Plano Mensal
+('2025-09-15', '2025-12-15', 11, 2), -- Usuário 11, Plano Trimestral
+('2025-10-10', '2026-10-10', 12, 3), -- Usuário 12, Plano Anual
+('2025-11-01', '2025-12-01', 13, 1), -- Usuário 13, Plano Mensal
+('2025-11-15', '2026-02-15', 14, 2), -- Usuário 14, Plano Trimestral
+('2025-12-10', '2026-12-10', 15, 3), -- Usuário 15, Plano Anual
+('2026-01-01', '2026-02-01', 16, 1), -- Usuário 16, Plano Mensal
+('2026-01-15', '2026-04-15', 17, 2), -- Usuário 17, Plano Trimestral
+('2026-02-10', '2027-02-10', 18, 3), -- Usuário 18, Plano Anual
+('2026-03-01', '2026-04-01', 19, 1), -- Usuário 19, Plano Mensal
+('2026-03-15', '2026-06-15', 20, 2); -- Usuário 20, Plano Trimestral
 
 
 
@@ -379,31 +382,27 @@ VALUES
 INSERT INTO `gym_genesis`.`refeicao` 
 (`dieta_id`, `tipo`, `horario`) 
 VALUES
+  (1, 'Café da manhã', '07:00:00'),
+  (2, 'Almoço', '12:00:00'),
+  (3, 'Jantar', '19:00:00'),
   (4, 'Café da manhã', '07:30:00'),
   (5, 'Almoço', '12:15:00'),
   (6, 'Jantar', '19:30:00'),
   (7, 'Café da manhã', '16:00:00'),
-  (8, 'Jantar', '22:00:00'),    -- Alterado para Jantar
+  (8, 'Jantar', '22:00:00'),
   (9, 'Café da manhã', '17:30:00'),
-  (10, 'Almoço', '20:00:00'),    -- Alterado para Almoço
+  (10, 'Almoço', '20:00:00'),
   (11, 'Café da manhã', '08:00:00'),
   (12, 'Almoço', '13:00:00'),
   (13, 'Jantar', '20:30:00'),
   (14, 'Café da manhã', '10:00:00'),
   (15, 'Almoço', '15:30:00'),
-  (16, 'Jantar', '21:30:00'),    -- Alterado para Jantar
+  (16, 'Jantar', '21:30:00'),
   (17, 'Café da manhã', '18:00:00'),
-  (18, 'Almoço', '21:00:00');    -- Alterado para Almoço
+  (18, 'Almoço', '21:00:00'),
+  (19, 'Café da manhã', '06:30:00'),
+  (20, 'Jantar', '23:00:00');
 
--- 5.2. refeicao
-INSERT INTO `gym_genesis`.`refeicao` 
-(`dieta_id`, `tipo`, `horario`) 
-VALUES
-  (1, 'Café da manhã', '07:00:00'),
-  (2, 'Almoço', '12:00:00'),
-  (3, 'Jantar', '19:00:00');
-
--- 5.3. dieta_alimentar
 INSERT INTO `gym_genesis`.`dieta_alimentar` 
 (`alimento_id`, `refeicao_id`, `quantidade`, `observacao`)
 VALUES
@@ -424,7 +423,9 @@ VALUES
   (15, 15, '60g', 'Cenoura no lanche da tarde'),
   (16, 16, '80g', 'Abacate na ceia'),
   (17, 17, '110g', 'Banana pré-treino'),
-  (18, 18, '140g', 'Peito de frango pós-treino');
+  (18, 18, '140g', 'Peito de frango pós-treino'),
+  (19, 19, '200g', 'Ovo cozido no café da manhã'),
+  (20, 20, '150g', 'Frango assado no jantar');
 
 
 
@@ -815,11 +816,7 @@ VALUES ('J1K2L3', 4, DATE_ADD(NOW(), INTERVAL 1 HOUR)),
 
 
 
-INSERT INTO usuario ( senha, email, tipo_usuario) VALUES ("$2y$10$G5VlwS/rmR57/w37BN93GuSUjJqABSOGALBB7/c2Mtx/u2lSMq0U6", "acabate@gmail.com", 1);
-INSERT INTO endereco (usuario_id, funcionario_id, cep, rua, numero, complemento, bairro, cidade, estado)
-VALUES (21, NULL, '12345-678', 'Rua das Flores', '100', 'Apto 202', 'Jardim Primavera', 'São Paulo', 'SP');
-INSERT INTO avaliacao_fisica (peso, altura, imc, percentual_gordura, data_avaliacao, usuario_id)
-VALUES (78.000, 198.00, 19.90, 32.00, '2025-08-25', 21);
+
 
 INSERT INTO `gym_genesis`.`assinatura` 
 (`data_inicio`, `data_fim`, `usuario_id`, `plano_id`)
