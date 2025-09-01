@@ -5,22 +5,8 @@ use gym_genesis;
 -- 1.2. cargo (já existe 3, adicionando mais 17)
 INSERT INTO cargo (nome, descricao) VALUES
   ('Instrutor', 'Responsável por orientar os alunos'),
-  ('Nutricionista', 'Especialista em nutrição'),
-  ('Personal Trainer', 'Treinamento personalizado'),
-  ('Recepcionista', 'Atendimento na recepção'),
-  ('Limpeza', 'Serviços de limpeza'),
-  ('Manutenção', 'Cuidados com equipamentos'),
-  ('Supervisor', 'Supervisão de setores'),
-  ('Estagiário', 'Apoio em diversas áreas'),
-  ('Consultor', 'Consultoria especializada'),
-  ('Diretor', 'Direção geral'),
-  ('Financeiro', 'Gestão financeira'),
-  ('Marketing', 'Promoção e divulgação'),
-  ('TI', 'Tecnologia da informação'),
-  ('Fisioterapeuta', 'Reabilitação física'),
-  ('Psicólogo', 'Apoio psicológico'),
-  ('Administrador', 'Gestão administrativa'),
-  ('Atendente', 'Atendimento ao cliente');
+  ('Personal Trainer', 'Treinamento personalizado');
+
 
 -- 1.3. categoria_produto (já existe 3, adicionando mais 17)
 INSERT INTO categoria_produto (nome, descricao) VALUES
@@ -138,26 +124,27 @@ INSERT INTO alimento (nome, calorias, carboidratos, proteinas, gorduras, porcao,
 -- 2. Usuario e tabelas dependentes diretas
 -- 2.1. usuario (20 inserts)
 INSERT INTO usuario (senha, email, tipo_usuario) VALUES
-('senha4', 'lucas@ex.com', 1),
-('senha5', 'fernanda@ex.com', 2),
-('senha6', 'rafael@ex.com', 1),
-('senha7', 'juliana@ex.com', 2),
-('senha8', 'gabriel@ex.com', 1),
-('senha9', 'patricia@ex.com', 2),
-('senha10', 'rodrigo@ex.com', 1),
-('senha11', 'amanda@ex.com', 2),
-('senha12', 'thiago@ex.com', 1),
-('senha13', 'camila@ex.com', 2),
-('senha14', 'vinicius@ex.com', 1),
-('senha15', 'beatriz@ex.com', 2),
-('senha16', 'felipe@ex.com', 1),
-('senha17', 'larissa@ex.com', 2),
-('senha18', 'brunot@ex.com', 1),
-('senha19', 'marianaf@ex.com', 2),
-('senha20', 'diego@ex.com', 1),
-('senha21', 'aline@ex.com', 2),
-('senha22', 'pedro@ex.com', 1),
-('senha23', 'sofia@ex.com', 2);
+('senha4', 'lucas.silva@ex.com', 1),
+('senha5', 'fernanda.souza@ex.com', 1),
+('senha6', 'rafael.costa@ex.com', 1),
+('senha7', 'juliana.lima@ex.com', 1),
+('senha8', 'gabriel.rocha@ex.com', 1),
+('senha9', 'patricia.nunes@ex.com', 1),
+('senha10', 'rodrigo.alves@ex.com', 1),
+('senha11', 'amanda.torres@ex.com', 1),
+('senha12', 'thiago.martins@ex.com', 1),
+('senha13', 'camila.prado@ex.com', 1),
+('senha14', 'mariana.oliveira@ex.com', 1),
+('senha15', 'bruno.ferreira@ex.com', 1),
+('senha16', 'carolina.mendes@ex.com', 1),
+('senha17', 'diego.ramos@ex.com', 1),
+('senha18', 'larissa.duarte@ex.com', 1),
+('senha19', 'felipe.barros@ex.com', 1),
+('senha20', 'renata.carvalho@ex.com', 1),
+('senha21', 'andre.goncalves@ex.com', 1),
+('senha22', 'beatriz.lima@ex.com', 1),
+('senha23', 'marcelo.pinto@ex.com', 1);
+
 INSERT INTO perfil_usuario (usuario_id, nome, cpf, telefone, data_nascimento, numero_matricula, foto_perfil) VALUES
   (1, 'Lucas Silva', '123.456.789-01', '11987654321', '1990-05-10', 'MAT2025001', 'padrao.png'),
   (2, 'Fernanda Souza', '234.567.890-12', '11876543210', '1988-08-22', 'MAT2025002', 'padrao.png'),
