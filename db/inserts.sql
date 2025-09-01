@@ -15,8 +15,8 @@ INSERT INTO cargo (nome, descricao) VALUES
   ('Professor de Dança', 'Ensina diferentes modalidades de dança para condicionamento físico'),
   ('Professor de Artes Marciais', 'Instrui lutas como jiu-jitsu, muay thai, judô e outras'),
   ('Professor de Boxe', 'Conduz treinos técnicos e físicos de boxe'),
-  ('Professor de Kickboxing', 'Ensina técnicas de kickboxing aplicadas ao fitness'),
-  ('Professor de Natação', 'Ensina e acompanha treinos de natação'),
+  ('Professor de Kçãickboxing', 'Ensina técnicas de kickboxing aplicadas ao fitness'),
+  ('Professor de Natao', 'Ensina e acompanha treinos de natação'),
   ('Professor de Hidroginástica', 'Aplica aulas de ginástica na água'),
   ('Professor de Ginástica Coletiva', 'Conduz aulas de ginástica em grupo'),
   ('Professor de Alongamento', 'Foca em aulas de flexibilidade e mobilidade'),
@@ -210,6 +210,28 @@ INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_va
 
 -- 3. Funcionário e endereço
 -- 3.1. funcionario (continuação dos 20 inserts)
+INSERT INTO usuario (senha, email, tipo_usuario) VALUES
+  ('senha22', 'carlos@ex.com', 2),
+  ('senha23', 'renata@ex.com', 2),
+  ('senha24', 'joao@ex.com', 2),
+  ('senha25', 'simone@ex.com', 2),
+  ('senha26', 'felipe@ex.com', 2),
+  ('senha27', 'patrician@ex.com', 2),
+  ('senha28', 'roberto@ex.com', 2),
+  ('senha29', 'julianap@ex.com', 2),
+  ('senha30', 'fernando@ex.com', 2),
+  ('senha31', 'amandat@ex.com', 2),
+  ('senha32', 'ricardo@ex.com', 2),
+  ('senha33', 'tatiane@ex.com', 2),
+  ('senha34', 'gustavo@ex.com', 2),
+  ('senha35', 'eliane@ex.com', 2),
+  ('senha36', 'marcelo@ex.com', 2),
+  ('senha37', 'vanessa@ex.com', 2),
+  ('senha38', 'brunof@ex.com', 2),
+  ('senha39', 'eduardo@ex.com', 2),
+  ('senha40', 'mariana@ex.com', 2),
+  ('senha41', 'paulo@ex.com', 2);
+  
 INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
   ('Carlos Mendes', 'carlos@ex.com', '11666667777', '2024-02-20', 3200.00, 4, 1),
   ('Renata Farias', 'renata@ex.com', '11777778888', '2023-09-10', 4100.00, 5, 2),

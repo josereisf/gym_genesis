@@ -108,14 +108,12 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `gym_genesis`.`funcionario` (
   `idfuncionario` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
   `telefone` VARCHAR(20) NULL DEFAULT NULL,
   `data_contratacao` DATE NOT NULL,
   `salario` DECIMAL(10,2) NULL DEFAULT NULL,
   `cargo_id` INT(11) NULL DEFAULT NULL,
   `usuario_id` INT(11) NOT NULL,
   PRIMARY KEY (`idfuncionario`),
-  UNIQUE INDEX `email` (`email` ASC) VISIBLE,
   INDEX `cargo_id` (`cargo_id` ASC) VISIBLE,
   INDEX `fk_funcionario_usuario1_idx` (`usuario_id` ASC) VISIBLE,
   CONSTRAINT `fk_funcionario_usuario1`
