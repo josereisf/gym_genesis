@@ -4,8 +4,26 @@ use gym_genesis;
 -- 1. Tabelas independentes
 -- 1.2. cargo (já existe 3, adicionando mais 17)
 INSERT INTO cargo (nome, descricao) VALUES
-  ('Instrutor', 'Responsável por orientar os alunos'),
-  ('Personal Trainer', 'Treinamento personalizado');
+  ('Instrutor', 'Responsável por orientar os alunos durante os treinos'),
+  ('Personal Trainer', 'Especialista em treinamento individualizado'),
+  ('Professor de Musculação', 'Acompanha os treinos de musculação e corrige técnicas'),
+  ('Professor de Spinning', 'Conduz aulas de ciclismo indoor'),
+  ('Professor de Pilates', 'Aplica exercícios de pilates solo e em aparelhos'),
+  ('Professor de Yoga', 'Instrui práticas de yoga e alongamento'),
+  ('Professor de Crossfit', 'Ministra treinos funcionais de alta intensidade'),
+  ('Professor de Zumba', 'Conduz aulas de dança fitness com ritmos variados'),
+  ('Professor de Dança', 'Ensina diferentes modalidades de dança para condicionamento físico'),
+  ('Professor de Artes Marciais', 'Instrui lutas como jiu-jitsu, muay thai, judô e outras'),
+  ('Professor de Boxe', 'Conduz treinos técnicos e físicos de boxe'),
+  ('Professor de Kickboxing', 'Ensina técnicas de kickboxing aplicadas ao fitness'),
+  ('Professor de Natação', 'Ensina e acompanha treinos de natação'),
+  ('Professor de Hidroginástica', 'Aplica aulas de ginástica na água'),
+  ('Professor de Ginástica Coletiva', 'Conduz aulas de ginástica em grupo'),
+  ('Professor de Alongamento', 'Foca em aulas de flexibilidade e mobilidade'),
+  ('Professor de Funcional', 'Ministra treinos funcionais e circuitos'),
+  ('Professor de Calistenia', 'Instrui treinos com peso corporal'),
+  ('Professor de Corrida', 'Acompanha e orienta treinos de corrida e atletismo'),
+  ('Professor de Powerlifting', 'Especialista em levantamento de peso olímpico e força máxima');
 
 
 -- 1.3. categoria_produto (já existe 3, adicionando mais 17)
