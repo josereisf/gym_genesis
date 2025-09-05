@@ -46,6 +46,16 @@ foreach ($professores as $prof) {
 
 <h1 class="text-3xl font-bold mb-6 text-center">Nossos Professores</h1>
 
+<div class="flex gap-4 mb-6">
+    <select id="filtroModalidade" class="border p-2 rounded bg-[#1f364f] text-white">
+        <option value="">Todas Modalidades</option>
+        <option value="Presencial">Presencial</option>
+        <option value="Híbrido">Híbrido</option>
+        <option value="Online">Online</option>
+    </select>
+    <input type="text" id="buscaNome" placeholder="Buscar por nome" class="border p-2 text-black rounded">
+</div>
+
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
     <?php foreach ($tudojunto as $prof): 
         $funcionario = $prof['perfil_funcionario'][0] ?? [];
@@ -73,11 +83,10 @@ foreach ($professores as $prof) {
                 './uploads/<?php echo addslashes($foto); ?>',
                 '<?php echo addslashes($horarios); ?>'
             )"
-             class="bg-[#1f364f] p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer">
+             class="bg-[#1f364f] p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer" data-nome="<?php echo strtolower($nome); ?>"
+     data-modalidade="<?php echo strtolower($modalidade); ?>">
             <img src="./uploads/<?php echo $foto; ?>" alt="<?php echo $nome; ?>" class="w-full h-48 object-cover rounded-xl mb-4">
             <h2 class="text-xl font-semibold mb-1"><?php echo $nome; ?></h2>
-            <p class="text-sm text-white">Especialidade: <?php echo $descricao; ?></p>
-            <p class="text-sm text-white">Experiência: <?php echo $experiencia; ?> anos</p>
             <p class="text-sm text-white">Modalidade: <?php echo $modalidade; ?></p>
             <p class="text-sm text-white">Avaliação: <?php echo $avaliacao; ?></p>
         </div>
@@ -118,6 +127,36 @@ function abrirModal(nome, descricao, experiencia, modalidade, avaliacao, telefon
 function fecharModal() {
     document.getElementById('modal').classList.add('hidden');
 }
+
+// Seleciona todos os cards
+const cards = document.querySelectorAll('[data-nome][data-modalidade]');
+const filtroModalidade = document.getElementById('filtroModalidade');
+const buscaNome = document.getElementById('buscaNome');
+
+function filtrarCards() {
+    const modalidade = filtroModalidade.value.toLowerCase();
+    const nome = buscaNome.value.toLowerCase();
+
+    cards.forEach(card => {
+        const cardNome = card.dataset.nome.toLowerCase();
+        const cardModalidade = card.dataset.modalidade.toLowerCase();
+
+        const matchModalidade = modalidade === '' || cardModalidade === modalidade;
+        const matchNome = cardNome.includes(nome);
+
+        if(matchModalidade && matchNome) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Eventos para atualizar a filtragem em tempo real
+filtroModalidade.addEventListener('change', filtrarCards);
+buscaNome.addEventListener('input', filtrarCards);
+
+
 </script>
 
 </body>
