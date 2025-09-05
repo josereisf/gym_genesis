@@ -921,3 +921,24 @@ INSERT INTO historico_peso (peso, data_registro, usuario_id) VALUES
 (38, 'carolina_silva.jpg', 4, 'Híbrido', 4.76, 'Professora de hidroginástica e natação', 'Segunda, Quarta, Sexta: 7h-13h', '(11) 99999-0018'),
 (39, 'gustavo_rocha.png', 8, 'Online', 4.89, 'Coach de emagrecimento e transformação corporal', 'Terça a Domingo: 6h-23h', '(11) 99999-0019'),
 (40, 'isabela_martins.jpg', 5, 'Presencial', 4.81, 'Especialista em treino funcional outdoor', 'Segunda a Sexta: 6h-9h e 17h-20h', '(11) 99999-0020');
+
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (1, 1);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (1, 2);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (2, 1);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (2, 3);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (3, 2);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (3, 4);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (4, 5);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (4, 1);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (5, 6);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (5, 2);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (6, 7);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (6, 3);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (7, 8);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (7, 4);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (8, 9);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (8, 5);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (9, 10);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (9, 6);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (10, 7);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (10, 8);

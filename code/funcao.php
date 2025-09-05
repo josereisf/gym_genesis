@@ -1878,7 +1878,7 @@ function listarAulaAgendada($idaula = null)
   mysqli_stmt_close($comando);
   desconectar($conexao);
 
-  return $lista;
+  return json_encode($lista, JSON_UNESCAPED_UNICODE);
 }
 
 
