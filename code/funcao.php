@@ -62,7 +62,7 @@ function deletarUsuario($idusuario)
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idusuario);
-        $funcionou = mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
 
   desconectar($conexao);
   return $funcionou;
@@ -242,44 +242,50 @@ function listarEnderecosID($id, $tipo)
 
 function listarFuncionarios($idfuncionario)
 {
-  $conexao = conectar();
-  if ($idfuncionario != null) {
-    $sql = ' SELECT
-    f.nome,
-    f.email,
-    f.telefone,
-    f.data_contratacao,
-    f.salario,
-    f.cargo_id,
-    c.nome AS nome_cargo,
-    FROM funcionario AS f
-    JOIN cargo AS c ON c.idcargo = f.cargo_id
-    WHERE f.idfuncionario=?;';
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
-  } else {
-    $sql = ' SELECT
-    f.nome,
-    f.email,
-    f.telefone,
-    f.data_contratacao,
-    f.salario,
-    f.cargo_id,
-    c.nome
-    FROM funcionario AS f
-    JOIN cargo AS c ON c.idcargo = f.cargo_id';
-    $comando = mysqli_prepare($conexao, $sql);
-  }
-  mysqli_stmt_execute($comando);
-  $resultados = mysqli_stmt_get_result($comando);
+    $conexao = conectar();
+    if ($idfuncionario != null) {
+        $sql = 'SELECT 
+            f.nome,
+            u.email,
+            f.telefone,
+            f.data_contratacao,
+            f.salario,
+            f.cargo_id,
+            f.usuario_id,
+            c.nome AS nome_cargo
+            FROM funcionario AS f
+            JOIN cargo AS c ON c.idcargo = f.cargo_id
+            JOIN usuario AS u on f.usuario_id = u.idusuario
+            WHERE f.usuario_id= ?;';
+        $comando = mysqli_prepare($conexao, $sql);
+        mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
+    } else {
+        $sql = 'SELECT
+            f.nome,
+            u.email,
+            f.telefone,
+            f.data_contratacao,
+            f.salario,
+            f.cargo_id,
+            f.usuario_id,
+            c.nome AS nome_cargo
+            FROM funcionario AS f
+            JOIN cargo AS c ON c.idcargo = f.cargo_id
+            JOIN usuario AS u on f.usuario_id = u.idusuario';
+        $comando = mysqli_prepare($conexao, $sql);
+    }
 
-  $lista_funcionarios = [];
-  while ($funcionario = mysqli_fetch_assoc($resultados)) {
-    $lista_funcionarios[] = $funcionario;
-  }
-  mysqli_stmt_close($comando);
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
 
-  return json_encode($lista_funcionarios, JSON_UNESCAPED_UNICODE);
+    $lista_funcionarios = [];
+    while ($funcionario = mysqli_fetch_assoc($resultados)) {
+        $lista_funcionarios[] = $funcionario;
+    }
+    mysqli_stmt_close($comando);
+
+    // Retorna array diretamente
+    return $lista_funcionarios;
 }
 
 
@@ -290,7 +296,7 @@ function deletarFuncionario($idfuncionario)
   $comando = mysqli_prepare($conexao, $sql);
 
   mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
-        $funcionou = mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
 
   mysqli_stmt_close($comando);
   desconectar($conexao);
@@ -312,24 +318,24 @@ function editarCargo($idcargo, $nome, $descricao)
 }
 function deletarCargo($idcargo): bool
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    $sql = "DELETE FROM cargo WHERE idcargo = ?";
-    $comando = mysqli_prepare($conexao, $sql);
+  $sql = "DELETE FROM cargo WHERE idcargo = ?";
+  $comando = mysqli_prepare($conexao, $sql);
 
-    if (!$comando) {
-        echo "Erro na preparação: " . mysqli_error($conexao);
-        return false;
-    }
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
 
-    mysqli_stmt_bind_param($comando, "i", $idcargo);
-        $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_bind_param($comando, "i", $idcargo);
+  $funcionou = mysqli_stmt_execute($comando);
 
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    return $funcionou;
+  return $funcionou;
 }
 
 function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
@@ -833,14 +839,14 @@ function listarProdutos($idproduto)
   return $lista;
 }
 
-function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino,$funcionario_id, $idaula)
+function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $funcionario_id, $idaula)
 {
   $conexao = conectar();
 
   $sql = ' UPDATE aula_agendada SET data_aula=?, dia_semana=?, hora_inicio=?, hora_fim=?, treino_id=?, funcionario_id=? WHERE idaula=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssiii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino,$funcionario_id, $idaula);
+  mysqli_stmt_bind_param($comando, 'ssssiii', $data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $funcionario_id, $idaula);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -1829,9 +1835,9 @@ function cadastrarHistoricoTreino($idusuario, $idtreino, $data_execucao, $observ
 
 function listarAulaAgendada($idaula = null)
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    $sql = "SELECT
+  $sql = "SELECT
                 ag.idaula,
                 ag.data_aula,
                 ag.dia_semana,
@@ -1845,42 +1851,42 @@ function listarAulaAgendada($idaula = null)
             LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
             LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario";
 
-    if ($idaula !== null) {
-        $sql .= " WHERE ag.idaula = ?";
-    }
+  if ($idaula !== null) {
+    $sql .= " WHERE ag.idaula = ?";
+  }
 
-    $sql .= " GROUP BY ag.idaula, ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id, t.tipo, t.descricao, f.idfuncionario, f.nome";
+  $sql .= " GROUP BY ag.idaula, ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id, t.tipo, t.descricao, f.idfuncionario, f.nome";
 
-    $comando = mysqli_prepare($conexao, $sql);
-    if (!$comando) {
-        echo "Erro na preparação: " . mysqli_error($conexao);
-        return [];
-    }
+  $comando = mysqli_prepare($conexao, $sql);
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return [];
+  }
 
-    if ($idaula !== null) {
-        mysqli_stmt_bind_param($comando, "i", $idaula);
-    }
+  if ($idaula !== null) {
+    mysqli_stmt_bind_param($comando, "i", $idaula);
+  }
 
-    mysqli_stmt_execute($comando);
-    $resultado = mysqli_stmt_get_result($comando);
+  mysqli_stmt_execute($comando);
+  $resultado = mysqli_stmt_get_result($comando);
 
-    $lista = [];
-    while ($linha = mysqli_fetch_assoc($resultado)) {
-        $lista[] = $linha;
-    }
+  $lista = [];
+  while ($linha = mysqli_fetch_assoc($resultado)) {
+    $lista[] = $linha;
+  }
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    return $lista;
+  return $lista;
 }
 
 
 function listarAulaAgendadaUsuario($idusuario)
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    $sql = "SELECT
+  $sql = "SELECT
                 ag.idaula,
                 ag.data_aula,
                 ag.dia_semana,
@@ -1896,33 +1902,33 @@ function listarAulaAgendadaUsuario($idusuario)
             LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario
             WHERE au.usuario_id = ?";
 
-    $comando = mysqli_prepare($conexao, $sql);
-    if (!$comando) {
-        echo "Erro na preparação: " . mysqli_error($conexao);
-        return [];
-    }
+  $comando = mysqli_prepare($conexao, $sql);
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return [];
+  }
 
-    mysqli_stmt_bind_param($comando, "i", $idusuario);
+  mysqli_stmt_bind_param($comando, "i", $idusuario);
 
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
-    $lista_aula_agendadas = [];
-    while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
-        $lista_aula_agendadas[] = $aula_agendada;
-    }
+  $lista_aula_agendadas = [];
+  while ($aula_agendada = mysqli_fetch_assoc($resultados)) {
+    $lista_aula_agendadas[] = $aula_agendada;
+  }
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    return $lista_aula_agendadas;
+  return $lista_aula_agendadas;
 }
 
 function listarPagamentosDetalhados($idpagamento = null)
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    $sql = "SELECT 
+  $sql = "SELECT 
                 p.idpagamento, 
                 p.valor, 
                 p.data_pagamento, 
@@ -1953,35 +1959,35 @@ function listarPagamentosDetalhados($idpagamento = null)
             JOIN item_pedido pp ON ped.idpedido = pp.pedido_id
             JOIN produto prod ON pp.produto_id = prod.idproduto";
 
-    if ($idpagamento !== null) {
-        $sql .= " WHERE p.idpagamento = ?";
-    }
+  if ($idpagamento !== null) {
+    $sql .= " WHERE p.idpagamento = ?";
+  }
 
-    $sql .= " ORDER BY p.idpagamento, ped.idpedido";
+  $sql .= " ORDER BY p.idpagamento, ped.idpedido";
 
-    $comando = mysqli_prepare($conexao, $sql);
-    if (!$comando) {
-        echo "Erro na preparação: " . mysqli_error($conexao);
-        desconectar($conexao);
-        return [];
-    }
-
-    if ($idpagamento !== null) {
-        mysqli_stmt_bind_param($comando, "i", $idpagamento);
-    }
-
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
-
-    $lista_pagamento_detalhados = [];
-    while ($pagamento_detalhado = mysqli_fetch_assoc($resultados)) {
-        $lista_pagamento_detalhados[] = $pagamento_detalhado;
-    }
-
-    mysqli_stmt_close($comando);
+  $comando = mysqli_prepare($conexao, $sql);
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
     desconectar($conexao);
+    return [];
+  }
 
-    return $lista_pagamento_detalhados;
+  if ($idpagamento !== null) {
+    mysqli_stmt_bind_param($comando, "i", $idpagamento);
+  }
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_pagamento_detalhados = [];
+  while ($pagamento_detalhado = mysqli_fetch_assoc($resultados)) {
+    $lista_pagamento_detalhados[] = $pagamento_detalhado;
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $lista_pagamento_detalhados;
 }
 
 function listarMetaUsuario($idmeta = null)
@@ -2068,7 +2074,7 @@ function listarAvaliacaoFisica($usuarioId)
   mysqli_close($conexao);
 
   // Retorna o array da avaliação ou false caso não tenha
-  return $lista_avaliacoes ;
+  return $lista_avaliacoes;
 }
 
 
@@ -2147,37 +2153,37 @@ function listarRefeicoes($idrefeicao)
 
 function listarAlimentos($idalimento = null)
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    if ($idalimento !== null) {
-        $sql = "SELECT * FROM alimento WHERE idalimento = ?";
-        $comando = mysqli_prepare($conexao, $sql);
-        if (!$comando) {
-            echo "Erro na preparação: " . mysqli_error($conexao);
-            return [];
-        }
-        mysqli_stmt_bind_param($comando, "i", $idalimento);
-    } else {
-        $sql = "SELECT * FROM alimento";
-        $comando = mysqli_prepare($conexao, $sql);
-        if (!$comando) {
-            echo "Erro na preparação: " . mysqli_error($conexao);
-            return [];
-        }
+  if ($idalimento !== null) {
+    $sql = "SELECT * FROM alimento WHERE idalimento = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    if (!$comando) {
+      echo "Erro na preparação: " . mysqli_error($conexao);
+      return [];
     }
-
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
-
-    $lista_alimentos = [];
-    while ($alimento = mysqli_fetch_assoc($resultados)) {
-        $lista_alimentos[] = $alimento;
+    mysqli_stmt_bind_param($comando, "i", $idalimento);
+  } else {
+    $sql = "SELECT * FROM alimento";
+    $comando = mysqli_prepare($conexao, $sql);
+    if (!$comando) {
+      echo "Erro na preparação: " . mysqli_error($conexao);
+      return [];
     }
+  }
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
-    return $lista_alimentos;
+  $lista_alimentos = [];
+  while ($alimento = mysqli_fetch_assoc($resultados)) {
+    $lista_alimentos[] = $alimento;
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $lista_alimentos;
 }
 
 
@@ -2596,26 +2602,26 @@ function deletarPedido($idpedido)
 
 function deletarExercicio($idexercicio): bool
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    // Corrigindo o SQL: o campo da tabela deve estar à esquerda
-    $sql = "DELETE FROM exercicio WHERE idexercicio = ?";
-    $comando = mysqli_prepare($conexao, $sql);
+  // Corrigindo o SQL: o campo da tabela deve estar à esquerda
+  $sql = "DELETE FROM exercicio WHERE idexercicio = ?";
+  $comando = mysqli_prepare($conexao, $sql);
 
-    if (!$comando) {
-        echo "Erro na preparação: " . mysqli_error($conexao);
-        return false;
-    }
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
 
-    mysqli_stmt_bind_param($comando, "i", $idexercicio);
+  mysqli_stmt_bind_param($comando, "i", $idexercicio);
 
-        $funcionou = mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
 
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    return $funcionou;
+  return $funcionou;
 }
 
 
@@ -2854,9 +2860,9 @@ function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_id)
 }
 function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto): bool
 {
-    $conexao = conectar();
+  $conexao = conectar();
 
-    $sql = "UPDATE pagamento_detalhe 
+  $sql = "UPDATE pagamento_detalhe 
                SET pagamento_id = ?, 
                    tipo = ?, 
                    bandeira_cartao = ?, 
@@ -2865,36 +2871,36 @@ function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_c
                    linha_digitavel_boleto = ?
              WHERE idpagamento2 = ?";
 
-    $comando = mysqli_prepare($conexao, $sql);
+  $comando = mysqli_prepare($conexao, $sql);
 
-    if (!$comando) {
-        echo "Erro na preparação: " . mysqli_error($conexao);
-        return false;
-    }
+  if (!$comando) {
+    echo "Erro na preparação: " . mysqli_error($conexao);
+    return false;
+  }
 
-    // Ordem: pagamento_id (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
-    mysqli_stmt_bind_param(
-        $comando,
-        "isssssi",
-        $pagamento_id,
-        $tipo,
-        $bandeira_cartao,
-        $ultimos_digitos,
-        $codigo_pix,
-        $linha_digitavel_boleto,
-        $idpagamento2
-    );
+  // Ordem: pagamento_id (i), tipo (s), bandeira_cartao (s), ultimos_digitos (s), codigo_pix (s), linha_digitavel_boleto (s), idpagamento2 (i)
+  mysqli_stmt_bind_param(
+    $comando,
+    "isssssi",
+    $pagamento_id,
+    $tipo,
+    $bandeira_cartao,
+    $ultimos_digitos,
+    $codigo_pix,
+    $linha_digitavel_boleto,
+    $idpagamento2
+  );
 
-    $funcionou = mysqli_stmt_execute($comando);
+  $funcionou = mysqli_stmt_execute($comando);
 
-    if (!$funcionou) {
-        echo "Erro na execução: " . mysqli_stmt_error($comando);
-    }
+  if (!$funcionou) {
+    echo "Erro na execução: " . mysqli_stmt_error($comando);
+  }
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
 
-    return $funcionou;
+  return $funcionou;
 }
 
 function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_id)
@@ -3068,7 +3074,7 @@ function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limit
   return $funcionou;
 }
 
-function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino,$funcionario_id)
+function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $funcionario_id)
 {
   $conexao = conectar();
 
@@ -3434,7 +3440,6 @@ function cadastrarHistoricoPeso($idusuario, $peso, $data_registro)
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $funcionou;
-  
 }
 
 function listarHistoricoPeso($idusuario)
@@ -3497,7 +3502,7 @@ function deletarCupomDesconto($idcupom)
   return $funcionou;
 }
 
-function cadastrarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone,$numero_matricula, $imagem)
+function cadastrarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, $numero_matricula, $imagem)
 {
   $conexao = conectar();
   $sql = "INSERT INTO perfil_usuario (usuario_id, nome, cpf, data_nascimento, telefone,numero_matricula, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -3526,11 +3531,11 @@ function editarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, $im
 function listarPerfilUsuario($idusuario)
 {
   $conexao = conectar();
-  if($idusuario != null){
+  if ($idusuario != null) {
     $sql = "SELECT * FROM perfil_usuario WHERE usuario_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
-  }else{
+  } else {
     $sql = "SELECT * FROM perfil_usuario";
     $comando = mysqli_prepare($conexao, $sql);
   }
@@ -3547,7 +3552,8 @@ function listarPerfilUsuario($idusuario)
   return $dados;
 }
 
-function deletarPerfilUsuario($idusuario){
+function deletarPerfilUsuario($idusuario)
+{
   $conexao = conectar();
   $sql = "DELETE FROM perfil_usuario WHERE usuario_id=?";
   $comando = mysqli_prepare($conexao, $sql);
@@ -3581,4 +3587,78 @@ function listarHistoricoPesoUltimo($idusuario)
   mysqli_stmt_close($comando);
   desconectar($conexao);
   return $dados;
+}
+
+function cadastrarPerfilProfessor($foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id) {
+    $conexao = conectar();
+    $sql = "INSERT INTO perfil_professor 
+            (foto_perfil, experiencia_anos, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone, usuario_id, data_atualizacao) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "sissssss", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+}
+
+function listarPerfilProfessor($idusuario) {
+    $conexao = conectar();
+
+    if ($idusuario) {
+        $sql = "SELECT * FROM perfil_professor WHERE usuario_id = ?";
+        $comando = mysqli_prepare($conexao, $sql);
+        mysqli_stmt_bind_param($comando, "i", $idusuario);
+    } else {
+        $sql = "SELECT * FROM perfil_professor";
+        $comando = mysqli_prepare($conexao, $sql);
+    }
+
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
+
+    $perfis = [];
+    while ($perfil = mysqli_fetch_assoc($resultados)) {
+        $perfis[] = $perfil;
+    }
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $perfis;
+}
+
+function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone) {
+    $conexao = conectar();
+    $sql = "UPDATE perfil_professor SET
+            foto_perfil = ?, 
+            experiencia_anos = ?, 
+            modalidade = ?, 
+            avaliacao_media = ?, 
+            descricao = ?, 
+            horarios_disponiveis = ?, 
+            telefone = ?, 
+            data_atualizacao = NOW()
+            WHERE idperfil = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "sisssssi", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $idperfil);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+
+}
+
+function deletarPerfilProfessor($idperfil) {
+    $conexao = conectar();
+    $sql = "DELETE FROM perfil_professor WHERE idperfil = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $idperfil);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+
 }
