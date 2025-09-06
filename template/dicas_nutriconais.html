@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buscar Informações Nutricionais</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold text-center text-green-600 mb-6">🔍 Buscar Informações Nutricionais</h1>
+
+    <!-- Campo de busca por nome -->
+    <div class="text-center mb-6">
+      <input type="text" id="nomeProduto" placeholder="Digite o nome do produto" class="px-4 py-2 border rounded-lg" />
+      <button onclick="buscarProdutoPorNome()" class="ml-4 bg-green-600 text-white px-4 py-2 rounded-lg">Buscar</button>
+    </div>
+
+    <!-- Exibição do produto encontrado -->
+    <div id="produtoInfo" class="bg-gray-900 rounded-xl shadow-md p-6 max-w-xl mx-auto hidden">
+      <h2 class="text-lg font-semibold text-white mb-4">Informação Nutricional</h2>
+      <div class="bg-gray-800 p-4 rounded-lg">
+        <div class="flex items-center mb-3">
+          <div class="bg-green-700 bg-opacity-20 p-2 rounded-full mr-3">
+            <i class="fas fa-apple-alt text-green-400 text-lg"></i>
+          </div>
+          <h3 id="nome" class="font-medium text-white">Carregando...</h3>
+        </div>
+        <p id="descricao" class="text-sm text-gray-300 mb-3">...</p>
+        <ul id="nutrientes" class="text-sm text-gray-400 list-disc list-inside space-y-1"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Função para buscar produtos pelo nome
+    async function buscarProdutoPorNome() {
+      const nomeProduto = document.getElementById('nomeProduto').value.trim();
+
+      if (!nomeProduto) {
+        alert('Por favor, insira o nome do produto');
+        return;
+      }
+
+      const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(nomeProduto)}&search_simple=1&action=process&json=true`;
+
+      try {
+        const resposta = await fetch(url);
+        const data = await resposta.json();
+
+        if (data.products && data.products.length > 0) {
+          // Seleciona o primeiro produto encontrado
+          const produto = data.products[0];
+
+          document.getElementById('nome').innerText = produto.product_name || 'Produto sem nome';
+          document.getElementById('descricao').innerText = produto.ingredients_text || 'Sem descrição de ingredientes.';
+          
+          const nutrientes = produto.nutriments;
+          const lista = `
+            <li>Calorias: ${nutrientes['energy-kcal'] || 'N/A'} kcal</li>
+            <li>Açúcares: ${nutrientes.sugars || 'N/A'} g</li>
+            <li>Proteínas: ${nutrientes.proteins || 'N/A'} g</li>
+            <li>Gorduras: ${nutrientes.fat || 'N/A'} g</li>
+            <li>Fibras: ${nutrientes.fiber || 'N/A'} g</li>
+          `;
+          document.getElementById('nutrientes').innerHTML = lista;
+
+          // Exibe a área com as informações
+          document.getElementById('produtoInfo').classList.remove('hidden');
+        } else {
+          alert('Produto não encontrado!');
+        }
+      } catch (error) {
+        console.error('Erro ao buscar produto:', error);
+        alert('Erro ao buscar produto. Tente novamente.');
+      }
+    }
+  </script>
+
+</body>
+</html>
