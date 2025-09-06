@@ -49,8 +49,7 @@ if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
 
 // Atualiza a foto do usuário
 atualizarFotoUsuario($nomeImagem, $idusuario);
-cadastrarHistoricoPeso($idusuario, $peso);
-// Agora salva os dados da avaliação física
+cadastrarHistoricoPeso($idusuario, $peso, date('Y-m-d H:i:s'));// Agora salva os dados da avaliação física
 $resposta = cadastrarAvaliacaoFisica($peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $idusuario);
 
 if (!$resposta) {
