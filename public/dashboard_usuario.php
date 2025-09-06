@@ -1,6 +1,7 @@
 <?php
 
 use Vtiful\Kernel\Format;
+
 require_once "../code/funcao.php";
 require_once "../php/verificarLogado.php";
 
@@ -97,45 +98,55 @@ $historico_peso = listarHistoricoPeso($idaluno);
 $diferenca = "Não há histórico de peso suficiente.";
 $icone = ""; // ícone da seta
 $cor = "";   // cor da seta e do texto
+$pesoAntigo = 0; // garante que existe
+$pesoRecente = 0; // valor padrão seguro
 
 if (!empty($historico_peso) && count($historico_peso) >= 2) {
-    // Pega o peso mais recente e o mais antigo
-    $pesoRecente = $historico_peso[0]['peso'];
-    $pesoAntigo  = $historico_peso[count($historico_peso) - 1]['peso'];
+  // Pega o peso mais recente e o mais antigo
+  $pesoRecente = $historico_peso[0]['peso'];
+  $pesoAntigo  = $historico_peso[count($historico_peso) - 1]['peso'];
 
-    $calculo = $pesoRecente - $pesoAntigo;
+  $calculo = $pesoRecente - $pesoAntigo;
 
-    if ($calculo > 0) {
-        $icone = "fas fa-arrow-up";
-        $cor = "text-red-500";
-        $diferenca = "Você ganhou " . abs($calculo) . " kg desde o início";
-    } elseif ($calculo < 0) {
-        $icone = "fas fa-arrow-down";
-        $cor = "text-green-400";
-        $diferenca = "Você perdeu " . abs($calculo) . " kg desde o início";
-    } else {
-        $icone = "fas fa-arrows-alt-h";
-        $cor = "text-gray-400";
-        $diferenca = "Sem alteração de peso desde o início";
-    }
-} else {
-    // Quando não há histórico suficiente
+  if ($calculo > 0) {
+    $icone = "fas fa-arrow-up";
+    $cor = "text-red-500";
+    $diferenca = "Você ganhou " . abs($calculo) . " kg desde o início";
+  } elseif ($calculo < 0) {
+    $icone = "fas fa-arrow-down";
+    $cor = "text-green-400";
+    $diferenca = "Você perdeu " . abs($calculo) . " kg desde o início";
+  } else {
     $icone = "fas fa-arrows-alt-h";
     $cor = "text-gray-400";
-    $diferenca = "Não há histórico de peso suficiente.";
+    $diferenca = "Sem alteração de peso desde o início";
+  }
+} else {
+  // Quando não há histórico suficiente
+  $icone = "fas fa-arrows-alt-h";
+  $cor = "text-gray-400";
+  $diferenca = "Não há histórico de peso suficiente.";
 }
 
 $avaliacao_fisica = listarAvaliacaoFisica($idaluno);
-if ($avaliacao_fisica) {
-  $perc_gordRecente = $avaliacao_fisica[0]['percentual_gordura'];
-  $perc_gordAntigo = $avaliacao_fisica[count($avaliacao_fisica) - 1]['percentual_gordura'];
+$porcentagem2 = "Não há histórico de calorias suficientes.";
+$porcentagem  = null;
+
+if (!empty($avaliacao_fisica) && count($avaliacao_fisica) >= 2) {
+  $perc_gordRecente = $avaliacao_fisica[0]['percentual_gordura'] ?? 0;
+  $perc_gordAntigo  = $avaliacao_fisica[count($avaliacao_fisica) - 1]['percentual_gordura'] ?? 0;
   $diferenca2 = abs($perc_gordRecente - $perc_gordAntigo);
-  $porcentagem = ($diferenca2 / $pesoAntigo) * 100;
-  $porcentagem = number_format($porcentagem, 1);
-  $porcentagem2 = "$porcentagem% desde o início";
-} elseif (count($avaliacao_fisica) < 2) {
-  $porcentagem2 = "Não há histórico de calorias suficientes.";
+
+  // Evita divisão por zero e variável nula
+  if (!empty($pesoAntigo) && $pesoAntigo != 0) {
+    $porcentagem = ($diferenca2 / $pesoAntigo) * 100;
+    $porcentagem = number_format($porcentagem, 1);
+    $porcentagem2 = "$porcentagem% desde o início";
+  } else {
+    $porcentagem2 = "Não é possível calcular a porcentagem.";
+  }
 }
+
 
 // Cálculo da renovação se não tiver data fim vinda do usuário
 if ($dia_fim === null || $dia_fim === "-") {
@@ -174,7 +185,8 @@ if ($dia_fim === null || $dia_fim === "-") {
 
 // $idprofessor = null;
 // $relacionamento = listarProfessorAluno($idprofessor, $idaluno);
-
+// pega todas as dicas
+$dicas = listarDicasNutricionais();
 
 ?>
 
@@ -186,22 +198,22 @@ if ($dia_fim === null || $dia_fim === "-") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Academia - Área do Cliente</title>
   <link rel="stylesheet" href="./css/dashboard_usuario.css">
-<!-- Tailwind CSS (para desenvolvimento rápido; depois, pode trocar pelo output.css) -->
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS (para desenvolvimento rápido; depois, pode trocar pelo output.css) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Font Montserrat -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<!-- Font Awesome (versão free, ícones) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Font Awesome (versão free, ícones) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<!-- Chart.js (para gráficos) -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js (para gráficos) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
-<!-- <link rel="stylesheet" href="./css/tailwind-output.css"> -->
-<link rel="stylesheet" href="./css/dashboard_usuario.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- <link rel="stylesheet" href="./css/tailwind-output.css"> -->
+  <link rel="stylesheet" href="./css/dashboard_usuario.css">
 
 
 </head>
@@ -346,29 +358,29 @@ if ($dia_fim === null || $dia_fim === "-") {
         </div>
 
         <!-- Peso -->
-<div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
-  <div class="flex justify-between items-start">
-    <div>
-      <p class="text-sm font-medium text-gray-400">Peso Atual</p>
-      <h3 class="text-2xl font-bold text-white mt-1"><?= number_format($pesoRecente, 1, ',', ''); ?> KG</h3>
-      <p class="text-sm mt-1 flex items-center <?= $cor ?>">
-        <i class="<?= $icone ?> w-4 h-4 mr-1"></i>
-        <?= $diferenca ?>
-      </p>
-<form id="form-peso" action="./api/index.php?entidade=historico_peso&acao=cadastrar" method="post">
-  <input type="hidden" name="idusuario" value="<?= $idaluno ?>">
-  <div id="input-peso" class="hidden mt-2">
-    <input type="text" name="peso" id="novo-peso" class="p-2 rounded-md" placeholder="Digite seu novo peso" required>
-    <button type="submit" class="bg-blue-500 text-white p-2 rounded-md mt-2">Salvar Peso</button>
-  </div>
-</form>
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-sm font-medium text-gray-400">Peso Atual</p>
+              <h3 class="text-2xl font-bold text-white mt-1"><?= number_format($pesoRecente, 1, ',', ''); ?> KG</h3>
+              <p class="text-sm mt-1 flex items-center <?= $cor ?>">
+                <i class="<?= $icone ?> w-4 h-4 mr-1"></i>
+                <?= $diferenca ?>
+              </p>
+              <form id="form-peso" action="./api/index.php?entidade=historico_peso&acao=cadastrar" method="post">
+                <input type="hidden" name="idusuario" value="<?= $idaluno ?>">
+                <div id="input-peso" class="hidden mt-2">
+                  <input type="text" name="peso" id="novo-peso" class="p-2 rounded-md" placeholder="Digite seu novo peso" required>
+                  <button type="submit" class="bg-blue-500 text-white p-2 rounded-md mt-2">Salvar Peso</button>
+                </div>
+              </form>
 
-    </div>
-    <div class="bg-[#1f2937] p-3 rounded-lg cursor-pointer" onclick="mostrarInput()">
-      <i class="fas fa-weight text-cyan-400 text-xl"></i>
-    </div>
-  </div>
-</div>
+            </div>
+            <div class="bg-[#1f2937] p-3 rounded-lg cursor-pointer" onclick="mostrarInput()">
+              <i class="fas fa-weight text-cyan-400 text-xl"></i>
+            </div>
+          </div>
+        </div>
 
 
 
@@ -629,27 +641,28 @@ if ($dia_fim === null || $dia_fim === "-") {
           </div>
 
 
-          <!-- Nutrition Tips -->
-          <div class="bg-gray-900 rounded-xl shadow-md p-6">
-            <h2 class="text-lg font-semibold text-white mb-4">Dica Nutricional</h2>
-            <div class="bg-gray-800 p-4 rounded-lg">
-              <div class="flex items-center mb-3">
-                <div class="bg-green-700 bg-opacity-20 p-2 rounded-full mr-3">
-                  <i class="fas fa-apple-alt text-green-400 text-lg"></i>
+          <div class="grid gap-6">
+            <?php foreach ($dicas as $dica): ?>
+              <div class="bg-gray-900 rounded-xl shadow-md p-6">
+                <h2 class="text-lg font-semibold text-white mb-4">Dica Nutricional</h2>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                  <div class="flex items-center mb-3">
+                    <div class="bg-<?php echo $dica['cor']; ?> bg-opacity-20 p-2 rounded-full mr-3">
+                      <i class="<?php echo $dica['icone']; ?> text-<?php echo $dica['cor']; ?> text-lg"></i>
+                    </div>
+                    <h3 class="font-medium text-white"><?php echo $dica['titulos']; ?></h3>
+                  </div>
+                  <p class="text-sm text-gray-300">
+                    <?php echo $dica['descricao']; ?>
+                  </p>
+                  <button
+                    class="mt-3 text-sm text-<?php echo $dica['cor']; ?> font-medium hover:underline flex items-center hover:text-<?php echo str_replace("400", "300", $dica['cor']); ?>">
+                    Ler mais
+                    <i class="fas fa-chevron-right text-xs ml-1"></i>
+                  </button>
                 </div>
-                <h3 class="font-medium text-white">Proteínas pós-treino</h3>
               </div>
-              <p class="text-sm text-gray-300">
-                Consumir proteínas dentro de 30 minutos após o treino ajuda na
-                recuperação muscular e maximiza os resultados. Boas opções
-                incluem whey protein, ovos ou frango.
-              </p>
-              <button
-                class="mt-3 text-sm text-green-400 font-medium hover:underline flex items-center hover:text-green-300">
-                Ler mais
-                <i class="fas fa-chevron-right text-xs ml-1"></i>
-              </button>
-            </div>
+            <?php endforeach; ?>
           </div>
 
 
@@ -1089,7 +1102,7 @@ if ($dia_fim === null || $dia_fim === "-") {
     });
 
 
-(function() {
+    (function() {
       function c() {
         var b = a.contentDocument || a.contentWindow.document;
         if (b) {
