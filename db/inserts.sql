@@ -899,6 +899,29 @@ INSERT INTO historico_peso (peso, data_registro, usuario_id) VALUES
   (89.50, '2025-08-15 11:30:00', 21),
   (65.00, '2025-08-01 12:00:00', 21),
   (64.80, '2025-08-15 12:00:00', 21);
+INSERT INTO `gym_genesis`.`dicas_nutricionais` 
+(titulos, descricao, icone, cor) 
+VALUES
+('Proteínas pós-treino', 'Consumir proteínas logo após o treino ajuda na recuperação.', 'fas fa-apple-alt', 'green-400'),
+('Hidratação', 'Beber água antes, durante e após o treino é essencial.', 'fas fa-tint', 'blue-400'),
+('Carboidratos pré-treino', 'Comer carboidratos leves antes do treino dá energia rápida.', 'fas fa-bread-slice', 'yellow-400'),
+('Sono e recuperação', 'Dormir bem é fundamental para recuperação muscular.', 'fas fa-bed', 'purple-400'),
+('Frutas e fibras', 'Frutas ricas em fibras ajudam na digestão e saciedade.', 'fas fa-lemon', 'orange-400'),
+('Alongamento', 'Alongar antes e depois do treino reduz risco de lesões.', 'fas fa-walking', 'pink-400'),
+('Treino de força', 'Exercícios de força aumentam massa magra e metabolismo.', 'fas fa-dumbbell', 'red-400'),
+('Vitaminas', 'Vitamina C e D fortalecem o sistema imunológico.', 'fas fa-capsules', 'teal-400'),
+('Postura', 'Manter a postura correta evita dores e lesões.', 'fas fa-child', 'indigo-400'),
+('Descanso ativo', 'Dias de descanso podem incluir caminhadas leves.', 'fas fa-shoe-prints', 'gray-400'),
+('Ômega 3', 'Consuma peixes ou sementes para saúde cardiovascular.', 'fas fa-fish', 'blue-500'),
+('Cafeína', 'Café antes do treino pode aumentar desempenho.', 'fas fa-coffee', 'brown-400'),
+('Lanches saudáveis', 'Prefira castanhas e frutas secas entre refeições.', 'fas fa-seedling', 'green-500'),
+('Treino funcional', 'Exercícios funcionais melhoram mobilidade.', 'fas fa-running', 'yellow-500'),
+('Equilíbrio alimentar', 'Inclua todos os grupos alimentares no dia.', 'fas fa-balance-scale', 'purple-500'),
+('Aquecimento', 'Aqueça o corpo antes de treinar para evitar lesões.', 'fas fa-fire', 'red-500'),
+('Magnésio', 'Ajuda na contração muscular e recuperação.', 'fas fa-tablets', 'blue-300'),
+('Pequenas metas', 'Definir metas pequenas ajuda a manter disciplina.', 'fas fa-flag-checkered', 'orange-500'),
+('Respeite limites', 'Escute seu corpo e evite exageros no treino.', 'fas fa-heartbeat', 'pink-500'),
+('Consistência', 'Resultados vêm da disciplina diária, não de excessos.', 'fas fa-calendar-check', 'green-600');
 
   INSERT INTO `gym_genesis`.`perfil_professor` (`usuario_id`, `foto_perfil`, `experiencia_anos`, `modalidade`, `avaliacao_media`, `descricao`, `horarios_disponiveis`, `telefone`) VALUES
 (21, 'carlos_silva.jpg', 5, 'Presencial', 4.75, 'Personal trainer especializado em musculação e condicionamento físico', 'Segunda a Sexta: 6h-10h e 18h-22h', '(11) 99999-0001'),
