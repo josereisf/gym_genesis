@@ -74,7 +74,7 @@ $nome = $resultado[0]['nome'];
             <?php
             echo 'x-for="(item, index) in [';
             $idaluno = null;
-            $alunos = listarProfessorAluno($idprofessor, $idaluno);
+            $alunos = listarAulaUsuario($idprofessor, $idaluno);
 
             foreach ($alunos as $a) {
               $idaluno = $a['idaluno'];

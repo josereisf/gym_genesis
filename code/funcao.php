@@ -2548,7 +2548,7 @@ function deletarPagamentoDetalhe($idpagaemento2)
 function deletarItemPedido($iditem)
 {
   $conexao = conectar();
-  $sql = "DELETE FROM item_pedido WHERE $iditem = ?";
+  $sql = "DELETE FROM item_pedido WHERE pedido_id = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $iditem);
   $funcionou = mysqli_stmt_execute($comando);
@@ -3733,4 +3733,47 @@ function deletarDicaNutricional($id) {
     mysqli_stmt_close($comando);
     desconectar($conexao);
     return $funcionou;
+}
+
+
+function cadastrarAulaUsuario($idaula, $idusuario){
+  
+  $conexao = conectar();
+  $sql = "INSERT INTO aula_usuario (idaula, usuario_id) VALUES (?,?)"; 
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ii", $idaula, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+
+function editarAulaUsuario($idaula, $idusuario){
+    
+  $conexao = conectar();
+  $sql = "UPDATE aula_usuario SET idaula=?, usuario_id=?"; 
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ii", $idaula, $idusuario);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+
+function deletarAulaUsuario($id){
+  $conexao = conectar();
+
+  $sql = "DELETE FROM aula_usuario WHERE usuario_id = ?";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $id);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
