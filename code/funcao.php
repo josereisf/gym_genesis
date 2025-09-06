@@ -3429,7 +3429,7 @@ function calcularIMC($pesoKg, $alturaCm): string
 }
 
 
-function cadastrarHistoricoPeso($idusuario, $peso, $data_registro)
+function cadastrarHistoricoPeso($idusuario, $peso, $data_registro): bool
 {
   $conexao = conectar();
   $sql = "INSERT INTO historico_peso (peso, data_registro, usuario_id) VALUES (?, ?, ?)";
@@ -3661,4 +3661,76 @@ function deletarPerfilProfessor($idperfil) {
     desconectar($conexao);
     return $funcionou;
 
+}
+
+
+function cadastrarDicaNutricional($titulos, $descricao, $icone, $cor) {
+    $conexao = conectar();
+    $sql = "INSERT INTO dicas_nutricionais (titulos, descricao, icone, cor) 
+            VALUES (?, ?, ?, ?)";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "ssss", $titulos, $descricao, $icone, $cor);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+}
+
+function listarDicasNutricionais($id = null) {
+    $conexao = conectar();
+
+    if ($id) {
+        $sql = "SELECT * FROM dicas_nutricionais WHERE iddicas_nutricionais = ?";
+        $comando = mysqli_prepare($conexao, $sql);
+        mysqli_stmt_bind_param($comando, "i", $id);
+    } else {
+        $sql = "SELECT * 
+FROM dicas_nutricionais
+ORDER BY RAND()
+LIMIT 1;
+";
+        $comando = mysqli_prepare($conexao, $sql);
+    }
+
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
+
+    $dicas = [];
+    while ($dica = mysqli_fetch_assoc($resultados)) {
+        $dicas[] = $dica;
+    }
+
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $dicas;
+}
+
+function editarDicaNutricional($id, $titulos, $descricao, $icone, $cor) {
+    $conexao = conectar();
+    $sql = "UPDATE dicas_nutricionais SET
+            titulos = ?, 
+            descricao = ?, 
+            icone = ?, 
+            cor = ?
+            WHERE iddicas_nutricionais = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "ssssi", $titulos, $descricao, $icone, $cor, $id);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
+}
+
+function deletarDicaNutricional($id) {
+    $conexao = conectar();
+    $sql = "DELETE FROM dicas_nutricionais WHERE iddicas_nutricionais = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $id);
+
+    $funcionou = mysqli_stmt_execute($comando);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return $funcionou;
 }
