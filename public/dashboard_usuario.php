@@ -753,7 +753,7 @@ $dicas = listarDicasNutricionais();
       <h2 class="text-2xl text-white font-bold mb-6">Vemos que você ainda não tem nenhum professor. Deseja agendar com algum para ver quais serão seus treinos?</h2>
       <div class="flex flex-col space-y-4">
         <a
-          href="formularioProfessorAluno.php"
+          href="professores.php"
           class="bg-blue-600 hover:bg-blue-700 py-2 rounded-xl font-semibold transition text-white">Sim, Vamos agendar Aula</a>
         <a
           href="#"

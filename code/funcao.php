@@ -247,7 +247,7 @@ function listarFuncionarios($idfuncionario)
         $sql = 'SELECT 
             f.nome,
             u.email,
-            f.telefone,
+            p.telefone,
             f.data_contratacao,
             f.salario,
             f.cargo_id,
@@ -256,14 +256,15 @@ function listarFuncionarios($idfuncionario)
             FROM funcionario AS f
             JOIN cargo AS c ON c.idcargo = f.cargo_id
             JOIN usuario AS u on f.usuario_id = u.idusuario
+            JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id
             WHERE f.usuario_id= ?;';
         $comando = mysqli_prepare($conexao, $sql);
         mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
     } else {
-        $sql = 'SELECT
+        $sql = 'SELECT 
             f.nome,
             u.email,
-            f.telefone,
+            p.telefone,
             f.data_contratacao,
             f.salario,
             f.cargo_id,
@@ -271,7 +272,8 @@ function listarFuncionarios($idfuncionario)
             c.nome AS nome_cargo
             FROM funcionario AS f
             JOIN cargo AS c ON c.idcargo = f.cargo_id
-            JOIN usuario AS u on f.usuario_id = u.idusuario';
+            JOIN usuario AS u on f.usuario_id = u.idusuario
+            JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id';
         $comando = mysqli_prepare($conexao, $sql);
     }
 
@@ -1689,12 +1691,12 @@ function editarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario)
   return $funcionou;
 }
 
-function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem)
+function editarFuncionario($idfuncionario, $nome, $email, $data_contratacao, $salario, $cargo_id, $usuario_id)
 {
   $conexao = conectar();
 
   $sql = "UPDATE funcionario 
-            SET nome = ?, email = ?, telefone = ?, data_contratacao = ?, salario = ?, cargo_id = ?, usuario_id=?
+            SET nome = ?, email = ?, data_contratacao = ?, salario = ?, cargo_id = ?, usuario_id=?
             WHERE idfuncionario = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -1705,7 +1707,7 @@ function editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contr
   }
 
   // Correção aqui:
-  mysqli_stmt_bind_param($comando, "ssssdisi", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem, $idfuncionario);
+  mysqli_stmt_bind_param($comando, "sssdiii", $nome, $email, $data_contratacao, $salario, $cargo_id, $usuario_id, $idfuncionario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2961,12 +2963,12 @@ function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observa
 }
 //
 
-function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem): bool
+function cadastrarFuncionario($nome, $email, $data_contratacao, $salario, $cargo_id, $imagem): bool
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO funcionario (nome, email, telefone, data_contratacao, salario, cargo_id, usuario_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO funcionario (nome, email,  data_contratacao, salario, cargo_id, usuario_id)
+            VALUES (?, ?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -2975,7 +2977,7 @@ function cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $sala
     return false;
   }
 
-  mysqli_stmt_bind_param($comando, "ssssdii", $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
+  mysqli_stmt_bind_param($comando, "sssdii", $nome, $email, $data_contratacao, $salario, $cargo_id, $imagem);
 
   $funcionou = mysqli_stmt_execute($comando);
 

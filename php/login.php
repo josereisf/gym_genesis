@@ -2,8 +2,8 @@
 require_once '../code/funcao.php';
 session_start(); // Precisa estar no topo antes de qualquer header()
 
-$email = $_GET['email'] ?? '';
-$senha = $_GET['senha'] ?? '';
+$email = $_POST['email'] ?? '';
+$senha = $_POST['senha'] ?? '';
 // Verifica campos vazios
 if (empty($email) || empty($senha)) {
     $_SESSION['erro_login'] = 'Preencha todos os campos.';
@@ -55,7 +55,6 @@ if ($usuario !== null) {
     $usuarioId = $usuario['id'];
     $resposta = listarAvaliacaoFisica($usuarioId);
     $usuario = listarPerfilUsuario($usuarioId);
-    
     $usuario['nome'] = $usuario[0]['nome'];
     $_SESSION['id'] = $usuarioId;
     $_SESSION['email'] = $email;
