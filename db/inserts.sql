@@ -231,32 +231,52 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
   ('senha39', 'eduardo@ex.com', 2),
   ('senha40', 'mariana@ex.com', 2),
   ('senha41', 'paulo@ex.com', 2);
-  
-INSERT INTO funcionario (nome, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
-  ('Carlos Mendes', '11666667777', '2024-02-20', 3200.00, 4, 21),
-  ('Renata Farias', '11777778888', '2023-09-10', 4100.00, 5, 22),
-  ('João Batista', '11888889999', '2025-03-05', 2800.00, 6, 23),
-  ('Simone Lopes', '11999990000', '2024-04-12', 3500.00, 7, 24),
-  ('Felipe Ramos', '11222223333', '2023-10-18', 3700.00, 8, 25),
-  ('Patricia Nunes', '11333334445', '2025-05-22', 3300.00, 9, 26),
-  ('Roberto Dias', '11444445556', '2024-06-30', 2900.00, 10, 27),
-  ('Juliana Prado', '11555556667', '2023-11-25', 4200.00, 11, 28),
-  ('Fernando Alves', '11666667788', '2025-07-14', 3100.00, 12, 29),
-  ('Amanda Torres', '11777778899', '2024-08-19', 3600.00, 13, 30),
-  ('Ricardo Lima', '11888889910', '2023-12-03', 4000.00, 14, 31),
-  ('Tatiane Souza', '11999990021', '2025-09-27', 3400.00, 15, 32),
-  ('Gustavo Pires', '11222223344', '2024-10-05', 3800.00, 16, 33),
-  ('Eliane Rocha', '11333334456', '2023-01-15', 2950.00, 17, 34),
-  ('Marcelo Cunha', '11444445567', '2025-02-28', 4100.00, 18, 35),
-  ('Vanessa Martins', '11555556678', '2024-03-22', 3250.00, 19, 36),
-  ('Bruno Ferreira', '11666667789', '2023-04-11', 3750.00, 20, 37);
+INSERT INTO funcionario (nome, data_contratacao, salario, cargo_id, usuario_id) VALUES
+  ('Carlos Mendes', '2024-02-20', 3200.00, 4, 21),
+  ('Renata Farias', '2023-09-10', 4100.00, 5, 22),
+  ('João Batista', '2025-03-05', 2800.00, 6, 23),
+  ('Simone Lopes', '2024-04-12', 3500.00, 7, 24),
+  ('Felipe Ramos', '2023-10-18', 3700.00, 8, 25),
+  ('Patricia Nunes', '2025-05-22', 3300.00, 9, 26),
+  ('Roberto Dias', '2024-06-30', 2900.00, 10, 27),
+  ('Juliana Prado', '2023-11-25', 4200.00, 11, 28),
+  ('Fernando Alves', '2025-07-14', 3100.00, 12, 29),
+  ('Amanda Torres', '2024-08-19', 3600.00, 13, 30),
+  ('Ricardo Lima', '2023-12-03', 4000.00, 14, 31),
+  ('Tatiane Souza', '2025-09-27', 3400.00, 15, 32),
+  ('Gustavo Pires', '2024-10-05', 3800.00, 16, 33),
+  ('Eliane Rocha', '2023-01-15', 2950.00, 17, 34),
+  ('Marcelo Cunha', '2025-02-28', 4100.00, 18, 35),
+  ('Vanessa Martins', '2024-03-22', 3250.00, 19, 36),
+  ('Bruno Ferreira', '2023-04-11', 3750.00, 20, 37);
 
 -- Inserts para mais 3 funcionários
--- 3.1. funcionario
-INSERT INTO funcionario (nome, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
-  ('Eduardo Lima', '11333334444', '2024-01-15', 3000.00, 1, 38),
-  ('Mariana Souza', '11444445555', '2023-08-01', 4500.00, 2, 39),
-  ('Paulo Rocha', '11555556666', '2025-02-10', 2500.00, 3, 40);
+INSERT INTO funcionario (nome, data_contratacao, salario, cargo_id, usuario_id) VALUES
+  ('Eduardo Lima', '2024-01-15', 3000.00, 1, 38),
+  ('Mariana Souza', '2023-08-01', 4500.00, 2, 39),
+  ('Paulo Rocha', '2025-02-10', 2500.00, 3, 40);
+
+INSERT INTO `gym_genesis`.`perfil_professor` (usuario_id, foto_perfil, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone) VALUES
+  (21, 'padrao.png', 'Presencial', 4.5, 'Instrutor de musculação com 5 anos de experiência.', 'Segunda a Sexta: 08:00-12:00', '11666667777'),
+  (22, 'padrao.png', 'Presencial', 4.2, 'Personal Trainer especializado em treinos individuais.', 'Segunda a Sexta: 09:00-18:00', '11777778888'),
+  (23, 'padrao.png', 'Presencial', 4.0, 'Professor de musculação com foco em técnicas de levantamento.', 'Terça a Sábado: 07:00-15:00', '11888889999'),
+  (24, 'padrao.png', 'Presencial', 4.3, 'Instrutora de spinning com aulas dinâmicas e motivadoras.', 'Segunda, Quarta e Sexta: 17:00-19:00', '11999990000'),
+  (25, 'padrao.png', 'Presencial', 4.7, 'Especialista em Pilates com certificações internacionais.', 'Segunda a Sexta: 07:30-14:30', '11222223333'),
+  (26, 'padrao.png', 'Presencial', 4.6, 'Instrutora de Yoga com foco em bem-estar e flexibilidade.', 'Terça a Quinta: 08:00-11:00', '11333334445'),
+  (27, 'padrao.png', 'Presencial', 4.1, 'Professor de Crossfit com 3 anos de experiência em grupos.', 'Segunda a Sexta: 06:00-08:00', '11444445556'),
+  (28, 'padrao.png', 'Presencial', 4.4, 'Instrutor de Zumba com foco em ritmos latinos.', 'Segunda, Quarta e Sexta: 18:00-20:00', '11555556667'),
+  (29, 'padrao.png', 'Presencial', 4.0, 'Professor de Dança especializado em ritmos variados.', 'Segunda a Sexta: 09:00-13:00', '11666667788'),
+  (30, 'padrao.png', 'Presencial', 4.3, 'Professor de Artes Marciais com foco em autodefesa.', 'Segunda, Quarta e Sexta: 14:00-17:00', '11777778899'),
+  (31, 'padrao.png', 'Presencial', 4.2, 'Professor de Boxe com 10 anos de experiência no esporte.', 'Terça a Sábado: 15:00-19:00', '11888889910'),
+  (32, 'padrao.png', 'Presencial', 3.9, 'Professor de Kickboxing com foco em fitness.', 'Segunda a Sexta: 06:00-08:00', '11999990021'),
+  (33, 'padrao.png', 'Presencial', 4.6, 'Instrutor de Natação com foco em técnicas de resistência.', 'Segunda, Quarta e Sexta: 07:00-10:00', '11222223344'),
+  (34, 'padrao.png', 'Presencial', 4.5, 'Instrutora de Hidroginástica com aulas aquáticas para todas as idades.', 'Segunda a Sexta: 10:00-12:00', '11333334456'),
+  (35, 'padrao.png', 'Presencial', 4.1, 'Professor de Ginástica Coletiva com experiência em grandes grupos.', 'Terça e Quinta: 07:00-09:00', '11444445567'),
+  (36, 'padrao.png', 'Presencial', 4.3, 'Instrutora de Alongamento com foco em mobilidade e flexibilidade.', 'Segunda, Quarta e Sexta: 08:00-11:00', '11555556678'),
+  (37, 'padrao.png', 'Presencial', 4.4, 'Especialista em treinamento funcional e circuitos.', 'Segunda a Sexta: 08:00-13:00', '11666667789'),
+  (38, 'padrao.png', 'Presencial', 4.2, 'Professor de Calistenia com foco em treinos com peso corporal.', 'Segunda a Sábado: 07:00-09:00', '11333334444'),
+  (39, 'padrao.png', 'Presencial', 4.6, 'Personal Trainer especializado em corridas e maratonas.', 'Segunda a Sexta: 06:00-08:00', '11444445555'),
+  (40, 'padrao.png', 'Presencial', 4.0, 'Professor de Powerlifting com foco em levantamento de força máxima.', 'Terça a Sábado: 08:00-10:00', '11555556666');
 
 -- 3.2. endereco (continuação dos 20 inserts)
 -- Endereços para os usuários (usuario_id de 1 a 20) com funcionario_id como NULL e CEPS reais
