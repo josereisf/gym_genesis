@@ -943,28 +943,6 @@ VALUES
 ('Respeite limites', 'Escute seu corpo e evite exageros no treino.', 'fas fa-heartbeat', 'pink-500'),
 ('Consistência', 'Resultados vêm da disciplina diária, não de excessos.', 'fas fa-calendar-check', 'green-600');
 
-  INSERT INTO `gym_genesis`.`perfil_professor` (`usuario_id`, `foto_perfil`, `experiencia_anos`, `modalidade`, `avaliacao_media`, `descricao`, `horarios_disponiveis`, `telefone`) VALUES
-(21, 'carlos_silva.jpg', 5, 'Presencial', 4.75, 'Personal trainer especializado em musculação e condicionamento físico', 'Segunda a Sexta: 6h-10h e 18h-22h', '(11) 99999-0001'),
-(22, 'ana_pereira.png', 3, 'Online', 4.80, 'Especialista em treinamento funcional e pilates', 'Terça e Quinta: 7h-12h, Sábado: 8h-14h', '(11) 99999-0002'),
-(23, 'pedro_alves.jpg', 7, 'Híbrido', 4.90, 'Professor de educação física com foco em emagrecimento', 'Segunda a Sexta: 5h-9h e 17h-21h', '(11) 99999-0003'),
-(24, 'juliana_costa.jpg', 2, 'Presencial', 4.65, 'Especialista em treino para terceira idade', 'Segunda, Quarta, Sexta: 8h-12h', '(11) 99999-0004'),
-(25, 'rafael_lima.png', 8, 'Online', 4.85, 'Coach de crossfit e alta performance', 'Terça a Sábado: 6h-15h', '(11) 99999-0005'),
-(26, 'fernanda_oliveira.jpg', 4, 'Presencial', 4.70, 'Personal trainer feminino e gestante', 'Segunda a Sexta: 9h-18h', '(11) 99999-0006'),
-(27, 'marcos_santos.jpg', 6, 'Híbrido', 4.88, 'Especialista em reabilitação física', 'Terça e Quinta: 14h-20h, Sábado: 9h-13h', '(11) 99999-0007'),
-(28, 'patricia_rocha.png', 5, 'Online', 4.82, 'Professora de yoga e meditação', 'Segunda a Domingo: 6h-22h (agendamento)', '(11) 99999-0008'),
-(29, 'rodrigo_martins.jpg', 10, 'Presencial', 4.95, 'Treinador de atletas profissionais', 'Segunda a Sexta: 5h-8h e 16h-20h', '(11) 99999-0009'),
-(30, 'camila_ferreira.jpg', 3, 'Híbrido', 4.68, 'Especialista em dança fitness', 'Quarta e Sexta: 14h-19h, Sábado: 10h-16h', '(11) 99999-0010'),
-(31, 'lucas_ribeiro.png', 4, 'Presencial', 4.73, 'Personal trainer para iniciantes', 'Segunda a Sexta: 11h-15h e 19h-23h', '(11) 99999-0011'),
-(32, 'tatiane_souza.jpg', 7, 'Online', 4.87, 'Especialista em nutrição esportiva e treino', 'Terça a Sexta: 8h-17h', '(11) 99999-0012'),
-(33, 'bruno_carvalho.jpg', 2, 'Presencial', 4.60, 'Professor de artes marciais e defesa pessoal', 'Segunda, Quarta, Sexta: 18h-22h', '(11) 99999-0013'),
-(34, 'vanessa_lima.png', 5, 'Híbrido', 4.78, 'Especialista em pilates e alongamento', 'Terça e Quinta: 9h-16h, Sábado: 8h-12h', '(11) 99999-0014'),
-(35, 'diegonascimento.jpg', 9, 'Presencial', 4.92, 'Treinador de alto rendimento', 'Segunda a Sábado: 5h-10h e 16h-21h', '(11) 99999-0015'),
-(36, 'amanda_costa.jpg', 3, 'Online', 4.71, 'Personal trainer para mulheres', 'Segunda a Sexta: 10h-15h e 19h-22h', '(11) 99999-0016'),
-(37, 'thiago_oliveira.png', 6, 'Presencial', 4.84, 'Especialista em musculação e hipertrofia', 'Terça a Sexta: 6h-12h e 17h-21h', '(11) 99999-0017'),
-(38, 'carolina_silva.jpg', 4, 'Híbrido', 4.76, 'Professora de hidroginástica e natação', 'Segunda, Quarta, Sexta: 7h-13h', '(11) 99999-0018'),
-(39, 'gustavo_rocha.png', 8, 'Online', 4.89, 'Coach de emagrecimento e transformação corporal', 'Terça a Domingo: 6h-23h', '(11) 99999-0019'),
-(40, 'isabela_martins.jpg', 5, 'Presencial', 4.81, 'Especialista em treino funcional outdoor', 'Segunda a Sexta: 6h-9h e 17h-20h', '(11) 99999-0020');
-
 INSERT INTO aula_usuario (idaula, usuario_id) VALUES (1, 1);
 INSERT INTO aula_usuario (idaula, usuario_id) VALUES (1, 2);
 INSERT INTO aula_usuario (idaula, usuario_id) VALUES (2, 1);
