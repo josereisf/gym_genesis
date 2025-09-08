@@ -1,6 +1,12 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-session_start();
+require_once "../php/verificarLogado.php";
+
+if ($_SESSION['tipo'] == 2) {
+  $_SESSION['erro_login'] = "Usuário não permitido!";
+  header('Location: dashboard_professor.php');
+  exit;
+}
 
 $idaluno = $_SESSION["id"] ?? 0;
 
