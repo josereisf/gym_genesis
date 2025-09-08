@@ -118,6 +118,11 @@ foreach ($professores as $prof) {
                     <i class="fa-solid fa-star text-yellow-400"></i>
                     Avaliação: <?php echo $avaliacao; ?>
                 </p>
+                <!-- Horário -->
+                <p class="text-sm text-white flex items-center gap-2" id='horario'>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    Horários: <?php echo $horarios; ?>
+                </p>
             </div>
         <?php endforeach; ?>
     </div>
