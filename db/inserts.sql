@@ -182,8 +182,8 @@ INSERT INTO perfil_usuario (usuario_id, nome, cpf, telefone, data_nascimento, nu
   (17, 'Renata Carvalho', '789.777.888-99', '11978901234', '1991-02-22', 'MAT2025017', 'padrao.png'),
   (18, 'André Gonçalves', '890.888.999-00', '11989012345', '1994-06-14', 'MAT2025018', 'padrao.png'),
   (19, 'Beatriz Lima', '901.999.000-11', '11990123456', '1992-10-30', 'MAT2025019', 'padrao.png'),
-  (20, 'Marcelo Pinto', '012.000.111-22', '11901234567', '1988-12-05', 'MAT2025020', 'padrao.png');
-  (21, 'Administrador', '012.002.431-22', '11905331567', '2002-12-05', 'MAT2025021', 'padrao.png');
+  (20, 'Marcelo Pinto', '012.000.111-22', '11901234567', '1988-12-05', 'MAT2025020', 'padrao.png'),
+  (21, 'Administrador', '021.002.428-89', '83905331567', '2002-12-05', 'MAT2025021', 'padrao.png');
 -- 2.2. cupom_desconto (20 inserts)
 INSERT INTO cupom_desconto (codigo, percentual_desconto, valor_desconto, data_validade, quantidade_uso, tipo) VALUES
 ('PROMO15', 15.00, NULL, '2025-12-31', 50, 'percentual'),
