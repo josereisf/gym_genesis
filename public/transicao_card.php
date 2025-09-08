@@ -1,369 +1,283 @@
 <?php
-require_once "../code/funcao.php";
+require_once __DIR__ . '/../code/funcao.php';
+session_start();
+
 $idaluno = $_SESSION["id"] ?? 0;
 
+// Pega todos os usuários do tipo professor
 $professores = listarUsuarioTipo(2);
 
+// Inicializa array final
 $tudojunto = [];
 
 foreach ($professores as $prof) {
-  $id = $prof['idusuario'];
+    $id = $prof['idusuario'];
 
-  $perfil = listarPerfilUsuario($id);
+    // Pega perfil do funcionário
+    $perfil_funcionario = listarFuncionarios($id); // array
+    $cargo = listarCargo($id);                     // array com cargos
 
-  $cargo = listarCargo($id);
+    // Pega perfil específico do professor
+    $perfil_professor = listarPerfilProfessor($id); // array
 
-  $tudojunto[] = [
-    'usuario' => $prof,
-    'perfil' => $perfil,
-    'cargo' => $cargo
-  ];
+    // Monta o array unificado
+    $tudojunto[] = [
+        'usuario' => $prof,
+        'perfil_funcionario' => $perfil_funcionario,
+        'cargo' => $cargo,
+        'perfil_professor' => $perfil_professor
+    ];
 }
+//  echo"<pre>";
+//  var_dump($tudojunto);
+//  echo"</pre>";
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Carrossel Professores</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
-      transition: background 0.5s infinite;
-    }
-
-    @keyframes background {
-      0% {
-        background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
-      }
-
-      50% {
-        background: linear-gradient(to bottom right, #0d1625, #132237, #1a2f4a);
-      }
-
-      100% {
-        background: linear-gradient(to bottom right, #132237, #1a2f4a, #0d1625);
-      }
-    }
-
-    .carousel-wrapper {
-      perspective: 1000px;
-    }
-
-    /* garante que bordas não aumentem o "tamanho" visual do card */
-    .card {
-      box-sizing: border-box;
-      transition: transform 0.45s ease, opacity 0.45s ease, border 0.25s, box-shadow 0.25s;
-      position: absolute;
-      width: 285px;
-      height: 397px;
-      background-color: white;
-      border-radius: 1rem;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      text-align: center;
-      cursor: pointer;
-      left: 50%;
-      /* centraliza a base do card */
-      top: 20px;
-      /* pequena margem do topo do container */
-      transform: translateX(-50%);
-      /* base central, depois as classes ajustam */
-    }
-
-    .card img {
-      width: 100%;
-      height: 160px;
-      border-radius: 0.75rem;
-      object-fit: cover;
-    }
-
-    /* Posições no carrossel (não mudam o tamanho, só posição/escala leve) */
-    .center {
-      transform: translateX(-50%) translateY(-10px) scale(1);
-      /* sobe levemente */
-      z-index: 30;
-      opacity: 1;
-    }
-
-    .left {
-      transform: translateX(calc(-50% - 280px)) scale(0.92);
-      z-index: 20;
-      opacity: 0.65;
-    }
-
-    .right {
-      transform: translateX(calc(-50% + 280px)) scale(0.92);
-      z-index: 20;
-      opacity: 0.65;
-    }
-
-    .hidden-card {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* Destaque quando selecionado (não afeta fluxo) */
-    .selected {
-      position: relative;
-      /* para o ::after absoluto */
-      border: 3px solid #22c55e;
-      /* verde */
-      box-shadow: 0 18px 36px rgba(34, 197, 94, 0.12);
-    }
-
-    .selected::after {
-      content: "✓";
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      color: #ffffff;
-      background: #16a34a;
-      width: 26px;
-      height: 26px;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-      box-shadow: 0 6px 12px rgba(16, 185, 129, 0.12);
-    }
-
-    /* evita overflow visual fora do contêiner */
-    #carousel {
-      overflow: visible;
-    }
-
-    /* melhora para botões */
-    button:disabled {
-      opacity: 0.9;
-    }
-
-    .fa-solid {
-      color: black;
-    }
-
-    /* responsividade simples: reduzir espaçamento lateral em telas pequenas */
-    @media (max-width: 480px) {
-      .card {
-        width: 220px;
-        height: 320px;
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="./uploads/1academia.webp" type="image/x-icon">
 </head>
 
-<body class="bg-gradient-to-br from-[#132237] via-[#1a2f4a] to-[#0d1625] text-white flex flex-col items-center justify-center min-h-screen p-6">
+<body class="bg-gradient-to-br from-[#132237] via-[#1a2f4a] to-[#0d1625] text-white flex flex-col items-center justify-start min-h-screen p-6">
 
-  <form action="api/index.php?entidade=professor_aluno&acao=cadastrar" method="post"
-    class="flex flex-col items-center space-y-6 w-full max-w-[920px]">
+    <h1 class="text-3xl font-bold mb-6 text-center">Nossos Professores</h1>
 
-    <div class="relative w-full flex justify-center items-center mb-6 group" id="carouselContainer">
-      <!-- Botão Esquerdo -->
-      <button type="button"
-        id="prevBtn"
-        class="absolute left-4 z-40 bg-white text-black hover:bg-green-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300">
-        ←
-      </button>
-
-      <!-- Carrossel (contêiner relativo) -->
-      <div class="relative w-[1000px] h-[400px] carousel-wrapper flex items-center justify-center">
-        <div id="carousel" class="relative w-full h-full"></div>
-      </div>
-
-      <!-- Botão Direito -->
-      <button type="button"
-        id="nextBtn"
-        class="absolute right-4 z-40 bg-white text-black hover:bg-green-500 hover:text-white shadow-lg rounded-full w-12 h-12 flex items-center justify-center text-2xl transition-all duration-300">
-        →
-      </button>
+    <div class="flex gap-4 mb-6">
+        <select id="filtroModalidade" class="border p-2 rounded bg-[#1f364f] text-white">
+            <option value="">Todas Modalidades</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Híbrido">Híbrido</option>
+            <option value="Online">Online</option>
+        </select>
+        <input type="text" id="buscaNome" placeholder="Buscar por nome" class="border p-2 text-black rounded">
     </div>
 
-    <!-- Input escondido -->
-    <input type="hidden" name="professor_id" id="professorId">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+        <?php foreach ($tudojunto as $prof):
+            $funcionario = $prof['perfil_funcionario'][0] ?? [];
+            $professor = $prof['perfil_professor'][0] ?? [];
 
-    <!-- Resumo -->
-    <p id="resumoEscolha" class="text-lg text-gray-200 font-medium"></p>
+            $nome = $funcionario['nome'] ?? 'Sem nome';
+            $email = $funcionario['email'] ?? 'Sem email';
+            $telefone = $professor['telefone'] ?? $funcionario['telefone'] ?? '';
+            $cargo = $funcionario['nome_cargo'] ?? '';
+            $foto = $professor['foto_perfil'] ?? 'padrao.png';
+            $experiencia = $professor['experiencia_anos'] ?? 0;
+            $modalidade = $professor['modalidade'] ?? '';
+            $avaliacao = $professor['avaliacao_media'] ?? '';
+            $descricao = $professor['descricao'] ?? '';
+            $horarios = $professor['horarios_disponiveis'] ?? '';
+            $id = $funcionario['usuario_id'] ?? '';
+        ?>
+            <div onclick="abrirModal(
+                '<?php echo addslashes($nome); ?>',
+                '<?php echo addslashes($descricao); ?>',
+                '<?php echo addslashes($experiencia); ?>',
+                '<?php echo addslashes($modalidade); ?>',
+                '<?php echo addslashes($avaliacao); ?>',
+                '<?php echo addslashes($telefone); ?>',
+                '<?php echo addslashes($email); ?>',
+                './uploads/<?php echo addslashes($foto); ?>',
+                '<?php echo addslashes($horarios); ?>'
+            )"
+                class="professor-card bg-[#1f364f] p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer"
+                data-nome="<?= $nome ?>"
+                data-descricao="<?= htmlspecialchars($descricao) ?>"
+                data-experiencia="<?= $experiencia ?>"
+                data-modalidade="<?= $modalidade ?>"
+                data-avaliacao="<?= $avaliacao ?>"
+                data-telefone="<?= $telefone ?>"
+                data-email="<?= $email ?>"
+                data-foto="./uploads/<?= $foto ?>">
 
-    <!-- Botão Confirmar -->
-    <button type="submit" id="btnSubmit"
-      disabled
-      class="px-6 py-2 bg-gray-400 text-white rounded-xl shadow-md cursor-not-allowed transition-colors">
-      Confirmar Professor
-    </button>
+                <!-- Foto -->
+                <img src="./uploads/<?php echo $foto; ?>" alt="<?php echo $nome; ?>"
+                    class="w-full h-48 object-cover rounded-xl mb-4" id='foto'>
+
+                <!-- Nome -->
+                <h2 class="text-xl font-semibold mb-1 flex items-center gap-2" id='nome'>
+                    <i class="fa-solid fa-user text-white"></i>
+                    <?php echo $nome; ?>
+                </h2>
+
+                <!-- Modalidade -->
+                <p class="text-sm text-white flex items-center gap-2" id='modalidade'>
+                    <i class="fa-solid fa-dumbbell text-white"></i>
+                    Modalidade: <?php echo $modalidade; ?>
+                </p>
+
+                <!-- Avaliação -->
+                <p class="text-sm text-white flex items-center gap-2" id='avaliacao'>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    Avaliação: <?php echo $avaliacao; ?>
+                </p>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
 
-  </form>
+    <!-- Modal -->
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-[#1f364f] p-6 rounded-2xl w-full max-w-4xl relative">
 
-  <script>
-    const professores = <?php echo json_encode($tudojunto); ?>;
+            <!-- Botão fechar -->
+            <button onclick="fecharModal()" class="absolute top-4 right-4 text-white font-bold text-2xl">&times;</button>
 
-    let currentIndex = 0;
-    let selectedId = ""; // armazena seleção persistente
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Foto -->
+                <div class="flex justify-center items-start">
+                    <img id="modalFoto" src="" alt="" class="w-full h-72 object-cover rounded-xl shadow-lg">
+                </div>
 
-    const carousel = document.getElementById("carousel");
-    const inputHidden = document.getElementById("professorId");
-    const resumo = document.getElementById("resumoEscolha");
-    const btnSubmit = document.getElementById("btnSubmit");
+                <!-- Informações -->
+                <div class="flex flex-col justify-start">
+                    <h2 id="modalNome" class="text-2xl font-bold mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-user text-white"></i>
+                    </h2>
 
-    function updateSubmitState() {
-      if (selectedId) {
-        btnSubmit.disabled = false;
-        btnSubmit.classList.remove("bg-gray-400", "cursor-not-allowed");
-        btnSubmit.classList.add("bg-green-600", "hover:bg-green-700");
-      } else {
-        btnSubmit.disabled = true;
-        btnSubmit.classList.remove("bg-green-600", "hover:bg-green-700");
-        btnSubmit.classList.add("bg-gray-400", "cursor-not-allowed");
-      }
+                    <p id="modalDescricao" class="text-white mb-3"></p>
+
+                    <p id="modalExperiencia" class="text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase text-white"></i>
+                    </p>
+
+                    <p id="modalModalidade" class="text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-dumbbell text-white"></i>
+                    </p>
+
+                    <p id="modalAvaliacao" class="text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                    </p>
+
+                    <p id="modalTelefone" class="text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-phone text-green-400"></i>
+                    </p>
+
+                    <p id="modalEmail" class="text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-blue-400"></i>
+                    </p>
+
+                    <!-- Horários -->
+                    <div id="modalHorarios" class="flex flex-col gap-2 mt-4">
+                        <!-- Botões de horários serão inseridos via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão Selecionar -->
+            <div class="mt-6 flex justify-center">
+                <button id="btnSelecionar"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-xl shadow-lg flex items-center gap-2 transition">
+                    <i class="fa-solid fa-check"></i> Selecionar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.professor-card');
+    const modal = document.getElementById('modal');
+    const btnSelecionar = document.getElementById('btnSelecionar');
+    const containerHorarios = document.getElementById('modalHorarios');
+    let selectedIdaula = null;
+    const usuarioId = <?= $idaluno ?>;
+
+    function abrirModal(card) {
+        document.getElementById('modalNome').textContent = card.dataset.nome;
+        document.getElementById('modalDescricao').textContent = card.dataset.descricao;
+        document.getElementById('modalExperiencia').textContent = "Experiência: " + card.dataset.experiencia + " anos";
+        document.getElementById('modalModalidade').textContent = "Modalidade: " + card.dataset.modalidade;
+        document.getElementById('modalAvaliacao').textContent = "Avaliação: " + card.dataset.avaliacao;
+        document.getElementById('modalTelefone').textContent = "Telefone: " + card.dataset.telefone;
+        document.getElementById('modalEmail').textContent = "Email: " + card.dataset.email;
+        document.getElementById('modalFoto').src = card.dataset.foto;
+
+        containerHorarios.innerHTML = '';
+        selectedIdaula = null;
+        btnSelecionar.disabled = true;
+
+        fetch(`http://localhost:83/public/api/index.php?entidade=aula_agendada&acao=listar&idprofessor=${card.dataset.idprofessor}`)
+            .then(res => res.json())
+            .then(response => {
+                if (!response.sucesso) return alert('Erro ao listar aulas: ' + response.mensagem);
+
+                const dados = JSON.parse(response.dados); // converte JSON string em array
+                dados.forEach(aula => {
+                    const btn = document.createElement('button');
+                    btn.className = 'horario-card bg-[#2a4662] hover:bg-[#3a5977] text-white py-2 px-4 rounded-lg transition';
+                    btn.dataset.idaula = aula.idaula;
+
+                    const inicio = aula.hora_inicio.slice(0, 5);
+                    const fim = aula.hora_fim.slice(0, 5);
+                    btn.textContent = `${aula.dia_semana} (${aula.data_aula}) - ${inicio} às ${fim} | ${aula.treino_tipo}: ${aula.treino_desc}`;
+                    containerHorarios.appendChild(btn);
+                });
+            });
+
+        modal.classList.remove('hidden');
     }
 
-    function renderCards() {
-      carousel.innerHTML = "";
+    cards.forEach(card => {
+        card.addEventListener('click', () => abrirModal(card));
+    });
 
-      // índices vizinhos (não circular): se estiver no início/fim, não exibe left/right
-      professores.forEach((profObj, index) => {
-        const prof = profObj.usuario;
-        const perfil = (profObj.perfil && profObj.perfil[0]) || {}; // agora pegando o índice 0
-        const cargo = (profObj.cargo && profObj.cargo[0]?.descricao) || "Professor";
-        const nome_cargo = (profObj.cargo && profObj.cargo[0]?.nome) || "Professor";
+    window.fecharModal = () => modal.classList.add('hidden');
 
-        const div = document.createElement("div");
-        div.className = "card";
+    containerHorarios.addEventListener('click', e => {
+        const btn = e.target.closest('.horario-card');
+        if (!btn) return;
+        document.querySelectorAll('.horario-card').forEach(b => b.classList.remove('bg-green-600'));
+        btn.classList.add('bg-green-600');
+        selectedIdaula = btn.dataset.idaula;
+        btnSelecionar.disabled = false;
+    });
 
-        // Decide posição
-        if (index === currentIndex) {
-          div.classList.add("center");
-        } else if (index === currentIndex - 1) {
-          div.classList.add("left");
-        } else if (index === currentIndex + 1) {
-          div.classList.add("right");
-        } else {
-          div.classList.add("hidden-card");
-        }
-
-        div.innerHTML = `
-    <div class="w-full h-full flex flex-col items-center">
-      <div class="w-full flex items-center justify-center">
-        <img
-          src="./uploads/${perfil.foto_perfil ? perfil.foto_perfil : 'padrao.png'}"
-          alt="${perfil.nome || 'Professor'}"
-          class="w-20 h-20 object-cover rounded-xl shadow-md border-4 border-white"
-          loading="lazy"
-        />
-      </div>
-
-      <div class="mt-2 text-center px-4">
-        <h2 class="text-lg font-semibold text-gray-900 leading-tight">
-          ${perfil.nome || "Sem Nome"}
-        </h2>
-
-        <div class="mt-2 flex items-center justify-center gap-2">
-          <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
-            ${nome_cargo}
-          </span>
-        </div>
-
-        <div class="mt-3 text-sm text-gray-700 space-y-2 text-left">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-envelope text-gray-500 w-4 h-4"></i>
-            <a href="mailto:${prof.email}" class="truncate" title="${prof.email}">
-              ${prof.email}
-            </a>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-phone text-gray-500"></i>
-            <a href="tel:${perfil.telefone}" class="truncate" title="${perfil.telefone}">
-              ${perfil.telefone}
-            </a>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-briefcase text-gray-500"></i>
-            <span class="text-gray-600">${cargo}</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3 justify-center">
-          <button type="button" class="px-3 py-1 bg-white text-gray-800 rounded-md text-sm shadow-md hover:shadow-lg transition">
-            Ver perfil
-          </button>
-
-          <button type="button"
-                  class="px-3 py-1 bg-green-600 text-white rounded-md text-sm shadow-md hover:bg-green-700 transition select-btn"
-                  data-id="${prof.idusuario}">
-            Selecionar
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
-
-        // Seleção
-        if (String(prof.idusuario) === String(selectedId)) {
-          div.classList.add("selected");
-        }
-
-        if (index === currentIndex) {
-          div.addEventListener("click", () => {
-            selectedId = String(prof.idusuario);
-            inputHidden.value = selectedId;
-            resumo.textContent = `Você selecionou: ${perfil.nome}`;
-            updateSubmitState();
-            renderCards();
-          });
-
-          div.addEventListener("dblclick", () => {
-            if (String(selectedId) === String(prof.idusuario)) {
-              selectedId = "";
-              inputHidden.value = "";
-              resumo.textContent = "Nenhum professor selecionado";
-              updateSubmitState();
-              renderCards();
+    btnSelecionar.addEventListener('click', () => {
+        if (!selectedIdaula) return;
+        fetch('http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({idaula: selectedIdaula, usuario_id: usuarioId})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success || data.sucesso) {
+                alert('Aula selecionada com sucesso!');
+                modal.classList.add('hidden');
+            } else {
+                alert('Erro ao selecionar aula!');
             }
-          });
-        }
+        });
+    });
+    const filtroModalidade = document.getElementById('filtroModalidade');
+            const buscaNome = document.getElementById('buscaNome');
 
-        carousel.appendChild(div);
-      });
+            function filtrarCards() {
+                const modalidade = filtroModalidade.value.toLowerCase();
+                const nome = buscaNome.value.toLowerCase();
 
-      // se houver seleção, mostra resumo mesmo que não esteja na tela central agora
-      if (selectedId) {
-        const sel = professores.find(p => String(p.idusuario) === String(selectedId));
-        if (sel) resumo.textContent = `Você selecionou: ${sel.nome}`;
-      }
-    }
+                cards.forEach(card => {
+                    const matchModalidade = !modalidade || card.dataset.modalidade.toLowerCase() === modalidade;
+                    const matchNome = card.dataset.nome.toLowerCase().includes(nome);
+                    card.style.display = (matchModalidade && matchNome) ? 'block' : 'none';
+                });
+            }
 
-    function nextSlide() {
-      if (currentIndex < professores.length - 1) {
-        currentIndex++;
-        renderCards();
-      }
-    }
+            filtroModalidade.addEventListener('change', filtrarCards);
+});
+    </script>
 
-    function prevSlide() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        renderCards();
-      }
-    }
 
-    document.getElementById("nextBtn").addEventListener("click", nextSlide);
-    document.getElementById("prevBtn").addEventListener("click", prevSlide);
-
-    // inicializa estado do botão de submit
-    updateSubmitState();
-    renderCards();
-  </script>
 </body>
 
-</html>
+</html>           

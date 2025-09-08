@@ -5,7 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_REQUEST['acao'] ?? null;
 
-$input = $_POST;
+$input = $_REQUEST;
 if (empty($input)) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
@@ -48,13 +48,15 @@ switch ($acao) {
         break;
 
     case 'listar':
-        $dados = listarAulaAgendada($idaula);
-        if ($dados) {
+        $idprofessor = $input['idprofessor'] ?? null; // pega o id do professor
+        $dados = listarAulaAgendada($idprofessor);
+        if ($dados !== false) {
             enviarResposta(true, 'Aulas agendadas listadas com sucesso', $dados);
         } else {
             enviarResposta(false, 'Erro ao listar aulas agendadas');
         }
         break;
+
 
     case 'deletar':
         if (!$idaula) {

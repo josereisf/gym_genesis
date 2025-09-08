@@ -88,15 +88,6 @@ INSERT INTO exercicio (nome, grupo_muscular, descricao, video_url) VALUES
 
 
 
--- 1.2. cargo
-INSERT INTO `gym_genesis`.`cargo` 
-(`nome`, `descricao`) 
-VALUES
-  ('Gerente', 'Responsável pela supervisão geral da equipe'),
-  ('Assistente', 'Apoio nas atividades administrativas'),
-  ('Vendedor', 'Responsável pelas vendas e atendimento ao cliente');
-
-
 -- 1.3. categoria_produto
 INSERT INTO categoria_produto (nome, descricao) VALUES
   ('Suplementos', 'Produtos nutricionais'),
@@ -239,32 +230,30 @@ INSERT INTO usuario (senha, email, tipo_usuario) VALUES
   ('senha39', 'eduardo@ex.com', 2),
   ('senha40', 'mariana@ex.com', 2),
   ('senha41', 'paulo@ex.com', 2);
-
--- Inserts para a tabela funcionario, removendo o email e alterando o usuario_id para começar a partir de 21
+  
 INSERT INTO funcionario (nome, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
-  ('Carlos Mendes', '11666667777', '2024-02-20', 3200.00, 4, 21),
-  ('Renata Farias', '11777778888', '2023-09-10', 4100.00, 5, 22),
-  ('João Batista', '11888889999', '2025-03-05', 2800.00, 6, 23),
-  ('Simone Lopes', '11999990000', '2024-04-12', 3500.00, 7, 24),
-  ('Felipe Ramos', '11222223333', '2023-10-18', 3700.00, 8, 25),
-  ('Patricia Nunes', '11333334445', '2025-05-22', 3300.00, 9, 26),
-  ('Roberto Dias', '11444445556', '2024-06-30', 2900.00, 10, 27),
-  ('Juliana Prado', '11555556667', '2023-11-25', 4200.00, 11, 28),
-  ('Fernando Alves', '11666667788', '2025-07-14', 3100.00, 12, 29),
-  ('Amanda Torres', '11777778899', '2024-08-19', 3600.00, 13, 30),
-  ('Ricardo Lima', '11888889910', '2023-12-03', 4000.00, 14, 31),
-  ('Tatiane Souza', '11999990021', '2025-09-27', 3400.00, 15, 32),
-  ('Gustavo Pires', '11222223344', '2024-10-05', 3800.00, 16, 33),
-  ('Eliane Rocha', '11333334456', '2023-01-15', 2950.00, 17, 34),
-  ('Marcelo Cunha', '11444445567', '2025-02-28', 4100.00, 18, 35),
-  ('Vanessa Martins', '11555556678', '2024-03-22', 3250.00, 19, 36),
-  ('Bruno Ferreira', '11666667789', '2023-04-11', 3750.00, 20, 37);
-
--- Inserts para mais 3 funcionários
+  ('Carlos Mendes', '11666667777', '2024-02-20', 3200.00, 4, 1),
+  ('Renata Farias', '11777778888', '2023-09-10', 4100.00, 5, 2),
+  ('João Batista', '11888889999', '2025-03-05', 2800.00, 6, 3),
+  ('Simone Lopes', '11999990000', '2024-04-12', 3500.00, 7, 4),
+  ('Felipe Ramos', '11222223333', '2023-10-18', 3700.00, 8, 5),
+  ('Patricia Nunes', '11333334445', '2025-05-22', 3300.00, 9, 6),
+  ('Roberto Dias', '11444445556', '2024-06-30', 2900.00, 10, 7),
+  ('Juliana Prado', '11555556667', '2023-11-25', 4200.00, 11, 8),
+  ('Fernando Alves', '11666667788', '2025-07-14', 3100.00, 12, 9),
+  ('Amanda Torres', '11777778899', '2024-08-19', 3600.00, 13, 10),
+  ('Ricardo Lima', '11888889910', '2023-12-03', 4000.00, 14, 11),
+  ('Tatiane Souza', '11999990021', '2025-09-27', 3400.00, 15, 12),
+  ('Gustavo Pires','11222223344', '2024-10-05', 3800.00, 16, 13),
+  ('Eliane Rocha', '11333334456', '2023-01-15', 2950.00, 17, 14),
+  ('Marcelo Cunha', '11444445567', '2025-02-28', 4100.00, 18, 15),
+  ('Vanessa Martins', '11555556678', '2024-03-22', 3250.00, 19, 16),
+  ('Bruno Ferreira','11666667789', '2023-04-11', 3750.00, 20, 17);
+-- 3.1. funcionario
 INSERT INTO funcionario (nome, telefone, data_contratacao, salario, cargo_id, usuario_id) VALUES
-  ('Eduardo Lima', '11333334444', '2024-01-15', 3000.00, 1, 38),
-  ('Mariana Souza', '11444445555', '2023-08-01', 4500.00, 2, 39),
-  ('Paulo Rocha', '11555556666', '2025-02-10', 2500.00, 3, 40);
+  ('Eduardo Lima', '11333334444', '2024-01-15', 3000.00, 1, 18),
+  ('Mariana Souza','11444445555', '2023-08-01', 4500.00, 2, 19),
+  ('Paulo Rocha', '11555556666', '2025-02-10', 2500.00, 3, 20);
 
 -- 3.2. endereco (continuação dos 20 inserts)
 -- Endereços para os usuários (usuario_id de 1 a 20) com funcionario_id como NULL e CEPS reais
@@ -907,3 +896,69 @@ INSERT INTO historico_peso (peso, data_registro, usuario_id) VALUES
   (89.50, '2025-08-15 11:30:00', 21),
   (65.00, '2025-08-01 12:00:00', 21),
   (64.80, '2025-08-15 12:00:00', 21);
+INSERT INTO `gym_genesis`.`dicas_nutricionais` 
+(titulos, descricao, icone, cor) 
+VALUES
+('Proteínas pós-treino', 'Consumir proteínas logo após o treino ajuda na recuperação.', 'fas fa-apple-alt', 'green-400'),
+('Hidratação', 'Beber água antes, durante e após o treino é essencial.', 'fas fa-tint', 'blue-400'),
+('Carboidratos pré-treino', 'Comer carboidratos leves antes do treino dá energia rápida.', 'fas fa-bread-slice', 'yellow-400'),
+('Sono e recuperação', 'Dormir bem é fundamental para recuperação muscular.', 'fas fa-bed', 'purple-400'),
+('Frutas e fibras', 'Frutas ricas em fibras ajudam na digestão e saciedade.', 'fas fa-lemon', 'orange-400'),
+('Alongamento', 'Alongar antes e depois do treino reduz risco de lesões.', 'fas fa-walking', 'pink-400'),
+('Treino de força', 'Exercícios de força aumentam massa magra e metabolismo.', 'fas fa-dumbbell', 'red-400'),
+('Vitaminas', 'Vitamina C e D fortalecem o sistema imunológico.', 'fas fa-capsules', 'teal-400'),
+('Postura', 'Manter a postura correta evita dores e lesões.', 'fas fa-child', 'indigo-400'),
+('Descanso ativo', 'Dias de descanso podem incluir caminhadas leves.', 'fas fa-shoe-prints', 'gray-400'),
+('Ômega 3', 'Consuma peixes ou sementes para saúde cardiovascular.', 'fas fa-fish', 'blue-500'),
+('Cafeína', 'Café antes do treino pode aumentar desempenho.', 'fas fa-coffee', 'brown-400'),
+('Lanches saudáveis', 'Prefira castanhas e frutas secas entre refeições.', 'fas fa-seedling', 'green-500'),
+('Treino funcional', 'Exercícios funcionais melhoram mobilidade.', 'fas fa-running', 'yellow-500'),
+('Equilíbrio alimentar', 'Inclua todos os grupos alimentares no dia.', 'fas fa-balance-scale', 'purple-500'),
+('Aquecimento', 'Aqueça o corpo antes de treinar para evitar lesões.', 'fas fa-fire', 'red-500'),
+('Magnésio', 'Ajuda na contração muscular e recuperação.', 'fas fa-tablets', 'blue-300'),
+('Pequenas metas', 'Definir metas pequenas ajuda a manter disciplina.', 'fas fa-flag-checkered', 'orange-500'),
+('Respeite limites', 'Escute seu corpo e evite exageros no treino.', 'fas fa-heartbeat', 'pink-500'),
+('Consistência', 'Resultados vêm da disciplina diária, não de excessos.', 'fas fa-calendar-check', 'green-600');
+
+  INSERT INTO `gym_genesis`.`perfil_professor` (`usuario_id`, `foto_perfil`, `experiencia_anos`, `modalidade`, `avaliacao_media`, `descricao`, `horarios_disponiveis`, `telefone`) VALUES
+(21, 'carlos_silva.jpg', 5, 'Presencial', 4.75, 'Personal trainer especializado em musculação e condicionamento físico', 'Segunda a Sexta: 6h-10h e 18h-22h', '(11) 99999-0001'),
+(22, 'ana_pereira.png', 3, 'Online', 4.80, 'Especialista em treinamento funcional e pilates', 'Terça e Quinta: 7h-12h, Sábado: 8h-14h', '(11) 99999-0002'),
+(23, 'pedro_alves.jpg', 7, 'Híbrido', 4.90, 'Professor de educação física com foco em emagrecimento', 'Segunda a Sexta: 5h-9h e 17h-21h', '(11) 99999-0003'),
+(24, 'juliana_costa.jpg', 2, 'Presencial', 4.65, 'Especialista em treino para terceira idade', 'Segunda, Quarta, Sexta: 8h-12h', '(11) 99999-0004'),
+(25, 'rafael_lima.png', 8, 'Online', 4.85, 'Coach de crossfit e alta performance', 'Terça a Sábado: 6h-15h', '(11) 99999-0005'),
+(26, 'fernanda_oliveira.jpg', 4, 'Presencial', 4.70, 'Personal trainer feminino e gestante', 'Segunda a Sexta: 9h-18h', '(11) 99999-0006'),
+(27, 'marcos_santos.jpg', 6, 'Híbrido', 4.88, 'Especialista em reabilitação física', 'Terça e Quinta: 14h-20h, Sábado: 9h-13h', '(11) 99999-0007'),
+(28, 'patricia_rocha.png', 5, 'Online', 4.82, 'Professora de yoga e meditação', 'Segunda a Domingo: 6h-22h (agendamento)', '(11) 99999-0008'),
+(29, 'rodrigo_martins.jpg', 10, 'Presencial', 4.95, 'Treinador de atletas profissionais', 'Segunda a Sexta: 5h-8h e 16h-20h', '(11) 99999-0009'),
+(30, 'camila_ferreira.jpg', 3, 'Híbrido', 4.68, 'Especialista em dança fitness', 'Quarta e Sexta: 14h-19h, Sábado: 10h-16h', '(11) 99999-0010'),
+(31, 'lucas_ribeiro.png', 4, 'Presencial', 4.73, 'Personal trainer para iniciantes', 'Segunda a Sexta: 11h-15h e 19h-23h', '(11) 99999-0011'),
+(32, 'tatiane_souza.jpg', 7, 'Online', 4.87, 'Especialista em nutrição esportiva e treino', 'Terça a Sexta: 8h-17h', '(11) 99999-0012'),
+(33, 'bruno_carvalho.jpg', 2, 'Presencial', 4.60, 'Professor de artes marciais e defesa pessoal', 'Segunda, Quarta, Sexta: 18h-22h', '(11) 99999-0013'),
+(34, 'vanessa_lima.png', 5, 'Híbrido', 4.78, 'Especialista em pilates e alongamento', 'Terça e Quinta: 9h-16h, Sábado: 8h-12h', '(11) 99999-0014'),
+(35, 'diegonascimento.jpg', 9, 'Presencial', 4.92, 'Treinador de alto rendimento', 'Segunda a Sábado: 5h-10h e 16h-21h', '(11) 99999-0015'),
+(36, 'amanda_costa.jpg', 3, 'Online', 4.71, 'Personal trainer para mulheres', 'Segunda a Sexta: 10h-15h e 19h-22h', '(11) 99999-0016'),
+(37, 'thiago_oliveira.png', 6, 'Presencial', 4.84, 'Especialista em musculação e hipertrofia', 'Terça a Sexta: 6h-12h e 17h-21h', '(11) 99999-0017'),
+(38, 'carolina_silva.jpg', 4, 'Híbrido', 4.76, 'Professora de hidroginástica e natação', 'Segunda, Quarta, Sexta: 7h-13h', '(11) 99999-0018'),
+(39, 'gustavo_rocha.png', 8, 'Online', 4.89, 'Coach de emagrecimento e transformação corporal', 'Terça a Domingo: 6h-23h', '(11) 99999-0019'),
+(40, 'isabela_martins.jpg', 5, 'Presencial', 4.81, 'Especialista em treino funcional outdoor', 'Segunda a Sexta: 6h-9h e 17h-20h', '(11) 99999-0020');
+
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (1, 1);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (1, 2);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (2, 1);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (2, 3);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (3, 2);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (3, 4);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (4, 5);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (4, 1);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (5, 6);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (5, 2);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (6, 7);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (6, 3);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (7, 8);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (7, 4);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (8, 9);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (8, 5);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (9, 10);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (9, 6);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (10, 7);
+INSERT INTO aula_usuario (idaula, usuario_id) VALUES (10, 8);
