@@ -50,17 +50,21 @@ foreach ($professores as $prof) {
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
     <style>
-        .swiper-button-next, .swiper-button-prev {
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
-    color: white;
-    padding: 10px;
-    border-radius: 50%;
-    }
+        .swiper-button-next,
+        .swiper-button-prev {
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Fundo semi-transparente */
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            justify-content: space-between;
+        }
 
-    .swiper-button-next:hover, .swiper-button-prev:hover {
-        background-color: rgba(0, 0, 0, 0.7); /* Fundo mais forte quando passar o mouse */
-    }
-
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Fundo mais forte quando passar o mouse */
+        }
     </style>
 </head>
 
@@ -79,20 +83,35 @@ foreach ($professores as $prof) {
     </div>
 
     <div class="swiper-container w-full max-w-6xl">
-    <div class="swiper-wrapper">
-        <?php foreach ($tudojunto as $prof): ?>
-        <div class="swiper-slide flex justify-center">
-            <div onclick="abrirModal(this)"
-            class="professor-card bg-[#1f364f] w-80 md:w-72 lg:w-80 p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer"
-            data-nome="<?= $nome ?>"
-            data-descricao="<?= htmlspecialchars($descricao) ?>"
-            data-experiencia="<?= $experiencia ?>"
+<div class="swiper-wrapper flex flex-row gap-4 justify-between">
+    <?php foreach ($tudojunto as $prof):
+        $funcionario = $prof['perfil_funcionario'][0] ?? [];
+        $professor = $prof['perfil_professor'][0] ?? [];
+
+        $nome = $funcionario['nome'] ?? 'Sem nome';
+        $email = $funcionario['email'] ?? 'Sem email';
+        $telefone = $professor['telefone'] ?? $funcionario['telefone'] ?? '';
+        $cargo = $funcionario['nome_cargo'] ?? '';
+        $foto = $professor['foto_perfil'] ?? 'padrao.png';
+        $experiencia = $professor['experiencia_anos'] ?? 0;
+        $modalidade = $professor['modalidade'] ?? '';
+        $avaliacao = $professor['avaliacao_media'] ?? '';
+        $descricao = $professor['descricao'] ?? '';
+        $horarios = $professor['horarios_disponiveis'] ?? '';
+        $id = $funcionario['usuario_id'] ?? '';
+    ?>
+        <div class="swiper-slide professor-card bg-[#1f364f] w-80 md:w-72 lg:w-80 p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer"
+            data-nome="<? $nome ?>"
+            data-descricao="<? htmlspecialchars($descricao) ?>"
+            data-experiencia="<? $experiencia ?>"
             data-modalidade="<?= $modalidade ?>"
-            data-avaliacao="<?= $avaliacao ?>"
-            data-telefone="<?= $telefone ?>"
-            data-email="<?= $email ?>"
-            data-foto="./uploads/<?= $foto ?>"
-            data-idprofessor="<?= $id ?>">
+            data-avaliacao="<? $avaliacao ?>"
+            data-telefone="<? $telefone ?>"
+            data-email="<? $email ?>"
+            data-foto="./uploads/<? $foto ?>"
+            data-idprofessor="<? $id ?>"
+            data-modalidade-raw="<?= $modalidade ?>"
+            data-idaluno="<? $idaula ?>">
 
             <!-- Foto -->
             <img src="./uploads/<?php echo $foto; ?>" alt="<?php echo $nome; ?>"
@@ -117,14 +136,14 @@ foreach ($professores as $prof) {
             <p class="text-sm text-gray-300">
                 <i class="fa-solid fa-clock text-white"></i> <?= $horarios ?>
             </p>
-            </div>
         </div>
-        <?php endforeach; ?>
-    </div>
+    <?php endforeach; ?>
+</div>
 
-    <!-- Botões -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+
+        <!-- Botões -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
 
 
@@ -132,7 +151,7 @@ foreach ($professores as $prof) {
 
     <!-- Modal -->
     <!-- Modal -->
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div id="modal" class="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-[#1f364f] p-6 rounded-2xl w-full max-w-4xl relative">
 
             <!-- Botão fechar -->
@@ -191,18 +210,23 @@ foreach ($professores as $prof) {
 
     <script>
         const swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-        },
-        breakpoints: {
-            640: { slidesPerView: 2, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 30 },
-        }
+            slidesPerView: 1,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+            }
         });
-
     </script>
 
 
@@ -294,12 +318,20 @@ foreach ($professores as $prof) {
                 const modalidade = filtroModalidade.value.toLowerCase();
                 const nome = buscaNome.value.toLowerCase();
 
+                const cards = document.querySelectorAll('.professor-card'); // Seleciona todos os cards
+
                 cards.forEach(card => {
                     const matchModalidade = !modalidade || card.dataset.modalidade.toLowerCase() === modalidade;
                     const matchNome = card.dataset.nome.toLowerCase().includes(nome);
-                    card.style.display = (matchModalidade && matchNome) ? 'block' : 'none';
+
+                    if (matchModalidade && matchNome) {
+                        card.classList.remove('hidden');  // Torna o card visível
+                    } else {
+                        card.classList.add('hidden');     // Torna o card invisível
+                    }
                 });
             }
+
 
             filtroModalidade.addEventListener('change', filtrarCards);
         });
