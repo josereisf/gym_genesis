@@ -173,7 +173,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
         <label>Confirmar senha</label>
         <div class="relative">
-          <input type="password" class="input pr-10" id="confirmarSenha" />
+          <input type="password" class="input pr-10" id="confirmarSenha" name="confirmarSenha" />
           <button
             type="button"
             class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
