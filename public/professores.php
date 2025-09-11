@@ -107,17 +107,17 @@ foreach ($professores as $prof) {
         $id = $funcionario['usuario_id'] ?? '';
     ?>
         <div class="swiper-slide professor-card bg-[#1f364f] w-80 md:w-72 lg:w-80 p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer"
-            data-nome="<? $nome ?>"
-            data-descricao="<? htmlspecialchars($descricao) ?>"
-            data-experiencia="<? $experiencia ?>"
+            data-nome="<?= $nome ?>"
+            data-descricao="<?= htmlspecialchars($descricao) ?>"
+            data-experiencia="<?= $experiencia ?>"
             data-modalidade="<?= $modalidade ?>"
-            data-avaliacao="<? $avaliacao ?>"
-            data-telefone="<? $telefone ?>"
-            data-email="<? $email ?>"
-            data-foto="./uploads/<? $foto ?>"
-            data-idprofessor="<? $id ?>"
+            data-avaliacao="<?= $avaliacao ?>"
+            data-telefone="<?= $telefone ?>"
+            data-email="<?= $email ?>"
+            data-foto="./uploads/<?= $foto ?>"
+            data-idprofessor="<?= $id ?>"
             data-modalidade-raw="<?= $modalidade ?>"
-            data-idaluno="<? $idaula ?>">
+            data-idaluno="<?= $idaula ?>">
 
             <!-- Foto -->
             <img src="./uploads/<?php echo $foto; ?>" alt="<?php echo $nome; ?>"
