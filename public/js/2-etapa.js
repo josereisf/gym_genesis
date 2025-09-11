@@ -1,5 +1,6 @@
 //===========================================================================================================================================================================================
 // essa parte aqui do codigo e o que faz funcionar o formulario por completo o botao de ir par ao proximo e de nao ir ao proximo
+
 let currentStep = 1
 const totalSteps = 3
 
@@ -200,9 +201,9 @@ async function enviarFormulario() {
     // 2. Cadastra (perfil completo)
     const respostaPerfilUsuario = await perfil_usuario(
       idUsuario,
-      nome, 
-      cpf, 
-      data, 
+      nome,
+      cpf,
+      data,
       telefone
     )
     if (!respostaPerfilUsuario.sucesso) {
@@ -227,7 +228,7 @@ async function enviarFormulario() {
 
     // 4. Cadastra assinatura
     const respostaAssinatura = await enviarAssinatura(
-      idUsuario, 
+      idUsuario,
       plano
     )
     if (!respostaAssinatura.sucesso) {
@@ -255,99 +256,196 @@ showStep(currentStep)
 
 //===========================================================================================================================================================================================
 // aqui começar a validação geral  com nome email cpf e por ai vai...
-const nomeInput = document.getElementById('nome')
-const emailInput = document.getElementById('email')
-const cpfInput = document.getElementById('cpf')
-const telefoneInput = document.getElementById('telefone')
+$("document").ready(function () {
+  // Métodos customizados
+  $.validator.addMethod("noSpace", function (value, element) {
+    return value === '' || value.trim().length > 0;
+  }, "Este campo não pode conter apenas espaços.");
+  
+  $.validator.addMethod("strongPassword", function (value, element) {
+    return this.optional(element) || /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value);
+  }, "A senha deve conter ao menos 8 caracteres, incluindo letras e números.");
 
-if (cpfInput) {
-  cpfInput.addEventListener('input', function () {
-    this.value = aplicarMascaraCPF(this.value)
-  })
-}
-
-function showError(input, message) {
-  const errorMsg = input.nextElementSibling
-  errorMsg.textContent = message
-  errorMsg.classList.remove('hidden')
-  input.classList.add('border-red-500', 'animate-shake')
-  input.classList.remove('border-green-500')
-  setTimeout(() => input.classList.remove('animate-shake'), 500)
-}
-
-function showSuccess(input) {
-  const errorMsg = input.nextElementSibling
-  errorMsg.classList.add('hidden')
-  errorMsg.textContent = ''
-  input.classList.remove('border-red-500')
-  input.classList.add('border-green-500')
-}
-
-// Validações simples
-
-function validateNome() {
-  const val = nomeInput.value.trim()
-  if (val.length < 3) {
-    showError(nomeInput, 'Nome deve ter pelo menos 3 caracteres')
-    return false
-  }
-  showSuccess(nomeInput)
-  return true
-}
-
-function validateEmail() {
-  const val = emailInput.value.trim()
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(val)) {
-    showError(emailInput, 'Email inválido')
-    return false
-  }
-  showSuccess(emailInput)
-  return true
-}
-
-function validateCPF() {
-  const val = cpfInput.value.replace(/\D/g, '') // só números
-  if (val.length !== 11) {
-    showError(cpfInput, 'CPF deve ter 11 números')
-    return false
-  }
-  // Pode implementar validação real de CPF aqui depois
-  showSuccess(cpfInput)
-  return true
-}
-
-function validateTelefone() {
-  const val = telefoneInput.value.replace(/\D/g, '')
-  if (val.length < 10) {
-    showError(telefoneInput, 'Telefone deve ter ao menos 10 dígitos')
-    return false
-  }
-  showSuccess(telefoneInput)
-  return true
-}
-
-// Eventos
-
-;[nomeInput, emailInput, cpfInput, telefoneInput].forEach((input) => {
-  input.addEventListener('blur', () => {
-    switch (input.id) {
-      case 'nome':
-        validateNome()
-        break
-      case 'email':
-        validateEmail()
-        break
-      case 'cpf':
-        validateCPF()
-        break
-      case 'telefone':
-        validateTelefone()
-        break
+  // Validação do formulário
+  $("#multiStepForm").validate({
+    rules: {
+      nome: {
+        required: true,
+        noSpace: true,
+        minlength: 4
+      },
+      email: {
+        required: true,
+        noSpace: true,
+        email: true
+      },
+      cpf: {
+        required: true,
+        noSpace: true,
+        minlength: 11,
+        maxlength: 11,
+        digits: true
+      },
+      telefone: {
+        required: true,
+        noSpace: true,
+        minlength: 11,
+        maxlength: 11,
+        digits: true
+      },
+      data: { // Corrigido: era data_nascimento mas o ID é "data"
+        required: true,
+        dateISO: true
+      },
+      cep: {
+        required: true,
+        digits: true,
+        noSpace: true,
+        minlength: 8,
+        maxlength: 8,
+      },
+      rua: {
+        required: true,
+        noSpace: true
+      },
+      numero: {
+        required: true,
+        noSpace: true
+      },
+      complemento: {
+        noSpace: true
+      },
+      bairro: {
+        required: true,
+        noSpace: true
+      },
+      cidade: {
+        required: true,
+        noSpace: true
+      },
+      estado: {
+        required: true,
+        noSpace: true
+      },
+      senha: {
+        required: true,
+        strongPassword: true
+      },
+      confirmarSenha: { // Adicione name="confirmarSenha" no input
+        required: true,
+        equalTo: "#senha"
+      },
+      plano: {
+        required: true
+      },
+    },
+    messages: {
+      nome: {
+        required: "Por favor, informe seu nome.",
+        noSpace: "O nome não pode conter apenas espaços."
+      },
+      email: {
+        required: "Por favor, informe seu email.",
+        noSpace: "O email não pode conter apenas espaços.",
+        email: "Por favor, utilize um email válido"
+      },
+      cpf: {
+        required: "Por favor, informe seu CPF.",
+        noSpace: "O CPF não pode conter apenas espaços.",
+        minlength: "O CPF deve conter exatamente 11 dígitos.",
+        maxlength: "O CPF deve conter exatamente 11 dígitos.",
+        digits: "O CPF deve conter apenas números."
+      },
+      telefone: {
+        required: "Por favor, informe seu telefone.",
+        noSpace: "O telefone não pode conter apenas espaços.",
+        minlength: "O telefone deve conter exatamente 11 dígitos.",
+        maxlength: "O telefone deve conter exatamente 11 dígitos.",
+        digits: "O telefone deve conter apenas números."
+      },
+      data: { // Corrigido para match com o ID
+        required: "Por favor, informe sua data de nascimento.",
+        dateISO: "Por favor, informe uma data válida no formato AAAA-MM-DD."
+      },
+      cep: {
+        required: "Por favor, informe seu CEP.",
+        digits: "O CEP deve conter apenas números.",
+        noSpace: "O CEP não pode conter apenas espaços.",
+        minlength: "O CEP deve conter exatamente 8 dígitos.",
+        maxlength: "O CEP deve conter exatamente 8 dígitos."
+      },
+      rua: {
+        required: "Por favor, informe a rua.",
+        noSpace: "A rua não pode conter apenas espaços."
+      },
+      numero: {
+        required: "Por favor, informe o número.",
+        noSpace: "O número não pode conter apenas espaços."
+      },
+      complemento: {
+        noSpace: "O complemento não pode conter apenas espaços."
+      },
+      bairro: {
+        required: "Por favor, informe o bairro.",
+        noSpace: "O bairro não pode conter apenas espaços."
+      },
+      cidade: {
+        required: "Por favor, informe a cidade.",
+        noSpace: "A cidade não pode conter apenas espaços."
+      },
+      estado: {
+        required: "Por favor, informe o estado.",
+        noSpace: "O estado não pode conter apenas espaços."
+      },
+      senha: {
+        required: "Por favor, informe a senha.",
+        strongPassword: "Senha deve ter ao menos 8 caracteres, letras e números."
+      },
+      confirmarSenha: {
+        required: "Por favor, confirme a senha.",
+        equalTo: "As senhas não coincidem."
+      },
+      plano: {
+        required: "Por favor, selecione um plano."
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      // Encontra o container de erro específico
+      var errorContainer = element.next('.error-message');
+      if (errorContainer.length) {
+        errorContainer.removeClass('hidden').html(error.text());
+      } else {
+        // Se não encontrar, cria um novo
+        error.addClass('error-message text-red-500 text-sm mt-1');
+        error.insertAfter(element);
+      }
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('border-red-500').removeClass('border-green-500');
+      // Mostra o container de erro
+      var errorContainer = $(element).next('.error-message');
+      if (errorContainer.length) {
+        errorContainer.removeClass('hidden');
+      }
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('border-red-500').addClass('border-green-500');
+      // Esconde o container de erro
+      var errorContainer = $(element).next('.error-message');
+      if (errorContainer.length) {
+        errorContainer.addClass('hidden');
+      }
+    },
+    invalidHandler: function(event, validator) {
+      // Debug: mostra erros no console
+      console.log('Erros de validação:', validator.errorList);
     }
-  })
-})
+  });
 
+  // Teste simples para verificar se a validação está funcionando
+  console.log('Validação jQuery carregada:', $.fn.validate !== undefined);
+});
 //===========================================================================================================================================================================================
 // Elementos do DOM
 const cepInput = document.getElementById('cep')

@@ -20,7 +20,10 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro | Gym Genesis</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./js/jquery-3.7.1.min.js"></script>
+  <script src="./js/jquery.validate.min.js"></script>
   <style type="text/tailwindcss">
+
     .input {
         @apply w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-green-400 mb-3;
       }
@@ -60,6 +63,8 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         animation: shake 0.3s;
       }
     </style>
+
+    
 </head>
 
 <body class="flex items-center justify-center min-h-screen px-4">
@@ -94,7 +99,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         }
         ?>
         <label for="nome">Nome completo</label>
-        <input id="nome" type="text" class="input" name="nome" />
+        <input id="nome" type="text" class="input error" name="nome" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="email">Email</label>
