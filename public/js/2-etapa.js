@@ -265,14 +265,23 @@ $("document").ready(function () {
   $.validator.addMethod("strongPassword", function (value, element) {
     return this.optional(element) || /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value);
   }, "A senha deve conter ao menos 8 caracteres, incluindo letras e números.");
+    $.validator.addMethod("validarData", function (value, element) {
+        // Data atual
+        var today = new Date();
+        // Data máxima (150 anos atrás)
+        var maxDate = new Date();
+        maxDate.setFullYear(today.getFullYear() - 150);
+        // Se a data for maior que a data de hoje ou mais nova que 150 anos, é inválida
+        var selectedDate = new Date(value);
 
+        return selectedDate <= today && selectedDate >= maxDate;
+    });
   // Validação do formulário
   $("#multiStepForm").validate({
     rules: {
       nome: {
         required: true,
         noSpace: true,
-        minlength: 4
       },
       email: {
         required: true,
@@ -282,24 +291,21 @@ $("document").ready(function () {
       cpf: {
         required: true,
         noSpace: true,
-        minlength: 11,
-        maxlength: 11,
-        digits: true
+        minlength: 14,
+        maxlength: 14,
       },
       telefone: {
         required: true,
         noSpace: true,
-        minlength: 11,
-        maxlength: 11,
-        digits: true
+        minlength: 15,
+        maxlength: 15,
       },
-      data: { // Corrigido: era data_nascimento mas o ID é "data"
+      data: {
         required: true,
-        dateISO: true
+        validarData: true
       },
       cep: {
         required: true,
-        digits: true,
         noSpace: true,
         minlength: 8,
         maxlength: 8,
@@ -309,7 +315,6 @@ $("document").ready(function () {
         noSpace: true
       },
       numero: {
-        required: true,
         noSpace: true
       },
       complemento: {
@@ -331,7 +336,7 @@ $("document").ready(function () {
         required: true,
         strongPassword: true
       },
-      confirmarSenha: { // Adicione name="confirmarSenha" no input
+      confirmarSenha: {
         required: true,
         equalTo: "#senha"
       },
@@ -354,22 +359,19 @@ $("document").ready(function () {
         noSpace: "O CPF não pode conter apenas espaços.",
         minlength: "O CPF deve conter exatamente 11 dígitos.",
         maxlength: "O CPF deve conter exatamente 11 dígitos.",
-        digits: "O CPF deve conter apenas números."
       },
       telefone: {
         required: "Por favor, informe seu telefone.",
         noSpace: "O telefone não pode conter apenas espaços.",
         minlength: "O telefone deve conter exatamente 11 dígitos.",
         maxlength: "O telefone deve conter exatamente 11 dígitos.",
-        digits: "O telefone deve conter apenas números."
       },
-      data: { // Corrigido para match com o ID
+      data: {
         required: "Por favor, informe sua data de nascimento.",
-        dateISO: "Por favor, informe uma data válida no formato AAAA-MM-DD."
+        validarData: "Por favor, informe uma data válida."
       },
       cep: {
         required: "Por favor, informe seu CEP.",
-        digits: "O CEP deve conter apenas números.",
         noSpace: "O CEP não pode conter apenas espaços.",
         minlength: "O CEP deve conter exatamente 8 dígitos.",
         maxlength: "O CEP deve conter exatamente 8 dígitos."
@@ -379,7 +381,6 @@ $("document").ready(function () {
         noSpace: "A rua não pode conter apenas espaços."
       },
       numero: {
-        required: "Por favor, informe o número.",
         noSpace: "O número não pode conter apenas espaços."
       },
       complemento: {
@@ -405,9 +406,6 @@ $("document").ready(function () {
         required: "Por favor, confirme a senha.",
         equalTo: "As senhas não coincidem."
       },
-      plano: {
-        required: "Por favor, selecione um plano."
-      }
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
