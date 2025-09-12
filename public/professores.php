@@ -34,9 +34,9 @@ foreach ($professores as $prof) {
         'perfil_professor' => $perfil_professor
     ];
 }
-//  echo"<pre>";
-//  var_dump($tudojunto);
-//  echo"</pre>";
+//   echo"<pre>";
+//   var_dump($tudojunto);
+//   echo"</pre>";
 ?>
 
 

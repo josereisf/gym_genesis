@@ -3630,7 +3630,7 @@ function listarPerfilProfessor($idusuario) {
     return $perfis;
 }
 
-function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone) {
+function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool {
     $conexao = conectar();
     $sql = "UPDATE perfil_professor SET
             foto_perfil = ?, 
