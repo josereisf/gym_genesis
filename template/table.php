@@ -49,7 +49,7 @@ $(document).ready(function() {
         "processing": true,
         "serverSide": false,
         "ajax": {
-            "url": "localhost:83/api/index.php?entidade=perfil_professor&acao=listar",
+            "url": "http://localhost:83/public/api/index.php?entidade=perfil_professor&acao=listar",
             "dataSrc": function(json) {
                 // Transforma a estrutura complexa em dados simples para o DataTables
                 return json.map(function(item) {

@@ -242,9 +242,9 @@ function listarEnderecosID($id, $tipo)
 
 function listarFuncionarios($idfuncionario)
 {
-    $conexao = conectar();
-    if ($idfuncionario != null) {
-        $sql = 'SELECT 
+  $conexao = conectar();
+  if ($idfuncionario != null) {
+    $sql = 'SELECT 
             f.nome,
             u.email,
             p.telefone,
@@ -258,10 +258,10 @@ function listarFuncionarios($idfuncionario)
             JOIN usuario AS u on f.usuario_id = u.idusuario
             JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id
             WHERE f.usuario_id= ?;';
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
-    } else {
-        $sql = 'SELECT 
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
+  } else {
+    $sql = 'SELECT 
             f.nome,
             u.email,
             p.telefone,
@@ -274,20 +274,20 @@ function listarFuncionarios($idfuncionario)
             JOIN cargo AS c ON c.idcargo = f.cargo_id
             JOIN usuario AS u on f.usuario_id = u.idusuario
             JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id';
-        $comando = mysqli_prepare($conexao, $sql);
-    }
+    $comando = mysqli_prepare($conexao, $sql);
+  }
 
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
-    $lista_funcionarios = [];
-    while ($funcionario = mysqli_fetch_assoc($resultados)) {
-        $lista_funcionarios[] = $funcionario;
-    }
-    mysqli_stmt_close($comando);
+  $lista_funcionarios = [];
+  while ($funcionario = mysqli_fetch_assoc($resultados)) {
+    $lista_funcionarios[] = $funcionario;
+  }
+  mysqli_stmt_close($comando);
 
-    // Retorna array diretamente
-    return $lista_funcionarios;
+  // Retorna array diretamente
+  return $lista_funcionarios;
 }
 
 
@@ -3591,48 +3591,135 @@ function listarHistoricoPesoUltimo($idusuario)
   return $dados;
 }
 
-function cadastrarPerfilProfessor($foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id) {
-    $conexao = conectar();
-    $sql = "INSERT INTO perfil_professor 
+function cadastrarPerfilProfessor($foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id)
+{
+  $conexao = conectar();
+  $sql = "INSERT INTO perfil_professor 
             (foto_perfil, experiencia_anos, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone, usuario_id, data_atualizacao) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "sissssss", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+
+/**
+ * Lista informações de perfil de professor(es) com suas aulas agendadas
+ * 
+ * Esta função consulta o banco de dados para recuperar informações completas
+ * do perfil do professor, incluindo dados pessoais, cargo e aulas agendadas.
+ * Pode retornar dados de um professor específico ou de todos os professores.
+ *
+ * @param int|null $idusuario ID do usuário professor para filtrar (opcional)
+ * 
+ * @return array Retorna um array associativo com os seguintes campos:
+ *               - idaula: ID da aula agendada
+ *               - data_aula: Data da aula
+ *               - dia_semana: Dia da semana (Segunda a Domingo)
+ *               - hora_inicio: Hora de início da aula
+ *               - hora_fim: Hora de término da aula
+ *               - treino_id: ID do treino associado
+ *               - nome_professor: Nome completo do professor
+ *               - modalidade: Modalidade de ensino do professor
+ *               - telefone_professor: Telefone de contato do professor
+ *               - email_professor: Email do professor
+ *               - cargo_professor: Cargo/função do professor
+ * 
+ * @throws mysqli_sql_exception Em caso de erro na execução da consulta SQL
+ * @example 
+ *   // Listar todos os professores com aulas
+ *   $todosProfessores = listarPerfilProfessor(null);
+ *   
+ *   // Listar apenas o professor com ID 5
+ *   $professorEspecifico = listarPerfilProfessor(5);
+ */
+function listarPerfilProfessor($idusuario)
+{
+  $conexao = conectar();
+
+  if ($idusuario) {
+    $sql = "SELECT
+          aa.funcionario_id,
+          aa.idaula,
+          aa.data_aula,
+          aa.dia_semana,
+          aa.hora_inicio,
+          aa.hora_fim,
+          aa.treino_id,
+          f.nome AS nome_professor,
+          pf.modalidade,
+          pf.telefone AS telefone_professor,
+          u.email AS email_professor,
+          c.nome AS cargo_professor,
+          f.salario,
+          pf.modalidade,
+          pf.avaliacao_media,
+          pf.descricao,
+          pf.horarios_disponiveis,
+          pf.data_atualizacao,
+          f.data_contratacao
+
+      FROM aula_agendada AS aa
+      INNER JOIN funcionario AS f ON aa.funcionario_id = f.idfuncionario
+      INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
+      INNER JOIN usuario AS u ON f.usuario_id = u.idusuario
+      INNER JOIN cargo AS c ON f.cargo_id = c.idcargo 
+    WHERE usuario_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "sissssss", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
+    mysqli_stmt_bind_param($comando, "i", $idusuario);
+  } else {
+    $sql = "SELECT
+          f.usuario_id,
+                    aa.funcionario_id,
 
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
+          aa.idaula,
+          aa.data_aula,
+          aa.dia_semana,
+          aa.hora_inicio,
+          aa.hora_fim,
+          aa.treino_id,
+          f.nome AS nome_professor,
+          pf.modalidade,
+          pf.telefone AS telefone_professor,
+          u.email AS email_professor,
+          c.idcargo AS cargo_id,
+          c.nome AS cargo_professor,
+          f.salario,
+          pf.modalidade,
+          pf.avaliacao_media,
+          pf.descricao,
+          pf.horarios_disponiveis,
+          pf.data_atualizacao,
+          f.data_contratacao
+      FROM aula_agendada AS aa
+      INNER JOIN funcionario AS f ON aa.funcionario_id = f.idfuncionario
+      INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
+      INNER JOIN usuario AS u ON f.usuario_id = u.idusuario
+      INNER JOIN cargo AS c ON f.cargo_id = c.idcargo  
+    ";
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $perfis = [];
+  while ($perfil = mysqli_fetch_assoc($resultados)) {
+    $perfis[] = $perfil;
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $perfis;
 }
 
-function listarPerfilProfessor($idusuario) {
-    $conexao = conectar();
-
-    if ($idusuario) {
-        $sql = "SELECT * FROM perfil_professor WHERE usuario_id = ?";
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "i", $idusuario);
-    } else {
-        $sql = "SELECT * FROM perfil_professor";
-        $comando = mysqli_prepare($conexao, $sql);
-    }
-
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
-
-    $perfis = [];
-    while ($perfil = mysqli_fetch_assoc($resultados)) {
-        $perfis[] = $perfil;
-    }
-
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $perfis;
-}
-
-function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool {
-    $conexao = conectar();
-    $sql = "UPDATE perfil_professor SET
+function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool
+{
+  $conexao = conectar();
+  $sql = "UPDATE perfil_professor SET
             foto_perfil = ?, 
             experiencia_anos = ?, 
             modalidade = ?, 
@@ -3642,106 +3729,110 @@ function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $moda
             telefone = ?, 
             data_atualizacao = NOW()
             WHERE idperfil = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "sisssssi", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $idperfil);
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "sisssssi", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $idperfil);
 
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
 
-function deletarPerfilProfessor($idperfil) {
-    $conexao = conectar();
-    $sql = "DELETE FROM perfil_professor WHERE idperfil = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idperfil);
+function deletarPerfilProfessor($idperfil)
+{
+  $conexao = conectar();
+  $sql = "DELETE FROM perfil_professor WHERE idperfil = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idperfil);
 
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
 
 
-function cadastrarDicaNutricional($titulos, $descricao, $icone, $cor) {
-    $conexao = conectar();
-    $sql = "INSERT INTO dicas_nutricionais (titulos, descricao, icone, cor) 
+function cadastrarDicaNutricional($titulos, $descricao, $icone, $cor)
+{
+  $conexao = conectar();
+  $sql = "INSERT INTO dicas_nutricionais (titulos, descricao, icone, cor) 
             VALUES (?, ?, ?, ?)";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "ssss", $titulos, $descricao, $icone, $cor);
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ssss", $titulos, $descricao, $icone, $cor);
 
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
 
-function listarDicasNutricionais($id = null) {
-    $conexao = conectar();
+function listarDicasNutricionais($id = null)
+{
+  $conexao = conectar();
 
-    if ($id) {
-        $sql = "SELECT * FROM dicas_nutricionais WHERE iddicas_nutricionais = ?";
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_bind_param($comando, "i", $id);
-    } else {
-        $sql = "SELECT * 
+  if ($id) {
+    $sql = "SELECT * FROM dicas_nutricionais WHERE iddicas_nutricionais = ?";
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $id);
+  } else {
+    $sql = "SELECT * 
 FROM dicas_nutricionais
 ORDER BY RAND()
 LIMIT 1;
 ";
-        $comando = mysqli_prepare($conexao, $sql);
-    }
+    $comando = mysqli_prepare($conexao, $sql);
+  }
 
-    mysqli_stmt_execute($comando);
-    $resultados = mysqli_stmt_get_result($comando);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
 
-    $dicas = [];
-    while ($dica = mysqli_fetch_assoc($resultados)) {
-        $dicas[] = $dica;
-    }
+  $dicas = [];
+  while ($dica = mysqli_fetch_assoc($resultados)) {
+    $dicas[] = $dica;
+  }
 
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $dicas;
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $dicas;
 }
 
-function editarDicaNutricional($id, $titulos, $descricao, $icone, $cor) {
-    $conexao = conectar();
-    $sql = "UPDATE dicas_nutricionais SET
+function editarDicaNutricional($id, $titulos, $descricao, $icone, $cor)
+{
+  $conexao = conectar();
+  $sql = "UPDATE dicas_nutricionais SET
             titulos = ?, 
             descricao = ?, 
             icone = ?, 
             cor = ?
             WHERE iddicas_nutricionais = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "ssssi", $titulos, $descricao, $icone, $cor, $id);
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "ssssi", $titulos, $descricao, $icone, $cor, $id);
 
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
 }
 
-function deletarDicaNutricional($id) {
-    $conexao = conectar();
-    $sql = "DELETE FROM dicas_nutricionais WHERE iddicas_nutricionais = ?";
-    $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $id);
-
-    $funcionou = mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-    return $funcionou;
-}
-
-
-function cadastrarAulaUsuario($idaula, $idusuario){
-  
+function deletarDicaNutricional($id)
+{
   $conexao = conectar();
-  $sql = "INSERT INTO aula_usuario (idaula, usuario_id) VALUES (?,?)"; 
+  $sql = "DELETE FROM dicas_nutricionais WHERE iddicas_nutricionais = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $id);
+
+  $funcionou = mysqli_stmt_execute($comando);
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $funcionou;
+}
+
+
+function cadastrarAulaUsuario($idaula, $idusuario)
+{
+
+  $conexao = conectar();
+  $sql = "INSERT INTO aula_usuario (idaula, usuario_id) VALUES (?,?)";
 
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "ii", $idaula, $idusuario);
@@ -3752,10 +3843,11 @@ function cadastrarAulaUsuario($idaula, $idusuario){
   return $funcionou;
 }
 
-function editarAulaUsuario($idaula, $idusuario){
-    
+function editarAulaUsuario($idaula, $idusuario)
+{
+
   $conexao = conectar();
-  $sql = "UPDATE aula_usuario SET idaula=?, usuario_id=?"; 
+  $sql = "UPDATE aula_usuario SET idaula=?, usuario_id=?";
 
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "ii", $idaula, $idusuario);
@@ -3766,7 +3858,8 @@ function editarAulaUsuario($idaula, $idusuario){
   return $funcionou;
 }
 
-function deletarAulaUsuario($id){
+function deletarAulaUsuario($id)
+{
   $conexao = conectar();
 
   $sql = "DELETE FROM aula_usuario WHERE usuario_id = ?";
