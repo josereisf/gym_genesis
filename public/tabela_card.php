@@ -1,5 +1,9 @@
 <?php
 require_once "../code/funcao.php";
+$tipo = 1;
+if (isset($_GET['tipo'])) {
+    $tipo = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +30,10 @@ require_once "../code/funcao.php";
             <tr>
                 <th>Foto de Perfil</th>
                 <th>Nome</th>
+                <?php if ($tipo == 0) {
+                    echo "<th>Salário</th>";
+                }
+                ?>
                 <th>Cargo</th>
                 <th>Modalidade</th>
                 <th>Avaliação</th>
@@ -35,16 +43,20 @@ require_once "../code/funcao.php";
         <tbody>
             <?php
             $professores = listarPerfilProfessor(null);
-            foreach ($professores AS $p){
+            foreach ($professores AS $p) {
             ?>
-            <tr>
-                <td><img src="./uploads/<?= $p['foto_perfil']?>" alt="Descrição da Imagem" /></td>
-                <td><?= $p['nome_professor']?></td>
-                <td><?= $p['cargo_professor']?></td>
-                <td><?= $p['modalidade']?></td>
-                <td><?= $p['avaliacao_media']?></td>
-                <td><?= $p['descricao']?></td>
-            </tr>
+                <tr>
+                    <td><img src="./uploads/<?= $p['foto_perfil'] ?>" alt="Descrição da Imagem" /></td>
+                    <td><?= $p['nome_professor'] ?></td>
+                    <?php if ($tipo == 0) {
+                        echo "<td>".$p['salario']."</td>";
+                    }
+                    ?>
+                    <td><?= $p['cargo_professor'] ?></td>
+                    <td><?= $p['modalidade'] ?></td>
+                    <td><?= $p['avaliacao_media'] ?></td>
+                    <td><?= $p['descricao'] ?></td>
+                </tr>
             <?php
             };
             ?>
@@ -55,10 +67,6 @@ require_once "../code/funcao.php";
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                columnDefs: [{
-                    targets: 2, // Segunda coluna (Position)
-                    visible: false // Esconde essa coluna
-                }],
                 language: {
                     url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
                 },
