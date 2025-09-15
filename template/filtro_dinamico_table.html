@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle por Tipo de Usuário</title>
+
+    <!-- Estilos do DataTables e Botões -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+    <!-- jQuery e Plugins -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+</head>
+<body>
+
+    <h2>Escolha o tipo de usuário</h2>
+    <input type="number" id="tipoUsuario" placeholder="Digite 1 para admin, 0 para usuário">
+    <button onclick="carregarTabela()">Carregar Tabela</button>
+
+    <hr>
+
+    <table id="tabela" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Local</th>
+                <th>Idade</th>
+                <th class="admin-only">Salário</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>Arquiteto</td>
+                <td>Edimburgo</td>
+                <td>61</td>
+                <td class="admin-only">R$ 12.000</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Contador</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td class="admin-only">R$ 9.500</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        let tabela;
+
+        function carregarTabela() {
+            // Se já existe uma instância do DataTables, destruir
+            if ( $.fn.DataTable.isDataTable('#tabela') ) {
+                tabela.destroy();
+                $('#tabela').empty().html(`
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Local</th>
+                            <th>Idade</th>
+                            <th class="admin-only">Salário</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>Arquiteto</td>
+                            <td>Edimburgo</td>
+                            <td>61</td>
+                            <td class="admin-only">R$ 12.000</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Contador</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                            <td class="admin-only">R$ 9.500</td>
+                        </tr>
+                    </tbody>
+                `);
+            }
+
+            const tipo = document.getElementById("tipoUsuario").value;
+
+            if (tipo == 1) {
+                // Admin: com tudo liberado
+                $('.admin-only').show();
+                tabela = $('#tabela').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+                    }
+                });
+
+            } else {
+                // Usuário: esconder recursos e colunas
+                $('.admin-only').hide();
+                tabela = $('#tabela').DataTable({
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+                    },
+                    columnDefs: [
+                        { targets: 4, visible: false } // esconde coluna "Salário"
+                    ]
+                });
+            }
+        }
+    </script>
+</body>
+</html>
