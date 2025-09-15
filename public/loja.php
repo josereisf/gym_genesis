@@ -162,7 +162,7 @@
           <div class="bg-white dark:bg-darkgray text-gray-900 dark:text-white shadow-lg rounded-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300">
               <div class="overflow-hidden">
                   <img 
-                      src="./img/' . htmlspecialchars($l['imagem']) . '" 
+                      src="./img/' .$l['imagem']. '" 
                       alt="Imagem de ' . htmlspecialchars($l['nome']) . '" 
                       class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300"
                   >

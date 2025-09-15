@@ -12,15 +12,15 @@ if (isset($_GET['tipo'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela de professor</title>
+<!-- Estilos do DataTables -->
+<link rel="stylesheet" href="./css/dataTable.css">
 
-    <!-- Estilos do DataTables (correto agora) -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css">
+<!-- jQuery -->
+<script src="./js/jquery-3.7.1.min.js"></script>
 
-    <!-- jQuery (essencial para o DataTables) -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Script do DataTables -->
+<script src="./js/dataTables.min.js"></script>
 
-    <!-- Script do DataTables -->
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 </head>
 
 <body>
