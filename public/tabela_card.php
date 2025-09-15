@@ -1,3 +1,6 @@
+<?php
+require_once "../code/funcao.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,31 +24,30 @@
     <table id="example" class="display">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>Foto de Perfil</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Modalidade</th>
+                <th>Avaliação</th>
+                <th>Descrição</th>
             </tr>
         </thead>
         <tbody>
+            <?php
+            $professores = listarPerfilProfessor(null);
+            foreach ($professores AS $p){
+            ?>
             <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011-04-25</td>
-                <td>$320,800</td>
+                <td><img src="./uploads/<?= $p['foto_perfil']?>" alt="Descrição da Imagem" /></td>
+                <td><?= $p['nome_professor']?></td>
+                <td><?= $p['cargo_professor']?></td>
+                <td><?= $p['modalidade']?></td>
+                <td><?= $p['avaliacao_media']?></td>
+                <td><?= $p['descricao']?></td>
             </tr>
-            <tr>
-                <td>Aleatório Nixon</td>
-                <td>Analyst</td>
-                <td>London</td>
-                <td>45</td>
-                <td>2012-07-17</td>
-                <td>$170,750</td>
-            </tr>
+            <?php
+            };
+            ?>
         </tbody>
     </table>
 
