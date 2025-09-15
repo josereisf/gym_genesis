@@ -25,43 +25,71 @@ if (isset($_GET['tipo'])) {
 
 <body>
 
-    <table id="example" class="display">
-        <thead>
+<table id="example" class="display">
+    <thead>
+        <tr>
+            <th>Foto de Perfil</th>
+            <th>Nome</th>
+            <th>Cargo</th>
+            <th>Modalidade</th>
+            <th>Avaliação</th>
+            <th>Descrição</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Data da Aula</th>
+            <th>Dia da Semana</th>
+            <th>Horários Disponíveis</th>
+            <th>Hora Início</th>
+            <th>Hora Fim</th>
+
+            <?php if ($tipo == 0) { ?>
+                <th>Salário</th>
+                <th>ID Funcionário</th>
+                <th>ID Aula</th>
+                <th>ID Treino</th>
+                <th>Data Atualização</th>
+                <th>Data Contratação</th>
+            <?php } ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $professores = listarPerfilProfessor(null);
+        foreach ($professores as $p) {
+        ?>
             <tr>
-                <th>Foto de Perfil</th>
-                <th>Nome</th>
-                <?php if ($tipo == 0) {
-                    echo "<th>Salário</th>";
-                }
-                ?>
-                <th>Cargo</th>
-                <th>Modalidade</th>
-                <th>Avaliação</th>
-                <th>Descrição</th>
+                <!-- FOTO -->
+                <td><img src="./uploads/<?= $p['foto_perfil'] ?>" alt="Foto de Perfil" width="60" /></td>
+
+                <!-- CAMPOS VISÍVEIS PARA TODOS -->
+                <td><?= $p['nome_professor'] ?></td>
+                <td><?= $p['cargo_professor'] ?></td>
+                <td><?= $p['modalidade'] ?></td>
+                <td><?= $p['avaliacao_media'] ?></td>
+                <td><?= $p['descricao'] ?></td>
+                <td><?= $p['telefone_professor'] ?></td>
+                <td><?= $p['email_professor'] ?></td>
+                <td><?= $p['data_aula'] ?></td>
+                <td><?= $p['dia_semana'] ?></td>
+                <td><?= $p['horarios_disponiveis'] ?></td>
+                <td><?= $p['hora_inicio'] ?></td>
+                <td><?= $p['hora_fim'] ?></td>
+
+                <!-- CAMPOS VISÍVEIS APENAS PARA ADMIN -->
+                <?php if ($tipo == 0) { ?>
+                    <td><?= $p['salario'] ?></td>
+                    <td><?= $p['funcionario_id'] ?></td>
+                    <td><?= $p['idaula'] ?></td>
+                    <td><?= $p['treino_id'] ?></td>
+                    <td><?= $p['data_atualizacao'] ?></td>
+                    <td><?= $p['data_contratacao'] ?></td>
+                <?php } ?>
             </tr>
-        </thead>
-        <tbody>
-            <?php
-            $professores = listarPerfilProfessor(null);
-            foreach ($professores AS $p) {
-            ?>
-                <tr>
-                    <td><img src="./uploads/<?= $p['foto_perfil'] ?>" alt="Descrição da Imagem" /></td>
-                    <td><?= $p['nome_professor'] ?></td>
-                    <?php if ($tipo == 0) {
-                        echo "<td>".$p['salario']."</td>";
-                    }
-                    ?>
-                    <td><?= $p['cargo_professor'] ?></td>
-                    <td><?= $p['modalidade'] ?></td>
-                    <td><?= $p['avaliacao_media'] ?></td>
-                    <td><?= $p['descricao'] ?></td>
-                </tr>
-            <?php
-            };
-            ?>
-        </tbody>
-    </table>
+        <?php
+        };
+        ?>
+    </tbody>
+</table>
 
     <!-- Inicializando o DataTable -->
     <script>
