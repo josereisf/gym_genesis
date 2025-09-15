@@ -836,9 +836,8 @@ function listarProdutos($idproduto)
     $lista_produtos[] = $produto;
   }
   mysqli_stmt_close($comando);
-  $lista_produtos = array_values($lista_produtos);
-  $lista = json_encode($lista_produtos, JSON_UNESCAPED_UNICODE);
-  return $lista;
+  $lista_produtoss = array_values($lista_produtos);
+  return $lista_produtoss;
 }
 
 function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $funcionario_id, $idaula)
