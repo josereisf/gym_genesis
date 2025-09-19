@@ -3865,5 +3865,29 @@ function deletarAulaUsuario($id)
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
-  return $funcionou;
+  return $funcionou;}
+
+function listarAulaUsurio($idaula){
+  $conexao = conectar();
+
+  if($idaula == null){
+    $sql= "SELECT * FROM aula_usuario";
+    $comando = mysqli_prepare($conexao , $sql);
+
+  }else{
+    $sql = "SELECT * FROM aula_usuario WHERE idaula = ?";
+    $comando = mysqli_prepare($conexao ,  $sql);
+    mysqli_stmt_bind_param($comando , "i", $idaula);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $aulas = [];
+  while ($aula = mysqli_fetch_assoc($resultados)) {
+    $aulas[] = $aula;
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+  return $aulas;
 }
