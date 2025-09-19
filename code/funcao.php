@@ -931,7 +931,7 @@ function listarForum($idtopico)
     f.descricao,
     f.data_criacao
     FROM forum AS f
-    JOIN perfil_usuario AS pf ON f.usuario_id = idusuario;';
+    JOIN perfil_usuario AS pf ON f.usuario_id = pf.usuario_id';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
