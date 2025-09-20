@@ -257,7 +257,7 @@ function listarFuncionarios($idfuncionario)
             JOIN cargo AS c ON c.idcargo = f.cargo_id
             JOIN usuario AS u on f.usuario_id = u.idusuario
             JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id
-            WHERE f.usuario_id= ?;';
+            WHERE u.idusuario = ?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
   } else {
@@ -3661,18 +3661,24 @@ function listarPerfilProfessor($idusuario)
           pf.horarios_disponiveis,
           pf.data_atualizacao,
           f.data_contratacao
-
       FROM aula_agendada AS aa
       INNER JOIN funcionario AS f ON aa.funcionario_id = f.idfuncionario
       INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
       INNER JOIN usuario AS u ON f.usuario_id = u.idusuario
       INNER JOIN cargo AS c ON f.cargo_id = c.idcargo 
-    WHERE usuario_id = ?";
+    WHERE f.usuario_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
 $sql = " SELECT
         f.usuario_id,
+        aa.funcionario_id,
+        aa.idaula,
+        aa.data_aula,
+        aa.dia_semana,
+        aa.hora_inicio,
+        aa.hora_fim,
+        aa.treino_id,
         f.nome AS nome_professor,
         pf.foto_perfil,
         pf.modalidade,

@@ -11,7 +11,7 @@ if ($_SESSION['tipo'] == 2) {
 $idaluno = $_SESSION["id"] ?? 0;
 
 // Pega todos os usuários do tipo professor
-$professores = listarUsuarioTipo(2);
+$professores = listarUsuarioTipo(tipo: 2);
 
 // Inicializa array final
 $tudojunto = [];
