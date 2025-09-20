@@ -1,5 +1,6 @@
 <?
 require_once "../php/verificarLogado.php";
+require_once "../code/funcao.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -172,33 +173,20 @@ require_once "../php/verificarLogado.php";
     <!-- Main forum content -->
     <div class="main">
       <h2>Dicas Avançadas de Hipertrofia</h2>
-
+      <?php
+      $idtopico = 0;
+      $comentarios = listarForum($idtopico);
+      foreach ($comentarios AS $c){
+      ?>
       <div class="comment">
-        <div class="user">@rafa_gym · há 3h</div>
-        Drop sets no leg press + agachamento livre = 🔥 resultado insano em 2 semanas!
+        <div class="user"><?= $c['nome_usuario'] ?> · <?= $c['data_criacao'] ?></div>
+        <?= $c['descricao'] ?>
         <div class="actions">
           <button>Curtir</button>
           <button>Responder</button>
         </div>
       </div>
-
-      <div class="comment">
-        <div class="user">@luana_fit · há 1h</div>
-        Uso progressivo de carga e descanso curto são a chave pra mim!
-        <div class="actions">
-          <button>Curtir</button>
-          <button>Responder</button>
-        </div>
-      </div>
-
-      <div class="comment">
-        <div class="user">@bruno.treino · agora</div>
-        Alguém tem planilha de treino ABCDE pra dividir por grupo muscular?
-        <div class="actions">
-          <button>Curtir</button>
-          <button>Responder</button>
-        </div>
-      </div>
+      <?php }?>
     </div>
   </div>
 
