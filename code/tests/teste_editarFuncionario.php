@@ -12,7 +12,7 @@ $salario = 4500.00;
 $cargo_id = 2; // ID de um cargo existente
 $usuario_id = 1; // ID de um usuário existente
 
-$resultado = editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $usuario_id);
+$resultado = editarFuncionario($idfuncionario, $nome, $data_contratacao, $salario, $cargo_id, $usuario_id);
 
 if ($resultado) {
     echo "Funcionário atualizado com sucesso!";

@@ -119,6 +119,9 @@ if (isset($_GET['tipo'])) {
     .dataTables_wrapper .dataTables_info {
       @apply text-gray-400 text-sm mt-2;
     }
+    span{
+        color: white;
+    }
   </style>
 </head>
 

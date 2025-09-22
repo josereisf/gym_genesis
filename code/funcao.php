@@ -252,12 +252,13 @@ function listarFuncionarios($idfuncionario)
             f.salario,
             f.cargo_id,
             f.usuario_id,
-            c.nome AS nome_cargo
+            c.nome AS nome_cargo,
+            p.idperfil
             FROM funcionario AS f
-            JOIN cargo AS c ON c.idcargo = f.cargo_id
-            JOIN usuario AS u on f.usuario_id = u.idusuario
-            JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id
-            WHERE u.idusuario = ?;';
+            INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
+            INNER JOIN usuario AS u on f.usuario_id = u.idusuario
+            INNER JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id
+            WHERE f.usuario_id = ?;';
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
   } else {
@@ -271,9 +272,9 @@ function listarFuncionarios($idfuncionario)
             f.usuario_id,
             c.nome AS nome_cargo
             FROM funcionario AS f
-            JOIN cargo AS c ON c.idcargo = f.cargo_id
-            JOIN usuario AS u on f.usuario_id = u.idusuario
-            JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id';
+            INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
+            INNER JOIN usuario AS u on f.usuario_id = u.idusuario
+            INNER JOIN perfil_professor AS p ON f.usuario_id = p.usuario_id';
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -915,10 +916,12 @@ function listarForum($idtopico)
   $conexao = conectar();
   if ($idtopico != null) {
     $sql = ' SELECT
+    f.idtopico,
     pf.nome AS nome_usuario,
     f.titulo,
     f.descricao,
-    f.data_criacao
+    f.data_criacao,
+    pf.usuario_id
     FROM forum AS f
     JOIN perfil_usuario AS pf ON f.usuario_id = pf.usuario_id
     WHERE f.idtopico=?;';
@@ -926,12 +929,14 @@ function listarForum($idtopico)
     mysqli_stmt_bind_param($comando, 'i', $idtopico);
   } else {
     $sql = 'SELECT
+    f.idtopico,
     pf.nome AS nome_usuario,
     f.titulo,
     f.descricao,
-    f.data_criacao
+    f.data_criacao,
+    pf.usuario_id
     FROM forum AS f
-    JOIN perfil_usuario AS pf ON f.usuario_id = pf.usuario_id';
+    INNER JOIN perfil_usuario AS pf ON f.usuario_id = pf.usuario_id';
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -1690,12 +1695,12 @@ function editarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario)
   return $funcionou;
 }
 
-function editarFuncionario($idfuncionario, $nome, $email, $data_contratacao, $salario, $cargo_id, $usuario_id)
+function editarFuncionario($idfuncionario, $nome, $data_contratacao, $salario, $cargo_id, $usuario_id)
 {
   $conexao = conectar();
 
   $sql = "UPDATE funcionario 
-            SET nome = ?, email = ?, data_contratacao = ?, salario = ?, cargo_id = ?, usuario_id=?
+            SET nome = ?, data_contratacao = ?, salario = ?, cargo_id = ?, usuario_id=?
             WHERE idfuncionario = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -1706,7 +1711,7 @@ function editarFuncionario($idfuncionario, $nome, $email, $data_contratacao, $sa
   }
 
   // Correção aqui:
-  mysqli_stmt_bind_param($comando, "sssdiii", $nome, $email, $data_contratacao, $salario, $cargo_id, $usuario_id, $idfuncionario);
+  mysqli_stmt_bind_param($comando, "sssiii", $nome,$data_contratacao, $salario, $cargo_id, $usuario_id, $idfuncionario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -2223,8 +2228,7 @@ function listarRespostaForum($idresposta)
   // Verifica se $idresposta não é nulo
   if ($idresposta !== null) {
     // Consulta com junção para pegar o nome do usuário ao invés do id
-    $sql = "
-    SELECT 
+    $sql = " SELECT 
      rf.idresposta, 
      rf.mensagem, 
      rf.data_resposta, 
@@ -2234,7 +2238,7 @@ function listarRespostaForum($idresposta)
     FROM resposta_forum rf
     JOIN perfil_usuario AS pf ON rf.usuario_id = pf.usuario_id
     JOIN forum AS f ON rf.forum_id = f.idtopico
-    WHERE rf.idresposta = ?";
+    WHERE rf.forum_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idresposta);
   } else {
@@ -2962,12 +2966,12 @@ function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observa
 }
 //
 
-function cadastrarFuncionario($nome, $email, $data_contratacao, $salario, $cargo_id, $imagem): bool
+function cadastrarFuncionario($nome,$data_contratacao, $salario, $cargo_id, $usuario_id): bool
 {
   $conexao = conectar();
 
-  $sql = "INSERT INTO funcionario (nome, email,  data_contratacao, salario, cargo_id, usuario_id)
-            VALUES (?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO funcionario (nome,  data_contratacao, salario, cargo_id, usuario_id)
+            VALUES (?, ?, ?, ?, ?)";
 
   $comando = mysqli_prepare($conexao, $sql);
 
@@ -2976,7 +2980,7 @@ function cadastrarFuncionario($nome, $email, $data_contratacao, $salario, $cargo
     return false;
   }
 
-  mysqli_stmt_bind_param($comando, "sssdii", $nome, $email, $data_contratacao, $salario, $cargo_id, $imagem);
+  mysqli_stmt_bind_param($comando, "sssii", $nome,  $data_contratacao, $salario, $cargo_id, $usuario_id);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -3670,7 +3674,7 @@ function listarPerfilProfessor($idusuario)
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
-$sql = " SELECT
+    $sql = " SELECT
         f.usuario_id,
         aa.funcionario_id,
         aa.idaula,
@@ -3871,19 +3875,20 @@ function deletarAulaUsuario($id)
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
   desconectar($conexao);
-  return $funcionou;}
+  return $funcionou;
+}
 
-function listarAulaUsurio($idaula){
+function listarAulaUsurio($idaula)
+{
   $conexao = conectar();
 
-  if($idaula == null){
-    $sql= "SELECT * FROM aula_usuario";
-    $comando = mysqli_prepare($conexao , $sql);
-
-  }else{
+  if ($idaula == null) {
+    $sql = "SELECT * FROM aula_usuario";
+    $comando = mysqli_prepare($conexao, $sql);
+  } else {
     $sql = "SELECT * FROM aula_usuario WHERE idaula = ?";
-    $comando = mysqli_prepare($conexao ,  $sql);
-    mysqli_stmt_bind_param($comando , "i", $idaula);
+    $comando = mysqli_prepare($conexao,  $sql);
+    mysqli_stmt_bind_param($comando, "i", $idaula);
   }
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);

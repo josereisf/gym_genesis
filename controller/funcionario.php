@@ -12,11 +12,10 @@ if (empty($input)) {
 
 $idfuncionario = $input['idfuncionario'] ?? null;
 $nome = $input['nome'] ?? null;
-$email = $input['email'] ?? null;
-$telefone = $input['telefone'] ?? null;
-$data_contratacao = $input['data'] ?? null;
+$data_contratacao = $input['data_contratacao'] ?? null;
 $salario = $input['salario'] ?? null;
 $cargo_id = $input['cargo_id'] ?? null;
+$usuario_id = $input['usuario_id'] ?? null;
 
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     $imagem = uploadImagem($_FILES['imagem']);
@@ -32,10 +31,7 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        if (!$nome || !$email || !$telefone || !$data_contratacao || !$salario || !$cargo_id) {
-            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
-        }
-        $ok = cadastrarFuncionario($nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
+        $ok = cadastrarFuncionario($nome,  $data_contratacao, $salario, $cargo_id, $usuario_id);
         if ($ok) {
             enviarResposta(true, 'Funcionário cadastrado com sucesso');
         } else {
@@ -44,10 +40,10 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$idfuncionario || !$nome || !$email || !$telefone || !$data_contratacao || !$salario || !$cargo_id) {
+        if (!$idfuncionario || !$nome || !$telefone || !$data_contratacao || !$salario || !$cargo_id) {
             enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
         }
-        $ok = editarFuncionario($idfuncionario, $nome, $email, $telefone, $data_contratacao, $salario, $cargo_id, $imagem);
+        $ok = editarFuncionario($idfuncionario, $nome,  $data_contratacao, $salario, $cargo_id, $usuario_id);
         if ($ok) {
             enviarResposta(true, 'Funcionário editado com sucesso');
         } else {

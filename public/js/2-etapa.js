@@ -112,7 +112,47 @@ async function perfil_usuario(idusuario, nome, cpf, data, telefone) {
     throw error
   }
 }
+async function funcionario(idusuario, nome, cpf, data, telefone) {
+  try {
+    const response = await fetch(
+      'http://localhost:83/public/api/index.php?entidade=perfil_professor&acao=cadastrar',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idusuario,
+          nome,
+          senha,
+          email,
+          cpf,
+          data_nascimento: data,
+          telefone,
+          imagem: null,
+          tipo: 2
+        }),
+      }
+    )
 
+    // Primeiro, verifica se a requisição deu certo
+    if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`)
+
+    // Lê a resposta como texto cru
+    const textoBruto = await response.text()
+    console.log('Resposta bruta da API:', textoBruto)
+
+    // Tenta converter pra JSON
+    try {
+      const json = JSON.parse(textoBruto)
+      return json
+    } catch (erroDeParse) {
+      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
+      throw erroDeParse
+    }
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error)
+    throw error
+  }
+}
 async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, cidade, estado) {
   try {
     const response = await fetch(

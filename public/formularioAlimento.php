@@ -29,7 +29,7 @@ if (isset($_GET['idalimento'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">

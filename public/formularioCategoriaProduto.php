@@ -3,12 +3,14 @@ require_once "../php/verificarLogado.php";
 require_once "../php/verificarPermissaoAdm.php";
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario Categoria Produto</title>
 </head>
+
 <body>
     <form action="" method="post">
         <label for="nome">Nome:</label><br>
@@ -18,4 +20,5 @@ require_once "../php/verificarPermissaoAdm.php";
         <input type="submit" value="Cadastrar">
     </form>
 </body>
+
 </html>
