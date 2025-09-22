@@ -1,9 +1,9 @@
 <?php
 require_once "../code/funcao.php";
 if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 0) {
-    $_SESSION['erro_login'] = "Usuário não permitido!";
-    header('Location: dashboard_usuario.php');
-    exit;
+  $_SESSION['erro_login'] = "Usuário não permitido!";
+  header('Location: dashboard_usuario.php');
+  exit;
 }
 if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   $liberado = 1;
@@ -22,49 +22,102 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./js/jquery-3.7.1.min.js"></script>
   <script src="./js/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <style type="text/tailwindcss">
+    /* Estilos gerais do input */
+  .input {
+    @apply w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-green-400 mb-3;
+  }
 
-    .input {
-        @apply w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-green-400 mb-3;
-      }
-      .step {
-        @apply transition-opacity duration-300 ease-in-out;
-      }
-      .step.hidden {
-        @apply opacity-0 absolute pointer-events-none;
-      }
-      .step-label.active {
-        @apply text-neongreen font-bold;
-      }
-      .text-neongreen {
-        color: #39ff14;
-      }
-      .bg-neongreen {
-        background-color: #39ff14;
-      }
-      .bg-neongreen:hover {
-        background-color: #32e313;
-      }
-      @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        25%,
-        75% {
-          transform: translateX(-5px);
-        }
-        50% {
-          transform: translateX(5px);
-        }
-      }
+  /* Estilos de input ao focar */
+  .input:focus {
+    @apply focus:ring-2 focus:ring-green-400;
+  }
 
-      .animate-shake {
-        animation: shake 0.3s;
-      }
-    </style>
+  /* Estilos do grupo de inputs */
+  .input-group {
+    @apply relative flex items-center w-full;
+  }
 
-    
+  /* Estilos do grupo de texto do input */
+  .input-group-text {
+    @apply flex items-center bg-gray-700 border-gray-600 p-2 rounded-l-md;
+  }
+
+  /* Estilos do checkbox dentro do grupo */
+  .form-check-input {
+    @apply mt-0 bg-gray-700 border-gray-600 rounded-l-md;
+    margin-left: 0; /* Remove qualquer margem indesejada */
+    margin-right: 0.5rem; /* Adiciona espaçamento entre o checkbox e o label */
+    vertical-align: middle; /* Alinha verticalmente o checkbox */
+  }
+
+  /* Estilos do label dentro do grupo de texto do input */
+  .input-group-text label {
+    @apply text-white;
+    margin-left: 0.25rem; /* Pequeno espaçamento entre o checkbox e o label */
+    vertical-align: middle; /* Alinha verticalmente o texto */
+  }
+
+  /* Estilos de texto com cor personalizada */
+  .text-neongreen {
+    color: #39ff14;
+  }
+
+  /* Estilos de fundo com cor personalizada */
+  .bg-neongreen {
+    background-color: #39ff14;
+  }
+
+  .bg-neongreen:hover {
+    background-color: #32e313;
+  }
+
+  /* Animação de shake */
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25%, 75% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+  }
+
+  .animate-shake {
+    animation: shake 0.3s;
+  }
+
+  /* Estilos de exibição de etapas */
+  .step {
+    @apply transition-opacity duration-300 ease-in-out;
+  }
+
+  .step.hidden {
+    @apply opacity-0 absolute pointer-events-none;
+  }
+
+  .step-label.active {
+    @apply text-neongreen font-bold;
+  }
+
+  /* Margem no elemento mb-3 */
+  .mb-3 {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Estilos adicionais para o formulário de checkbox */
+  .form-check .form-check-input {
+    float: left;
+    margin-left: -1.5em;
+  }
+</style>
+
+
+
+
 </head>
 
 <body class="flex items-center justify-center min-h-screen px-4">
@@ -99,11 +152,23 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         }
         ?>
         <label for="nome">Nome completo</label>
-        <input id="nome" type="text" class="input error" name="nome" />
+        <input 
+          id="nome" 
+          type="text" 
+          class="input error" 
+          name="nome" 
+          placeholder="Digite seu nome completo" 
+        />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="email">Email</label>
-        <input id="email" type="email" class="input" name="email" />
+        <input 
+          id="email" 
+          type="email" 
+          class="input" 
+          name="email" 
+          placeholder="Exemplo: usuario@dominio.com" 
+        />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="cpf">CPF</label>
@@ -112,7 +177,8 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           type="text"
           class="input"
           placeholder="000.000.000-00"
-          name="cpf" />
+          name="cpf"
+          maxlength="14" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="telefone">Telefone</label>
@@ -121,7 +187,8 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           type="text"
           class="input"
           placeholder="(00) 00000-0000"
-          name="telefone" />
+          name="telefone"
+          maxlength="15" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
 
@@ -133,29 +200,93 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
       <!-- Etapa 2 -->
       <div class="step hidden" data-step="2">
         <label>CEP</label>
-        <input type="text" id="cep" class="input" name="cep" />
+        <input
+          type="text"
+          id="cep"
+          class="input"
+          name="cep"
+          pattern="\d{5}-\d{3}"
+          maxlength="10"
+          placeholder="00000-000"
+          required />
         <p class="error-message text-red-500 text-sm mt-1 hidden" id="erro"></p>
 
         <label>Rua</label>
-        <input type="text" id="rua" class="input" name="rua" disabled />
+        <input
+          type="text"
+          id="rua"
+          class="input"
+          name="rua"
+          placeholder="Digite a rua"
+          required
+          disabled />
 
         <label for="numero">Número</label>
-        <input type="text" id="numero" class="input flex-1" name="numero" disabled />
+        <div class="input-group mb-3">
+          <!-- Checkbox com o ícone de entrada à esquerda -->
+          <div class="input-group-text">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              style="border-right: none;"
+              id="sem_numero"
+              onclick="toggleNumero()"
+              aria-label="Checkbox for following text input">
+            <label for="sem_numero">S/N</label>
+          </div>
+
+          <!-- Campo de texto que depende do checkbox -->
+          <input
+            type="text"
+            class="input flex-1 my-3"
+            id="numero"
+            placeholder="Número da residência"
+            aria-label="Text input with checkbox"
+            disabled />
+        </div>
+
 
         <label>Complemento</label>
-        <input type="text" id="complemento" class="input" name="complemento" disabled />
+        <input
+          type="text"
+          id="complemento"
+          class="input"
+          name="complemento"
+          placeholder="Ex: Bloco, Apt, etc."
+          required
+          disabled />
 
         <label>Bairro</label>
-        <input type="text" id="bairro" class="input" name="bairro" disabled />
+        <input
+          type="text"
+          id="bairro"
+          class="input"
+          name="bairro"
+          placeholder="Digite o bairro"
+          required
+          disabled />
 
         <label>Cidade</label>
-        <input type="text" id="cidade" class="input" name="cidade" />
+        <input
+          type="text"
+          id="cidade"
+          class="input"
+          name="cidade"
+          placeholder="Digite a cidade"
+          required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label>Estado</label>
-        <input type="text" id="estado" class="input" name="estado" />
+        <input
+          type="text"
+          id="estado"
+          class="input"
+          name="estado"
+          placeholder="Digite o estado"
+          required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
       </div>
+
 
       <!-- Etapa 3 -->
       <div class="step hidden" data-step="3">
@@ -194,10 +325,14 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           ?>
         </select>
 
-        <label class="inline-flex items-center mt-2">
-          <input type="checkbox" class="mr-2" />
-          <span class="text-sm">Aceito os termos e condições</span>
-        </label>
+<label class="inline-flex items-center mt-4 text-gray-300">
+  <!-- Checkbox -->
+  <input type="checkbox" class="form-checkbox text-green-500 rounded focus:ring-2 focus:ring-green-400 mr-2" />
+  
+  <!-- Texto ao lado do checkbox -->
+  <span class="text-sm text-white">Aceito os termos e condições</span>
+</label>
+
       </div>
 
       <!-- Botões navegação -->

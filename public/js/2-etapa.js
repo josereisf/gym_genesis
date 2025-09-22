@@ -261,21 +261,21 @@ $("document").ready(function () {
   $.validator.addMethod("noSpace", function (value, element) {
     return value === '' || value.trim().length > 0;
   }, "Este campo não pode conter apenas espaços.");
-  
+
   $.validator.addMethod("strongPassword", function (value, element) {
     return this.optional(element) || /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value);
   }, "A senha deve conter ao menos 8 caracteres, incluindo letras e números.");
-    $.validator.addMethod("validarData", function (value, element) {
-        // Data atual
-        var today = new Date();
-        // Data máxima (150 anos atrás)
-        var maxDate = new Date();
-        maxDate.setFullYear(today.getFullYear() - 150);
-        // Se a data for maior que a data de hoje ou mais nova que 150 anos, é inválida
-        var selectedDate = new Date(value);
+  $.validator.addMethod("validarData", function (value, element) {
+    // Data atual
+    var today = new Date();
+    // Data máxima (150 anos atrás)
+    var maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() - 150);
+    // Se a data for maior que a data de hoje ou mais nova que 150 anos, é inválida
+    var selectedDate = new Date(value);
 
-        return selectedDate <= today && selectedDate >= maxDate;
-    });
+    return selectedDate <= today && selectedDate >= maxDate;
+  });
   // Validação do formulário
   $("#multiStepForm").validate({
     rules: {
@@ -435,7 +435,7 @@ $("document").ready(function () {
         errorContainer.addClass('hidden');
       }
     },
-    invalidHandler: function(event, validator) {
+    invalidHandler: function (event, validator) {
       // Debug: mostra erros no console
       console.log('Erros de validação:', validator.errorList);
     }
@@ -564,3 +564,17 @@ document.getElementById('telefone').addEventListener('input', function (e) {
 })
 this.value = aplicarMascaraCPF(this.value).substring(0, 14)
 //=================================================================================================================================================================
+function toggleNumero() {
+  const numeroInput = document.getElementById('numero');
+  const semNumeroCheckbox = document.getElementById('sem_numero');
+
+  if (semNumeroCheckbox.checked) {
+    // Se "S/N" estiver marcado, desabilita o campo e coloca um valor específico
+    numeroInput.disabled = true;
+    numeroInput.value = 'S/N'; // Atribui o valor 'S/N' ao campo
+  } else {
+    // Se "S/N" não estiver marcado, habilita o campo de número
+    numeroInput.disabled = false;
+    numeroInput.value = ''; // Limpa o valor do campo quando reabilitado
+  }
+}
