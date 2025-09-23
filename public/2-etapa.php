@@ -141,19 +141,6 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
     <form action="" id="multiStepForm" class="space-y-4 relative min-h-[400px]">
       <!-- Etapa 1 -->
       <div class="step" data-step="1">
-        <?php
-        if ($liberado == 1) {
-          echo '<label for="">Tipo de Usuário:</label> <br>';
-          echo "<select name='tipo_usuario'>";
-          echo '<option value="0">Administrador</option>';
-          echo '<option value="1">Aluno</option>';
-          echo '<option value="2">Professor</option>';
-          echo '</select>';
-          echo '<br>';
-        } else {
-          echo '<input type="hidden" name="tipo_usuario" value="1">';
-        }
-        ?>
         <label for="nome">Nome completo</label>
         <input id="nome" type="text" autocomplete="on" class="input error" name="nome"
           placeholder="Digite seu nome completo" />
@@ -231,10 +218,11 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
       <div class="step hidden" data-step="3">
         <label for="senha">Senha</label>
         <div class="relative">
-          <input type="password" class="input pr-10" id="senha" name="senha" oninput="verificarForcaSenha()" />
+          <input type="password" class="input pr-10" id="senha" name="senha"
+            oninput="verificarForcaSenha('senha')" />
           <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('senha', this)">
-            <i class="fa-regular fa-eye-slash"></i>
+            <i class="fa-regular fa-eye-slash h-10"></i>
           </button>
 
           <p id="message" class="text-center text-sm font-medium text-gray-700"></p>
@@ -246,12 +234,20 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
         <label for="confirmarSenha">Confirmar senha</label>
         <div class="relative">
-          <input type="password" class="input pr-10" id="confirmarSenha" name="confirmarSenha" />
+          <input type="password" class="input pr-10" id="confirmarSenha" name="confirmarSenha"
+            oninput="verificarForcaSenha('confirmarSenha')" />
           <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('confirmarSenha', this)">
-            <i class="fa-regular fa-eye-slash"></i>
+            <i class="fa-regular fa-eye-slash h-10"></i>
           </button>
+
+          <p id="message2" class="text-center text-sm font-medium text-gray-700"></p>
+
+          <div class="w-full h-2 bg-gray-300 rounded-full mb-2">
+            <div id="progress2" class="h-full rounded-full"></div>
+          </div>
         </div>
+
 
         <label>Plano</label>
         <select class="input" id="plano" name="plano">

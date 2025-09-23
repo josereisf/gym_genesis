@@ -62,7 +62,9 @@ async function usuario(senha, email) {
       const json = JSON.parse(textoBruto)
       return json
     } catch (erroDeParse) {
-      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
+      console.error(
+        'Erro ao fazer JSON.parse. A resposta não é um JSON válido.'
+      )
       throw erroDeParse
     }
   } catch (error) {
@@ -87,7 +89,7 @@ async function perfil_usuario(idusuario, nome, cpf, data, telefone) {
           data_nascimento: data,
           telefone,
           imagem: null,
-          tipo: 1
+          tipo: 1,
         }),
       }
     )
@@ -104,7 +106,9 @@ async function perfil_usuario(idusuario, nome, cpf, data, telefone) {
       const json = JSON.parse(textoBruto)
       return json
     } catch (erroDeParse) {
-      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
+      console.error(
+        'Erro ao fazer JSON.parse. A resposta não é um JSON válido.'
+      )
       throw erroDeParse
     }
   } catch (error) {
@@ -128,7 +132,7 @@ async function funcionario(idusuario, nome, cpf, data, telefone) {
           data_nascimento: data,
           telefone,
           imagem: null,
-          tipo: 2
+          tipo: 2,
         }),
       }
     )
@@ -145,7 +149,9 @@ async function funcionario(idusuario, nome, cpf, data, telefone) {
       const json = JSON.parse(textoBruto)
       return json
     } catch (erroDeParse) {
-      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
+      console.error(
+        'Erro ao fazer JSON.parse. A resposta não é um JSON válido.'
+      )
       throw erroDeParse
     }
   } catch (error) {
@@ -153,7 +159,17 @@ async function funcionario(idusuario, nome, cpf, data, telefone) {
     throw error
   }
 }
-async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, cidade, estado) {
+async function enviarEndereco(
+  id,
+  tipo,
+  cep,
+  rua,
+  numero,
+  complemento,
+  bairro,
+  cidade,
+  estado
+) {
   try {
     const response = await fetch(
       'http://localhost:83/public/api/index.php?entidade=endereco&acao=cadastrar',
@@ -237,7 +253,6 @@ async function enviarFormulario() {
     }
     const idUsuario = respostaUsuario.dados.id
 
-
     // 2. Cadastra (perfil completo)
     const respostaPerfilUsuario = await perfil_usuario(
       idUsuario,
@@ -267,10 +282,7 @@ async function enviarFormulario() {
     }
 
     // 4. Cadastra assinatura
-    const respostaAssinatura = await enviarAssinatura(
-      idUsuario,
-      plano
-    )
+    const respostaAssinatura = await enviarAssinatura(idUsuario, plano)
     if (!respostaAssinatura.sucesso) {
       throw new Error('Erro ao cadastrar assinatura.')
     }
@@ -296,28 +308,40 @@ showStep(currentStep)
 
 //===========================================================================================================================================================================================
 // aqui começar a validação geral  com nome email cpf e por ai vai...
-$("document").ready(function () {
+$('document').ready(function () {
   // Métodos customizados
-  $.validator.addMethod("noSpace", function (value, element) {
-    return value === '' || value.trim().length > 0;
-  }, "Este campo não pode conter apenas espaços.");
+  $.validator.addMethod(
+    'noSpace',
+    function (value, element) {
+      return value === '' || value.trim().length > 0
+    },
+    'Este campo não pode conter apenas espaços.'
+  )
 
-  $.validator.addMethod("strongPassword", function (value, element) {
-    return this.optional(element) || /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value);
-  }, "A senha deve conter ao menos 8 caracteres, incluindo letras e números.");
-  $.validator.addMethod("validarData", function (value, element) {
+  $.validator.addMethod(
+    'strongPassword',
+    function (value, element) {
+      return (
+        this.optional(element) ||
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(value)
+      )
+    },
+    'A senha deve ter ao menos 8 caracteres, incluindo maiúsculas, minúsculas, números e símbolos.'
+  )
+
+  $.validator.addMethod('validarData', function (value, element) {
     // Data atual
-    var today = new Date();
+    var today = new Date()
     // Data máxima (150 anos atrás)
-    var maxDate = new Date();
-    maxDate.setFullYear(today.getFullYear() - 150);
+    var maxDate = new Date()
+    maxDate.setFullYear(today.getFullYear() - 150)
     // Se a data for maior que a data de hoje ou mais nova que 150 anos, é inválida
-    var selectedDate = new Date(value);
+    var selectedDate = new Date(value)
 
-    return selectedDate <= today && selectedDate >= maxDate;
-  });
+    return selectedDate <= today && selectedDate >= maxDate
+  })
   // Validação do formulário
-  $("#multiStepForm").validate({
+  $('#multiStepForm').validate({
     rules: {
       nome: {
         required: true,
@@ -326,7 +350,7 @@ $("document").ready(function () {
       email: {
         required: true,
         noSpace: true,
-        email: true
+        email: true,
       },
       cpf: {
         required: true,
@@ -342,296 +366,314 @@ $("document").ready(function () {
       },
       data: {
         required: true,
-        validarData: true
+        validarData: true,
       },
       cep: {
         required: true,
         noSpace: true,
-        minlength: 8,
-        maxlength: 8,
+        minlength: 9,
+        maxlength: 9,
       },
       rua: {
         required: true,
-        noSpace: true
+        noSpace: true,
       },
       numero: {
-        noSpace: true
+        noSpace: true,
       },
       complemento: {
-        noSpace: true
+        noSpace: true,
       },
       bairro: {
         required: true,
-        noSpace: true
+        noSpace: true,
       },
       cidade: {
         required: true,
-        noSpace: true
+        noSpace: true,
       },
       estado: {
         required: true,
-        noSpace: true
+        noSpace: true,
       },
       senha: {
         required: true,
-        strongPassword: true
+        strongPassword: true,
       },
       confirmarSenha: {
         required: true,
-        equalTo: "#senha"
+        equalTo: '#senha',
       },
       plano: {
-        required: true
+        required: true,
       },
     },
     messages: {
       nome: {
-        required: "Por favor, informe seu nome.",
-        noSpace: "O nome não pode conter apenas espaços."
+        required: 'Por favor, informe seu nome.',
+        noSpace: 'O nome não pode conter apenas espaços.',
       },
       email: {
-        required: "Por favor, informe seu email.",
-        noSpace: "O email não pode conter apenas espaços.",
-        email: "Por favor, utilize um email válido"
+        required: 'Por favor, informe seu email.',
+        noSpace: 'O email não pode conter apenas espaços.',
+        email: 'Por favor, utilize um email válido',
       },
       cpf: {
-        required: "Por favor, informe seu CPF.",
-        noSpace: "O CPF não pode conter apenas espaços.",
-        minlength: "O CPF deve conter exatamente 11 dígitos.",
-        maxlength: "O CPF deve conter exatamente 11 dígitos.",
+        required: 'Por favor, informe seu CPF.',
+        noSpace: 'O CPF não pode conter apenas espaços.',
+        minlength: 'O CPF deve conter exatamente 11 dígitos.',
+        maxlength: 'O CPF deve conter exatamente 11 dígitos.',
       },
       telefone: {
-        required: "Por favor, informe seu telefone.",
-        noSpace: "O telefone não pode conter apenas espaços.",
-        minlength: "O telefone deve conter exatamente 11 dígitos.",
-        maxlength: "O telefone deve conter exatamente 11 dígitos.",
+        required: 'Por favor, informe seu telefone.',
+        noSpace: 'O telefone não pode conter apenas espaços.',
+        minlength: 'O telefone deve conter exatamente 11 dígitos.',
+        maxlength: 'O telefone deve conter exatamente 11 dígitos.',
       },
       data: {
-        required: "Por favor, informe sua data de nascimento.",
-        validarData: "Por favor, informe uma data válida."
+        required: 'Por favor, informe sua data de nascimento.',
+        validarData: 'Por favor, informe uma data válida.',
       },
       cep: {
-        required: "Por favor, informe seu CEP.",
-        noSpace: "O CEP não pode conter apenas espaços.",
-        minlength: "O CEP deve conter exatamente 8 dígitos.",
-        maxlength: "O CEP deve conter exatamente 8 dígitos."
+        required: 'Por favor, informe seu CEP.',
+        noSpace: 'O CEP não pode conter apenas espaços.',
+        minlength: 'O CEP deve conter exatamente 8 dígitos.',
+        maxlength: 'O CEP deve conter exatamente 8 dígitos.',
       },
       rua: {
-        required: "Por favor, informe a rua.",
-        noSpace: "A rua não pode conter apenas espaços."
+        required: 'Por favor, informe a rua.',
+        noSpace: 'A rua não pode conter apenas espaços.',
       },
       numero: {
-        noSpace: "O número não pode conter apenas espaços."
+        noSpace: 'O número não pode conter apenas espaços.',
       },
       complemento: {
-        noSpace: "O complemento não pode conter apenas espaços."
+        noSpace: 'O complemento não pode conter apenas espaços.',
       },
       bairro: {
-        required: "Por favor, informe o bairro.",
-        noSpace: "O bairro não pode conter apenas espaços."
+        required: 'Por favor, informe o bairro.',
+        noSpace: 'O bairro não pode conter apenas espaços.',
       },
       cidade: {
-        required: "Por favor, informe a cidade.",
-        noSpace: "A cidade não pode conter apenas espaços."
+        required: 'Por favor, informe a cidade.',
+        noSpace: 'A cidade não pode conter apenas espaços.',
       },
       estado: {
-        required: "Por favor, informe o estado.",
-        noSpace: "O estado não pode conter apenas espaços."
+        required: 'Por favor, informe o estado.',
+        noSpace: 'O estado não pode conter apenas espaços.',
       },
       senha: {
-        required: "Por favor, informe a senha.",
-        strongPassword: "Senha deve ter ao menos 8 caracteres, letras e números."
+        required: 'Por favor, informe a senha.',
+        strongPassword:
+          'Senha deve ter ao menos 8 caracteres, letras e números.',
       },
       confirmarSenha: {
-        required: "Por favor, confirme a senha.",
-        equalTo: "As senhas não coincidem."
+        required: 'Por favor, confirme a senha.',
+        equalTo: 'As senhas não coincidem.',
       },
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
       // Encontra o container de erro específico
-      var errorContainer = element.next('.error-message');
+      var errorContainer = element.next('.error-message')
       if (errorContainer.length) {
-        errorContainer.removeClass('hidden').html(error.text());
+        errorContainer.removeClass('hidden').html(error.text())
       } else {
         // Se não encontrar, cria um novo
-        error.addClass('error-message text-red-500 text-sm mt-1');
-        error.insertAfter(element);
+        error.addClass('error-message text-red-500 text-sm mt-1')
+        error.insertAfter(element)
       }
     },
     highlight: function (element, errorClass, validClass) {
-      $(element).addClass('border-red-500').removeClass('border-green-500');
+      $(element).addClass('border-red-500').removeClass('border-green-500')
       // Mostra o container de erro
-      var errorContainer = $(element).next('.error-message');
+      var errorContainer = $(element).next('.error-message')
       if (errorContainer.length) {
-        errorContainer.removeClass('hidden');
+        errorContainer.removeClass('hidden')
       }
     },
     unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('border-red-500').addClass('border-green-500');
+      $(element).removeClass('border-red-500').addClass('border-green-500')
       // Esconde o container de erro
-      var errorContainer = $(element).next('.error-message');
+      var errorContainer = $(element).next('.error-message')
       if (errorContainer.length) {
-        errorContainer.addClass('hidden');
+        errorContainer.addClass('hidden')
       }
     },
     invalidHandler: function (event, validator) {
       // Debug: mostra erros no console
-      console.log('Erros de validação:', validator.errorList);
-    }
-  });
+      console.log('Erros de validação:', validator.errorList)
+    },
+  })
 
   // Teste simples para verificar se a validação está funcionando
-  console.log('Validação jQuery carregada:', $.fn.validate !== undefined);
-});
+  console.log('Validação jQuery carregada:', $.fn.validate !== undefined)
+})
 //===========================================================================================================================================================================================
-// Elementos do DOM
-const cepInput = document.getElementById('cep')
-const ruaInput = document.getElementById('rua')
-const numeroInput = document.getElementById('numero')
-const complementoInput = document.getElementById('complemento')
-const bairroInput = document.getElementById('bairro')
-const cidadeInput = document.getElementById('cidade')
-const estadoInput = document.getElementById('estado')
+// Aqui e o que faz a busca do cep funcionar e preencher os campos automaticamente
+$(document).ready(function () {
+  const $cep = $('#cep')
+  const $rua = $('#rua')
+  const $numero = $('#numero')
+  const $complemento = $('#complemento')
+  const $bairro = $('#bairro')
+  const $cidade = $('#cidade')
+  const $estado = $('#estado')
 
-// Funções de tratamento de erro visual
-function showFieldError(input, message) {
-  const errEl = input.nextElementSibling
-  errEl.textContent = message
-  errEl.classList.remove('hidden')
-  input.classList.add('border-red-500')
-}
+  // --- Funções auxiliares ---
+  function showFieldError($input, message) {
+    const $err = $input.next('.error')
+    $err.text(message).removeClass('hidden')
+    $input.addClass('border-red-500')
+  }
 
-function clearFieldError(input) {
-  const errEl = input.nextElementSibling
-  errEl.textContent = ''
-  errEl.classList.add('hidden')
-  input.classList.remove('border-red-500')
-}
+  function clearFieldError($input) {
+    const $err = $input.next('.error')
+    $err.text('').addClass('hidden')
+    $input.removeClass('border-red-500')
+  }
 
-// Bloqueia/desbloqueia os campos de endereço
-function lockAddressFields() {
-  ruaInput.disabled = true
-  numeroInput.disabled = true
-  complementoInput.disabled = true
-  bairroInput.disabled = true
-}
+  function lockAddressFields() {
+    $rua.prop('disabled', true)
+    $numero.prop('disabled', true)
+    $complemento.prop('disabled', true)
+    $bairro.prop('disabled', true)
+  }
 
-function unlockAddressFields() {
-  ruaInput.disabled = false
-  numeroInput.disabled = false
-  complementoInput.disabled = false
-  bairroInput.disabled = false
-}
+  function unlockAddressFields() {
+    $rua.prop('disabled', false)
+    $numero.prop('disabled', false)
+    $complemento.prop('disabled', false)
+    $bairro.prop('disabled', false)
+  }
 
-// Função principal: busca endereço via CEP
-async function buscaEnderecoPorCep(cep) {
-  try {
-    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-    const data = await response.json()
+  // --- Função principal ---
+  function buscaEnderecoPorCep(cep) {
+    let timeout = setTimeout(() => {
+      unlockAddressFields()
+      showFieldError($cep, 'Tempo limite excedido. Preencha manualmente.')
+    }, 5000) // 5 segundos
 
-    if (data.erro) {
-      showFieldError(cepInput, 'CEP não encontrado.')
+    $.ajax({
+      url: `https://viacep.com.br/ws/${cep}/json/`,
+      dataType: 'json',
+      success: function (data) {
+        clearTimeout(timeout)
+
+        if (data.erro) {
+          showFieldError($cep, 'CEP não encontrado.')
+          return
+        }
+
+        $rua.val(data.logradouro || '')
+        $bairro.val(data.bairro || '')
+        $cidade.val(data.localidade || '')
+        $estado.val(data.uf || '')
+
+        unlockAddressFields()
+        clearFieldError($cep)
+      },
+      error: function () {
+        clearTimeout(timeout)
+        unlockAddressFields()
+        showFieldError($cep, 'Erro ao buscar o CEP.')
+      },
+    })
+  }
+
+  // --- Evento blur no CEP ---
+  $cep.on('blur', function () {
+    const cep = $(this).val().replace(/\D/g, '')
+    if (cep.length !== 8) {
+      showFieldError($cep, 'CEP inválido! Deve ter 8 números.')
       return
     }
 
-    ruaInput.value = data.logradouro || ''
-    bairroInput.value = data.bairro || ''
-    cidadeInput.value = data.localidade || ''
-    estadoInput.value = data.uf || ''
+    clearFieldError($cep)
+    lockAddressFields()
+    buscaEnderecoPorCep(cep)
+  })
 
-    unlockAddressFields()
-    clearFieldError(cepInput)
-  } catch (error) {
-    showFieldError(cepInput, 'Erro ao buscar o CEP.')
-    console.error(error)
-  }
+  // --- Inicializa com os campos bloqueados ---
+  lockAddressFields()
+})
+
+//===========================================================================================================================================================================================
+// Alterna entre mostrar/ocultar senha
+function toggleSenha(id, btn) {
+  const input = document.getElementById(id)
+  const isHidden = input.type === 'password'
+  input.type = isHidden ? 'text' : 'password'
+
+  const eyeOpen = '<i class="fa-regular fa-eye h-16"></i>'
+  const eyeOff = '<i class="fa-regular fa-eye-slash h-16"></i>'
+
+  btn.innerHTML = isHidden ? eyeOpen : eyeOff
 }
 
-// Evento de blur no campo de CEP
-cepInput.addEventListener('blur', () => {
-  const cep = cepInput.value.replace(/\D/g, '')
-  if (cep.length !== 8) {
-    showFieldError(cepInput, 'CEP inválido! Deve ter 8 números.')
+// Verifica força da senha (funciona para senha e confirmarSenha)
+function verificarForcaSenha(id) {
+  const senha = document.getElementById(id).value
+  const progressBar = document.getElementById(id === 'senha' ? 'progress' : 'progress2')
+  const message = document.getElementById(id === 'senha' ? 'message' : 'message2')
+
+  if (senha.length === 0) {
+    progressBar.style.width = '0%'
+    progressBar.className = 'h-full bg-gray-300'
+    message.innerText = ''
+    message.className = 'text-gray-700'
     return
   }
 
-  clearFieldError(cepInput)
-  buscaEnderecoPorCep(cep)
-})
+  // Critérios
+  let strength = 0
+  const regexUpper = /[A-Z]/
+  const regexLower = /[a-z]/
+  const regexDigits = /\d/
+  const regexSpecial = /[!@#$%^&*(),.?":{}|<>]/
 
-// Inicializa com os campos bloqueados
-lockAddressFields()
+  if (senha.length >= 8) strength++
+  if (regexUpper.test(senha)) strength++
+  if (regexLower.test(senha)) strength++
+  if (regexDigits.test(senha)) strength++
+  if (regexSpecial.test(senha)) strength++
 
-//===========================================================================================================================================================================================
-// aqui e o que faz os olhos da senha se mexerem e mudares suas formas...
-function toggleSenha(id, btn) {
-  const input = document.getElementById(id);
-  const isHidden = input.type === 'password';
-  input.type = isHidden ? 'text' : 'password';
-
-  // Ícones Font Awesome para olho aberto e fechado
-  const eyeOpen = '<i class="fa-regular fa-eye"></i>';
-  const eyeOff = '<i class="fa-regular fa-eye-slash"></i>';
-
-  btn.innerHTML = isHidden ? eyeOpen : eyeOff;
+  // Força da senha
+  switch (strength) {
+    case 1:
+    case 2:
+      progressBar.style.width = '25%'
+      progressBar.className = 'h-full bg-red-500'
+      message.innerText = 'Senha Fraca'
+      message.className = 'text-red-500'
+      break
+    case 3:
+      progressBar.style.width = '50%'
+      progressBar.className = 'h-full bg-yellow-500'
+      message.innerText = 'Senha Média'
+      message.className = 'text-yellow-500'
+      break
+    case 4:
+      progressBar.style.width = '75%'
+      progressBar.className = 'h-full bg-green-500'
+      message.innerText = 'Senha Forte'
+      message.className = 'text-green-500'
+      break
+    case 5:
+      progressBar.style.width = '100%'
+      progressBar.className = 'h-full bg-indigo-500'
+      message.innerText = 'Senha Muito Forte'
+      message.className = 'text-indigo-500'
+      break
+    default:
+      progressBar.style.width = '0%'
+      progressBar.className = 'h-full bg-gray-300'
+      message.innerText = ''
+      message.className = 'text-gray-700'
+  }
 }
 
-    // Função para verificar a força da senha
-    function verificarForcaSenha() {
-      const senha = document.getElementById("senha").value;
-      const progressBar = document.getElementById("progress");
-      const message = document.getElementById("message");
 
-      let strength = 0;
-      const regexUpper = /[A-Z]/;
-      const regexLower = /[a-z]/;
-      const regexDigits = /\d/;
-      const regexSpecial = /[!@#$%^&*(),.?":{}|<>]/;
-
-      if (senha.length >= 8) strength++;
-      if (regexUpper.test(senha)) strength++;
-      if (regexLower.test(senha)) strength++;
-      if (regexDigits.test(senha)) strength++;
-      if (regexSpecial.test(senha)) strength++;
-
-      // Definir a força da senha
-      switch (strength) {
-        case 1:
-        case 2:
-          progressBar.style.width = '25%';
-          progressBar.className = 'h-full bg-red-500';
-          message.innerText = 'Senha Fraca';
-          message.className = 'text-red-500';
-          break;
-        case 3:
-          progressBar.style.width = '50%';
-          progressBar.className = 'h-full bg-yellow-500';
-          message.innerText = 'Senha Média';
-          message.className = 'text-yellow-500';
-          break;
-        case 4:
-          progressBar.style.width = '75%';
-          progressBar.className = 'h-full bg-green-500';
-          message.innerText = 'Senha Forte';
-          message.className = 'text-green-500';
-          break;
-        case 5:
-          progressBar.style.width = '100%';
-          progressBar.className = 'h-full bg-indigo-500';
-          message.innerText = 'Senha Muito Forte';
-          message.className = 'text-indigo-500';
-          break;
-        default:
-          progressBar.style.width = '0%';
-          progressBar.className = 'h-full bg-gray-300';
-          message.innerText = '';
-          message.className = 'text-gray-700';
-      }
-    }
-  
-  
-    
 //===========================================================================================================================================================================================
 // aqui aplicar mascaraCPf, mascaraTelefone para deixa para o usuario facil de entender e ver oq e como fazer tudo
 function aplicarMascaraCPF(valor) {
@@ -660,16 +702,16 @@ document.getElementById('telefone').addEventListener('input', function (e) {
 this.value = aplicarMascaraCPF(this.value).substring(0, 14)
 //=================================================================================================================================================================
 function toggleNumero() {
-  const numeroInput = document.getElementById('numero');
-  const semNumeroCheckbox = document.getElementById('sem_numero');
+  const numeroInput = document.getElementById('numero')
+  const semNumeroCheckbox = document.getElementById('sem_numero')
 
   if (semNumeroCheckbox.checked) {
     // Se "S/N" estiver marcado, desabilita o campo e coloca um valor específico
-    numeroInput.disabled = true;
-    numeroInput.value = 'S/N'; // Atribui o valor 'S/N' ao campo
+    numeroInput.disabled = true
+    numeroInput.value = 'S/N' // Atribui o valor 'S/N' ao campo
   } else {
     // Se "S/N" não estiver marcado, habilita o campo de número
-    numeroInput.disabled = false;
-    numeroInput.value = ''; // Limpa o valor do campo quando reabilitado
+    numeroInput.disabled = false
+    numeroInput.value = '' // Limpa o valor do campo quando reabilitado
   }
 }
