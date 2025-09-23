@@ -566,17 +566,72 @@ lockAddressFields()
 //===========================================================================================================================================================================================
 // aqui e o que faz os olhos da senha se mexerem e mudares suas formas...
 function toggleSenha(id, btn) {
-  const input = document.getElementById(id)
-  const isHidden = input.type === 'password'
-  input.type = isHidden ? 'text' : 'password'
+  const input = document.getElementById(id);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
 
   // Ícones Font Awesome para olho aberto e fechado
-  const eyeOpen = '<i class="fa-regular fa-eye"></i>'
-  const eyeOff = '<i class="fa-regular fa-eye-slash"></i>'
+  const eyeOpen = '<i class="fa-regular fa-eye"></i>';
+  const eyeOff = '<i class="fa-regular fa-eye-slash"></i>';
 
-  btn.innerHTML = isHidden ? eyeOpen : eyeOff
+  btn.innerHTML = isHidden ? eyeOpen : eyeOff;
 }
 
+    // Função para verificar a força da senha
+    function verificarForcaSenha() {
+      const senha = document.getElementById("senha").value;
+      const progressBar = document.getElementById("progress");
+      const message = document.getElementById("message");
+
+      let strength = 0;
+      const regexUpper = /[A-Z]/;
+      const regexLower = /[a-z]/;
+      const regexDigits = /\d/;
+      const regexSpecial = /[!@#$%^&*(),.?":{}|<>]/;
+
+      if (senha.length >= 8) strength++;
+      if (regexUpper.test(senha)) strength++;
+      if (regexLower.test(senha)) strength++;
+      if (regexDigits.test(senha)) strength++;
+      if (regexSpecial.test(senha)) strength++;
+
+      // Definir a força da senha
+      switch (strength) {
+        case 1:
+        case 2:
+          progressBar.style.width = '25%';
+          progressBar.className = 'h-full bg-red-500';
+          message.innerText = 'Senha Fraca';
+          message.className = 'text-red-500';
+          break;
+        case 3:
+          progressBar.style.width = '50%';
+          progressBar.className = 'h-full bg-yellow-500';
+          message.innerText = 'Senha Média';
+          message.className = 'text-yellow-500';
+          break;
+        case 4:
+          progressBar.style.width = '75%';
+          progressBar.className = 'h-full bg-green-500';
+          message.innerText = 'Senha Forte';
+          message.className = 'text-green-500';
+          break;
+        case 5:
+          progressBar.style.width = '100%';
+          progressBar.className = 'h-full bg-indigo-500';
+          message.innerText = 'Senha Muito Forte';
+          message.className = 'text-indigo-500';
+          break;
+        default:
+          progressBar.style.width = '0%';
+          progressBar.className = 'h-full bg-gray-300';
+          message.innerText = '';
+          message.className = 'text-gray-700';
+      }
+    }
+  
+  
+    
 //===========================================================================================================================================================================================
 // aqui aplicar mascaraCPf, mascaraTelefone para deixa para o usuario facil de entender e ver oq e como fazer tudo
 function aplicarMascaraCPF(valor) {

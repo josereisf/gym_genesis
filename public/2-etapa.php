@@ -22,7 +22,11 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./js/jquery-3.7.1.min.js"></script>
   <script src="./js/jquery.validate.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <style type="text/tailwindcss">
     /* Estilos gerais do input */
   .input {
@@ -121,8 +125,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 </head>
 
 <body class="flex items-center justify-center min-h-screen px-4">
-  <div
-    class="bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-xl relative">
+  <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-xl relative">
     <h2 class="text-2xl font-bold text-center mb-6">
       Cadastro <span class="text-neongreen">Gym Genesis</span>
     </h2>
@@ -152,137 +155,73 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         }
         ?>
         <label for="nome">Nome completo</label>
-        <input 
-          id="nome" 
-          type="text" 
-          class="input error" 
-          name="nome" 
-          placeholder="Digite seu nome completo" 
-        />
+        <input id="nome" type="text" autocomplete="on" class="input error" name="nome"
+          placeholder="Digite seu nome completo" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="email">Email</label>
-        <input 
-          id="email" 
-          type="email" 
-          class="input" 
-          name="email" 
-          placeholder="Exemplo: usuario@dominio.com" 
-        />
+        <input id="email" type="email" autocomplete="on" class="input" name="email"
+          placeholder="Exemplo: usuario@dominio.com" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="cpf">CPF</label>
-        <input
-          id="cpf"
-          type="text"
-          class="input"
-          placeholder="000.000.000-00"
-          name="cpf"
+        <input id="cpf" type="text" autocomplete="on" class="input" placeholder="000.000.000-00" name="cpf"
           maxlength="14" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="telefone">Telefone</label>
-        <input
-          id="telefone"
-          type="text"
-          class="input"
-          placeholder="(00) 00000-0000"
-          name="telefone"
+        <input id="telefone" type="text" autocomplete="on" class="input" placeholder="(00) 00000-0000" name="telefone"
           maxlength="15" />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
 
         <label for="data_nascimento">Data Nascimento:</label>
-        <input type="date" name="data" id="data" class="input">
+        <input type="date" name="data" id="data" autocomplete="on" class="input">
 
       </div>
 
       <!-- Etapa 2 -->
       <div class="step hidden" data-step="2">
         <label>CEP</label>
-        <input
-          type="text"
-          id="cep"
-          class="input"
-          name="cep"
-          pattern="\d{5}-\d{3}"
-          maxlength="10"
-          placeholder="00000-000"
-          required />
+        <input type="text" id="cep" autocomplete="on" class="input" name="cep" pattern="\d{5}-\d{3}" maxlength="10"
+          placeholder="00000-000" required />
         <p class="error-message text-red-500 text-sm mt-1 hidden" id="erro"></p>
 
         <label>Rua</label>
-        <input
-          type="text"
-          id="rua"
-          class="input"
-          name="rua"
-          placeholder="Digite a rua"
-          required
+        <input type="text" id="rua" autocomplete="on" class="input" name="rua" placeholder="Digite a rua" required
           disabled />
 
         <label for="numero">Número</label>
         <div class="input-group mb-3">
           <!-- Checkbox com o ícone de entrada à esquerda -->
+
           <div class="input-group-text">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              style="border-right: none;"
-              id="sem_numero"
-              onclick="toggleNumero()"
-              aria-label="Checkbox for following text input">
+            <input class="form-check-input" type="checkbox" style="border-right: none;" id="sem_numero"
+              onclick="toggleNumero()" aria-label="Checkbox for following text input">
             <label for="sem_numero">S/N</label>
           </div>
 
           <!-- Campo de texto que depende do checkbox -->
-          <input
-            type="text"
-            class="input flex-1 my-3"
-            id="numero"
-            placeholder="Número da residência"
-            aria-label="Text input with checkbox"
-            disabled />
+          <input type="text" autocomplete="on" class="input flex-1 my-3" id="numero" placeholder="Número da residência"
+            aria-label="Text input with checkbox" disabled />
         </div>
 
 
         <label>Complemento</label>
-        <input
-          type="text"
-          id="complemento"
-          class="input"
-          name="complemento"
-          placeholder="Ex: Bloco, Apt, etc."
-          required
-          disabled />
+        <input type="text" id="complemento" autocomplete="on" class="input" name="complemento"
+          placeholder="Ex: Bloco, Apt, etc." required disabled />
 
         <label>Bairro</label>
-        <input
-          type="text"
-          id="bairro"
-          class="input"
-          name="bairro"
-          placeholder="Digite o bairro"
-          required
-          disabled />
+        <input type="text" id="bairro" autocomplete="on" class="input" name="bairro" placeholder="Digite o bairro"
+          required disabled />
 
         <label>Cidade</label>
-        <input
-          type="text"
-          id="cidade"
-          class="input"
-          name="cidade"
-          placeholder="Digite a cidade"
+        <input type="text" id="cidade" autocomplete="on" class="input" name="cidade" placeholder="Digite a cidade"
           required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label>Estado</label>
-        <input
-          type="text"
-          id="estado"
-          class="input"
-          name="estado"
-          placeholder="Digite o estado"
+        <input type="text" id="estado" autocomplete="on" class="input" name="estado" placeholder="Digite o estado"
           required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
       </div>
@@ -290,27 +229,27 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
       <!-- Etapa 3 -->
       <div class="step hidden" data-step="3">
-        <label>Senha</label>
+        <label for="senha">Senha</label>
         <div class="relative">
-          <input type="password" class="input pr-10" id="senha" name="senha" />
-          <button
-            type="button"
-            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+          <input type="password" class="input pr-10" id="senha" name="senha" oninput="verificarForcaSenha()" />
+          <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('senha', this)">
             <i class="fa-regular fa-eye-slash"></i>
-
           </button>
+
+          <p id="message" class="text-center text-sm font-medium text-gray-700"></p>
+
+          <div class="w-full h-2 bg-gray-300 rounded-full mb-2">
+            <div id="progress" class="h-full rounded-full"></div>
+          </div>
         </div>
 
-        <label>Confirmar senha</label>
+        <label for="confirmarSenha">Confirmar senha</label>
         <div class="relative">
           <input type="password" class="input pr-10" id="confirmarSenha" name="confirmarSenha" />
-          <button
-            type="button"
-            class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+          <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('confirmarSenha', this)">
             <i class="fa-regular fa-eye-slash"></i>
-
           </button>
         </div>
 
@@ -325,28 +264,22 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           ?>
         </select>
 
-<label class="inline-flex items-center mt-4 text-gray-300">
-  <!-- Checkbox -->
-  <input type="checkbox" class="form-checkbox text-green-500 rounded focus:ring-2 focus:ring-green-400 mr-2" />
-  
-  <!-- Texto ao lado do checkbox -->
-  <span class="text-sm text-white">Aceito os termos e condições</span>
-</label>
+        <label class="inline-flex items-center mt-4 text-gray-300">
+          <!-- Checkbox -->
+          <input type="checkbox" class="form-checkbox text-green-500 rounded focus:ring-2 focus:ring-green-400 mr-2" />
+
+          <!-- Texto ao lado do checkbox -->
+          <span class="text-sm text-white">Aceito os termos e condições</span>
+        </label>
 
       </div>
 
       <!-- Botões navegação -->
       <div class="flex justify-between pt-4">
-        <button
-          type="button"
-          id="prevBtn"
-          class="text-white px-4 py-2 rounded border border-white hover:bg-white/10">
+        <button type="button" id="prevBtn" class="text-white px-4 py-2 rounded border border-white hover:bg-white/10">
           Voltar
         </button>
-        <button
-          type="button"
-          id="nextBtn"
-          class="bg-neongreen text-black font-bold px-6 py-2 rounded">
+        <button type="button" id="nextBtn" class="bg-neongreen text-black font-bold px-6 py-2 rounded">
           Próximo
         </button>
       </div>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indicador de Força de Senha</title>
+  
+  <!-- Link do Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  
+  <!-- Link do Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen m-0">
+
+  <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+    <label for="senha" class="block text-lg font-medium text-gray-700">Senha</label>
+    <div class="relative mb-4">
+      <input type="password" id="senha" name="senha" class="input w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="verificarForcaSenha()" />
+      <button
+        type="button"
+        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+        onclick="toggleSenha('senha', this)">
+        <i class="fa-regular fa-eye-slash"></i>
+      </button>
+    </div>
+
+    <div class="w-full h-2 bg-gray-300 rounded-full mb-2">
+      <div id="progress" class="h-full rounded-full"></div>
+    </div>
+
+    <p id="message" class="text-center text-sm font-medium text-gray-700"></p>
+  </div>
+
+  <script>
+    // Função para alternar entre senha oculta e visível
+    function toggleSenha(id, btn) {
+      const input = document.getElementById(id);
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+
+      // Ícones Font Awesome para olho aberto e fechado
+      const eyeOpen = '<i class="fa-regular fa-eye"></i>';
+      const eyeOff = '<i class="fa-regular fa-eye-slash"></i>';
+
+      btn.innerHTML = isHidden ? eyeOpen : eyeOff;
+    }
+
+    // Função para verificar a força da senha
+    function verificarForcaSenha() {
+      const senha = document.getElementById("senha").value;
+      const progressBar = document.getElementById("progress");
+      const message = document.getElementById("message");
+
+      let strength = 0;
+      const regexUpper = /[A-Z]/;
+      const regexLower = /[a-z]/;
+      const regexDigits = /\d/;
+      const regexSpecial = /[!@#$%^&*(),.?":{}|<>]/;
+
+      if (senha.length >= 8) strength++;
+      if (regexUpper.test(senha)) strength++;
+      if (regexLower.test(senha)) strength++;
+      if (regexDigits.test(senha)) strength++;
+      if (regexSpecial.test(senha)) strength++;
+
+      // Definir a força da senha
+      switch (strength) {
+        case 1:
+        case 2:
+          progressBar.style.width = '25%';
+          progressBar.className = 'h-full bg-red-500';
+          message.innerText = 'Senha Fraca';
+          message.className = 'text-red-500';
+          break;
+        case 3:
+          progressBar.style.width = '50%';
+          progressBar.className = 'h-full bg-yellow-500';
+          message.innerText = 'Senha Média';
+          message.className = 'text-yellow-500';
+          break;
+        case 4:
+          progressBar.style.width = '75%';
+          progressBar.className = 'h-full bg-green-500';
+          message.innerText = 'Senha Forte';
+          message.className = 'text-green-500';
+          break;
+        case 5:
+          progressBar.style.width = '100%';
+          progressBar.className = 'h-full bg-indigo-500';
+          message.innerText = 'Senha Muito Forte';
+          message.className = 'text-indigo-500';
+          break;
+        default:
+          progressBar.style.width = '0%';
+          progressBar.className = 'h-full bg-gray-300';
+          message.innerText = '';
+          message.className = 'text-gray-700';
+      }
+    }
+  
+  
+  </script>
+
+</body>
+</html>
