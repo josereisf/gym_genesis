@@ -214,19 +214,53 @@ echo '</nav>';
       <!-- Calendário -->
       <div class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10 border border-gray-700">
         <h2 class="text-2xl font-semibold text-indigo-300 mb-6">Agenda de Aulas</h2>
-        <div id="aulasCarousel" class="carousel"></div>
-      </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <template
+            <?php
+            echo 'x-for="(item, index) in [';
+            $idaluno = null;
+            $alunos = listarAulaUsuario($idprofessor, $idaluno);
 
-      <!-- Modal -->
-      <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 hidden">
-        <div class="bg-gray-900 p-8 rounded-2xl w-full max-w-md shadow-xl border border-indigo-600">
-          <h2 class="text-2xl font-bold mb-4 text-indigo-400">Detalhes da Aula</h2>
-          <p class="mb-2"><strong>Dia:</strong> <span id="modalDia"></span></p>
-          <p class="mb-2"><strong>Horário:</strong> <span id="modalHorario"></span></p>
-          <p class="mb-2"><strong>Treino:</strong> <span id="modalTreino"></span></p>
-          <p class="mb-4"><strong>Alunos:</strong> <span id="modalAlunos"></span></p>
-          <div class="text-right">
-            <button id="fecharModal" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full text-white font-semibold">Fechar</button>
+            foreach ($alunos as $a) {
+              $idaluno = $a['idaluno'];
+              $horarios = listarAulaAgendadaUsuario($idaluno);
+              $idtreino = $horarios[0]["treino_id"];
+              $treino = listarTreino($idtreino);
+              echo "{
+                dia: '" . $horarios[0]['dia_semana'] . "',
+                inicio: '" . $horarios[0]['hora_inicio'] . "',
+                fim: '" . $horarios[0]['hora_fim'] . "',
+                treino: '" . $treino[0]['tipo'] . "',
+                alunos: '" . $a['nome_aluno'] . "'
+              },";
+            }
+            echo ']" :key="index"';
+            ?>>
+            <div @click="modal = true; aula = item" class="cursor-pointer bg-gray-800 p-5 rounded-2xl hover:bg-indigo-600 transition shadow-md border border-gray-700">
+              <h3 class="text-lg font-bold text-indigo-200" x-text="item.dia"></h3>
+              <p class="text-sm mt-2 text-gray-300">
+                Horário: <span x-text="item.inicio + ' - ' + item.fim"></span>
+              </p>
+              <p class="text-sm text-gray-300">
+                Treino: <span x-text="item.treino"></span>
+              </p>
+              <p class="text-sm text-gray-300">
+                Alunos: <span x-text="item.alunos"></span>
+              </p>
+            </div>
+          </template>
+        </div>
+        <!-- Modal -->
+        <div x-show="modal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50" x-cloak>
+          <div class="bg-gray-900 p-8 rounded-2xl w-full max-w-md shadow-xl border border-indigo-600">
+            <h2 class="text-2xl font-bold mb-4 text-indigo-400">Detalhes da Aula</h2>
+            <p class="mb-2"><strong>Dia:</strong> <span x-text="aula?.dia"></span></p>
+            <p class="mb-2"><strong>Horário:</strong> <span x-text="aula?.inicio + ' - ' + aula?.fim"></span></p>
+            <p class="mb-2"><strong>Treino:</strong> <span x-text="aula?.treino"></span></p>
+            <p class="mb-4"><strong>Alunos:</strong> <span x-text="aula?.alunos"></span></p>
+            <div class="text-right">
+              <button @click="modal = false" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full text-white font-semibold">Fechar</button>
+            </div>
           </div>
         </div>
       </div>

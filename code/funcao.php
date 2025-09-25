@@ -3878,7 +3878,8 @@ function deletarAulaUsuario($id)
   desconectar($conexao);
   return $funcionou;
 }
-function listarAulaUsuario($idaula = null)
+
+function listarAulaUsurio($idaula)
 {
   $conexao = conectar();
 

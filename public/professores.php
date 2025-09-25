@@ -1,349 +1,456 @@
 <?php
-require_once __DIR__ . '/../code/funcao.php';
-require_once "../php/verificarLogado.php";
-
-if ($_SESSION['tipo'] == 2) {
-  $_SESSION['erro_login'] = "Usuário não permitido!";
-  header('Location: dashboard_professor.php');
-  exit;
+require_once "../code/funcao.php";
+$tipo = 0;
+if (isset($_GET['tipo'])) {
+    $tipo = 0;
 }
-
-$idaluno = $_SESSION["id"] ?? 0;
-
-// Pega todos os usuários do tipo professor
-$professores = listarUsuarioTipo(tipo: 2);
-
-// Inicializa array final
-$tudojunto = [];
-
-foreach ($professores as $prof) {
-    $id = $prof['idusuario'];
-
-    // Pega perfil do funcionário
-    $perfil_funcionario = listarFuncionarios($id); // array
-    $cargo = listarCargo($id);                     // array com cargos
-
-    // Pega perfil específico do professor
-    $perfil_professor = listarPerfilProfessor($id); // array
-
-    // Monta o array unificado
-    $tudojunto[] = [
-        'usuario' => $prof,
-        'perfil_funcionario' => $perfil_funcionario,
-        'cargo' => $cargo,
-        'perfil_professor' => $perfil_professor
-    ];
-}
-//   echo"<pre>";
-//   var_dump($tudojunto);
-//   echo"</pre>";
 ?>
-
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professores</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="shortcut icon" href="./uploads/1academia.webp" type="image/x-icon">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela de professor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <!-- Configuração customizada do Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: "#0a0a0a",
+            darkblue: "#0d1b2a",
+            neonred: "#ff2e63",
+            neongreen: "#39ff14",
+            darkgray: "#1a1a1a",
+          },
+          fontFamily: {
+            montserrat: ["Montserrat", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
 
-    <style>
-        .swiper-button-next,
-        .swiper-button-prev {
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Fundo semi-transparente */
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
-            justify-content: space-between;
-        }
+  <!-- CSS do DataTables (CDN) -->
+  <link rel="stylesheet"
+        href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+        onerror="this.onerror=null;this.href='./css/dataTable.css';">
 
-        .swiper-button-next:hover,
-        .swiper-button-prev:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-            /* Fundo mais forte quando passar o mouse */
-        }
-    </style>
+  <!-- jQuery (CDN com fallback local) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    if (typeof jQuery === "undefined") {
+      document.write('<script src="./js/jquery-3.7.1.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- DataTables (CDN com fallback local) -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    if (typeof $.fn.DataTable === "undefined") {
+      document.write('<script src="./js/dataTables.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- CSS do Swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- SwiperJS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- DataTables Buttons -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <style>
+    /* Animação para modais */
+    .animate-scaleUp {
+      animation: scaleUp 0.3s ease;
+    }
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* 🎨 Customizações do DataTables */
+    .dt-button {
+      @apply px-4 py-2 rounded-lg font-semibold transition shadow-md;
+      @apply bg-gradient-to-r from-[#22d3ee] to-[#3b82f6] text-white;
+      margin-right: 0.5rem !important;
+    }
+
+    .dt-button:hover {
+      @apply from-[#0ea5e9] to-[#2563eb] scale-105;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      @apply px-3 py-1 rounded-md text-sm font-medium text-gray-200 bg-[#1e293b] border border-[#22d3ee] transition;
+      margin: 2px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      @apply bg-[#22d3ee] text-white border-[#22d3ee];
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+      @apply px-3 py-2 rounded-md border border-[#22d3ee] bg-[#0f172a] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#22d3ee];
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+      @apply px-2 py-1 rounded-md border border-[#22d3ee] bg-[#0f172a] text-gray-200 focus:outline-none;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+      @apply text-gray-400 text-sm mt-2;
+    }
+    span{
+        color: white;
+    }
+  </style>
 </head>
 
-<body class="bg-gradient-to-br from-[#132237] via-[#1a2f4a] to-[#0d1625] text-white flex flex-col items-center justify-start min-h-screen p-6">
 
-    <h1 class="text-3xl font-bold mb-6 text-center">Nossos Professores</h1>
+<body class="bg-gradient-to-br from-[#132237] via-[#1a2f4a] to-[#0d1625] text-[#f1f5f9] font-montserrat min-h-screen">
+    <div class="p-6">
+        <button id="trocar"
+            class="mb-6 px-5 py-2 rounded-lg bg-[#a855f7] hover:bg-[#3b82f6] transition text-white font-semibold shadow-lg">
+            Trocar para Cards </button>
 
-    <div class="flex gap-4 mb-6">
-        <select id="filtroModalidade" class="border p-2 rounded bg-[#1f364f] text-white">
-            <option value="">Todas Modalidades</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Híbrido">Híbrido</option>
-            <option value="Online">Online</option>
-        </select>
-        <input type="text" id="buscaNome" placeholder="Buscar por nome" class="border p-2 text-black rounded">
-    </div>
+        <!-- Cards -->
+        <div id="container_card" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-center min-h-screen px-6">
 
-    <div class="swiper-container w-full max-w-6xl">
-<div class="swiper-wrapper flex flex-row gap-4 justify-between">
-    <?php foreach ($tudojunto as $prof):
-        $funcionario = $prof['perfil_funcionario'][0] ?? [];
-        $professor = $prof['perfil_professor'][0] ?? [];
-
-        $nome = $funcionario['nome'] ?? 'Sem nome';
-        $email = $funcionario['email'] ?? 'Sem email';
-        $telefone = $professor['telefone'] ?? $funcionario['telefone'] ?? '';
-        $cargo = $funcionario['nome_cargo'] ?? '';
-        $foto = $professor['foto_perfil'] ?? 'padrao.png';
-        $experiencia = $professor['experiencia_anos'] ?? 0;
-        $modalidade = $professor['modalidade'] ?? '';
-        $avaliacao = $professor['avaliacao_media'] ?? '';
-        $descricao = $professor['descricao'] ?? '';
-        $horarios = $professor['horarios_disponiveis'] ?? '';
-        $id = $funcionario['usuario_id'] ?? '';
-    ?>
-        <div class="swiper-slide professor-card bg-[#1f364f] w-80 md:w-72 lg:w-80 p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer"
-            data-nome="<?= $nome ?>"
-            data-descricao="<?= htmlspecialchars($descricao) ?>"
-            data-experiencia="<?= $experiencia ?>"
-            data-modalidade="<?= $modalidade ?>"
-            data-avaliacao="<?= $avaliacao ?>"
-            data-telefone="<?= $telefone ?>"
-            data-email="<?= $email ?>"
-            data-foto="./uploads/<?= $foto ?>"
-            data-idprofessor="<?= $id ?>"
-            data-modalidade-raw="<?= $modalidade ?>"
-            data-idaluno="<?= $idaula ?>">
-
-            <!-- Foto -->
-            <img src="./uploads/<?php echo $foto; ?>" alt="<?php echo $nome; ?>"
-                class="w-full h-48 object-cover rounded-xl mb-4">
-
-            <!-- Nome -->
-            <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-user text-white"></i> <?= $nome ?>
-            </h2>
-
-            <!-- Modalidade -->
-            <p class="text-sm text-gray-300 mb-1">
-                <i class="fa-solid fa-dumbbell text-white"></i> Modalidade: <?= $modalidade ?>
-            </p>
-
-            <!-- Avaliação -->
-            <p class="text-sm text-gray-300 mb-1">
-                <i class="fa-solid fa-star text-yellow-400"></i> Avaliação: <?= $avaliacao ?>
-            </p>
-
-            <!-- Horários -->
-            <p class="text-sm text-gray-300">
-                <i class="fa-solid fa-clock text-white"></i> <?= $horarios ?>
-            </p>
-        </div>
-    <?php endforeach; ?>
-</div>
-
-
-        <!-- Botões -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-
-
-
-
-    <!-- Modal -->
-    <!-- Modal -->
-    <div id="modal" class="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-[#1f364f] p-6 rounded-2xl w-full max-w-4xl relative">
-
-            <!-- Botão fechar -->
-            <button onclick="fecharModal()" class="absolute top-4 right-4 text-white font-bold text-2xl">&times;</button>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Foto -->
-                <div class="flex justify-center items-start">
-                    <img id="modalFoto" src="" alt="" class="w-full h-72 object-cover rounded-xl shadow-lg">
-                </div>
-
-                <!-- Informações -->
-                <div class="flex flex-col justify-start">
-                    <h2 id="modalNome" class="text-2xl font-bold mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-user text-white"></i>
-                    </h2>
-
-                    <p id="modalDescricao" class="text-white mb-3"></p>
-
-                    <p id="modalExperiencia" class="text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-briefcase text-white"></i>
-                    </p>
-
-                    <p id="modalModalidade" class="text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-dumbbell text-white"></i>
-                    </p>
-
-                    <p id="modalAvaliacao" class="text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-star text-yellow-400"></i>
-                    </p>
-
-                    <p id="modalTelefone" class="text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-phone text-green-400"></i>
-                    </p>
-
-                    <p id="modalEmail" class="text-white mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-blue-400"></i>
-                    </p>
-
-                    <!-- Horários -->
-                    <div id="modalHorarios" class="flex flex-col gap-2 mt-4">
-                        <!-- Botões de horários serão inseridos via JS -->
-                    </div>
-                </div>
+            <!-- Card 1 -->
+            <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#3b82f6] hover:shadow-[#3b82f6]/40 transition">
+                <img src="https://randomuser.me/api/portraits/men/45.jpg"
+                    alt="Foto de Perfil"
+                    class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#a855f7]">
+                <h2 class="mt-4 text-xl font-bold text-[#22d3ee]">John Doe</h2>
+                <p class="text-[#cbd5e1] text-sm">Instrutor de Musculação</p>
+                <button onclick="openModal(0)"
+                    class="mt-4 px-4 py-2 bg-[#3b82f6] text-white rounded-lg hover:bg-[#22d3ee] transition">
+                    Ver mais
+                </button>
             </div>
 
-            <!-- Botão Selecionar -->
-            <div class="mt-6 flex justify-center">
-                <button id="btnSelecionar"
-                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-xl shadow-lg flex items-center gap-2 transition">
-                    <i class="fa-solid fa-check"></i> Selecionar
+            <!-- Card 2 -->
+            <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#a855f7] hover:shadow-[#a855f7]/40 transition">
+                <img src="https://randomuser.me/api/portraits/women/45.jpg"
+                    alt="Foto de Perfil"
+                    class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#3b82f6]">
+                <h2 class="mt-4 text-xl font-bold text-[#f43f5e]">Jane Smith</h2>
+                <p class="text-[#cbd5e1] text-sm">Personal Trainer</p>
+                <button onclick="openModal(1)"
+                    class="mt-4 px-4 py-2 bg-[#a855f7] text-white rounded-lg hover:bg-[#22d3ee] transition">
+                    Ver mais
+                </button>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#22d3ee] hover:shadow-[#22d3ee]/40 transition">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                    alt="Foto de Perfil"
+                    class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#3b82f6]">
+                <h2 class="mt-4 text-xl font-bold text-[#22d3ee]">Carlos Silva</h2>
+                <p class="text-[#cbd5e1] text-sm">Professor de Yoga</p>
+                <button onclick="openModal(2)"
+                    class="mt-4 px-4 py-2 bg-[#22d3ee] text-white rounded-lg hover:bg-[#3b82f6] transition">
+                    Ver mais
                 </button>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div id="modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden flex items-center justify-center z-50">
+            <div class="bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative animate-scaleUp border border-[#3b82f6]">
+
+                <!-- Botão fechar -->
+                <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl">&times;</button>
+
+                <!-- Conteúdo do modal (dinâmico) -->
+                <div id="modalContent"></div>
+            </div>
+        </div>
+
+
+
+        <!-- Tabela -->
+        <div class="bg-darkblue p-4 rounded-xl shadow-lg">
+            <!-- Wrapper responsivo -->
+            <div class="overflow-x-auto w-full">
+                <table id="container_tabela" class="min-w-full text-sm text-white border-collapse">
+                    <thead class="bg-darkgray text-[#f1f5f9]">
+                        <tr>
+                            <th class="px-4 py-2 text-left">Ações</th>
+                            <th class="px-4 py-2 text-left">Foto de Perfil</th>
+                            <th class="px-4 py-2 text-left">Nome</th>
+                            <th class="px-4 py-2 text-left">Cargo</th>
+                            <th class="px-4 py-2 text-left">Modalidade</th>
+                            <th class="px-4 py-2 text-left">Avaliação</th>
+                            <th class="px-4 py-2 text-left">Descrição</th>
+                            <th class="px-4 py-2 text-left">Telefone</th>
+                            <th class="px-4 py-2 text-left">Email</th>
+                            <th class="px-4 py-2 text-left">Data da Aula</th>
+                            <th class="px-4 py-2 text-left">Dia da Semana</th>
+                            <th class="px-4 py-2 text-left">Horários Disponíveis</th>
+                            <th class="px-4 py-2 text-left">Hora Início</th>
+                            <th class="px-4 py-2 text-left">Hora Fim</th>
+                            <?php if ($tipo == 0) { ?>
+                                <th class="px-4 py-2 text-left">Salário</th>
+                                <th class="px-4 py-2 text-left">ID Funcionário</th>
+                                <th class="px-4 py-2 text-left">ID Aula</th>
+                                <th class="px-4 py-2 text-left">ID Treino</th>
+                                <th class="px-4 py-2 text-left">Data Atualização</th>
+                                <th class="px-4 py-2 text-left">Data Contratação</th>
+                            <?php } ?>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-darkgray">
+                        <?php
+                        $professores = listarPerfilProfessor(null);
+                        foreach ($professores as $p) {
+                        ?>
+                            <tr class="hover:bg-darkgray/60 transition">
+                                <td class="px-4 py-2"><button>Botão 1</button><button>Botão 2</button><button>Botão 3</button></td>
+                                <td class="px-4 py-2">
+                                    <img src="./uploads/<?= $p['foto_perfil'] ?>"
+                                        alt="Foto de Perfil"
+                                        class="w-12 h-12 rounded-full border-2 border-neongreen object-cover" />
+                                </td>
+                                <td class="px-4 py-2"><?= $p['nome_professor'] ?></td>
+                                <td class="px-4 py-2"><?= $p['cargo_professor'] ?></td>
+                                <td class="px-4 py-2"><?= $p['modalidade'] ?></td>
+                                <td class="px-4 py-2"><?= $p['avaliacao_media'] ?></td>
+                                <td class="px-4 py-2"><?= $p['descricao'] ?></td>
+                                <td class="px-4 py-2"><?= $p['telefone_professor'] ?></td>
+                                <td class="px-4 py-2"><?= $p['email_professor'] ?></td>
+                                <td class="px-4 py-2"><?= $p['data_aula'] ?></td>
+                                <td class="px-4 py-2"><?= $p['dia_semana'] ?></td>
+                                <td class="px-4 py-2"><?= $p['horarios_disponiveis'] ?></td>
+                                <td class="px-4 py-2"><?= $p['hora_inicio'] ?></td>
+                                <td class="px-4 py-2"><?= $p['hora_fim'] ?></td>
+                                <?php if ($tipo == 0) { ?>
+                                    <td class="px-4 py-2"><?= $p['salario'] ?></td>
+                                    <td class="px-4 py-2"><?= $p['funcionario_id'] ?></td>
+                                    <td class="px-4 py-2"><?= $p['idaula'] ?></td>
+                                    <td class="px-4 py-2"><?= $p['treino_id'] ?></td>
+                                    <td class="px-4 py-2"><?= $p['data_atualizacao'] ?></td>
+                                    <td class="px-4 py-2"><?= $p['data_contratacao'] ?></td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Inicializando DataTable -->
+    <?php if ($tipo == 0) { ?>
+        <script>
+            $(document).ready(function() {
+                $('#container_tabela').DataTable({
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+                    },
+                    paging: true, // Paginação ativada
+                    pageLength: 10, // Mostra 10 por padrão
+                    lengthMenu: [10, 25, 50, 100], // Opções de quantos itens por página
+                    searching: true, // Campo de pesquisa
+                    info: true, // Mostra "Mostrando X de Y"
+                    ordering: true, // Ordenação ativada
+                    responsive: true, // Responsivo (se ajustar em telas menores)
+                    scrollX: true, // Scroll horizontal para muitas colunas
+                    dom: 'Bfrtip', // Layout para incluir botões
+                    buttons: [{
+                            extend: 'copy',
+                            text: 'Copiar'
+                        },
+                        {
+                            extend: 'excel',
+                            text: 'Exportar Excel'
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Exportar PDF'
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Imprimir'
+                        }
+                    ]
+                });
+            });
+        </script>
+    <?php } else { ?>
+
+        <script>
+            $(document).ready(function() {
+                $('#container_tabela').DataTable({
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+                    },
+                    paging: true,
+                    searching: true,
+                    info: true
+                });
+            });
+        </script>
+
+    <?php } ?>
+
+
+    <!-- Modal -->
+    <!-- <script>
+        function openModal() {
+            document.getElementById("modal").classList.remove("hidden");
+            document.getElementById("modal").classList.add("flex");
+        }
+
+        function closeModal() {
+            document.getElementById("modal").classList.remove("flex");
+            document.getElementById("modal").classList.add("hidden");
+        }
+    </script> -->
+
+    <!-- Troca tabela/cards -->
     <script>
-        const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
+        const btnTrocar = document.getElementById("trocar");
+        const tabelaWrapper = document.getElementById("container_tabela");
+        const cards = document.getElementById("container_card");
+
+        btnTrocar.addEventListener("click", () => {
+            tabelaWrapper.classList.toggle("hidden");
+            cards.classList.toggle("hidden");
+            cards.classList.add("flex");
+
+            if (tabelaWrapper.classList.contains("hidden")) {
+                btnTrocar.innerText = "Trocar para Tabela";
+            } else {
+                btnTrocar.innerText = "Trocar para Cards";
+            }
+        });
+    </script>
+    <script>
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 3,
             spaceBetween: 20,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
             },
             breakpoints: {
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20
-                },
+                768: {
+                    slidesPerView: 2
+                }, // 2 cards no tablet
                 1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30
-                },
+                    slidesPerView: 3
+                }, // 3 cards no desktop
             }
         });
     </script>
-
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.professor-card');
-            const modal = document.getElementById('modal');
-            const btnSelecionar = document.getElementById('btnSelecionar');
-            const containerHorarios = document.getElementById('modalHorarios');
-            let selectedIdaula = null;
-            const usuarioId = <?= $idaluno ?>;
-
-            function abrirModal(card) {
-                document.getElementById('modalNome').textContent = card.dataset.nome;
-                document.getElementById('modalDescricao').textContent = card.dataset.descricao;
-                document.getElementById('modalExperiencia').textContent = "Experiência: " + card.dataset.experiencia + " anos";
-                document.getElementById('modalModalidade').textContent = "Modalidade: " + card.dataset.modalidade;
-                document.getElementById('modalAvaliacao').textContent = "Avaliação: " + card.dataset.avaliacao;
-                document.getElementById('modalTelefone').textContent = "Telefone: " + card.dataset.telefone;
-                document.getElementById('modalEmail').textContent = "Email: " + card.dataset.email;
-                document.getElementById('modalFoto').src = card.dataset.foto;
-
-                containerHorarios.innerHTML = '';
-                selectedIdaula = null;
-                btnSelecionar.disabled = true;
-
-                fetch(`http://localhost:83/public/api/index.php?entidade=aula_agendada&acao=listar&idprofessor=${card.dataset.idprofessor}`)
-                    .then(res => res.json())
-                    .then(response => {
-                        if (!response.sucesso) return alert('Erro ao listar aulas: ' + response.mensagem);
-
-                        const dados = JSON.parse(response.dados); // converte JSON string em array
-                        dados.forEach(aula => {
-                            const btn = document.createElement('button');
-                            btn.className = 'horario-card bg-[#2a4662] hover:bg-[#3a5977] text-white py-2 px-4 rounded-lg transition';
-                            btn.dataset.idaula = aula.idaula;
-
-                            const inicio = aula.hora_inicio.slice(0, 5);
-                            const fim = aula.hora_fim.slice(0, 5);
-                            btn.textContent = `${aula.dia_semana} (${aula.data_aula}) - ${inicio} às ${fim} | ${aula.treino_tipo}: ${aula.treino_desc}`;
-                            containerHorarios.appendChild(btn);
-                        });
-                    });
-
-                modal.classList.remove('hidden');
+        // Dados dos instrutores
+        const instrutores = [{
+                nome: "John Doe",
+                cargo: "Instrutor de Musculação",
+                foto: "https://randomuser.me/api/portraits/men/45.jpg",
+                modalidade: "Presencial",
+                avaliacao: "⭐⭐⭐⭐☆ (4.0)",
+                telefone: "(62) 99999-1234",
+                email: "john@academia.com",
+                dataAula: "20/09/2025",
+                diaSemana: "Segunda-feira",
+                horario: "08:00 - 12:00",
+                salario: "R$ 3.500,00",
+                id: "#12345"
+            },
+            {
+                nome: "Jane Smith",
+                cargo: "Personal Trainer",
+                foto: "https://randomuser.me/api/portraits/women/45.jpg",
+                modalidade: "Online",
+                avaliacao: "⭐⭐⭐⭐⭐ (5.0)",
+                telefone: "(62) 99999-5678",
+                email: "jane@academia.com",
+                dataAula: "22/09/2025",
+                diaSemana: "Quarta-feira",
+                horario: "14:00 - 18:00",
+                salario: "R$ 4.200,00",
+                id: "#67890"
+            },
+            {
+                nome: "Carlos Silva",
+                cargo: "Professor de Yoga",
+                foto: "https://randomuser.me/api/portraits/men/32.jpg",
+                modalidade: "Presencial",
+                avaliacao: "⭐⭐⭐⭐☆ (4.3)",
+                telefone: "(62) 99999-2468",
+                email: "carlos@academia.com",
+                dataAula: "25/09/2025",
+                diaSemana: "Sexta-feira",
+                horario: "10:00 - 12:00",
+                salario: "R$ 3.800,00",
+                id: "#13579"
             }
+        ];
 
-            cards.forEach(card => {
-                card.addEventListener('click', () => abrirModal(card));
-            });
+        // Abrir modal com dados dinâmicos
+        function openModal(index) {
+            const i = instrutores[index];
+            const modalContent = `
+      <div class="flex items-center gap-4 border-b border-[#3b82f6] pb-4 mb-4">
+        <img src="${i.foto}" alt="Foto"
+          class="w-24 h-24 rounded-full shadow-lg border-2 border-[#a855f7]">
+        <div>
+          <h2 class="text-2xl font-bold text-[#22d3ee]">${i.nome}</h2>
+          <p class="text-gray-300">${i.cargo}</p>
+          <span class="inline-block mt-2 px-3 py-1 text-xs font-semibold text-dark bg-[#22d3ee] rounded-full">
+            ${i.modalidade}
+          </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-200">
+        <p><span class="font-semibold text-[#22d3ee]">Avaliação:</span> ${i.avaliacao}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Telefone:</span> ${i.telefone}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Email:</span> ${i.email}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Data da Aula:</span> ${i.dataAula}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Dia da Semana:</span> ${i.diaSemana}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Horário:</span> ${i.horario}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Salário:</span> ${i.salario}</p>
+        <p><span class="font-semibold text-[#22d3ee]">ID Funcionário:</span> ${i.id}</p>
+      </div>
+    `;
+            document.getElementById("modalContent").innerHTML = modalContent;
+            document.getElementById("modal").classList.remove("hidden");
+        }
 
-            window.fecharModal = () => modal.classList.add('hidden');
-
-            containerHorarios.addEventListener('click', e => {
-                const btn = e.target.closest('.horario-card');
-                if (!btn) return;
-                document.querySelectorAll('.horario-card').forEach(b => b.classList.remove('bg-green-600'));
-                btn.classList.add('bg-green-600');
-                selectedIdaula = btn.dataset.idaula;
-                btnSelecionar.disabled = false;
-            });
-
-            btnSelecionar.addEventListener('click', () => {
-                if (!selectedIdaula) return;
-                fetch('http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            idaula: selectedIdaula,
-                            usuario_id: usuarioId
-                        })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success || data.sucesso) {
-                            alert('Aula selecionada com sucesso!');
-                            modal.classList.add('hidden');
-                        } else {
-                            alert('Erro ao selecionar aula!');
-                        }
-                    });
-            });
-            const filtroModalidade = document.getElementById('filtroModalidade');
-            const buscaNome = document.getElementById('buscaNome');
-
-            function filtrarCards() {
-                const modalidade = filtroModalidade.value.toLowerCase();
-                const nome = buscaNome.value.toLowerCase();
-
-                const cards = document.querySelectorAll('.professor-card'); // Seleciona todos os cards
-
-                cards.forEach(card => {
-                    const matchModalidade = !modalidade || card.dataset.modalidade.toLowerCase() === modalidade;
-                    const matchNome = card.dataset.nome.toLowerCase().includes(nome);
-
-                    if (matchModalidade && matchNome) {
-                        card.classList.remove('hidden');  // Torna o card visível
-                    } else {
-                        card.classList.add('hidden');     // Torna o card invisível
-                    }
-                });
-            }
-
-
-            filtroModalidade.addEventListener('change', filtrarCards);
-        });
+        // Fechar modal
+        function closeModal() {
+            document.getElementById("modal").classList.add("hidden");
+        }
     </script>
-
-
 </body>
 
 </html>
