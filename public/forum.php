@@ -107,7 +107,8 @@ require_once "../code/funcao.php";
   <div id="modalResponder" class="fixed inset-0 bg-black/70 flex items-center justify-center hidden z-50">
     <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 w-96 shadow-xl">
       <h3 class="text-xl font-bold text-emerald-400 mb-4">Responder ao Tópico</h3>
-      <form method="post" action="./api/index.php?entidade=resposta_forum&acao=cadastrar">
+      <form method="post" action="">
+        <input type="hidden" name="location">
         <!-- preenchido via JS -->
         <input type="hidden" name="forum_id" id="forumIdInput" value="">
 
@@ -132,6 +133,10 @@ require_once "../code/funcao.php";
 
   <!-- Script Modal -->
   <script>
+
+
+
+
     const modal = document.getElementById("modalResponder");
     const forumIdInput = document.getElementById("forumIdInput");
     const usuarioIdInput = document.getElementById("usuarioIdInput");
@@ -156,32 +161,30 @@ require_once "../code/funcao.php";
       }
     });
 
-  </script>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // botão "Ver todas"
-  document.querySelectorAll(".ver-mais").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const forumId = btn.dataset.forum;
-      const respostas = document.querySelectorAll(`.resposta[data-forum="${forumId}"]`);
+    document.addEventListener("DOMContentLoaded", () => {
+      // botão "Ver todas"
+      document.querySelectorAll(".ver-mais").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const forumId = btn.dataset.forum;
+          const respostas = document.querySelectorAll(`.resposta[data-forum="${forumId}"]`);
 
-      const ocultas = [...respostas].filter(r => r.classList.contains("hidden"));
+          const ocultas = [...respostas].filter(r => r.classList.contains("hidden"));
 
-      if (ocultas.length > 0) {
-        // mostrar todas
-        ocultas.forEach(r => r.classList.remove("hidden"));
-        btn.textContent = "Ver menos respostas";
-      } else {
-        // esconder a partir da 3ª
-        respostas.forEach((r, i) => {
-          if (i > 1) r.classList.add("hidden");
+          if (ocultas.length > 0) {
+            // mostrar todas
+            ocultas.forEach(r => r.classList.remove("hidden"));
+            btn.textContent = "Ver menos respostas";
+          } else {
+            // esconder a partir da 3ª
+            respostas.forEach((r, i) => {
+              if (i > 1) r.classList.add("hidden");
+            });
+            btn.textContent = `Ver todas as ${respostas.length} respostas`;
+          }
         });
-        btn.textContent = `Ver todas as ${respostas.length} respostas`;
-      }
+      });
     });
-  });
-});
-</script>
+  </script>
 
 </body>
 

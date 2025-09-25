@@ -26,8 +26,8 @@ if ($usuario !== null) {
         // Verifica se excedeu o limite de tentativas
         if ($_SESSION['tentativas_login'] >= 5) {
             $_SESSION['erro_login'] = '⚠️ Detectamos várias tentativas de acesso sem sucesso. 
-        Recomendamos que você refaça seu cadastro. 
-        Se você já possui cadastro e continua enfrentando problemas, por favor, entre em contato com o administrador do sistema.';
+            Recomendamos que você refaça seu cadastro. 
+            Se você já possui cadastro e continua enfrentando problemas, por favor, entre em contato com o administrador do sistema.';
 
             header('Location: ../public/login.php');
             exit;
@@ -50,9 +50,9 @@ if ($usuario !== null) {
 
     // Tipo padrão (aluno)
     $usuarioId = $usuario['id'];
-    $resposta = listarAvaliacaoFisica($usuarioId);
-    $usuario = listarPerfilUsuario($usuarioId);
-    $usuario['nome'] = $usuario[0]['nome'];
+    $usuario = listarPerfilProfessor($usuarioId);
+    var_dump($usuarioId);
+    $usuario['nome'] = $usuario[0]['nome_professor'];
     $_SESSION['id'] = $usuarioId;
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $usuario['nome'];

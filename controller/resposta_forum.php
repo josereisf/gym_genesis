@@ -66,3 +66,5 @@ switch ($acao) {
         enviarResposta(false, 'Ação inválida');
         break;
 }
+
+?>

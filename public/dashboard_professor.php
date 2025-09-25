@@ -7,7 +7,7 @@ if ($_SESSION['tipo'] == 1) {
   header('Location: dashboard_usuario.php');
   exit;
 }
-
+var_dump($_SESSION);
 $idprofessor = $_SESSION['id']; // ID do professor, pode ser dinâmico conforme a sessão do usuário
 $resultado = listarUsuarioCompleto($idprofessor);
 foreach ($resultado as $r) {
