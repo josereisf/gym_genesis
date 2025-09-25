@@ -196,6 +196,7 @@ if (isset($_GET['tipo'])) {
                 <table id="container_tabela" class="min-w-full text-sm text-white border-collapse">
                     <thead class="bg-darkgray text-[#f1f5f9]">
                         <tr>
+                            <th class="px-4 py-2 text-left">Ações</th>
                             <th class="px-4 py-2 text-left">Foto de Perfil</th>
                             <th class="px-4 py-2 text-left">Nome</th>
                             <th class="px-4 py-2 text-left">Cargo</th>
@@ -225,6 +226,7 @@ if (isset($_GET['tipo'])) {
                         foreach ($professores as $p) {
                         ?>
                             <tr class="hover:bg-darkgray/60 transition">
+                                <td class="px-4 py-2"><button>Botão 1</button><button>Botão 2</button><button>Botão 3</button></td>
                                 <td class="px-4 py-2">
                                     <img src="./uploads/<?= $p['foto_perfil'] ?>"
                                         alt="Foto de Perfil"
