@@ -1,8 +1,10 @@
 <?php
 require_once "../code/funcao.php";
-$tipo = 0;
-if (isset($_GET['tipo'])) {
+if (isset($_GET['tipo']) and $GET['tipo'] = 0) {
     $tipo = 0;
+}
+else {
+    $tipo = 1;
 }
 $professores = listarPerfilProfessor(null);
 ?>
