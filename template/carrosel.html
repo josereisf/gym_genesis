@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrossel com Swiper e Tailwind</title>
+
+    <!-- Importando o CSS do Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <!-- Importando o Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <div class="max-w-4xl mx-auto mt-10">
+        <!-- Swiper Container -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="../public/img/goli.jpg" alt="Imagem 1" class="w-full rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../public/img/logo.png" alt="Imagem 2" class="w-full rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../public/img/possivel_logo.png" alt="Imagem 3" class="w-full rounded-xl">
+                </div>
+            </div>
+
+            <!-- Botões de Navegação -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+            <!-- Indicadores -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializando o Swiper
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,          // Carrossel infinito
+            autoplay: {          // Autoplay com intervalo de 3 segundos
+                delay: 3000,
+            },
+            navigation: {        // Setas de navegação
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {        // Indicadores de navegação (pontos)
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            spaceBetween: 10,    // Espaço entre os slides
+        });
+    </script>
+
+</body>
+</html>

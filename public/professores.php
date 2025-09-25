@@ -61,6 +61,9 @@ $professores = listarPerfilProfessor(null);
     <!-- CSS do Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+    <!-- SwiperJS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <!-- DataTables Buttons -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
@@ -166,10 +169,10 @@ $professores = listarPerfilProfessor(null);
 
 
         <!-- Tabela -->
-        <div id="container_tabela" class="bg-darkblue p-4 rounded-xl shadow-lg">
+        <div class="bg-darkblue p-4 rounded-xl shadow-lg">
             <!-- Wrapper responsivo -->
             <div class="overflow-x-auto w-full">
-                <table class="min-w-full text-sm text-white border-collapse">
+                <table id="container_tabela" class="min-w-full text-sm text-white border-collapse">
                     <thead class="bg-darkgray text-[#f1f5f9]">
                         <tr>
                             <th class="px-4 py-2 text-left">Ações</th>
@@ -347,32 +350,61 @@ $professores = listarPerfilProfessor(null);
     </script>
     <script>
         // Dados dos instrutores
-        let instrutores = <?= json_encode($professores)?>;
-        console.table(instrutores);
+        const instrutores = [
+            <?php foreach ($professores as $p) { ?> {
+                    nome: "<?= $p['nome_professor'] ?>";
+                    cargo: "<?= $p['cargo_professor'] ?>",
+                    foto: "<?= $p['foto'] ?>",
+                    modalidade: "<?= $p['modalidade'] ?>",
+                    avaliacao: "<?= $p['avaliacao_media'] ?>",
+                    telefone: "<?= $p['telefone_professor'] ?>",
+                    email: "<?= $p['email_professor'] ?>",
+                    dataAula: "<?= $p['data_aula'] ?>",
+                    diaSemana: "<?= $p['dia_semana'] ?>",
+                    horario: "<?= $p['horarios_disponiveis'] ?>",
+                    salario: "<?= $p['salario'] ?>",
+                    id: "#<?= $p['funcionario_id'] ?>"
+                },
+            <?php } ?> {
+                nome: "Carlos Silva",
+                cargo: "Professor de Yoga",
+                foto: "https://randomuser.me/api/portraits/men/32.jpg",
+                modalidade: "Presencial",
+                avaliacao: "⭐⭐⭐⭐☆ (4.3)",
+                telefone: "(62) 99999-2468",
+                email: "carlos@academia.com",
+                dataAula: "25/09/2025",
+                diaSemana: "Sexta-feira",
+                horario: "10:00 - 12:00",
+                salario: "R$ 3.800,00",
+                id: "#13579"
+            }
+        ];
+
         // Abrir modal com dados dinâmicos
         function openModal(index) {
             const i = instrutores[index];
             const modalContent = `
       <div class="flex items-center gap-4 border-b border-[#3b82f6] pb-4 mb-4">
-        <img src="./uploads/${i.foto_perfil}" alt="Foto"
+        <img src="${i.foto}" alt="Foto"
           class="w-24 h-24 rounded-full shadow-lg border-2 border-[#a855f7]">
         <div>
-          <h2 class="text-2xl font-bold text-[#22d3ee]">${i.nome_professor}</h2>
-          <p class="text-gray-300">${i.cargo_professor}</p>
+          <h2 class="text-2xl font-bold text-[#22d3ee]">${i.nome}</h2>
+          <p class="text-gray-300">${i.cargo}</p>
           <span class="inline-block mt-2 px-3 py-1 text-xs font-semibold text-dark bg-[#22d3ee] rounded-full">
             ${i.modalidade}
           </span>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-200">
-        <p><span class="font-semibold text-[#22d3ee]">Avaliação:</span> ${i.avaliacao_media}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Telefone:</span> ${i.telefone_professor}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Email:</span> ${i.email_professor}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Data da Aula:</span> ${i.data_aula}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Dia da Semana:</span> ${i.dia_semana}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Horário:</span> ${i.horarios_disponiveis}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Avaliação:</span> ${i.avaliacao}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Telefone:</span> ${i.telefone}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Email:</span> ${i.email}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Data da Aula:</span> ${i.dataAula}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Dia da Semana:</span> ${i.diaSemana}</p>
+        <p><span class="font-semibold text-[#22d3ee]">Horário:</span> ${i.horario}</p>
         <p><span class="font-semibold text-[#22d3ee]">Salário:</span> ${i.salario}</p>
-        <p><span class="font-semibold text-[#22d3ee]">ID Funcionário:</span> ${i.funcionario_id}</p>
+        <p><span class="font-semibold text-[#22d3ee]">ID Funcionário:</span> ${i.id}</p>
       </div>
     `;
             document.getElementById("modalContent").innerHTML = modalContent;
