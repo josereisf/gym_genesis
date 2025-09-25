@@ -255,7 +255,3 @@ O **DataTables** é uma ferramenta poderosa e flexível. Com os recursos acima, 
 * Edição de dados diretamente na interface
 * Suporte a mobile
 * Integração com banco de dados via AJAX
-
----
-
-Se quiser, posso te mandar esse conteúdo em `.docx` ou `.pdf`, ou ainda criar um projeto completo com frontend + backend. Me avisa como quer usar esse material!

@@ -1711,7 +1711,7 @@ function editarFuncionario($idfuncionario, $nome, $data_contratacao, $salario, $
   }
 
   // Correção aqui:
-  mysqli_stmt_bind_param($comando, "sssiii", $nome,$data_contratacao, $salario, $cargo_id, $usuario_id, $idfuncionario);
+  mysqli_stmt_bind_param($comando, "sssiii", $nome, $data_contratacao, $salario, $cargo_id, $usuario_id, $idfuncionario);
 
   $funcionou = mysqli_stmt_execute($comando);
 
@@ -1898,6 +1898,7 @@ function listarAulaAgendadaUsuario($idusuario)
                 ag.dia_semana,
                 ag.hora_inicio,
                 ag.hora_fim,
+                ag.treino_id,
                 t.tipo AS treino_tipo,
                 t.descricao AS treino_desc,
                 f.idfuncionario,
@@ -2966,7 +2967,7 @@ function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observa
 }
 //
 
-function cadastrarFuncionario($nome,$data_contratacao, $salario, $cargo_id, $usuario_id): bool
+function cadastrarFuncionario($nome, $data_contratacao, $salario, $cargo_id, $usuario_id): bool
 {
   $conexao = conectar();
 
@@ -3877,19 +3878,48 @@ function deletarAulaUsuario($id)
   desconectar($conexao);
   return $funcionou;
 }
-
-function listarAulaUsurio($idaula)
+function listarAulaUsuario($idaula = null)
 {
   $conexao = conectar();
 
-  if ($idaula == null) {
-    $sql = "SELECT * FROM aula_usuario";
+  if ($idaula !== null) {
+    $sql = "SELECT 
+                    au.idaula,
+                    au.usuario_id,
+                    ag.data_aula,
+                    ag.dia_semana,
+                    ag.hora_inicio,
+                    ag.hora_fim,
+                    ag.treino_id,
+                    ag.funcionario_id,
+                    pf.nome AS nome_aluno,
+                    f.nome AS nome_professor
+                FROM aula_usuario AS au
+                INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
+                INNER JOIN perfil_usuario AS pf ON pf.usuario_id = au.usuario_id
+                INNER JOIN funcionario AS f ON f.idfuncionario = ag.funcionario_id
+                WHERE au.idaula = ?";
     $comando = mysqli_prepare($conexao, $sql);
-  } else {
-    $sql = "SELECT * FROM aula_usuario WHERE idaula = ?";
-    $comando = mysqli_prepare($conexao,  $sql);
     mysqli_stmt_bind_param($comando, "i", $idaula);
+  } else {
+    $sql = "SELECT 
+                    au.idaula,
+                    au.usuario_id,
+                    ag.data_aula,
+                    ag.dia_semana,
+                    ag.hora_inicio,
+                    ag.hora_fim,
+                    ag.treino_id,
+                    ag.funcionario_id,
+                    pf.nome AS nome_aluno,
+                    f.nome AS nome_professor
+                FROM aula_usuario AS au
+                INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
+                INNER JOIN perfil_usuario AS pf ON pf.usuario_id = au.usuario_id
+                INNER JOIN funcionario AS f ON f.idfuncionario = ag.funcionario_id";
+    $comando = mysqli_prepare($conexao, $sql);
   }
+
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
 
@@ -3900,5 +3930,6 @@ function listarAulaUsurio($idaula)
 
   mysqli_stmt_close($comando);
   desconectar($conexao);
+
   return $aulas;
 }

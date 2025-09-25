@@ -47,6 +47,16 @@ if ($usuario !== null) {
     }
 
     if ($tipo == 2) {
+
+    // Tipo padrão (aluno)
+    $usuarioId = $usuario['id'];
+    $resposta = listarAvaliacaoFisica($usuarioId);
+    $usuario = listarPerfilUsuario($usuarioId);
+    $usuario['nome'] = $usuario[0]['nome'];
+    $_SESSION['id'] = $usuarioId;
+    $_SESSION['email'] = $email;
+    $_SESSION['nome'] = $usuario['nome'];
+    $_SESSION['tipo'] = $tipo;
         header('Location: ../public/dashboard_professor.html');
         exit();
     }
