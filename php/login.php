@@ -51,13 +51,12 @@ if ($usuario !== null) {
     // Tipo padrão (aluno)
     $usuarioId = $usuario['id'];
     $usuario = listarPerfilProfessor($usuarioId);
-    var_dump($usuarioId);
     $usuario['nome'] = $usuario[0]['nome_professor'];
     $_SESSION['id'] = $usuarioId;
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $usuario['nome'];
     $_SESSION['tipo'] = $tipo;
-        header('Location: ../public/dashboard_professor.html');
+        header('Location: ../public/dashboard_professor.php');
         exit();
     }
 
