@@ -4,125 +4,127 @@ $tipo = 0;
 if (isset($_GET['tipo'])) {
     $tipo = 0;
 }
+$professores = listarPerfilProfessor(null);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabela de professor</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de professor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Configuração customizada do Tailwind -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            dark: "#0a0a0a",
-            darkblue: "#0d1b2a",
-            neonred: "#ff2e63",
-            neongreen: "#39ff14",
-            darkgray: "#1a1a1a",
-          },
-          fontFamily: {
-            montserrat: ["Montserrat", "sans-serif"],
-          },
-        },
-      },
-    };
-  </script>
+    <!-- Configuração customizada do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: "#0a0a0a",
+                        darkblue: "#0d1b2a",
+                        neonred: "#ff2e63",
+                        neongreen: "#39ff14",
+                        darkgray: "#1a1a1a",
+                    },
+                    fontFamily: {
+                        montserrat: ["Montserrat", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
 
-  <!-- CSS do DataTables (CDN) -->
-  <link rel="stylesheet"
+    <!-- CSS do DataTables (CDN) -->
+    <link rel="stylesheet"
         href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
         onerror="this.onerror=null;this.href='./css/dataTable.css';">
 
-  <!-- jQuery (CDN com fallback local) -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script>
-    if (typeof jQuery === "undefined") {
-      document.write('<script src="./js/jquery-3.7.1.min.js"><\/script>');
-    }
-  </script>
+    <!-- jQuery (CDN com fallback local) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        if (typeof jQuery === "undefined") {
+            document.write('<script src="./js/jquery-3.7.1.min.js"><\/script>');
+        }
+    </script>
 
-  <!-- DataTables (CDN com fallback local) -->
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script>
-    if (typeof $.fn.DataTable === "undefined") {
-      document.write('<script src="./js/dataTables.min.js"><\/script>');
-    }
-  </script>
+    <!-- DataTables (CDN com fallback local) -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        if (typeof $.fn.DataTable === "undefined") {
+            document.write('<script src="./js/dataTables.min.js"><\/script>');
+        }
+    </script>
 
-  <!-- CSS do Swiper -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- CSS do Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-  <!-- SwiperJS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- SwiperJS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <!-- DataTables Buttons -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-  <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- DataTables Buttons -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-  <style>
-    /* Animação para modais */
-    .animate-scaleUp {
-      animation: scaleUp 0.3s ease;
-    }
+    <style>
+        /* Animação para modais */
+        .animate-scaleUp {
+            animation: scaleUp 0.3s ease;
+        }
 
-    @keyframes scaleUp {
-      from {
-        transform: scale(0.9);
-        opacity: 0;
-      }
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
 
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-    /* 🎨 Customizações do DataTables */
-    .dt-button {
-      @apply px-4 py-2 rounded-lg font-semibold transition shadow-md;
-      @apply bg-gradient-to-r from-[#22d3ee] to-[#3b82f6] text-white;
-      margin-right: 0.5rem !important;
-    }
+        /* 🎨 Customizações do DataTables */
+        .dt-button {
+            @apply px-4 py-2 rounded-lg font-semibold transition shadow-md;
+            @apply bg-gradient-to-r from-[#22d3ee] to-[#3b82f6] text-white;
+            margin-right: 0.5rem !important;
+        }
 
-    .dt-button:hover {
-      @apply from-[#0ea5e9] to-[#2563eb] scale-105;
-    }
+        .dt-button:hover {
+            @apply from-[#0ea5e9] to-[#2563eb] scale-105;
+        }
 
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-      @apply px-3 py-1 rounded-md text-sm font-medium text-gray-200 bg-[#1e293b] border border-[#22d3ee] transition;
-      margin: 2px;
-    }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            @apply px-3 py-1 rounded-md text-sm font-medium text-gray-200 bg-[#1e293b] border border-[#22d3ee] transition;
+            margin: 2px;
+        }
 
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-      @apply bg-[#22d3ee] text-white border-[#22d3ee];
-    }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            @apply bg-[#22d3ee] text-white border-[#22d3ee];
+        }
 
-    .dataTables_wrapper .dataTables_filter input {
-      @apply px-3 py-2 rounded-md border border-[#22d3ee] bg-[#0f172a] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#22d3ee];
-    }
+        .dataTables_wrapper .dataTables_filter input {
+            @apply px-3 py-2 rounded-md border border-[#22d3ee] bg-[#0f172a] text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#22d3ee];
+        }
 
-    .dataTables_wrapper .dataTables_length select {
-      @apply px-2 py-1 rounded-md border border-[#22d3ee] bg-[#0f172a] text-gray-200 focus:outline-none;
-    }
+        .dataTables_wrapper .dataTables_length select {
+            @apply px-2 py-1 rounded-md border border-[#22d3ee] bg-[#0f172a] text-gray-200 focus:outline-none;
+        }
 
-    .dataTables_wrapper .dataTables_info {
-      @apply text-gray-400 text-sm mt-2;
-    }
-    span{
-        color: white;
-    }
-  </style>
+        .dataTables_wrapper .dataTables_info {
+            @apply text-gray-400 text-sm mt-2;
+        }
+
+        span {
+            color: white;
+        }
+    </style>
 </head>
 
 
@@ -135,44 +137,19 @@ if (isset($_GET['tipo'])) {
         <!-- Cards -->
         <div id="container_card" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-center min-h-screen px-6">
 
-            <!-- Card 1 -->
-            <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#3b82f6] hover:shadow-[#3b82f6]/40 transition">
-                <img src="https://randomuser.me/api/portraits/men/45.jpg"
-                    alt="Foto de Perfil"
-                    class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#a855f7]">
-                <h2 class="mt-4 text-xl font-bold text-[#22d3ee]">John Doe</h2>
-                <p class="text-[#cbd5e1] text-sm">Instrutor de Musculação</p>
-                <button onclick="openModal(0)"
-                    class="mt-4 px-4 py-2 bg-[#3b82f6] text-white rounded-lg hover:bg-[#22d3ee] transition">
-                    Ver mais
-                </button>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#a855f7] hover:shadow-[#a855f7]/40 transition">
-                <img src="https://randomuser.me/api/portraits/women/45.jpg"
-                    alt="Foto de Perfil"
-                    class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#3b82f6]">
-                <h2 class="mt-4 text-xl font-bold text-[#f43f5e]">Jane Smith</h2>
-                <p class="text-[#cbd5e1] text-sm">Personal Trainer</p>
-                <button onclick="openModal(1)"
-                    class="mt-4 px-4 py-2 bg-[#a855f7] text-white rounded-lg hover:bg-[#22d3ee] transition">
-                    Ver mais
-                </button>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#22d3ee] hover:shadow-[#22d3ee]/40 transition">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg"
-                    alt="Foto de Perfil"
-                    class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#3b82f6]">
-                <h2 class="mt-4 text-xl font-bold text-[#22d3ee]">Carlos Silva</h2>
-                <p class="text-[#cbd5e1] text-sm">Professor de Yoga</p>
-                <button onclick="openModal(2)"
-                    class="mt-4 px-4 py-2 bg-[#22d3ee] text-white rounded-lg hover:bg-[#3b82f6] transition">
-                    Ver mais
-                </button>
-            </div>
+            <?php foreach ($professores as $p) { ?>
+                <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#3b82f6] hover:shadow-[#3b82f6]/40 transition">
+                    <img src="./uploads/<?= $p['foto_perfil'] ?>"
+                        alt="Foto de Perfil"
+                        class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#a855f7]">
+                    <h2 class="mt-4 text-xl font-bold text-[#22d3ee]"><?= $p['nome_professor'] ?></h2>
+                    <p class="text-[#cbd5e1] text-sm"><?= $p['cargo_professor'] ?></p>
+                    <button onclick="openModal(0)"
+                        class="mt-4 px-4 py-2 bg-[#3b82f6] text-white rounded-lg hover:bg-[#22d3ee] transition">
+                        Ver mais
+                    </button>
+                </div>
+            <?php } ?>
         </div>
 
         <!-- Modal -->
@@ -222,7 +199,6 @@ if (isset($_GET['tipo'])) {
                     </thead>
                     <tbody class="divide-y divide-darkgray">
                         <?php
-                        $professores = listarPerfilProfessor(null);
                         foreach ($professores as $p) {
                         ?>
                             <tr class="hover:bg-darkgray/60 transition">
@@ -372,35 +348,22 @@ if (isset($_GET['tipo'])) {
     </script>
     <script>
         // Dados dos instrutores
-        const instrutores = [{
-                nome: "John Doe",
-                cargo: "Instrutor de Musculação",
-                foto: "https://randomuser.me/api/portraits/men/45.jpg",
-                modalidade: "Presencial",
-                avaliacao: "⭐⭐⭐⭐☆ (4.0)",
-                telefone: "(62) 99999-1234",
-                email: "john@academia.com",
-                dataAula: "20/09/2025",
-                diaSemana: "Segunda-feira",
-                horario: "08:00 - 12:00",
-                salario: "R$ 3.500,00",
-                id: "#12345"
-            },
-            {
-                nome: "Jane Smith",
-                cargo: "Personal Trainer",
-                foto: "https://randomuser.me/api/portraits/women/45.jpg",
-                modalidade: "Online",
-                avaliacao: "⭐⭐⭐⭐⭐ (5.0)",
-                telefone: "(62) 99999-5678",
-                email: "jane@academia.com",
-                dataAula: "22/09/2025",
-                diaSemana: "Quarta-feira",
-                horario: "14:00 - 18:00",
-                salario: "R$ 4.200,00",
-                id: "#67890"
-            },
-            {
+        const instrutores = [
+            <?php foreach ($professores as $p) { ?> {
+                    nome: "<?= $p['nome_professor'] ?>";
+                    cargo: "<?= $p['cargo_professor'] ?>",
+                    foto: "<?= $p['foto'] ?>",
+                    modalidade: "<?= $p['modalidade'] ?>",
+                    avaliacao: "<?= $p['avaliacao_media'] ?>",
+                    telefone: "<?= $p['telefone_professor'] ?>",
+                    email: "<?= $p['email_professor'] ?>",
+                    dataAula: "<?= $p['data_aula'] ?>",
+                    diaSemana: "<?= $p['dia_semana'] ?>",
+                    horario: "<?= $p['horarios_disponiveis'] ?>",
+                    salario: "<?= $p['salario'] ?>",
+                    id: "#<?= $p['funcionario_id'] ?>"
+                },
+            <?php } ?> {
                 nome: "Carlos Silva",
                 cargo: "Professor de Yoga",
                 foto: "https://randomuser.me/api/portraits/men/32.jpg",
