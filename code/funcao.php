@@ -3879,7 +3879,7 @@ function deletarAulaUsuario($id)
   return $funcionou;
 }
 
-function listarAulaUsurio($idaula)
+function listarAulaUsuario($idaula)
 {
   $conexao = conectar();
 
