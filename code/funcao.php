@@ -3934,3 +3934,18 @@ function listarAulaUsuario($idaula)
 
   return $aulas;
 }
+function listarColunasTabela($tabela){
+  $conexao = conectar();
+  $tabela = mysqli_real_escape_string($conexao, $tabela); 
+  $sql = "SHOW COLUMNS FROM $tabela";
+  $comando = mysqli_query($conexao, $sql);
+  $colunas = [];
+  while ($coluna = mysqli_fetch_assoc($comando)) {
+    $colunas[] = $coluna;
+  }
+
+  mysqli_free_result($comando);
+  desconectar($conexao);
+
+  return $colunas;
+}
