@@ -1,0 +1,611 @@
+[
+  {
+    "identificador": "UC 01",
+    "nome": "Cadastrar Usuário",
+    "ator_principal": "Usuário",
+    "interessados": "Usuário: deseja criar conta no sistema",
+    "pre_condicoes": "Ter email válido e acesso à internet.",
+    "pos_condicoes": "Usuário cadastrado no sistema.",
+    "fluxo_basico": [
+      "Usuário acessa página de cadastro.",
+      "Preenche dados pessoais e credenciais.",
+      "Sistema valida informações.",
+      "Conta é criada com sucesso."
+    ],
+    "fluxo_alternativo": [
+      "Email já cadastrado - sistema informa duplicidade.",
+      "Dados inválidos - sistema mostra erros de validação."
+    ],
+    "frequencia": "Aproximadamente 50 vezes por dia."
+  },
+  {
+    "identificador": "UC 02",
+    "nome": "Realizar Login",
+    "ator_principal": "Usuário",
+    "interessados": "Usuário: deseja acessar sua conta",
+    "pre_condicoes": "Estar cadastrado no sistema.",
+    "pos_condicoes": "Usuário autenticado no sistema.",
+    "fluxo_basico": [
+      "Usuário inscre email e senha.",
+      "Clica em 'Entrar'.",
+      "Sistema valida credenciais.",
+      "Acesso concedido ao dashboard."
+    ],
+    "fluxo_alternativo": [
+      "Credenciais incorretas - sistema solicita reenvio.",
+      "Conta inativa - sistema orienta ativação."
+    ],
+    "frequencia": "Aproximadamente 300 vezes por dia."
+  },
+  {
+    "identificador": "UC 03",
+    "nome": "Gerenciar Metas Pessoais",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: deseja definir e acompanhar objetivos",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Metas registradas ou atualizadas.",
+    "fluxo_basico": [
+      "Aluno acessa seção de Metas.",
+      "Visualiza metas atuais.",
+      "Define novas metas ou ajusta existentes.",
+      "Sistema salva alterações."
+    ],
+    "fluxo_alternativo": [
+      "Meta irreais - sistema sugere ajustes.",
+      "Prazo inválido - sistema notifica inconsistência."
+    ],
+    "frequencia": "Aproximadamente 80 vezes por dia."
+  },
+  {
+    "identificador": "UC 04",
+    "nome": "Registrar Histórico de Peso",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: quer acompanhar evolução corporal",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Peso registrado no histórico.",
+    "fluxo_basico": [
+      "Aluno acessa histórico pessoal.",
+      "Informa peso atual e data.",
+      "Sistema registra a informação.",
+      "Atualiza gráficos de progresso."
+    ],
+    "fluxo_alternativo": [
+      "Peso inconsistentes - sistema solicita confirmação.",
+      "Data futura - sistema não permite registro."
+    ],
+    "frequencia": "Aproximadamente 60 vezes por dia."
+  },
+  {
+    "identificador": "UC 05",
+    "nome": "Consultar Mensagens",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: deseja ver mensagens do professor",
+    "pre_condicoes": "Estar logado e ter professor atribuído.",
+    "pos_condicoes": "Mensagens visualizadas.",
+    "fluxo_basico": [
+      "Aluno acessa painel de mensagens.",
+      "Sistema lista mensagens recebidas.",
+      "Aluno seleciona mensagem para ler.",
+      "Sistema marca como lida."
+    ],
+    "fluxo_alternativo": [
+      "Nenhuma mensagem - sistema informa ausência.",
+      "Mensagem com anexo - sistema permite download."
+    ],
+    "frequencia": "Aproximadamente 120 vezes por dia."
+  },
+  {
+    "identificador": "UC 06",
+    "nome": "Gerenciar Perfil",
+    "ator_principal": "Usuário",
+    "interessados": "Usuário: quer manter dados atualizados",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Perfil atualizado.",
+    "fluxo_basico": [
+      "Usuário acessa configurações do perfil.",
+      "Edita informações pessoais.",
+      "Sistema valida alterações.",
+      "Dados são salvos."
+    ],
+    "fluxo_alternativo": [
+      "Dados inválidos - sistema mostra erros.",
+      "Foto muito grande - sistema solicita redimensionamento."
+    ],
+    "frequencia": "Aproximadamente 40 vezes por dia."
+  },
+  {
+    "identificador": "UC 07",
+    "nome": "Criar Tópico no Fórum",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: deseja iniciar discussão",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Tópico criado no fórum.",
+    "fluxo_basico": [
+      "Aluno acessa fórum da comunidade.",
+      "Clica em 'Novo Tópico'.",
+      "Preenche título e conteúdo.",
+      "Publica tópico."
+    ],
+    "fluxo_alternativo": [
+      "Conteúdo inadequado - sistema bloqueia publicação.",
+      "Título duplicado - sistema sugere alteração."
+    ],
+    "frequencia": "Aproximadamente 25 vezes por dia."
+  },
+  {
+    "identificador": "UC 08",
+    "nome": "Responder no Fórum",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: quer participar de discussão",
+    "pre_condicoes": "Estar logado e tópico existir.",
+    "pos_condicoes": "Resposta publicada.",
+    "fluxo_basico": [
+      "Aluno acessa tópico desejado.",
+      "Digita resposta na caixa de texto.",
+      "Clica em 'Responder'.",
+      "Resposta é publicada."
+    ],
+    "fluxo_alternativo": [
+      "Resposta vazia - sistema não permite envio.",
+      "Tópico trancado - sistema informa impossibilidade."
+    ],
+    "frequencia": "Aproximadamente 100 vezes por dia."
+  },
+  {
+    "identificador": "UC 09",
+    "nome": "Consultar Dicas Nutricionais",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: busca orientação alimentar",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Dicas consultadas.",
+    "fluxo_basico": [
+      "Aluno acessa biblioteca nutricional.",
+      "Navega por categorias de dicas.",
+      "Seleciona conteúdo desejado.",
+      "Sistema exibe informações."
+    ],
+    "fluxo_alternativo": [
+      "Busca sem resultados - sistema sugere termos.",
+      "Conteúdo premium - sistema oferece upgrade."
+    ],
+    "frequencia": "Aproximadamente 90 vezes por dia."
+  },
+  {
+    "identificador": "UC 10",
+    "nome": "Gerenciar Dieta do Aluno",
+    "ator_principal": "Professor",
+    "interessados": "Professor: precisa criar plano alimentar",
+    "pre_condicoes": "Estar logado como professor.",
+    "pos_condicoes": "Dieta definida para aluno.",
+    "fluxo_basico": [
+      "Professor seleciona aluno.",
+      "Acessa módulo de nutrição.",
+      "Define plano alimentar personalizado.",
+      "Sistema registra dieta."
+    ],
+    "fluxo_alternativo": [
+      "Alergias não consideradas - sistema alerta.",
+      "Valores nutricionais inadequados - sistema sugere ajustes."
+    ],
+    "frequencia": "Aproximadamente 35 vezes por dia."
+  },
+  {
+    "identificador": "UC 11",
+    "nome": "Visualizar Aulas",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: quer ver aulas disponíveis",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Aulas visualizadas.",
+    "fluxo_basico": [
+      "Aluno acessa seção de Aulas.",
+      "Sistema lista aulas disponíveis.",
+      "Aluno filtra por tipo ou professor.",
+      "Seleciona aula para detalhes."
+    ],
+    "fluxo_alternativo": [
+      "Nenhuma aula - sistema informa disponibilidade futura.",
+      "Aula lotada - sistema mostra lista de espera."
+    ],
+    "frequencia": "Aproximadamente 80 vezes por dia."
+  },
+  {
+    "identificador": "UC 12",
+    "nome": "Repetir Aula para Aluno",
+    "ator_principal": "Professor",
+    "interessados": "Professor: quer reassignar aula",
+    "pre_condicoes": "Estar logado como professor.",
+    "pos_condicoes": "Aula reassignada.",
+    "fluxo_basico": [
+      "Professor acessa histórico de aulas.",
+      "Seleciona aula para repetir.",
+      "Escolhe aluno destino.",
+      "Confirma reassignação."
+    ],
+    "fluxo_alternativo": [
+      "Aluno incompatível - sistema alerta restrições.",
+      "Conflito de horário - sistema sugere alternativas."
+    ],
+    "frequencia": "Aproximadamente 20 vezes por dia."
+  },
+  {
+    "identificador": "UC 13",
+    "nome": "Consultar Avaliação Física",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: deseja ver métricas corporais",
+    "pre_condicoes": "Estar logado e ter avaliações.",
+    "pos_condicoes": "Avaliações visualizadas.",
+    "fluxo_basico": [
+      "Aluno acessa avaliações físicas.",
+      "Sistema exibe histórico.",
+      "Seleciona avaliação específica.",
+      "Visualiza métricas detalhadas."
+    ],
+    "fluxo_alternativo": [
+      "Sem avaliações - sistema orienta agendar.",
+      "Dados inconsistentes - sistema alerta."
+    ],
+    "frequencia": "Aproximadamente 70 vezes por dia."
+  },
+  {
+    "identificador": "UC 14",
+    "nome": "Registrar Avaliação Física",
+    "ator_principal": "Professor",
+    "interessados": "Professor: precisa registrar avaliação",
+    "pre_condicoes": "Estar logado como professor.",
+    "pos_condicoes": "Avaliação registrada.",
+    "fluxo_basico": [
+      "Professor seleciona aluno.",
+      "Acessa formulário de avaliação.",
+      "Preenche métricas corporais.",
+      "Salva avaliação."
+    ],
+    "fluxo_alternativo": [
+      "Valores extremos - sistema solicita confirmação.",
+      "Avaliação duplicada - sistema alerta."
+    ],
+    "frequencia": "Aproximadamente 30 vezes por dia."
+  },
+  {
+    "identificador": "UC 15",
+    "nome": "Registrar Execução de Treino",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: quer registrar treino realizado",
+    "pre_condicoes": "Estar logado e ter treino atribuído.",
+    "pos_condicoes": "Treino registrado.",
+    "fluxo_basico": [
+      "Aluno acessa treino do dia.",
+      "Marca exercícios completados.",
+      "Registra cargas e repetições.",
+      "Salva progresso."
+    ],
+    "fluxo_alternativo": [
+      "Exercício não realizado - sistema permite pular.",
+      "Carga diferente - sistema permite ajuste."
+    ],
+    "frequencia": "Aproximadamente 200 vezes por dia."
+  },
+  {
+    "identificador": "UC 16",
+    "nome": "Visualizar Treinos",
+    "ator_principal": "Aluno",
+    "interessados": "Aluno: precisa ver rotina de exercícios",
+    "pre_condicoes": "Estar logado e ter treino.",
+    "pos_condicoes": "Treino visualizado.",
+    "fluxo_basico": [
+      "Aluno acessa seção de Treinos.",
+      "Sistema exibe rotina atual.",
+      "Navega entre dias da semana.",
+      "Visualiza detalhes dos exercícios."
+    ],
+    "fluxo_alternativo": [
+      "Treino desatualizado - sistema solicita atualização.",
+      "Exercício com vídeo - sistema exibe demonstração."
+    ],
+    "frequencia": "Aproximadamente 150 vezes por dia."
+  },
+  {
+    "identificador": "UC 17",
+    "nome": "Gerenciar Treino do Aluno",
+    "ator_principal": "Professor",
+    "interessados": "Professor: precisa criar plano de treino",
+    "pre_condicoes": "Estar logado como professor.",
+    "pos_condicoes": "Treino definido para aluno.",
+    "fluxo_basico": [
+      "Professor seleciona aluno.",
+      "Acessa módulo de treinos.",
+      "Monta rotina personalizada.",
+      "Salva treino."
+    ],
+    "fluxo_alternativo": [
+      "Exercício incompatível - sistema alerta.",
+      "Carga excessiva - sistema sugere ajustes."
+    ],
+    "frequencia": "Aproximadamente 40 vezes por dia."
+  },
+  {
+    "identificador": "UC 18",
+    "nome": "Gerenciar Histórico de Exercícios",
+    "ator_principal": "Professor",
+    "interessados": "Professor: quer analisar evolução",
+    "pre_condicoes": "Estar logado como professor.",
+    "pos_condicoes": "Histórico analisado.",
+    "fluxo_basico": [
+      "Professor acessa histórico do aluno.",
+      "Filtra por período ou exercício.",
+      "Analisa progresso e estatísticas.",
+      "Gera relatórios se necessário."
+    ],
+    "fluxo_alternativo": [
+      "Dados insuficientes - sistema informa necessidade de mais registros.",
+      "Queda de performance - sistema destaca para análise."
+    ],
+    "frequencia": "Aproximadamente 25 vezes por dia."
+  },
+  {
+    "identificador": "UC 19",
+    "nome": "Utilizar Exercícios em Treinos",
+    "ator_principal": "Professor",
+    "interessados": "Professor: precisa selecionar exercícios",
+    "pre_condicoes": "Estar logado como professor.",
+    "pos_condicoes": "Exercícios adicionados ao treino.",
+    "fluxo_basico": [
+      "Professor cria novo treino.",
+      "Acessa biblioteca de exercícios.",
+      "Seleciona exercícios desejados.",
+      "Adiciona ao treino."
+    ],
+    "fluxo_alternativo": [
+      "Exercício não encontrado - sistema permite busca.",
+      "Exercício complexo - sistema sugere alternativas."
+    ],
+    "frequencia": "Aproximadamente 50 vezes por dia."
+  },
+  {
+    "identificador": "UC 20",
+    "nome": "Reduzir Produtos",
+    "ator_principal": "Administrador",
+    "interessados": "Administrador: precisa ajustar estoque",
+    "pre_condicoes": "Estar logado como administrador.",
+    "pos_condicoes": "Estoque ajustado.",
+    "fluxo_basico": [
+      "Administrador acessa gestão de produtos.",
+      "Seleciona produto para ajuste.",
+      "Define nova quantidade em estoque.",
+      "Salva alterações."
+    ],
+    "fluxo_alternativo": [
+      "Quantidade negativa - sistema não permite.",
+      "Produto em pedidos pendentes - sistema alerta."
+    ],
+    "frequencia": "Aproximadamente 15 vezes por dia."
+  },
+  {
+    "identificador": "UC 21",
+    "nome": "Gerenciar Pagamentos",
+    "ator_principal": "Administrador",
+    "interessados": "Administrador: controlar fluxo financeiro",
+    "pre_condicoes": "Estar logado como administrador.",
+    "pos_condicoes": "Pagamentos processados.",
+    "fluxo_basico": [
+      "Administrador acessa painel financeiro.",
+      "Visualiza pagamentos pendentes.",
+      "Atualiza status conforme processamento.",
+      "Registra confirmações."
+    ],
+    "fluxo_alternativo": [
+      "Pagamento em disputa - sistema permite análise detalhada.",
+      "Chargeback - sistema registra contestação."
+    ],
+    "frequencia": "Aproximadamente 30 vezes por dia."
+  },
+  {
+    "identificador": "UC 22",
+    "nome": "Gerenciar Produtos",
+    "ator_principal": "Administrador",
+    "interessados": "Administrador: manter catálogo atualizado",
+    "pre_condicoes": "Estar logado como administrador.",
+    "pos_condicoes": "Produto cadastrado/editado.",
+    "fluxo_basico": [
+      "Administrador acessa catálogo.",
+      "Adiciona novo produto ou edita existente.",
+      "Preenche informações completas.",
+      "Publica no sistema."
+    ],
+    "fluxo_alternativo": [
+      "Código duplicado - sistema não permite.",
+      "Preço inválido - sistema valida formatação."
+    ],
+    "frequencia": "Aproximadamente 20 vezes por dia."
+  },
+  {
+    "identificador": "UC 23",
+    "nome": "Gerenciar Pedidos",
+    "ator_principal": "Administrador",
+    "interessados": "Administrador: acompanhar vendas",
+    "pre_condicoes": "Estar logado como administrador.",
+    "pos_condicoes": "Pedidos processados.",
+    "fluxo_basico": [
+      "Administrador acessa painel de pedidos.",
+      "Visualiza pedidos por status.",
+      "Atualiza andamento dos pedidos.",
+      "Registra entregas realizadas."
+    ],
+    "fluxo_alternativo": [
+      "Pedido com problema - sistema permite observações.",
+      "Cliente não localizado - sistema alerta."
+    ],
+    "frequencia": "Aproximadamente 40 vezes por dia."
+  },
+  {
+    "identificador": "UC 24",
+    "nome": "Efetuar Pagamento",
+    "ator_principal": "Cliente",
+    "interessados": "Cliente: finalizar compra",
+    "pre_condicoes": "Ter produtos no carrinho.",
+    "pos_condicoes": "Pagamento processado.",
+    "fluxo_basico": [
+      "Cliente acessa checkout.",
+      "Seleciona forma de pagamento.",
+      "Insere dados necessários.",
+      "Confirma transação."
+    ],
+    "fluxo_alternativo": [
+      "Pagamento recusado - sistema sugere nova tentativa.",
+      "Dados inválidos - sistema mostra erros."
+    ],
+    "frequencia": "Aproximadamente 35 vezes por dia."
+  },
+  {
+    "identificador": "UC 25",
+    "nome": "Login do Gestor",
+    "ator_principal": "Gestor",
+    "interessados": "Gestor: acessar painel administrativo",
+    "pre_condicoes": "Ter credenciais de gestor.",
+    "pos_condicoes": "Acesso concedido ao painel.",
+    "fluxo_basico": [
+      "Gestor acessa página de login administrativo.",
+      "Insere credenciais específicas.",
+      "Sistema valida permissões.",
+      "Acesso ao painel gestor concedido."
+    ],
+    "fluxo_alternativo": [
+      "Credenciais incorretas - sistema bloqueia após tentativas.",
+      "Permissões insuficientes - sistema nega acesso."
+    ],
+    "frequencia": "Aproximadamente 10 vezes por dia."
+  },
+  {
+    "identificador": "UC 26",
+    "nome": "Incluir Coberturas",
+    "ator_principal": "Gestor",
+    "interessados": "Gestor: adicionar benefícios a planos",
+    "pre_condicoes": "Estar logado como gestor.",
+    "pos_condicoes": "Coberturas adicionadas.",
+    "fluxo_basico": [
+      "Gestor acessa gestão de planos.",
+      "Seleciona plano para modificar.",
+      "Adiciona novas coberturas.",
+      "Salva alterações."
+    ],
+    "fluxo_alternativo": [
+      "Cobertura conflitante - sistema alerta incompatibilidade.",
+      "Custo excessivo - sistema calcula impacto."
+    ],
+    "frequencia": "Aproximadamente 5 vezes por dia."
+  },
+  {
+    "identificador": "UC 27",
+    "nome": "Adicionar Pacientes",
+    "ator_principal": "Administrador",
+    "interessados": "Administrador: cadastrar novos usuários",
+    "pre_condicoes": "Estar logado como administrador.",
+    "pos_condicoes": "Paciente cadastrado.",
+    "fluxo_basico": [
+      "Administrador acessa cadastro de pacientes.",
+      "Preenche dados do novo usuário.",
+      "Define plano inicial.",
+      "Salva cadastro."
+    ],
+    "fluxo_alternativo": [
+      "Usuário já existe - sistema sugere vincular conta existente.",
+      "Dados incompletos - sistema não permite finalizar."
+    ],
+    "frequencia": "Aproximadamente 15 vezes por dia."
+  },
+  {
+    "identificador": "UC 28",
+    "nome": "Gerenciar Assinaturas",
+    "ator_principal": "Gestor",
+    "interessados": "Gestor: controlar planos de assinatura",
+    "pre_condicoes": "Estar logado como gestor.",
+    "pos_condicoes": "Assinaturas gerenciadas.",
+    "fluxo_basico": [
+      "Gestor acessa módulo de assinaturas.",
+      "Cria/edita planos disponíveis.",
+      "Define valores e benefícios.",
+      "Ativa/desativa planos."
+    ],
+    "fluxo_alternativo": [
+      "Plano com usuários ativos - sistema alerta impacto.",
+      "Valor abaixo do custo - sistema calcula prejuízo."
+    ],
+    "frequencia": "Aproximadamente 8 vezes por dia."
+  },
+  {
+    "identificador": "UC 29",
+    "nome": "Pesquisar Assinaturas",
+    "ator_principal": "Gestor",
+    "interessados": "Gestor: encontrar assinaturas específicas",
+    "pre_condicoes": "Estar logado como gestor.",
+    "pos_condicoes": "Assinaturas localizadas.",
+    "fluxo_basico": [
+      "Gestor acessa pesquisa de assinaturas.",
+      "Aplica filtros por usuário, plano ou status.",
+      "Sistema retorna resultados.",
+      "Gestor visualiza detalhes."
+    ],
+    "fluxo_alternativo": [
+      "Nenhum resultado - sistema sugere ajustar filtros.",
+      "Muitos resultados - sistema oferece refinamento."
+    ],
+    "frequencia": "Aproximadamente 12 vezes por dia."
+  },
+  {
+    "identificador": "UC 30",
+    "nome": "Gerenciar Funções e Cargos",
+    "ator_principal": "Gestor",
+    "interessados": "Gestor: controlar permissões do sistema",
+    "pre_condicoes": "Estar logado como gestor.",
+    "pos_condicoes": "Funções atualizadas.",
+    "fluxo_basico": [
+      "Gestor acessa gestão de cargos.",
+      "Cria/edita funções disponíveis.",
+      "Define permissões para cada função.",
+      "Atribui funções aos usuários."
+    ],
+    "fluxo_alternativo": [
+      "Permissões conflitantes - sistema alerta inconsistências.",
+      "Função em uso - sistema não permite exclusão."
+    ],
+    "frequencia": "Aproximadamente 5 vezes por dia."
+  },
+  {
+    "identificador": "UC 31",
+    "nome": "Vincular Professor a Aluno",
+    "ator_principal": "Gestor",
+    "interessados": "Gestor: atribuir alunos aos professores",
+    "pre_condicoes": "Estar logado como gestor.",
+    "pos_condicoes": "Vínculo estabelecido.",
+    "fluxo_basico": [
+      "Gestor acessa gestão de vínculos.",
+      "Seleciona professor e aluno.",
+      "Confirma associação.",
+      "Sistema registra vínculo."
+    ],
+    "fluxo_alternativo": [
+      "Professor com lotação máxima - sistema alerta.",
+      "Vínculo existente - sistema informa duplicidade."
+    ],
+    "frequencia": "Aproximadamente 10 vezes por dia."
+  },
+  {
+    "identificador": "UC 32",
+    "nome": "Gerenciar Endereços",
+    "ator_principal": "Usuário",
+    "interessados": "Usuário: manter endereços cadastrados",
+    "pre_condicoes": "Estar logado no sistema.",
+    "pos_condicoes": "Endereços atualizados.",
+    "fluxo_basico": [
+      "Usuário acessa gestão de endereços.",
+      "Adiciona novo endereço ou edita existente.",
+      "Preenche informações completas.",
+      "Salva alterações."
+    ],
+    "fluxo_alternativo": [
+      "Endereço inválido - sistema valvia via API de CEP.",
+      "Endereço principal - sistema permite definição."
+    ],
+    "frequencia": "Aproximadamente 20 vezes por dia."
+  }
+]
+
