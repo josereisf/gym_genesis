@@ -2,8 +2,8 @@
 
 use Vtiful\Kernel\Format;
 
-require_once "../code/funcao.php";
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/../code/funcao.php";
+require_once __DIR__ . "/php/verificarLogado.php";
 
 
 // var_dump($_SESSION);

@@ -1,6 +1,6 @@
 <?
 
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/php/verificarLogado.php";
 
 $id = $_SESSION['id']; // Simulando um ID de usuário para testes, remova em produção
 $nome = $_SESSION['nome']; // Simulando um ID de usuário para testes, remova em produção
@@ -36,7 +36,7 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
-  <form id="formulario" method="POST" enctype="multipart/form-data" action="../php/primeira_avaliacao.php" class="w-full max-w-xl bg-gray-800 rounded-2xl p-8 space-y-8 shadow-xl">
+  <form id="formulario" method="POST" enctype="multipart/form-data" action="./php/primeira_avaliacao.php" class="w-full max-w-xl bg-gray-800 rounded-2xl p-8 space-y-8 shadow-xl">
     <div class="w-full bg-gray-700 rounded-full h-2 mb-4">
       <div id="barra-progresso" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 16.6%;"></div>
     </div>

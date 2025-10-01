@@ -34,7 +34,7 @@ unset($_SESSION['erro_login']); // Limpa depois de exibir
   <div class="w-full max-w-sm bg-[#1e2a3a] p-8 rounded-2xl shadow-lg">
     <h1 class="text-3xl font-bold text-center mb-6">Gym Genesis</h1>
 
-    <form action="../php/login.php" method="post" class="space-y-4">
+    <form action="./php/login.php" method="post" class="space-y-4">
       <div>
         <label for="email" class="block text-sm font-medium">Email</label>
         <input

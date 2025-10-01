@@ -1,5 +1,5 @@
 <?php
-require_once '../code/funcao.php';
+require_once __DIR__ . '/../../code/funcao.php';
 session_start();
 
 $idusuario = $_POST['idusuario'];
@@ -57,6 +57,6 @@ if (!$resposta) {
 }
 
 $_SESSION['id'] = $idusuario;
-header('Location: ../public/dashboard_usuario.php');
+header('Location: ../dashboard_usuario.php');
 exit;
 
