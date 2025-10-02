@@ -6,10 +6,9 @@ require_once __DIR__ . "/../code/funcao.php";
 require_once __DIR__ . "/php/verificarLogado.php";
 
 
-// var_dump($_SESSION);
-
 $idaluno = $_SESSION["id"];
 $nomes = $_SESSION['nome'] ?? "-";
+// var_dump($_SESSION["id"]);
 
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
 $foto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg==';
@@ -33,12 +32,30 @@ if ($resultados && count($resultados) > 0) {
 
 $metas = listarMetaUsuario($idaluno);
 
-$metasProcessadas = []; // inicializa sempre
+$metasProcessadas = [];
 
 if (!empty($metas)) {
   foreach ($metas as $meta) {
-    // Cálculo do progresso (exemplo, você pode trocar pela sua regra real)
-    $progresso = rand(20, 100);
+    $inicioRaw = $meta['data_inicio'] ?? null;
+    $limiteRaw = $meta['data_limite'] ?? null;
+
+    $progresso = 0;
+
+    if ($inicioRaw && $limiteRaw) {
+      $hoje     = strtotime(date("Y-m-d"));
+      $inicio   = strtotime($inicioRaw);
+      $limite   = strtotime($limiteRaw);
+
+      if ($hoje <= $inicio) {
+        $progresso = 0; // ainda não começou
+      } elseif ($hoje >= $limite) {
+        $progresso = 100; // já passou do prazo
+      } else {
+        $total     = $limite - $inicio;
+        $andamento = $hoje - $inicio;
+        $progresso = round(($andamento / $total) * 100, 2);
+      }
+    }
 
     // Definição de cores conforme progresso
     if ($progresso >= 100) {
@@ -52,27 +69,25 @@ if (!empty($metas)) {
       $corTexto = "text-red-400";
     }
 
-    // Dados formatados (com fallback seguro)
+    // Dados formatados
     $descricao   = !empty($meta['descricao']) ? htmlspecialchars($meta['descricao']) : "-";
-    $inicio      = !empty($meta['data_inicio']) ? date("d/m/Y", strtotime($meta['data_inicio'])) : "-";
-    $limite      = !empty($meta['data_limite']) ? date("d/m/Y", strtotime($meta['data_limite'])) : "-";
+    $inicioFmt   = $inicioRaw ? date("d/m/Y", strtotime($inicioRaw)) : "-";
+    $limiteFmt   = $limiteRaw ? date("d/m/Y", strtotime($limiteRaw)) : "-";
     $status      = !empty($meta['status']) ? ucfirst($meta['status']) : "-";
     $usuario     = !empty($meta['nome']) ? htmlspecialchars($meta['nome']) : "-";
 
-    // Sempre popula com valores, mesmo se faltarem dados
     $metasProcessadas[] = [
       'descricao'   => $descricao,
-      'progresso'   => $progresso ?? 0,
-      'corBarra'    => $corBarra ?? "bg-gray-500",
-      'corTexto'    => $corTexto ?? "text-gray-400",
-      'inicio'      => $inicio,
-      'limite'      => $limite,
+      'progresso'   => $progresso,
+      'corBarra'    => $corBarra,
+      'corTexto'    => $corTexto,
+      'inicio'      => $inicioFmt,
+      'limite'      => $limiteFmt,
       'status'      => $status,
       'usuario'     => $usuario
     ];
   }
 } else {
-  // Se não houver metas, coloca um item "vazio" para não quebrar a tela
   $metasProcessadas[] = [
     'descricao'   => "-",
     'progresso'   => 0,
@@ -84,6 +99,7 @@ if (!empty($metas)) {
     'usuario'     => "-"
   ];
 }
+
 // echo '<pre>';
 // var_dump(
 //   $metas
@@ -183,7 +199,8 @@ if ($dia_fim === null || $dia_fim === "-") {
 // $relacionamento = listarProfessorAluno($idprofessor, $idaluno);
 // pega todas as dicas
 $dicas = listarDicasNutricionais();
-
+$aula_agendada = listarAulaAgendadaUsuario($idaluno);
+$aula_agendada = array_slice($aula_agendada, 0, 5);
 ?>
 
 <!DOCTYPE html>
@@ -211,7 +228,19 @@ $dicas = listarDicasNutricionais();
   <!-- <link rel="stylesheet" href="./css/tailwind-output.css"> -->
   <link rel="stylesheet" href="./css/dashboard_usuario.css">
 
+  <style>
+    .concluido {
+      opacity: 0.6;
+      /* deixa mais apagado */
+    }
 
+    .concluido .descricao {
+      text-decoration: line-through;
+      /* risca o texto */
+      color: #9ca3af;
+      /* cinza claro */
+    }
+  </style>
 </head>
 
 <body>
@@ -437,42 +466,52 @@ $dicas = listarDicasNutricionais();
 
               <!-- Exercício -->
               <?php
-              $treino = listarTreinoUsuario($idaluno);
+              foreach ($aula_agendada as $a) {
+                $idtreino = $a['idtreino'];
+              }
+              $treino = listarTreinoUsuario($idtreino);
               foreach ($treino as $t) {
                 $exercicio = listarTreinoExercicioTreino($t['idtreino']);
                 $descricao = $t['descricao'];
                 $serie = $exercicio[0]['series'];
                 $repeticao = $exercicio[0]['repeticoes'];
                 $tempo = $exercicio[0]['intervalo_segundos'];
-                echo '<div class="flex items-center p-3 bg-[#1f2937] rounded-lg">';
-                echo '  <div class="bg-green-900 p-3 rounded-lg mr-4">';
-                echo '    <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>';
-                echo '  </div>';
-                echo '  <div class="flex-1">';
-                echo '    <h3 class="font-medium text-white">' . $descricao . '</h3>';
-                echo '    <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>';
-                echo '  </div>';
-                echo '  <div class="flex items-center">';
-                echo '    <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . ' segundos</span>';
-                echo '    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" />';
-                echo '  </div>';
-                echo '</div>';
+
+                echo '
+  <div class="flex items-center p-3 bg-[#1f2937] rounded-lg transition duration-500 ease-in-out hover:bg-gray-700" id="card-' . $t['idtreino'] . '">
+      <div class="bg-green-900 p-3 rounded-lg mr-4">
+          <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
+      </div>
+      <div class="flex-1">
+          <h3 class="font-medium text-white descricao transition-all duration-500">' . $descricao . '</h3>
+          <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>
+      </div>
+      <div class="flex items-center">
+          <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . ' segundos</span>
+          <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" onchange="concluirTreino(' . $t['idtreino'] . ')" />
+      </div>
+  </div>
+  ';
               }
               ?>
-              <!-- Botão final -->
-              <button id="btnStart"
-                class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
 
-                <?php
-                if (empty($relacionamento)) {
-                  echo '                <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>';
-                  echo "Agende sua aula com Algum Professor";
-                } else {
-                  echo '                <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>';
-                  echo "Concluir Treino";
-                }
-                ?>
-              </button>
+              <!-- Botão final -->
+
+              <?php
+              if (empty($treino)) {
+                echo '<button id="btnStart"
+                class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">                
+                  <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
+                  Agende sua aula com Algum Professor
+                  </button>';
+              } else {
+                echo '<button onclick="concluirTreino(id)"
+                class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                                <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>';
+                echo "Concluir Treino";
+                echo '</button>';
+              }
+              ?>
 
             </div>
           </div>
@@ -610,8 +649,6 @@ $dicas = listarDicasNutricionais();
             <div class="space-y-4">
 
               <?php
-              $aula_agendada = listarAulaAgendadaUsuario($idaluno);
-              $aula_agendada = array_slice($aula_agendada, 0, 5);
               foreach ($aula_agendada as $a) {
                 echo '<div class="flex items-center p-3 bg-gray-800 rounded-lg border-l-4 border-green-500">';
                 echo '<div class="mr-4 text-center">';
@@ -619,7 +656,7 @@ $dicas = listarDicasNutricionais();
                 echo '<span class="text-xs text-gray-400">' . $a['dia_semana'] . '</span>';
                 echo '</div>';
                 echo '<div class="flex-1">';
-                echo '<h3 class="font-medium text-white">' . $a['tipo'] . '</h3>';
+                echo '<h3 class="font-medium text-white">' . $a['treino_tipo'] . '</h3>';
                 echo '<p class="text-sm text-gray-400">' . $a['hora_inicio'] . ' - ' . $a['hora_fim'] . '</p>';
                 echo '</div>';
                 echo '<button class="text-green-400 hover:text-green-300">';
@@ -823,7 +860,7 @@ $dicas = listarDicasNutricionais();
     </div>
 
   </div>
-  <script>
+  <!-- <script>
     document.addEventListener("DOMContentLoaded", () => {
       const botaoPerfil = document.getElementById("botaoPerfil");
       const menuPerfil = document.getElementById("menuPerfil");
@@ -1134,7 +1171,13 @@ $dicas = listarDicasNutricionais();
     lucide.createIcons();
   </script>
   <script src="./js/dashboard_usuario.js"></script>
-
+  <script>
+    function concluirTreino(id) {
+      const card = document.getElementById("card-" + id);
+      card.classList.toggle("concluido");
+    }
+  </script> -->
+  <script src="./js/dashboard_usuario.js"></script>
 </body>
 
 </html>

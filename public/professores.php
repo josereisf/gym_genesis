@@ -1,12 +1,14 @@
 <?php
 require_once "../code/funcao.php";
+session_start();
+$usuario = $_SESSION['id'];
 if (isset($_GET['tipo']) and $GET['tipo'] = 0) {
     $tipo = 0;
-}
-else {
+} else {
     $tipo = 1;
 }
 $professores = listarPerfilProfessor(null);
+// var_dump($professores);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -15,6 +17,8 @@ $professores = listarPerfilProfessor(null);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela de professor</title>
+    <script src="./js/loader.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Configuração customizada do Tailwind -->
@@ -72,7 +76,7 @@ $professores = listarPerfilProfessor(null);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Animação para modais */
         .animate-scaleUp {
@@ -127,33 +131,15 @@ $professores = listarPerfilProfessor(null);
             color: white;
         }
     </style>
+    <link rel="stylesheet" href="./css/loader.css">
+
 </head>
 
 
 <body class="bg-gradient-to-br from-[#132237] via-[#1a2f4a] to-[#0d1625] text-[#f1f5f9] font-montserrat min-h-screen">
+    <?php require_once __DIR__ . "/./php/loader.php" ?>
+
     <div class="p-6">
-        <button id="trocar"
-            class="mb-6 px-5 py-2 rounded-lg bg-[#a855f7] hover:bg-[#3b82f6] transition text-white font-semibold shadow-lg">
-            Trocar para Cards </button>
-
-        <!-- Cards -->
-        <div id="container_card" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-center min-h-screen px-6">
-
-            <?php foreach ($professores as $p) { ?>
-                <div class="bg-[#1e293b] shadow-xl rounded-xl p-6 max-w-xs text-center border border-[#3b82f6] hover:shadow-[#3b82f6]/40 transition">
-                    <img src="./uploads/<?= $p['foto_perfil'] ?>"
-                        alt="Foto de Perfil"
-                        class="w-32 h-32 rounded-full mx-auto shadow-lg border-4 border-[#a855f7]">
-                    <h2 class="mt-4 text-xl font-bold text-[#22d3ee]"><?= $p['nome_professor'] ?></h2>
-                    <p class="text-[#cbd5e1] text-sm"><?= $p['cargo_professor'] ?></p>
-                    <button onclick="openModal(0)"
-                        class="mt-4 px-4 py-2 bg-[#3b82f6] text-white rounded-lg hover:bg-[#22d3ee] transition">
-                        Ver mais
-                    </button>
-                </div>
-            <?php } ?>
-        </div>
-
         <!-- Modal -->
         <div id="modal" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden flex items-center justify-center z-50">
             <div class="bg-[#1e293b] rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative animate-scaleUp border border-[#3b82f6]">
@@ -204,7 +190,27 @@ $professores = listarPerfilProfessor(null);
                         foreach ($professores as $p) {
                         ?>
                             <tr class="hover:bg-darkgray/60 transition">
-                                <td class="px-4 py-2"><button>Botão 1</button><button>Botão 2</button><button>Botão 3</button></td>
+                                <!-- Certifique-se de ter o Font Awesome -->
+                                <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+                                <td class="px-4 py-2 flex gap-2">
+                                    <!-- Botão de Detalhes -->
+                                    <button
+                                        onclick="openModal(this)"
+                                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded shadow-md transition"
+                                        title="Ver Detalhes">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <!-- Botão de Selecionar -->
+                                    <button
+                                        class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded shadow-md transition"
+                                        data-idprofessor="<?= $p['idaula'] ?>"
+                                        title="Selecionar Professor">
+                                        <i class="fa-solid fa-user-check"></i>
+                                    </button>
+                                </td>
+
                                 <td class="px-4 py-2">
                                     <img src="./uploads/<?= $p['foto_perfil'] ?>"
                                         alt="Foto de Perfil"
@@ -292,130 +298,130 @@ $professores = listarPerfilProfessor(null);
         </script>
 
     <?php } ?>
-
-
     <!-- Modal -->
-    <!-- <script>
-        function openModal() {
+    <script>
+        // Abrir modal pegando os dados direto da linha da tabela
+        function openModal(botao) {
+            // Acha a linha <tr> mais próxima do botão clicado
+            const row = botao.closest("tr");
+            const cells = row.querySelectorAll("td");
+
+            // Pega os valores das colunas (ajuste os índices conforme sua tabela)
+            const dados = {
+                foto: row.querySelector("img").src,
+                nome: cells[2].innerText,
+                cargo: cells[3].innerText,
+                modalidade: cells[4].innerText,
+                avaliacao: cells[5].innerText,
+                descricao: cells[6].innerText,
+                telefone: cells[7].innerText,
+                email: cells[8].innerText,
+                dataAula: cells[9].innerText,
+                diaSemana: cells[10].innerText,
+                horarios: cells[11].innerText,
+                horaInicio: cells[12].innerText,
+                horaFim: cells[13].innerText,
+                salario: cells[14] ? cells[14].innerText : "",
+                funcionarioId: cells[15] ? cells[15].innerText : "",
+                aulaId: cells[16] ? cells[16].innerText : "",
+                treinoId: cells[17] ? cells[17].innerText : "",
+                dataAtualizacao: cells[18] ? cells[18].innerText : "",
+                dataContratacao: cells[19] ? cells[19].innerText : ""
+            };
+
+            // Monta o conteúdo do modal
+            const modalContent = `
+            <div class="flex items-center gap-4 border-b border-[#3b82f6] pb-4 mb-4">
+                <img src="${dados.foto}" alt="Foto"
+                    class="w-24 h-24 rounded-full shadow-lg border-2 border-[#a855f7]">
+                <div>
+                    <h2 class="text-2xl font-bold text-[#22d3ee]">${dados.nome}</h2>
+                    <p class="text-gray-300">${dados.cargo}</p>
+                    <span class="inline-block mt-2 px-3 py-1 text-xs font-semibold text-dark bg-[#22d3ee] rounded-full">
+                        ${dados.modalidade}
+                    </span>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-200">
+                <p><span class="font-semibold text-[#22d3ee]">Avaliação:</span> ${dados.avaliacao}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Descrição:</span> ${dados.descricao}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Telefone:</span> ${dados.telefone}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Email:</span> ${dados.email}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Data da Aula:</span> ${dados.dataAula}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Dia da Semana:</span> ${dados.diaSemana}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Horários:</span> ${dados.horarios}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Hora Início:</span> ${dados.horaInicio}</p>
+                <p><span class="font-semibold text-[#22d3ee]">Hora Fim:</span> ${dados.horaFim}</p>
+                ${dados.salario ? `<p><span class="font-semibold text-[#22d3ee]">Salário:</span> ${dados.salario}</p>` : ""}
+                ${dados.funcionarioId ? `<p><span class="font-semibold text-[#22d3ee]">ID Funcionário:</span> ${dados.funcionarioId}</p>` : ""}
+                ${dados.aulaId ? `<p><span class="font-semibold text-[#22d3ee]">ID Aula:</span> ${dados.aulaId}</p>` : ""}
+                ${dados.treinoId ? `<p><span class="font-semibold text-[#22d3ee]">ID Treino:</span> ${dados.treinoId}</p>` : ""}
+                ${dados.dataAtualizacao ? `<p><span class="font-semibold text-[#22d3ee]">Data Atualização:</span> ${dados.dataAtualizacao}</p>` : ""}
+                ${dados.dataContratacao ? `<p><span class="font-semibold text-[#22d3ee]">Data Contratação:</span> ${dados.dataContratacao}</p>` : ""}
+            </div>
+        `;
+
+            document.getElementById("modalContent").innerHTML = modalContent;
             document.getElementById("modal").classList.remove("hidden");
             document.getElementById("modal").classList.add("flex");
         }
 
+        // Fechar modal
         function closeModal() {
             document.getElementById("modal").classList.remove("flex");
             document.getElementById("modal").classList.add("hidden");
         }
-    </script> -->
 
-    <!-- Troca tabela/cards -->
-    <script>
-        const btnTrocar = document.getElementById("trocar");
-        const tabelaWrapper = document.getElementById("container_tabela");
-        const cards = document.getElementById("container_card");
+document.addEventListener("click", (e) => {
+    // Verifica se clicou num botão com data-idprofessor
+    const botao = e.target.closest("button[data-idprofessor]");
+    if (botao) {
+        const idprofessor = botao.dataset.idprofessor;
+        const idaluno = <?= $usuario ?>;
 
-        btnTrocar.addEventListener("click", () => {
-            tabelaWrapper.classList.toggle("hidden");
-            cards.classList.toggle("hidden");
-            cards.classList.add("flex");
+        console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
 
-            if (tabelaWrapper.classList.contains("hidden")) {
-                btnTrocar.innerText = "Trocar para Tabela";
-            } else {
-                btnTrocar.innerText = "Trocar para Cards";
+        aula_usuario(idprofessor, idaluno);
+        // window.location.href = "http://localhost:83/public/dashboard_usuario.php"
+    }
+});
+
+async function aula_usuario(idprofessor, idaluno) {
+    try {
+        const response = await fetch(
+            'http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    idaula: idprofessor,
+                    idaluno
+                }),
             }
-        });
-    </script>
-    <script>
-        const swiper = new Swiper(".mySwiper", {
-            slidesPerView: 3,
-            spaceBetween: 20,
-            loop: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                768: {
-                    slidesPerView: 2
-                }, // 2 cards no tablet
-                1024: {
-                    slidesPerView: 3
-                }, // 3 cards no desktop
-            }
-        });
-    </script>
-    <script>
-        // Dados dos instrutores
-        const instrutores = [
-            <?php foreach ($professores as $p) { ?> {
-                    nome: "<?= $p['nome_professor'] ?>";
-                    cargo: "<?= $p['cargo_professor'] ?>",
-                    foto: "<?= $p['foto'] ?>",
-                    modalidade: "<?= $p['modalidade'] ?>",
-                    avaliacao: "<?= $p['avaliacao_media'] ?>",
-                    telefone: "<?= $p['telefone_professor'] ?>",
-                    email: "<?= $p['email_professor'] ?>",
-                    dataAula: "<?= $p['data_aula'] ?>",
-                    diaSemana: "<?= $p['dia_semana'] ?>",
-                    horario: "<?= $p['horarios_disponiveis'] ?>",
-                    salario: "<?= $p['salario'] ?>",
-                    id: "#<?= $p['funcionario_id'] ?>"
-                },
-            <?php } ?> {
-                nome: "Carlos Silva",
-                cargo: "Professor de Yoga",
-                foto: "https://randomuser.me/api/portraits/men/32.jpg",
-                modalidade: "Presencial",
-                avaliacao: "⭐⭐⭐⭐☆ (4.3)",
-                telefone: "(62) 99999-2468",
-                email: "carlos@academia.com",
-                dataAula: "25/09/2025",
-                diaSemana: "Sexta-feira",
-                horario: "10:00 - 12:00",
-                salario: "R$ 3.800,00",
-                id: "#13579"
-            }
-        ];
+        );
 
-        // Abrir modal com dados dinâmicos
-        function openModal(index) {
-            const i = instrutores[index];
-            const modalContent = `
-      <div class="flex items-center gap-4 border-b border-[#3b82f6] pb-4 mb-4">
-        <img src="${i.foto}" alt="Foto"
-          class="w-24 h-24 rounded-full shadow-lg border-2 border-[#a855f7]">
-        <div>
-          <h2 class="text-2xl font-bold text-[#22d3ee]">${i.nome}</h2>
-          <p class="text-gray-300">${i.cargo}</p>
-          <span class="inline-block mt-2 px-3 py-1 text-xs font-semibold text-dark bg-[#22d3ee] rounded-full">
-            ${i.modalidade}
-          </span>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-200">
-        <p><span class="font-semibold text-[#22d3ee]">Avaliação:</span> ${i.avaliacao}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Telefone:</span> ${i.telefone}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Email:</span> ${i.email}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Data da Aula:</span> ${i.dataAula}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Dia da Semana:</span> ${i.diaSemana}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Horário:</span> ${i.horario}</p>
-        <p><span class="font-semibold text-[#22d3ee]">Salário:</span> ${i.salario}</p>
-        <p><span class="font-semibold text-[#22d3ee]">ID Funcionário:</span> ${i.id}</p>
-      </div>
-    `;
-            document.getElementById("modalContent").innerHTML = modalContent;
-            document.getElementById("modal").classList.remove("hidden");
+        if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
+
+        const textoBruto = await response.text();
+        console.log('Resposta bruta da API:', textoBruto);
+
+        try {
+            const json = JSON.parse(textoBruto);
+            return json;
+        } catch (erroDeParse) {
+            console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.');
+            throw erroDeParse;
         }
+    } catch (error) {
+        console.error('Erro ao cadastrar Aula para Usuario:', error);
+        throw error;
+    }
+}
 
-        // Fechar modal
-        function closeModal() {
-            document.getElementById("modal").classList.add("hidden");
-        }
     </script>
+
+    <script src="./js/loader.js"></script>
+
 </body>
 
 </html>

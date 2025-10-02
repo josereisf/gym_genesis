@@ -1779,7 +1779,7 @@ FROM historico_treino AS ht
 JOIN treino AS t ON t.idtreino = ht.treino_id
 JOIN perfil_usuario AS f ON f.usuario_id = t.funcionario_id
 JOIN usuario AS u ON u.idusuario = ht.usuario_id
-WHERE ht.usuario_id = ? AND u.tipo_usuario = 1
+WHERE t.idtreino = ?
 ";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $idusuario);
@@ -1899,6 +1899,7 @@ function listarAulaAgendadaUsuario($idusuario)
                 ag.hora_inicio,
                 ag.hora_fim,
                 ag.treino_id,
+                t.idtreino,
                 t.tipo AS treino_tipo,
                 t.descricao AS treino_desc,
                 f.idfuncionario,
@@ -3646,32 +3647,33 @@ function listarPerfilProfessor($idusuario)
 
   if ($idusuario) {
     $sql = "SELECT
-          aa.funcionario_id,
-          aa.idaula,
-          aa.data_aula,
-          aa.dia_semana,
-          aa.hora_inicio,
-          aa.hora_fim,
-          aa.treino_id,
-          f.nome AS nome_professor,
-          pf.foto_perfil,
-          pf.modalidade,
-          pf.telefone AS telefone_professor,
-          u.email AS email_professor,
-          c.nome AS cargo_professor,
-          f.salario,
-          pf.modalidade,
-          pf.avaliacao_media,
-          pf.descricao,
-          pf.horarios_disponiveis,
-          pf.data_atualizacao,
-          f.data_contratacao
-      FROM aula_agendada AS aa
-      INNER JOIN funcionario AS f ON aa.funcionario_id = f.idfuncionario
-      INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
-      INNER JOIN usuario AS u ON f.usuario_id = u.idusuario
-      INNER JOIN cargo AS c ON f.cargo_id = c.idcargo 
-    WHERE f.usuario_id = ?";
+    aa.funcionario_id,
+    f.usuario_id,  -- 👈 agora você pega também o usuario_id
+    aa.idaula,
+    aa.data_aula,
+    aa.dia_semana,
+    aa.hora_inicio,
+    aa.hora_fim,
+    aa.treino_id,
+    f.nome AS nome_professor,
+    pf.foto_perfil,
+    pf.modalidade,
+    pf.telefone AS telefone_professor,
+    u.email AS email_professor,
+    c.nome AS cargo_professor,
+    f.salario,
+    pf.avaliacao_media,
+    pf.descricao,
+    pf.horarios_disponiveis,
+    pf.data_atualizacao,
+    f.data_contratacao
+FROM aula_agendada AS aa
+INNER JOIN funcionario AS f ON aa.funcionario_id = f.idfuncionario
+INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
+INNER JOIN usuario AS u ON f.usuario_id = u.idusuario
+INNER JOIN cargo AS c ON f.cargo_id = c.idcargo 
+WHERE f.usuario_id = ?
+";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
