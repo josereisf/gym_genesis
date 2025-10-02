@@ -1,7 +1,9 @@
 <?php
 require_once "../code/funcao.php";
-$tabela = "usuario";
+
+$tabela = "aula_usuario";
 $colunas = listarColunasTabela($tabela);
+
 echo "<pre>";
 print_r($colunas);
 echo "</pre>";
@@ -12,33 +14,42 @@ echo "</pre>";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulário Genérico</title>
 </head>
 
 <body>
-    <form action="" method="post"></form>
-    <?php foreach ($colunas as $c) {
-        $nome_campo = $c['Field'];
-        $tipo_campo = $c['Type'];
-        $chave = $c['Key'];
-        if (strpos($nome_campo, "id") !== False && strpos($chave, "PRI") !== False) {
-            echo "<input type='hidden' name='$nome_campo' value='$nome_campo'>";
-        }
-        if (strpos($nome_campo, 'foto') !== False) {
-            echo "<img src='uploads/$imagem' alt='$imagem'>";
-            echo "<input type='file' name='$nome_campo' value='$nome_campo'>";
-            echo "<br>";
-        }
-        if (strpos($tipo, 'int') !== false || strpos($tipo, 'decimal') !== false) {
-            echo "<label>$nome:</label>";
-            echo "<input type='number' step='any' name='$nome' value='" . htmlspecialchars($valor) . "'><br>";
-            continue;
-        }
+    <form action="" method="post" enctype="multipart/form-data">
+        <?php foreach ($colunas as $c) {
+            $nome_campo = $c['Field'];   // nome do campo no banco
+            $tipo_campo = $c['Type'];    // tipo do campo
+            $chave      = $c['Key'];     // chave (PRI, MUL, etc.)
 
-    ?>
+            // Caso seja chave primária (id), cria hidden
+            if (strpos($nome_campo, "id") !== false && strpos($chave, "PRI") !== false) {
+                echo "<input type='hidden' name='$nome_campo' value=''>";
+                continue;
+            }
 
-    <?php } ?>
+            // Caso seja imagem/foto
+            if (strpos($nome_campo, 'foto') !== false) {
+                echo "<label for='$nome_campo'>Foto:</label><br>";
+                echo "<input type='file' name='$nome_campo'><br><br>";
+                continue;
+            }
 
+            // Caso seja número
+            if (strpos($tipo_campo, 'int') !== false || strpos($tipo_campo, 'decimal') !== false) {
+                echo "<label for='$nome_campo'>$nome_campo:</label><br>";
+                echo "<input type='number' step='any' name='$nome_campo' value=''><br><br>";
+                continue;
+            }
+
+            // Para os demais campos (texto por padrão)
+            echo "<label for='$nome_campo'>$nome_campo:</label><br>";
+            echo "<input type='text' name='$nome_campo' value=''><br><br>";
+        } ?>
+        <button type="submit">Salvar</button>
+    </form>
 </body>
 
 </html>
