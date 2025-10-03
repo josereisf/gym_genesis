@@ -1,0 +1,13 @@
+arrumar o dashboard para o adm
+arrumar o direcionamento corretamente
+arrumar os arrays para enviar a tabela que estamos querendo
+arrumar os acessos para o adm
+arrumar as configuraçoes para o usuario
+arrumar corretamente os insert's
+falta achar videos para os exercicios
+falta arrumar imagens para a loja
+falta melhorar o forum de conversar
+preciso organizar as logicas
+revisar cada função
+arrumar uma forma de tudo funcionar sem internet
+arrumar responsividade do site completo
