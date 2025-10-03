@@ -205,3 +205,91 @@
     console.log('Enter bloqueado neste campo');
   }
 });
+
+// ========================
+// verificação do form
+// ========================
+
+$('document').ready(function () {
+  // Método para não permitir apenas espaços
+  $.validator.addMethod(
+    'noSpace',
+    function (value, element) {
+      return value === '' || value.trim().length > 0
+    },
+    'Este campo não pode conter apenas espaços.'
+  )
+
+  // Método: valor numérico maior que zero
+  $.validator.addMethod(
+    'positiveNumber',
+    function (value, element) {
+      return this.optional(element) || parseFloat(value) > 0
+    },
+    'Informe um valor válido maior que 0.'
+  )
+
+  // Método: pelo menos 1 checkbox marcado
+  $.validator.addMethod(
+    'minChecked',
+    function (value, element, param) {
+      return $(element).closest('form').find('input[name="' + element.name + '"]:checked').length >= param
+    },
+    'Selecione pelo menos uma opção.'
+  )
+
+  // Método: validar tipo de arquivo de imagem
+  $.validator.addMethod(
+    'validImage',
+    function (value, element) {
+      if (this.optional(element)) return true
+      const ext = value.split('.').pop().toLowerCase()
+      return ['jpg', 'jpeg', 'png'].includes(ext)
+    },
+    'Envie apenas imagens JPG ou PNG.'
+  )
+
+  // Inicialização da validação
+  $('#formulario').validate({
+    rules: {
+      peso: { required: true, positiveNumber: true },
+      altura: { required: true, positiveNumber: true },
+      percentual_gordura: { required: true, positiveNumber: true },
+      'objetivo[]': { minChecked: 1 }, // pelo menos 1 objetivo
+      meta: { required: true, noSpace: true, minlength: 3 },
+      'dias_semana[]': { minChecked: 1 }, // pelo menos 1 dia
+      horario_preferido: { required: true },
+      foto: { validImage: true }
+    },
+
+    messages: {
+      peso: { required: 'Informe seu peso.', positiveNumber: 'Digite um número válido.' },
+      altura: { required: 'Informe sua altura.', positiveNumber: 'Digite um número válido.' },
+      percentual_gordura: { required: 'Informe seu percentual de gordura.', positiveNumber: 'Digite um número válido.' },
+      'objetivo[]': { minChecked: 'Selecione pelo menos um objetivo.' },
+      meta: { required: 'Informe sua meta.', minlength: 'A meta deve ter pelo menos 3 caracteres.' },
+      'dias_semana[]': { minChecked: 'Selecione pelo menos um dia.' },
+      horario_preferido: { required: 'Selecione um horário.' },
+      foto: { validImage: 'Envie apenas arquivos JPG ou PNG.' }
+    },
+
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('error-message text-red-500 text-sm mt-1')
+      if (element.attr('type') === 'checkbox') {
+        error.insertAfter(element.closest('.grid'))
+      } else {
+        error.insertAfter(element)
+      }
+    },
+    highlight: function (element) {
+      $(element).addClass('border-red-500').removeClass('border-green-500')
+    },
+    unhighlight: function (element) {
+      $(element).removeClass('border-red-500').addClass('border-green-500')
+    },
+    invalidHandler: function (event, validator) {
+      console.log('Erros de validação:', validator.errorList)
+    }
+  })
+})
