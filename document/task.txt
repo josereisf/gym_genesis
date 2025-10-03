@@ -11,3 +11,4 @@ preciso organizar as logicas
 revisar cada função
 arrumar uma forma de tudo funcionar sem internet
 arrumar responsividade do site completo
+criar pagina de esquecimento de senha
