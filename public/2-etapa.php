@@ -164,6 +164,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
         <label for="data_nascimento">Data Nascimento:</label>
         <input type="date" name="data" id="data" autocomplete="on" class="input">
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
       </div>
 
@@ -177,6 +178,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         <label>Rua</label>
         <input type="text" id="rua" autocomplete="on" class="input" name="rua" placeholder="Digite a rua" required
           disabled />
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="numero">Número</label>
         <div class="input-group mb-3">
@@ -192,15 +194,18 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           <input type="text" autocomplete="on" class="input flex-1 my-3" id="numero" placeholder="Número da residência"
             aria-label="Text input with checkbox" disabled />
         </div>
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
 
         <label>Complemento</label>
         <input type="text" id="complemento" autocomplete="on" class="input" name="complemento"
           placeholder="Ex: Bloco, Apt, etc." required disabled />
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label>Bairro</label>
         <input type="text" id="bairro" autocomplete="on" class="input" name="bairro" placeholder="Digite o bairro"
           required disabled />
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label>Cidade</label>
         <input type="text" id="cidade" autocomplete="on" class="input" name="cidade" placeholder="Digite a cidade"
@@ -259,6 +264,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           }
           ?>
         </select>
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label class="inline-flex items-center mt-4 text-gray-300">
           <!-- Checkbox -->
@@ -267,6 +273,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
           <!-- Texto ao lado do checkbox -->
           <span class="text-sm text-white">Aceito os termos e condições</span>
         </label>
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
       </div>
 
