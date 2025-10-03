@@ -456,65 +456,78 @@ $aula_agendada = array_slice($aula_agendada, 0, 5);
             </div>
           </div>
 
-          <!-- TREINO DE HOJE -->
-          <div class="bg-[#111827] rounded-xl shadow-md p-6">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
-            </div>
-
-            <div class="space-y-4">
-
-              <!-- Exercício -->
-              <?php
-              foreach ($aula_agendada as $a) {
-                $idtreino = $a['idtreino'];
-              }
-              $treino = listarTreinoUsuario($idtreino);
-              foreach ($treino as $t) {
-                $exercicio = listarTreinoExercicioTreino($t['idtreino']);
-                $descricao = $t['descricao'];
-                $serie = $exercicio[0]['series'];
-                $repeticao = $exercicio[0]['repeticoes'];
-                $tempo = $exercicio[0]['intervalo_segundos'];
-
-                echo '
-  <div class="flex items-center p-3 bg-[#1f2937] rounded-lg transition duration-500 ease-in-out hover:bg-gray-700" id="card-' . $t['idtreino'] . '">
-      <div class="bg-green-900 p-3 rounded-lg mr-4">
-          <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
-      </div>
-      <div class="flex-1">
-          <h3 class="font-medium text-white descricao transition-all duration-500">' . $descricao . '</h3>
-          <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>
-      </div>
-      <div class="flex items-center">
-          <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . ' segundos</span>
-          <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" onchange="concluirTreino(' . $t['idtreino'] . ')" />
-      </div>
+<!-- TREINO DE HOJE -->
+<div class="bg-[#111827] rounded-xl shadow-md p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
   </div>
-  ';
-              }
-              ?>
 
-              <!-- Botão final -->
+  <div class="space-y-4">
+    <?php
+    if (isset($aula_agendada) && !empty($aula_agendada)) {
+        // Pega o último treino agendado
+        $ultimoAgendamento = end($aula_agendada);
+        $idtreino = $ultimoAgendamento['idtreino'];
 
-              <?php
-              if (empty($treino)) {
-                echo '<button id="btnStart"
-                class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">                
-                  <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
-                  Agende sua aula com Algum Professor
-                  </button>';
-              } else {
-                echo '<button onclick="concluirTreino(id)"
-                class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                                <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>';
-                echo "Concluir Treino";
-                echo '</button>';
-              }
-              ?>
+        // Lista treino
+        $treino = listarTreinoUsuario($idtreino);
 
-            </div>
-          </div>
+        if (!empty($treino)) {
+            foreach ($treino as $t) {
+                $exercicios = listarTreinoExercicioTreino($t['idtreino']);
+
+                // Evita erro caso não haja exercícios
+                if (!empty($exercicios)) {
+                    $descricao  = $t['descricao'];
+                    $serie      = $exercicios[0]['series'];
+                    $repeticao  = $exercicios[0]['repeticoes'];
+                    $tempo      = $exercicios[0]['intervalo_segundos'];
+
+                    echo '
+                    <div class="flex items-center p-3 bg-[#1f2937] rounded-lg transition duration-500 ease-in-out hover:bg-gray-700" id="card-' . $t['idtreino'] . '">
+                        <div class="bg-green-900 p-3 rounded-lg mr-4">
+                            <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-white descricao transition-all duration-500">' . htmlspecialchars($descricao) . '</h3>
+                            <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . ' segundos</span>
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" onchange="concluirTreino(' . $t['idtreino'] . ')" />
+                        </div>
+                    </div>';
+                }
+            }
+
+            // Botão de concluir treino
+            echo '
+            <button onclick="concluirTreino(' . $idtreino . ')" 
+              class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>
+                Concluir Treino
+            </button>';
+        } else {
+            // Caso não tenha treino vinculado
+            echo '<button id="btnStart"
+              class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">                
+                <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
+                Agende sua aula com Algum Professor
+            </button>';
+        }
+    } else {
+        // Nenhuma aula agendada
+        echo '<p class="text-gray-400 text-center">Nenhum treino agendado para hoje.</p>';
+        echo '<button id="btnStart"
+              class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">                
+                <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
+                Agende sua aula com Algum Professor
+            </button>';
+    }
+    ?>
+  </div>
+</div>
+
         </div>
 
 
