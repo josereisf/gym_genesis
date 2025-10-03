@@ -62,9 +62,7 @@ async function usuario(senha, email) {
       const json = JSON.parse(textoBruto)
       return json
     } catch (erroDeParse) {
-      console.error(
-        'Erro ao fazer JSON.parse. A resposta não é um JSON válido.'
-      )
+      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
       throw erroDeParse
     }
   } catch (error) {
@@ -106,9 +104,7 @@ async function perfil_usuario(idusuario, nome, cpf, data, telefone) {
       const json = JSON.parse(textoBruto)
       return json
     } catch (erroDeParse) {
-      console.error(
-        'Erro ao fazer JSON.parse. A resposta não é um JSON válido.'
-      )
+      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
       throw erroDeParse
     }
   } catch (error) {
@@ -149,9 +145,7 @@ async function funcionario(idusuario, nome, cpf, data, telefone) {
       const json = JSON.parse(textoBruto)
       return json
     } catch (erroDeParse) {
-      console.error(
-        'Erro ao fazer JSON.parse. A resposta não é um JSON válido.'
-      )
+      console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.')
       throw erroDeParse
     }
   } catch (error) {
@@ -159,17 +153,7 @@ async function funcionario(idusuario, nome, cpf, data, telefone) {
     throw error
   }
 }
-async function enviarEndereco(
-  id,
-  tipo,
-  cep,
-  rua,
-  numero,
-  complemento,
-  bairro,
-  cidade,
-  estado
-) {
+async function enviarEndereco(id, tipo, cep, rua, numero, complemento, bairro, cidade, estado) {
   try {
     const response = await fetch(
       'http://localhost:83/public/api/index.php?entidade=endereco&acao=cadastrar',
@@ -254,13 +238,7 @@ async function enviarFormulario() {
     const idUsuario = respostaUsuario.dados.id
 
     // 2. Cadastra (perfil completo)
-    const respostaPerfilUsuario = await perfil_usuario(
-      idUsuario,
-      nome,
-      cpf,
-      data,
-      telefone
-    )
+    const respostaPerfilUsuario = await perfil_usuario(idUsuario, nome, cpf, data, telefone)
     if (!respostaPerfilUsuario.sucesso) {
       throw new Error('Erro ao cadastrar usuário.')
     }
@@ -328,86 +306,51 @@ $('document').ready(function () {
     },
     'A senha deve ter ao menos 8 caracteres, incluindo maiúsculas, minúsculas, números e símbolos.'
   )
+  // Adiciona máscara no campo
+  $('#cep').mask('00000-000')
 
+  // Método customizado continua igual
+  $.validator.addMethod(
+    'validarCEP',
+    function (value, element) {
+      return this.optional(element) || /^[0-9]{5}-[0-9]{3}$/.test(value)
+    },
+    'Por favor, informe um CEP válido (00000-000).'
+  )
+
+  // Método customizado para validar data
   $.validator.addMethod('validarData', function (value, element) {
-    // Data atual
-    var today = new Date()
-    // Data máxima (150 anos atrás)
-    var maxDate = new Date()
+    const today = new Date()
+    const maxDate = new Date()
     maxDate.setFullYear(today.getFullYear() - 150)
-    // Se a data for maior que a data de hoje ou mais nova que 150 anos, é inválida
-    var selectedDate = new Date(value)
 
+    const selectedDate = new Date(value)
+    // Data deve ser menor/igual a hoje e maior/igual a 150 anos atrás
     return selectedDate <= today && selectedDate >= maxDate
   })
-  // Validação do formulário
+
+  // Inicialização da validação do formulário
   $('#multiStepForm').validate({
+    // ===== Regras =====
     rules: {
-      nome: {
-        required: true,
-        noSpace: true,
-      },
-      email: {
-        required: true,
-        noSpace: true,
-        email: true,
-      },
-      cpf: {
-        required: true,
-        noSpace: true,
-        minlength: 14,
-        maxlength: 14,
-      },
-      telefone: {
-        required: true,
-        noSpace: true,
-        minlength: 15,
-        maxlength: 15,
-      },
-      data: {
-        required: true,
-        validarData: true,
-      },
-      cep: {
-        required: true,
-        noSpace: true,
-        minlength: 9,
-        maxlength: 9,
-      },
-      rua: {
-        required: true,
-        noSpace: true,
-      },
-      numero: {
-        noSpace: true,
-      },
-      complemento: {
-        noSpace: true,
-      },
-      bairro: {
-        required: true,
-        noSpace: true,
-      },
-      cidade: {
-        required: true,
-        noSpace: true,
-      },
-      estado: {
-        required: true,
-        noSpace: true,
-      },
-      senha: {
-        required: true,
-        strongPassword: true,
-      },
-      confirmarSenha: {
-        required: true,
-        equalTo: '#senha',
-      },
-      plano: {
-        required: true,
-      },
+      nome: { required: true, noSpace: true },
+      email: { required: true, noSpace: true, email: true },
+      cpf: { required: true, noSpace: true, minlength: 14, maxlength: 14 },
+      telefone: { required: true, noSpace: true, minlength: 15, maxlength: 15 },
+      data: { required: true, validarData: true },
+cep: { required: true, noSpace: true, minlength: 9, maxlength: 9, validarCEP: true },
+      rua: { required: true, noSpace: true },
+      numero: { noSpace: true },
+      complemento: { noSpace: true },
+      bairro: { required: true, noSpace: true },
+      cidade: { required: true, noSpace: true },
+      estado: { required: true, noSpace: true },
+      senha: { required: true, strongPassword: true },
+      confirmarSenha: { required: true, equalTo: '#senha' },
+      plano: { required: true },
     },
+
+    // ===== Mensagens =====
     messages: {
       nome: {
         required: 'Por favor, informe seu nome.',
@@ -437,8 +380,8 @@ $('document').ready(function () {
       cep: {
         required: 'Por favor, informe seu CEP.',
         noSpace: 'O CEP não pode conter apenas espaços.',
-        minlength: 'O CEP deve conter exatamente 8 dígitos.',
-        maxlength: 'O CEP deve conter exatamente 8 dígitos.',
+        minlength: 'O CEP deve conter exatamente 8 dígitos (formato 00000-000).',
+        maxlength: 'O CEP deve conter exatamente 8 dígitos (formato 00000-000).',
       },
       rua: {
         required: 'Por favor, informe a rua.',
@@ -464,44 +407,44 @@ $('document').ready(function () {
       },
       senha: {
         required: 'Por favor, informe a senha.',
-        strongPassword:
-          'Senha deve ter ao menos 8 caracteres, letras e números.',
+        strongPassword: 'Senha deve ter ao menos 8 caracteres, letras e números.',
       },
       confirmarSenha: {
         required: 'Por favor, confirme a senha.',
         equalTo: 'As senhas não coincidem.',
       },
     },
+
+    // ===== Configuração de exibição =====
     errorElement: 'span',
     errorPlacement: function (error, element) {
-      // Encontra o container de erro específico
-      var errorContainer = element.next('.error-message')
+      let errorContainer = element.next('.error-message')
       if (errorContainer.length) {
         errorContainer.removeClass('hidden').html(error.text())
       } else {
-        // Se não encontrar, cria um novo
         error.addClass('error-message text-red-500 text-sm mt-1')
         error.insertAfter(element)
       }
     },
-    highlight: function (element, errorClass, validClass) {
+
+    highlight: function (element) {
       $(element).addClass('border-red-500').removeClass('border-green-500')
-      // Mostra o container de erro
-      var errorContainer = $(element).next('.error-message')
+      let errorContainer = $(element).next('.error-message')
       if (errorContainer.length) {
         errorContainer.removeClass('hidden')
       }
     },
-    unhighlight: function (element, errorClass, validClass) {
+
+    unhighlight: function (element) {
       $(element).removeClass('border-red-500').addClass('border-green-500')
-      // Esconde o container de erro
-      var errorContainer = $(element).next('.error-message')
+      let errorContainer = $(element).next('.error-message')
       if (errorContainer.length) {
         errorContainer.addClass('hidden')
       }
     },
+
+    // ===== Debug =====
     invalidHandler: function (event, validator) {
-      // Debug: mostra erros no console
       console.log('Erros de validação:', validator.errorList)
     },
   })
@@ -672,7 +615,6 @@ function verificarForcaSenha(id) {
       message.className = 'text-gray-700'
   }
 }
-
 
 //===========================================================================================================================================================================================
 // aqui aplicar mascaraCPf, mascaraTelefone para deixa para o usuario facil de entender e ver oq e como fazer tudo
