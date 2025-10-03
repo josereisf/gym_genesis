@@ -174,12 +174,14 @@ require_once __DIR__ . '/../code/funcao.php';
         <button id="themeToggle" class="text-lg text-white bg-neonred w-10 h-10 rounded-full transition hover:bg-red-600 flex items-center justify-center">
           <i id="themeIcon" class="fas fa-moon"></i>
         </button>
+          
+        
+<button onclick="window.location.href='carrinho.php'" 
+        class="relative bg-neonred text-white w-10 h-10 rounded-full hover:bg-red-700 transition flex items-center justify-center">
+  <i class="fas fa-shopping-cart"></i>
+  <span class="absolute -top-1 -right-1 bg-neongreen text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
+</button>
 
-        <!-- Carrinho com contador -->
-        <button class="relative bg-neonred text-white w-10 h-10 rounded-full hover:bg-red-700 transition flex items-center justify-center">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="absolute -top-1 -right-1 bg-neongreen text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
-        </button>
 
         <!-- Menu mobile -->
         <button id="mobileMenuButton" class="md:hidden text-gray-700 dark:text-white">
