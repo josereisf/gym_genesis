@@ -1,5 +1,5 @@
 <?php
-require_once "../code/funcao.php";
+require_once __DIR__ . "/../code/funcao.php";
 
 $tabela = "aula_usuario";
 $colunas = listarColunasTabela($tabela);

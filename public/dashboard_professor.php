@@ -1,5 +1,5 @@
 <?php
-require_once "../code/funcao.php";
+require_once __DIR__ . "/../code/funcao.php";
 require_once "../php/verificarLogado.php";
 
 if ($_SESSION['tipo'] == 1) {
@@ -161,22 +161,22 @@ $menus = [
         <h2 class="text-2xl font-extrabold text-indigo-400">Gym Gênesis</h2>
       </div>
 
-<?php
-$usuarioRole = 2; // 0 = admin, 2 = professor
+      <?php
+      $usuarioRole = 2; // 0 = admin, 2 = professor
 
-echo '<nav class="w-full flex-1">';
+      echo '<nav class="w-full flex-1">';
 
-foreach ($menus as $grupo => $links) {
-  // Verifica se o grupo tem ao menos 1 link permitido
-  $linksPermitidos = array_filter($links, function ($link) use ($usuarioRole) {
-    return in_array($usuarioRole, $link["roles"]);
-  });
+      foreach ($menus as $grupo => $links) {
+        // Verifica se o grupo tem ao menos 1 link permitido
+        $linksPermitidos = array_filter($links, function ($link) use ($usuarioRole) {
+          return in_array($usuarioRole, $link["roles"]);
+        });
 
-  if (count($linksPermitidos) === 0) {
-    continue; // pula o grupo se não tiver link permitido
-  }
+        if (count($linksPermitidos) === 0) {
+          continue; // pula o grupo se não tiver link permitido
+        }
 
-  echo '
+        echo '
   <div class="accordion-group border-b border-gray-700">
     <button class="accordion-toggle flex justify-between items-center w-full px-4 py-3 text-gray-300 hover:bg-indigo-600 hover:text-white transition">
       <span class="text-sm font-semibold uppercase tracking-wider">' . $grupo . '</span>
@@ -184,21 +184,21 @@ foreach ($menus as $grupo => $links) {
     </button>
     <div class="accordion-content hidden flex-col bg-gray-800">';
 
-  foreach ($linksPermitidos as $link) {
-    echo '
+        foreach ($linksPermitidos as $link) {
+          echo '
       <a href="' . $link["href"] . '" class="flex items-center gap-3 text-gray-300 hover:bg-indigo-500 hover:text-white px-4 py-2 transition">
         <span class="material-icons">' . $link["icon"] . '</span>
         <span>' . $link["label"] . '</span>
       </a>';
-  }
+        }
 
-  echo '
+        echo '
     </div>
   </div>';
-}
+      }
 
-echo '</nav>';
-?>
+      echo '</nav>';
+      ?>
 
     </aside>
 

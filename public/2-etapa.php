@@ -1,5 +1,5 @@
 <?php
-require_once "../code/funcao.php";
+require_once __DIR__ . "/../code/funcao.php";
 if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 0) {
   $_SESSION['erro_login'] = "Usuário não permitido!";
   header('Location: dashboard_usuario.php');

@@ -1,6 +1,6 @@
 <?php
 require_once "../php/verificarLogado.php";
-require_once "../code/funcao.php";
+require_once __DIR__ . "/../code/funcao.php";
 
 ?>
 <!DOCTYPE html>
@@ -133,10 +133,6 @@ require_once "../code/funcao.php";
 
   <!-- Script Modal -->
   <script>
-
-
-
-
     const modal = document.getElementById("modalResponder");
     const forumIdInput = document.getElementById("forumIdInput");
     const usuarioIdInput = document.getElementById("usuarioIdInput");

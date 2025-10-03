@@ -1,5 +1,5 @@
 <?php
-require_once "../code/funcao.php";
+require_once __DIR__ . "/../code/funcao.php";
 session_start();
 $usuario = $_SESSION['id'];
 if (isset($_GET['tipo']) and $GET['tipo'] = 0) {
@@ -372,52 +372,52 @@ $professores = listarPerfilProfessor(null);
             document.getElementById("modal").classList.add("hidden");
         }
 
-document.addEventListener("click", (e) => {
-    // Verifica se clicou num botão com data-idprofessor
-    const botao = e.target.closest("button[data-idprofessor]");
-    if (botao) {
-        const idprofessor = botao.dataset.idprofessor;
-        const idaluno = <?= $usuario ?>;
+        document.addEventListener("click", (e) => {
+            // Verifica se clicou num botão com data-idprofessor
+            const botao = e.target.closest("button[data-idprofessor]");
+            if (botao) {
+                const idprofessor = botao.dataset.idprofessor;
+                const idaluno = <?= $usuario ?>;
 
-        console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
+                console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
 
-        aula_usuario(idprofessor, idaluno);
-        // window.location.href = "http://localhost:83/public/dashboard_usuario.php"
-    }
-});
-
-async function aula_usuario(idprofessor, idaluno) {
-    try {
-        const response = await fetch(
-            'http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    idaula: idprofessor,
-                    idaluno
-                }),
+                aula_usuario(idprofessor, idaluno);
+                // window.location.href = "http://localhost:83/public/dashboard_usuario.php"
             }
-        );
+        });
 
-        if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
+        async function aula_usuario(idprofessor, idaluno) {
+            try {
+                const response = await fetch(
+                    'http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            idaula: idprofessor,
+                            idaluno
+                        }),
+                    }
+                );
 
-        const textoBruto = await response.text();
-        console.log('Resposta bruta da API:', textoBruto);
+                if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
 
-        try {
-            const json = JSON.parse(textoBruto);
-            return json;
-        } catch (erroDeParse) {
-            console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.');
-            throw erroDeParse;
+                const textoBruto = await response.text();
+                console.log('Resposta bruta da API:', textoBruto);
+
+                try {
+                    const json = JSON.parse(textoBruto);
+                    return json;
+                } catch (erroDeParse) {
+                    console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.');
+                    throw erroDeParse;
+                }
+            } catch (error) {
+                console.error('Erro ao cadastrar Aula para Usuario:', error);
+                throw error;
+            }
         }
-    } catch (error) {
-        console.error('Erro ao cadastrar Aula para Usuario:', error);
-        throw error;
-    }
-}
-
     </script>
 
     <script src="./js/loader.js"></script>
