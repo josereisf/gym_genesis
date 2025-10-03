@@ -1,3 +1,10 @@
+<?php
+
+require_once __DIR__ . '/../code/funcao.php';
+
+$funcionarios = listarPerfilProfessor(null);
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -12,6 +19,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;display=swap"
     rel="stylesheet" />
+    <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -36,7 +49,7 @@
 </head>
 
 <body>
-    <?php require_once __DIR__ . "/./php/loader.php"?>
+  <?php require_once __DIR__ . "/./php/loader.php" ?>
   <!-- Navbar -->
   <nav
     class="fixed w-full z-50 bg-dark/80 backdrop-blur-md border-b border-white/10">
@@ -634,81 +647,49 @@
   </section>
 
   <!-- Equipe -->
-  <section id="equipe" class="py-20 bg-dark">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16 reveal active">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Nossa <span class="text-neonred">Equipe</span>
-        </h2>
-        <p class="text-lg text-white/70 max-w-2xl mx-auto">
-          Profissionais qualificados e apaixonados por transformar vidas
-          através do exercício físico
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Treinador 1 -->
-        <div class="trainer-card text-center reveal active">
-          <div
-            class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">
-            <i class="fa-solid fa-user text-6xl text-gray-400"></i>
-          </div>
-
-          <h3 class="text-xl font-bold">Carlos Silva</h3>
-          <p class="text-neonred">Personal Trainer</p>
-          <p class="text-white/70 mt-2">
-            Especialista em hipertrofia e emagrecimento, com 10 anos de
-            experiência.
-          </p>
-        </div>
-
-        <!-- Treinador 2 -->
-        <div class="trainer-card text-center reveal active">
-          <div
-            class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">
-            <i class="fa-solid fa-user text-6xl text-gray-400"></i>
-          </div>
-
-          <h3 class="text-xl font-bold">Ana Oliveira</h3>
-          <p class="text-neongreen">Funcional e HIIT</p>
-          <p class="text-white/70 mt-2">
-            Especializada em treinamento funcional de alta intensidade e
-            condicionamento físico.
-          </p>
-        </div>
-
-        <!-- Treinador 3 -->
-        <div class="trainer-card text-center reveal active">
-          <div
-            class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">
-            <i class="fa-solid fa-user text-6xl text-gray-400"></i>
-          </div>
-
-          <h3 class="text-xl font-bold">Marcos Santos</h3>
-          <p class="text-neonred">Nutricionista Esportivo</p>
-          <p class="text-white/70 mt-2">
-            Especialista em nutrição esportiva para maximizar resultados e
-            performance.
-          </p>
-        </div>
-
-        <!-- Treinador 4 -->
-        <div class="trainer-card text-center reveal active">
-          <div
-            class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">
-            <i class="fa-solid fa-user text-6xl text-gray-400"></i>
-          </div>
-
-          <h3 class="text-xl font-bold">Juliana Costa</h3>
-          <p class="text-neongreen">Pilates e Yoga</p>
-          <p class="text-white/70 mt-2">
-            Especialista em técnicas de alongamento, mobilidade e consciência
-            corporal.
-          </p>
-        </div>
-      </div>
+<section id="equipe" class="py-20 bg-dark">
+  <div class="container mx-auto px-4">
+    <!-- Título -->
+    <div class="text-center mb-16 reveal active">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Nossa <span class="text-neonred">Equipe</span>
+      </h2>
+      <p class="text-lg text-white/70 max-w-2xl mx-auto">
+        Profissionais qualificados e apaixonados por transformar vidas
+        através do exercício físico
+      </p>
     </div>
-  </section>
+
+<!-- Carrossel -->
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <?php foreach ($funcionarios as $f): ?>
+      <div class="swiper-slide">
+        <div class="trainer-card text-center reveal active w-64 mx-auto">
+          <div
+            class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">
+            <i class="fa-solid fa-user text-6xl text-gray-400"></i>
+          </div>
+
+          <h3 class="text-xl font-bold"><?= $f['nome_professor'] ?></h3>
+          <p class="text-neonred"><?= $f['cargo_professor'] ?></p>
+          <p class="text-white/70 mt-2"><?= $f['descricao'] ?></p>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- Botões de navegação -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+
+  <!-- Paginação (bolinhas) -->
+  <div class="swiper-pagination"></div>
+</div>
+
+  </div>
+</section>
+
 
   <!-- Depoimentos -->
   <section class="py-20 bg-darkgray">
@@ -1083,6 +1064,39 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="./js/loader.js"></script>
   <script src="./js/inicial.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.innerWidth >= 1024) {
+      document.getElementById("cards-container").classList.add("flex", "flex-row", "flex-wrap", "gap-8");
+      document.getElementById("cards-container").classList.remove("grid");
+    }
+  });
+</script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true, // volta pro início quando termina
+    autoplay: {
+      delay: 3000, // muda a cada 3s
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      640: { slidesPerView: 2 }, // sm
+      1024: { slidesPerView: 4 }, // lg
+      1280: { slidesPerView: 5 }, // xl
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
+
 </body>
 
 </html>
