@@ -14,6 +14,8 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Boas-Vindas - Gym Genesis</title>
+  <script src="./js/jquery-3.7.1.min.js"></script>
+  <script src="./js/jquery.validate.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Tailwind custom animation (adicione no seu <style> ou CSS global) -->
   <style>
@@ -66,14 +68,20 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         <div>
           <label class="block mb-2">Peso (kg)</label>
           <input name="peso" type="number" step="0.1" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                  <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
+
         </div>
         <div>
           <label class="block mb-2">Altura (cm)</label>
           <input name="altura" type="number" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                  <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
+
         </div>
         <div>
           <label class="block mb-2">Percentual de Gordura</label>
           <input name="percentual_gordura" type="number" step="0.1" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                  <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
+
         </div>
       </div>
       <div class="text-center mt-6">
@@ -142,6 +150,7 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
             <div class="text-xl">🧠 Saúde Mental</div>
           </div>
         </label>
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
       </div>
 
@@ -160,7 +169,8 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
       <h2 class="text-2xl font-semibold mb-4">🏁 Sua meta</h2>
       <p class="mb-4">Qual a sua meta de peso ou ganho muscular?</p>
       <input name="meta" type="text" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
-      <div class="text-center mt-6">
+      <div class="text-center mt-6">        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
+
         <button type="button" onclick="proximaEtapa()" class="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-full">Continuar</button>
       </div>
     </div>
@@ -241,6 +251,7 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
             Dom
           </div>
         </label>
+        <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
       </div>
       <!-- Botão continuar -->
@@ -280,6 +291,8 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
         <option value="tarde">Tarde</option>
         <option value="noite">Noite</option>
       </select>
+              <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
+
       <div class="text-center mt-6">
         <div class="text-center mt-6">
           <button type="button" onclick="etapaAnterior()" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-full mr-2">Voltar</button>
@@ -329,209 +342,6 @@ $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova e
     </div>
 
   </form>
-  <!-- <script defer>
-    // ===============================
-    // VARIÁVEIS GLOBAIS
-    // ===============================
-    let etapaAtual = 0;
-    const etapas = document.querySelectorAll('.etapa');
-    const video = document.getElementById("preview");
-    const canvas = document.getElementById("canvas");
-    const imgPreview = document.getElementById("imgPreview");
-    const previewFoto = document.getElementById("previewFoto");
-    const inputFile = document.getElementById('foto_input');
-
-    // ===============================
-    // FUNÇÃO: Atualiza barra de progresso
-    // ===============================
-    function atualizarProgresso() {
-      const progresso = document.getElementById('barra-progresso');
-      progresso.style.width = `${((etapaAtual + 1) / etapas.length) * 100}%`;
-    }
-
-    // ===============================
-    // FUNÇÃO: Próxima etapa do formulário
-    // ===============================
-    function proximaEtapa() {
-      etapas[etapaAtual].classList.add('hidden');
-      etapaAtual++;
-
-      if (etapaAtual < etapas.length) {
-        etapas[etapaAtual].classList.remove('hidden');
-        atualizarProgresso();
-
-        if (etapas[etapaAtual].querySelector("video#preview")) {
-          ativarCamera();
-        }
-      }
-    }
-
-    function etapaAnterior() {
-      if (etapaAtual > 0) {
-        etapas[etapaAtual].classList.add('hidden');
-        etapaAtual--;
-        etapas[etapaAtual].classList.remove('hidden');
-        atualizarProgresso();
-
-        if (etapas[etapaAtual].querySelector("video#preview")) {
-          ativarCamera();
-        }
-      }
-    }
-
-    // ===============================
-    // FUNÇÃO: Ativar câmera
-    // ===============================
-    let fotoUsuario = null; // vai guardar o nome da foto (capturada ou padrão)
-
-    async function ativarCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
-        });
-        video.srcObject = stream;
-        video.play();
-      } catch (error) {
-        console.error('Erro ao acessar a câmera:', error);
-        console.log('Não foi possível acessar a câmera. Essa etapa será ignorada.');
-
-        // Define a imagem padrão
-        fotoUsuario = "padrao.png";
-
-        // Oculta a etapa de foto
-        const etapaFoto = document.getElementById("etapa-foto");
-        if (etapaFoto) {
-          etapaFoto.remove(); // ou etapaFoto.classList.add("hidden");
-        }
-
-        // Avança automaticamente para a próxima etapa
-        if (etapaAtual < etapas.length - 1) {
-          etapas[etapaAtual].classList.add('hidden');
-          etapaAtual++;
-          etapas[etapaAtual].classList.remove('hidden');
-          atualizarProgresso();
-        }
-      }
-    }
-
-
-    // ===============================
-    // FUNÇÃO: Tirar foto
-    // ===============================
-
-
-    function tirarFoto() {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      canvas.toBlob(blob => {
-        // Cria um arquivo para o input file
-        const file = new File([blob], 'foto.png', {
-          type: 'image/png'
-        });
-
-        // Exibe o preview
-        const reader = new FileReader();
-        reader.onload = e => {
-          imgPreview.src = e.target.result;
-          previewFoto.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-
-        // Cria DataTransfer para simular a seleção do arquivo no input file
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        inputFile.files = dataTransfer.files;
-      }, 'image/png');
-    }
-
-    // Inicia a câmera ao carregar a etapa, por exemplo
-    ativarCamera();
-
-
-    // ===============================
-    // DOMCarregado: Ações iniciais
-    // ===============================
-    document.addEventListener('DOMContentLoaded', () => {
-      atualizarProgresso();
-
-      // Mostrar botão "Continuar" apenas se algum objetivo for selecionado
-      const checkboxes = document.querySelectorAll('input[name="objetivo[]"]');
-      const botao = document.getElementById('btn-continuar');
-
-      if (botao) {
-        checkboxes.forEach(cb => {
-          cb.addEventListener('change', () => {
-            const algumSelecionado = Array.from(checkboxes).some(c => c.checked);
-            botao.classList.toggle('hidden', !algumSelecionado);
-          });
-        });
-      }
-
-      // ========================
-      // Restaurar e salvar campos comuns
-      // ========================
-      document.querySelectorAll("input, select").forEach(input => {
-        const nome = input.name;
-
-        const salvo = localStorage.getItem(nome);
-        if (salvo) {
-          if (input.type === "checkbox") {
-            input.checked = salvo === "true";
-          } else {
-            input.value = salvo;
-          }
-        }
-
-        input.addEventListener("input", () => {
-          if (input.type === "checkbox") {
-            localStorage.setItem(nome, input.checked);
-          } else {
-            localStorage.setItem(nome, input.value);
-          }
-        });
-      });
-
-      // ========================
-      // Restaurar e salvar checkboxes múltiplos
-      // ========================
-      const objetivosSalvos = JSON.parse(localStorage.getItem("objetivo[]")) || [];
-
-      checkboxes.forEach(cb => {
-        if (objetivosSalvos.includes(cb.value)) cb.checked = true;
-
-        cb.addEventListener("change", () => {
-          const selecionados = Array.from(checkboxes)
-            .filter(c => c.checked)
-            .map(c => c.value);
-
-          localStorage.setItem("objetivo[]", JSON.stringify(selecionados));
-
-          if (botao) {
-            botao.classList.toggle('hidden', selecionados.length === 0);
-          }
-        });
-      });
-
-      // Força botão aparecer se já tiver algo marcado
-      const algumMarcado = Array.from(checkboxes).some(c => c.checked);
-      if (botao && algumMarcado) botao.classList.remove('hidden');
-    });
-
-    // ========================
-    // Limpa localStorage ao enviar
-    // ========================
-    document.getElementById("formulario").addEventListener("submit", () => {
-      const campos = [
-        "peso", "altura", "percentual_gordura",
-        "meta", "horario_preferido", "objetivo[]"
-      ];
-      campos.forEach(c => localStorage.removeItem(c));
-    });
-  </script> -->
-
 <script src="./js/primeira_avaliacao.js" defer></script>
 
 </body>
