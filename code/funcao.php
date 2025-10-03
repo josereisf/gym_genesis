@@ -3951,3 +3951,18 @@ function listarColunasTabela($tabela){
 
   return $colunas;
 }
+function formatarTelefone($numero) {
+    // Remove tudo que não for número
+    $tel = preg_replace('/\D/', '', $numero);
+
+    if (strlen($tel) === 11) {
+        // Celular com 9 dígitos → (62) 98765-4321
+        return "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 5) . "-" . substr($tel, 7);
+    } elseif (strlen($tel) === 10) {
+        // Telefone fixo com 8 dígitos → (62) 3456-7890
+        return "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 4) . "-" . substr($tel, 6);
+    } else {
+        // Caso não seja 10 ou 11 dígitos, retorna como está
+        return $numero;
+    }
+}
