@@ -201,6 +201,9 @@ if ($dia_fim === null || $dia_fim === "-") {
 $dicas = listarDicasNutricionais();
 $aula_agendada = listarAulaAgendadaUsuario($idaluno);
 $aula_agendada = array_slice($aula_agendada, 0, 5);
+// echo "<pre>";
+// var_dump($aula_agendada);
+// echo "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -462,70 +465,82 @@ $aula_agendada = array_slice($aula_agendada, 0, 5);
     <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
   </div>
 
-  <div class="space-y-4">
-    <?php
-    if (isset($aula_agendada) && !empty($aula_agendada)) {
-        // Pega o último treino agendado
-        $ultimoAgendamento = end($aula_agendada);
-        $idtreino = $ultimoAgendamento['idtreino'];
+<div class="space-y-4">
+  <?php
+  if (isset($aula_agendada) && !empty($aula_agendada)) {
+      $temTreino = false; // flag para saber se algum treino foi encontrado
 
-        // Lista treino
-        $treino = listarTreinoUsuario($idtreino);
+      foreach ($aula_agendada as $aula) {
+          $idtreino = $aula['idtreino'];
+          $treino   = listarTreinoUsuario($idtreino);
 
-        if (!empty($treino)) {
-            foreach ($treino as $t) {
-                $exercicios = listarTreinoExercicioTreino($t['idtreino']);
+          if (!empty($treino)) {
+              foreach ($treino as $t) {
+                  $exercicios = listarTreinoExercicioTreino($t['idtreino']);
 
-                // Evita erro caso não haja exercícios
-                if (!empty($exercicios)) {
-                    $descricao  = $t['descricao'];
-                    $serie      = $exercicios[0]['series'];
-                    $repeticao  = $exercicios[0]['repeticoes'];
-                    $tempo      = $exercicios[0]['intervalo_segundos'];
+                  if (!empty($exercicios)) {
+                      $temTreino = true;
 
-                    echo '
-                    <div class="flex items-center p-3 bg-[#1f2937] rounded-lg transition duration-500 ease-in-out hover:bg-gray-700" id="card-' . $t['idtreino'] . '">
-                        <div class="bg-green-900 p-3 rounded-lg mr-4">
-                            <i data-lucide="file-text" class="h-6 w-6 text-green-400"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-white descricao transition-all duration-500">' . htmlspecialchars($descricao) . '</h3>
-                            <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . ' segundos</span>
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" onchange="concluirTreino(' . $t['idtreino'] . ')" />
-                        </div>
-                    </div>';
-                }
-            }
+                      echo '
+                      <div class="p-4 bg-[#111827] rounded-xl shadow-md mb-4">
+                          <h3 class="text-lg font-semibold text-white mb-3">' . htmlspecialchars($t['descricao']) . '</h3>
+                          <div class="space-y-3">';
+                      
+                      foreach ($exercicios as $ex) {
+                          $serie     = $ex['series'];
+                          $repeticao = $ex['repeticoes'];
+                          $tempo     = $ex['intervalo_segundos'];
 
-            // Botão de concluir treino
-            echo '
-            <button onclick="concluirTreino(' . $idtreino . ')" 
-              class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>
-                Concluir Treino
-            </button>';
-        } else {
-            // Caso não tenha treino vinculado
-            echo '<button id="btnStart"
-              class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">                
-                <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
-                Agende sua aula com Algum Professor
-            </button>';
-        }
-    } else {
-        // Nenhuma aula agendada
-        echo '<p class="text-gray-400 text-center">Nenhum treino agendado para hoje.</p>';
-        echo '<button id="btnStart"
-              class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center">                
-                <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
-                Agende sua aula com Algum Professor
-            </button>';
-    }
-    ?>
-  </div>
+                          echo '
+                          <div class="flex items-center p-3 bg-[#1f2937] rounded-lg transition hover:bg-gray-700" id="card-' . $t['idtreino'] . '">
+                              <div class="bg-green-900 p-3 rounded-lg mr-4">
+                                  <i data-lucide="dumbbell" class="h-6 w-6 text-green-400"></i>
+                              </div>
+                              <div class="flex-1">
+                                  <h4 class="font-medium text-white">' . htmlspecialchars($ex['nome']) . '</h4>
+                                  <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>
+                              </div>
+                              <div class="flex items-center">
+                                  <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . 's</span>
+                                  <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" onchange="concluirTreino(' . $t['idtreino'] . ')" />
+                              </div>
+                          </div>';
+                      }
+
+                      echo '</div></div>'; // fecha lista de exercícios + bloco treino
+                  }
+              }
+          }
+      }
+
+      // Botão só aparece uma vez no final, se houver treino
+      if ($temTreino) {
+          echo '
+          <button onclick="concluirTreinoTodos()" 
+            class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">
+              <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>
+              Concluir Treino
+          </button>';
+      } else {
+          echo '<button id="btnStart"
+            class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">                
+              <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
+              Agende sua aula com Algum Professor
+          </button>';
+      }
+
+  } else {
+      echo '<p class="text-gray-400 text-center">Nenhum treino agendado para hoje.</p>';
+      echo '<button id="btnStart"
+            class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">                
+              <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
+              Agende sua aula com Algum Professor
+          </button>';
+  }
+  ?>
+</div>
+
+
 </div>
 
         </div>

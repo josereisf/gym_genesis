@@ -221,21 +221,7 @@ $professores = listarPerfilProfessor(null);
                                 <td class="px-4 py-2"><?= $p['modalidade'] ?></td>
                                 <td class="px-4 py-2"><?= $p['avaliacao_media'] ?></td>
                                 <td class="px-4 py-2"><?= $p['descricao'] ?></td>
-                                <td class="px-4 py-2">
-                                    <?php
-                                        $tel = preg_replace('/\D/', '', $p['telefone_professor']); // tira tudo que não for número
-                                        if (strlen($tel) === 11) {
-                                            // Formato celular: (62) 98765-4321
-                                            echo "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 5) . "-" . substr($tel, 7);
-                                        } elseif (strlen($tel) === 10) {
-                                            // Formato fixo: (62) 3456-7890
-                                            echo "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 4) . "-" . substr($tel, 6);
-                                        } else {
-                                            // Se não encaixar, mostra cru mesmo
-                                            echo $p['telefone_professor'];
-                                        }
-                                    ?>
-                                </td>
+                                <td class="px-4 py-2"><?= formatarTelefone($p['telefone_professor']) ?></td>
                                 <td class="px-4 py-2"><?= $p['email_professor'] ?></td>
                                 <td class="px-4 py-2"><?= $p['data_aula'] ?></td>
                                 <td class="px-4 py-2"><?= $p['dia_semana'] ?></td>
@@ -412,7 +398,7 @@ $professores = listarPerfilProfessor(null);
             }
         });
 
-    async function aula_usuario(idprofessor, idaluno) {
+        async function aula_usuario(idprofessor, idaluno) {
             try {
                 const response = await fetch(
                     'http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar', {
