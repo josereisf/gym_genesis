@@ -48,14 +48,14 @@ if ($usuario !== null) {
 
     if ($tipo == 2) {
 
-    // Tipo padrão (aluno)
-    $usuarioId = $usuario['id'];
-    $usuario = listarPerfilProfessor($usuarioId);
-    $usuario['nome'] = $usuario[0]['nome_professor'];
-    $_SESSION['id'] = $usuarioId;
-    $_SESSION['email'] = $email;
-    $_SESSION['nome'] = $usuario['nome'];
-    $_SESSION['tipo'] = $tipo;
+        // Tipo padrão (aluno)
+        $usuarioId = $usuario['id'];
+        $usuario = listarPerfilProfessor($usuarioId);
+        $usuario['nome'] = $usuario[0]['nome_professor'];
+        $_SESSION['id'] = $usuarioId;
+        $_SESSION['email'] = $email;
+        $_SESSION['nome'] = $usuario['nome'];
+        $_SESSION['tipo'] = $tipo;
         header('Location: ../dashboard_professor.php');
         exit();
     }

@@ -59,7 +59,7 @@
                     <h2 class="text-xl font-extrabold text-indigo-400">Configurações do Aluno</h2>
                 </div>
                 <nav class="flex-1 space-y-2">
-                    <a href="dashboard_aluno.php" class="block px-4 py-2 rounded-lg text-gray-300 hover:bg-indigo-600 hover:text-white transition">🏠 Voltar ao Painel</a>
+                    <a href="dashboard_usuario.php" class="block px-4 py-2 rounded-lg text-gray-300 hover:bg-indigo-600 hover:text-white transition">🏠 Voltar ao Painel</a>
                 </nav>
             </aside>
 
