@@ -1,12 +1,15 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
 
+$id = 1;
 $tabela = $_GET['tabela'];
+$acao = $_GET['acao'];
 $colunas = listarColunasTabela($tabela);
 
 echo "<pre>";
-print_r($colunas);
 echo "</pre>";
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,9 +18,27 @@ echo "</pre>";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário Genérico</title>
+    <script src="../public/js/formularioGenerico.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
+    <div id="dados" data-tabela="<?php echo $tabela; ?>" data-id="<?php echo $id; ?>"></div>
+      <script>
+    $(document).ready(function() {
+      // Pegando os dados diretamente do atributo 'data-*' no HTML
+      var tabela = $('#dados').data('tabela');
+      var id = $('#dados').data('id');
+      
+      // Agora você pode usar esses valores no JavaScript
+      console.log("Tabela:", tabela);
+      console.log("ID:", id);
+      
+      // Passando para a função listarTabela
+      listarTabela(tabela, id);
+    });
+      </script>
     <form action="api/index.php?entidade=<?= $tabela ?>&acao=cadastrar" method="post" enctype="multipart/form-data">
         <?php foreach ($colunas as $c) {
             $nome_campo = $c['Field'];
