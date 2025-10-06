@@ -322,7 +322,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
                 <span class="font-medium group-hover:text-green-900">Perfil</span>
               </a>
 
-              <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
+              <a href="configuracao.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-green-600 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
                   <i data-lucide="settings" class="h-5 w-5 text-green-600 group-hover:text-green-700"></i>

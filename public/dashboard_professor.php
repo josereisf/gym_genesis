@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
-require_once "../php/verificarLogado.php";
+// require_once "./php/verificarLogado.php";
 
 if ($_SESSION['tipo'] == 1) {
   $_SESSION['erro_login'] = "Usuário não permitido!";
@@ -8,6 +8,7 @@ if ($_SESSION['tipo'] == 1) {
   exit;
 }
 
+var_dump($_SESSION);
 $idprofessor = $_SESSION['id']; // ID do professor, pode ser dinâmico conforme a sessão do usuário
 $resultado = listarUsuarioCompleto($idprofessor);
 foreach ($resultado as $r) {
