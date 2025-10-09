@@ -7,6 +7,7 @@ if (isset($_GET['tipo']) and $GET['tipo'] = 0) {
 } else {
     $tipo = 1;
 }
+
 $professores = listarPerfilProfessor(null);
 // var_dump($professores);
 ?>

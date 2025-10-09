@@ -3646,7 +3646,7 @@ function listarPerfilProfessor($idusuario)
 {
   $conexao = conectar();
 
-  if ($idusuario) {
+  if ($idusuario != null) {
     $sql = "SELECT
     aa.funcionario_id,
     f.usuario_id,  -- 👈 agora você pega também o usuario_id
