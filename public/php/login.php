@@ -10,9 +10,9 @@ if (empty($email) || empty($senha)) {
     // header('Location: ../login.php');
     exit();
 }
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
 
 $usuario = loginUsuario($email, $senha);
 
@@ -59,9 +59,9 @@ if ($usuario !== null) {
         $_SESSION['email'] = $email;
         $_SESSION['nome'] = $nome;
         $_SESSION['tipo'] = $tipo;
-        echo "<pre>";
-        print_r($perfil);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($perfil);
+        // echo "</pre>";
 
         // header('Location: ../dashboard_professor.php');
         exit();
