@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
 
-$id = 2;
-$tabela = $_GET['tabela'] ?? '';
-
+$id = 1;
+$tabela = $_GET['tabela'];
+$acao = $_GET['acao'];
 $colunas = listarColunasTabela($tabela);
 ?>
 <!DOCTYPE html>

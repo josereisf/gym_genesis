@@ -2411,7 +2411,7 @@ function listarUsuario($idusuario)
 {
   $conexao = conectar();
 
-  if ($idusuario !== null) {
+  if ($idusuario != null) {
     $sql = " SELECT * FROM usuario WHERE idusuario = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
