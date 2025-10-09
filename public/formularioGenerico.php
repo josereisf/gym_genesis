@@ -112,7 +112,8 @@ $colunas = listarColunasTabela($tabela);
     <button type="submit">Salvar</button>
   </form>
 
-<script src="./js/formularioGenerico.js"></script>
+  <script src="./js/formularioGenerico.js"></script>
 
 </body>
+
 </html>
