@@ -1,5 +1,5 @@
 <?php
-require_once "../php/verificarLogado.php";
+require_once "./php/verificarLogado.php";
 require_once __DIR__ . "/../code/funcao.php";
 
 ?>
@@ -181,7 +181,39 @@ require_once __DIR__ . "/../code/funcao.php";
       });
     });
   </script>
+<script>
+  function salvarResposta(){
+    const dados = document.getElementById("dados");
+    const forumId = dados.getAttribute("data-forum-id");
+    const usuarioId = dados.getAttribute("data-usuario-id");
+    const mensagem = document.getElementById("mensagem").value;
 
+    fetch("localhost:83/public/api/index.php?entidade=resposta_forum&acao=cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        forum_id: forumId,
+        usuario_id: usuarioId,
+        mensagem: mensagem
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert("Resposta salva com sucesso!");
+        location.reload();
+      } else {
+        alert("Erro ao salvar resposta: " + data.error);
+      }
+    })
+    .catch(error => {
+      console.error("Erro na requisição:", error);
+      alert("Erro na requisição.");
+    });
+  }
+</script>
 </body>
 
 </html>

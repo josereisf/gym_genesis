@@ -1,33 +1,59 @@
-async function listarTabela(tabela, id) {
-  try {
-    const response = await fetch(
-      'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }) // Envia o ID como JSON
-      }
-    );
+  $(document).ready(function () {
+    let tabela = $('#dados').data('tabela');
+    let id = $('#dados').data('id');
 
-    const data = await response.json();
+    console.log("Tabela:", tabela);
+    console.log("ID:", id);
 
-    if (data.sucesso) {
-      const dados = data.dados;
+    listarTabela(tabela, id);
+  });
 
-      // Preenche todos os inputs com base nos dados retornados
-      for (const campo in dados) {
-        if (dados.hasOwnProperty(campo)) {
-          // Se o input existir com o nome correspondente
-          const input = document.getElementById(campo);
-          if (input) {
-            input.value = dados[campo];  // Preenche o valor do input
+  function listarTabela(tabela, id) {
+    $.ajax({
+      url: 'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ id: id }),
+      success: function (data) {
+        if (data.sucesso) {
+          const dados = data.dados;
+          console.table(dados);
+
+          if (Array.isArray(dados)) {
+
+            // --- PREENCHER SELECT DE CARGO ---
+            const selectCargo = $('#select_cargo_id');
+            selectCargo.empty();
+            dados.forEach(item => {
+              // 'idperfil' é o id do cargo e 'nome_cargo' é o nome
+              if (item.idperfil && item.nome_cargo) {
+                selectCargo.append(
+                  $('<option></option>').val(item.idperfil).text(item.nome_cargo)
+                );
+              }
+            });
+
+            // --- PREENCHER SELECT DE USUÁRIO ---
+            const selectUsuario = $('#select_usuario_id');
+            selectUsuario.empty();
+            dados.forEach(item => {
+              // 'usuario_id' e 'nome' (ou outro campo se houver)
+              if (item.usuario_id && item.nome) {
+                selectUsuario.append(
+                  $('<option></option>').val(item.usuario_id).text(item.nome)
+                );
+              }
+            });
+
+          } else {
+            console.log('Erro: Dados não estão no formato esperado.');
           }
+        } else {
+          console.log('Erro: Dados não encontrados');
         }
+      },
+      error: function (error) {
+        console.error('Erro ao buscar dados:', error);
       }
-    } else {
-      console.log('Erro: Dados não encontrados');
-    }
-  } catch (error) {
-    console.error('Erro ao buscar dados:', error);
+    });
   }
-}

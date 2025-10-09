@@ -270,7 +270,8 @@ function listarFuncionarios($idfuncionario)
             f.salario,
             f.cargo_id,
             f.usuario_id,
-            c.nome AS nome_cargo
+            c.nome AS nome_cargo,
+            p.idperfil
             FROM funcionario AS f
             INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
             INNER JOIN usuario AS u on f.usuario_id = u.idusuario
