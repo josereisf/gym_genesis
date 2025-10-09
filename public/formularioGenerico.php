@@ -3,7 +3,6 @@ require_once __DIR__ . "/../code/funcao.php";
 
 $id = 1;
 $tabela = $_GET['tabela'];
-$acao = $_GET['acao'];
 $colunas = listarColunasTabela($tabela);
 
 echo "<pre>";

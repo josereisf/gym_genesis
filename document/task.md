@@ -15,6 +15,8 @@
 
 * [ ] Corrigir as configurações da conta do usuário
 * [ ] Criar página de **recuperação de senha (esquecimento)**
+* [ ] Corrigir a edição do formulário genérico
+
 
 ---
 
