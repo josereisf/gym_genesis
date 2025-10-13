@@ -1,8 +1,5 @@
 <?php
 require_once '../code/funcao.php';
-$id = 1;
-$tabela = "usuario";
-$colunas = listarColunasTabela($tabela);
 $id = 0;
 $tabelas = listarTabelas();
 ?>
@@ -17,16 +14,6 @@ $tabelas = listarTabelas();
 </head>
 
 <body>
-
-</head>
-
-<body>
-    <div id="dados" data-tabela="<?php echo $tabela; ?>" data-id="<?php echo $id; ?>"></div>
-    <select name="" id="tabela">
-
-        <option data-<?= $tabela ?>="<?= $tabela ?>">Usuario</option>
-        <option data->Perfil Usuario</option>
-
     <div id="dados" data-id="<?php echo $id; ?>"></div>
     <select id="tabelas">
         <option value="">Selecione uma tabela</option>
@@ -41,3 +28,8 @@ $tabelas = listarTabelas();
     <table id="tabela-dados">
         <thead></thead>
         <tbody></tbody>
+    </table>
+    <script src="./js/tabelaGenerica.js"></script>
+</body>
+
+</html>
