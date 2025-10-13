@@ -9,5 +9,5 @@ $emails = [
 ];
 
 echo '<pre>';
-print_r(gerarCodigosDeSegurancaa($emails, $idusuario));
+print_r(enviarCodigoSeguranca($emails, $idusuario));
 echo '</pre>';

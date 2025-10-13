@@ -1094,170 +1094,25 @@ function editarDietaAlimentar($idalimento, $idrefeicao, $quantidade, $observacao
   desconectar($conexao);
   return $funcionou;
 }
-function gerarCodigoDeSeguranca($email_destinatario, $idusuario)
+
+function enviarCodigoSeguranca($emails, $idusuario)
 {
-  $codigo = random_int(100000, 999999);
-  $expiracao = date('Y-m-d H:i:s', strtotime('+10 minutes'));
-
-  $email = new PHPMailer(true);
-
-  try {
-    // Configurações do servidor SMTP do Gmail
-    $email->isSMTP();
-    $email->Host = 'smtp.gmail.com';
-    $email->SMTPAuth = true;
-    $email->Username = 'smtpemaile@gmail.com'; // Seu Gmail
-    $email->Password = 'xjqc orkg ckls fant'; // Senha gerada no passo 2
-    $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $email->Port = 587;
-
-    // Remetente e destinatário
-    $email->setFrom('smtpemaile@gmail.com', 'Jozinho');
-    $email->addAddress($email_destinatario, 'Destinatário');
-
-    // Conteúdo do e-mail em HTML
-    $email->isHTML(true); // Alterado para permitir HTML
-    $email->Subject = 'Recuperacao de e-mail';
-
-    // Corpo do e-mail com HTML e CSS
-    $email->Body = '
-        <!DOCTYPE html>
-        <html lang="pt-BR">
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Recuperação de Senha</title>
-          <style>
-            * {
-              box-sizing: border-box;
-              margin: 0;
-              padding: 0;
-            }
-
-            body {
-              font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-              background: linear-gradient(135deg, #e0f7fa, #e1bee7);
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100vh;
-              animation: fadeInBody 1.2s ease-in;
-            }
-
-            @keyframes fadeInBody {
-              from { opacity: 0; }
-              to { opacity: 1; }
-            }
-
-            .container {
-              background-color: #ffffff;
-              padding: 30px;
-              border-radius: 12px;
-              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-              width: 100%;
-              max-width: 400px;
-              text-align: center;
-              animation: slideIn 0.8s ease;
-            }
-
-            @keyframes slideIn {
-              from {
-                transform: translateY(-40px);
-                opacity: 0;
-              }
-              to {
-                transform: translateY(0);
-                opacity: 1;
-              }
-            }
-
-            h2 {
-              color: #4a148c;
-              margin-bottom: 20px;
-            }
-
-            p {
-              color: #555;
-              font-size: 16px;
-              margin-bottom: 10px;
-            }
-
-            .codigo {
-              font-size: 32px;
-              font-weight: bold;
-              color: #2e7d32;
-              background-color: #e8f5e9;
-              padding: 15px;
-              border-radius: 8px;
-              margin: 20px 0;
-              letter-spacing: 2px;
-              animation: pulse 1.5s infinite;
-            }
-
-            @keyframes pulse {
-              0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4); }
-              70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(46, 125, 50, 0); }
-              100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); }
-            }
-
-            .expiracao {
-              font-size: 13px;
-              color: #888;
-            }
-
-            @media (max-width: 480px) {
-              .container {
-                padding: 20px;
-              }
-
-              .codigo {
-                font-size: 28px;
-              }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <h2>Recuperação de Senha</h2>
-            <p>Esse é o seu código de segurança:</p>
-            <div class="codigo">' . $codigo . '</div>
-            <p class="expiracao">O código expira em: ' . $expiracao . '</p>
-          </div>
-        </body>
-        </html>
-
-    ';
-
-    $email->send();
-    echo 'A mensagem foi enviada com sucesso!';
-
-    // Inserção no banco de dados
-    $conexao = conectar();
-    $sql = 'INSERT INTO recuperacao_senha (codigo, tempo_expiracao, usuario_id) VALUES (?, ?, ?)';
-    $comando = mysqli_prepare($conexao, $sql);
-
-    mysqli_stmt_bind_param($comando, 'isi', $codigo, $expiracao, $idusuario);
-
-    mysqli_stmt_execute($comando);
-    mysqli_stmt_close($comando);
-    desconectar($conexao);
-  } catch (Exception $e) {
-    echo "Erro ao enviar e-mail: {$email->ErrorInfo}";
+  // Garante que $emails seja sempre um array
+  if (!is_array($emails)) {
+    $emails = [$emails];
   }
-}
 
-function gerarCodigosDeSegurancaa(array $emails_destinatarios, $idusuario)
-{
   $resultados = [];
 
-  foreach ($emails_destinatarios as $email_destinatario) {
+  foreach ($emails as $email_destinatario) {
     $codigo = random_int(100000, 999999);
     $expiracao = date('Y-m-d H:i:s', strtotime('+10 minutes'));
+    $expiracao_msg = date('d/m/Y H:i:s', strtotime('+10 minutes'));
 
     $email = new PHPMailer(true);
 
     try {
-      // Configurações do servidor SMTP
+      // Configurações do SMTP
       $email->isSMTP();
       $email->Host = 'smtp.gmail.com';
       $email->SMTPAuth = true;
@@ -1267,35 +1122,34 @@ function gerarCodigosDeSegurancaa(array $emails_destinatarios, $idusuario)
       $email->Port = 587;
 
       // Remetente e destinatário
-      $email->setFrom('smtpemaile@gmail.com', 'Jozinho');
+      $email->setFrom('smtpemaile@gmail.com', 'Academia Gym Genesis');
       $email->addAddress($email_destinatario);
 
       // Conteúdo do e-mail
       $email->isHTML(true);
-      $email->Subject = 'Recuperacao de e-mail';
-
+      $email->Subject = 'Recuperação de Senha';
       $email->Body = '
-        <!DOCTYPE html>
-        <html lang="pt-BR">
-        <head>
-        <meta charset="UTF-8" />
-        <style>
-          body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; padding: 20px; }
-          .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
-          .codigo { font-size: 28px; font-weight: bold; color: #2e7d32; background: #e8f5e9; padding: 15px; border-radius: 6px; margin: 15px 0; text-align: center; }
-          .expiracao { font-size: 14px; color: #888; text-align: center; }
-        </style>
-        </head>
-        <body>
-        <div class="container">
-          <h2>Recuperação de Senha</h2>
-          <p>Seu código de segurança:</p>
-          <div class="codigo">' . $codigo . '</div>
-          <p class="expiracao">Expira em: ' . $expiracao . '</p>
-        </div>
-        </body>
-        </html>
-      ';
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8" />
+                <style>
+                    body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e0f7fa, #e1bee7); padding: 20px; }
+                    .container { background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); max-width: 400px; margin: auto; text-align: center; }
+                    .codigo { font-size: 32px; font-weight: bold; color: #2e7d32; background-colortrocar_senha.php: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0; letter-spacing: 2px; }
+                    .expiracao { font-size: 13px; color: #888; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h2>Recuperação de Senha</h2>
+                    <p>Seu código de segurança:</p>
+                    <div class="codigo">' . $codigo . '</div>
+                    <p class="expiracao">Expira em: ' . $expiracao_msg . '</p>
+                </div>
+            </body>
+            </html>
+            ';
 
       $email->send();
 
@@ -1326,6 +1180,7 @@ function gerarCodigosDeSegurancaa(array $emails_destinatarios, $idusuario)
   return $resultados;
 }
 
+
 function VerificarCodigo($codigoInserido, $idusuario)
 {
   $conexao = conectar();
@@ -1349,11 +1204,13 @@ function VerificarCodigo($codigoInserido, $idusuario)
   $expiracaoArmazenada = $resultado['tempo_expiracao'];
 
   if ($codigoInserido !== $codigoArmazenado) {
-    return false; // Código incorreto
+    $resposta =  "codigo inserido esta incorreto"; // Código incorreto
+    return $resposta;
   }
 
   if (strtotime($expiracaoArmazenada) <= time()) {
-    return false; // Código expirado
+    $resposta =  "codigo inserido expirou";
+    return $resposta; // Código expirado
   }
 
   return true; // Código correto e válido
@@ -1885,7 +1742,7 @@ function listarAulaAgendada($idaula = null)
   mysqli_stmt_close($comando);
   desconectar($conexao);
 
-  return json_encode($lista, JSON_UNESCAPED_UNICODE);
+  return $lista;
 }
 
 
@@ -2412,7 +2269,7 @@ function listarUsuario($idusuario)
   $conexao = conectar();
 
   if ($idusuario != null) {
-    $sql = " SELECT * FROM usuario WHERE idusuario = ?";
+    $sql = " SELECT * FROM usuario WHERE idusuario = ? ";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
@@ -2494,7 +2351,7 @@ function listarAssinaturas($idassinatura)
 
   mysqli_stmt_close($comando);
 
-  return json_encode($lista_assinaturas);
+  return $lista_assinaturas;
 }
 
 
@@ -3979,4 +3836,52 @@ function listarTabelas(){
   desconectar($conexao);
 
   return $tabelas;
+}
+
+/**
+ * Verifica se um usuário existe pelo email, senha ou tipo de usuário
+ * Retorna o usuário encontrado ou false se não existir
+ */
+function verificarUsuario($email = null, $senha = null, $tipo_usuario = null)
+{
+  $conexao = conectar();
+
+  // Base da query
+  $sql = "SELECT * FROM usuario WHERE 1=1";
+  $params = [];
+  $tipos = "";
+
+  if ($email !== null) {
+    $sql .= " AND email = ?";
+    $params[] = $email;
+    $tipos .= "s";
+  }
+
+  if ($senha !== null) {
+    $sql .= " AND senha = ?";
+    $params[] = $senha;
+    $tipos .= "s";
+  }
+
+  if ($tipo_usuario !== null) {
+    $sql .= " AND tipo_usuario = ?";
+    $params[] = $tipo_usuario;
+    $tipos .= "i";
+  }
+
+  $comando = mysqli_prepare($conexao, $sql);
+
+  if (!empty($params)) {
+    mysqli_stmt_bind_param($comando, $tipos, ...$params);
+  }
+
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $usuario = mysqli_fetch_assoc($resultados);
+
+  mysqli_stmt_close($comando);
+
+  // Retorna o usuário encontrado ou false se não existir
+  return $usuario ?: false;
 }
