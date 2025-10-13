@@ -1,8 +1,8 @@
 <?php
 
 require_once __DIR__ . "/../code/funcao.php";
-require_once "../php/verificarLogado.php";
-require_once "../php/verificarPermissaoAdm.php";
+require_once "./php/verificarLogado.php";
+require_once "./php/verificarPermissaoAdm.php";
 
 if (isset($_GET['idcargo'])) {
     $idcargo = $_GET['idcargo'];

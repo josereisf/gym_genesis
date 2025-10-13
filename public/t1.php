@@ -10,7 +10,7 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: 'http://localhost:83/public/php/troca.php?tipo=0',
+                url: 'http://localhost:83/public/php/troca.php?tipo=1',
                 method: 'GET',
                 complete: function() {
                     // Defina a página de redirecionamento

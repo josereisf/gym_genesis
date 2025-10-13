@@ -1,0 +1,123 @@
+{
+    "🧑‍💼 Painel Administrativo (ADM)": {
+        "tarefas": [
+            {
+                "texto": "Arrumar o dashboard para o ADM",
+                "feito": false
+            },
+            {
+                "texto": "Corrigir o direcionamento de páginas",
+                "feito": false
+            },
+            {
+                "texto": "Ajustar os arrays para enviar corretamente as tabelas desejadas",
+                "feito": false
+            },
+            {
+                "texto": "Revisar e corrigir os acessos e permissões do ADM",
+                "feito": false
+            }
+        ],
+        "comentario": ""
+    },
+    "👤 Configurações do Usuário": {
+        "tarefas": [
+            {
+                "texto": "Corrigir as configurações da conta do usuário",
+                "feito": false
+            },
+            {
+                "texto": "Criar página de recuperação de senha (esquecimento)",
+                "feito": false
+            },
+            {
+                "texto": "Corrigir a edição do formulário genérico",
+                "feito": false
+            }
+        ],
+        "comentario": ""
+    },
+    "🧩 Banco de Dados e Lógica": {
+        "tarefas": [
+            {
+                "texto": "Corrigir todos os INSERTs",
+                "feito": false
+            },
+            {
+                "texto": "Revisar e testar cada função",
+                "feito": false
+            },
+            {
+                "texto": "Organizar e otimizar as lógicas do sistema",
+                "feito": false
+            },
+            {
+                "texto": "Garantir que tudo funcione sem internet (modo offline)",
+                "feito": false
+            }
+        ],
+        "comentario": ""
+    },
+    "🖼️ Conteúdo e Interface": {
+        "tarefas": [
+            {
+                "texto": "Achar e adicionar vídeos para os exercícios",
+                "feito": false
+            },
+            {
+                "texto": "Adicionar imagens para a loja",
+                "feito": false
+            },
+            {
+                "texto": "Melhorar o fórum de conversa",
+                "feito": false
+            },
+            {
+                "texto": "Adicionar botão de curtida no fórum",
+                "feito": false
+            },
+            {
+                "texto": "Melhorar a responsividade completa do site",
+                "feito": false
+            }
+        ],
+        "comentario": ""
+    },
+    "🧠 Novas Tarefas": {
+        "tarefas": [
+            {
+                "texto": "Implementar lógica do fórum",
+                "feito": false
+            },
+            {
+                "texto": "Fazer a lógica do carrinho da loja",
+                "feito": false
+            },
+            {
+                "texto": "Criar o processamento de pagamento",
+                "feito": false
+            },
+            {
+                "texto": "Excluir dados relacionados ao usuário de forma prática",
+                "feito": false
+            },
+            {
+                "texto": "Ajustar configurações do dashboard (todos)",
+                "feito": false
+            },
+            {
+                "texto": "Corrigir o fluxo do administrador na academia",
+                "feito": false
+            },
+            {
+                "texto": "Criar páginas dedicadas (pedido, refeição, treino)",
+                "feito": false
+            },
+            {
+                "texto": "Criar formulário para entregar dieta personalizada",
+                "feito": false
+            }
+        ],
+        "comentario": ""
+    }
+}

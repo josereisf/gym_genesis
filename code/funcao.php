@@ -3967,3 +3967,16 @@ function formatarTelefone($numero) {
         return $numero;
     }
 }
+function listarTabelas(){
+  $conexao = conectar();
+  $sql = "SHOW TABLES;";
+  $comando = mysqli_query($conexao, $sql);
+  $tabelas = [];
+  while ($tabela = mysqli_fetch_assoc($comando)) {
+    $tabelas[] = $tabela;
+  }
+  mysqli_free_result($comando);
+  desconectar($conexao);
+
+  return $tabelas;
+}

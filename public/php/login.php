@@ -7,7 +7,7 @@ $senha = $_POST['senha'] ?? '';
 // Verifica campos vazios
 if (empty($email) || empty($senha)) {
     $_SESSION['erro_login'] = 'Preencha todos os campos.';
-    // header('Location: ../login.php');
+    header('Location: ../login.php');
     exit();
 }
 // echo "<pre>";
@@ -32,20 +32,20 @@ if ($usuario !== null) {
             Recomendamos que você refaça seu cadastro. 
             Se você já possui cadastro e continua enfrentando problemas, por favor, entre em contato com o administrador do sistema.';
 
-            // header('Location: ../login.php');
+            header('Location: ../login.php');
             exit;
         }
 
         // Mensagem de erro padrão (para menos de 5 tentativas)
         $_SESSION['erro_login'] = '❌ Usuário ou senha inválidos. Verifique suas credenciais e tente novamente.';
-        // header('Location: ../login.php');
+        header('Location: ../login.php');
         exit;
     }
 
 
     // Redirecionamento por tipo
     if ($tipo == 0) {
-        // header('Location: ../dashboard_administrador.html');
+        header('Location: ../dashboard_administrador.html');
         exit();
     }
 
@@ -59,11 +59,9 @@ if ($usuario !== null) {
         $_SESSION['email'] = $email;
         $_SESSION['nome'] = $nome;
         $_SESSION['tipo'] = $tipo;
-        // echo "<pre>";
-        // print_r($perfil);
-        // echo "</pre>";
 
-        // header('Location: ../dashboard_professor.php');
+
+        header('Location: ../dashboard_professor.php');
         exit();
     }
 
@@ -76,24 +74,24 @@ if ($usuario !== null) {
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $usuario['nome'];
     $_SESSION['tipo'] = $tipo;
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>";
+    // echo "<pre>";
+    // print_r($_SESSION);
+    // echo "</pre>";
     if ($resposta) {
         // Resetar tentativas após login bem-sucedido
         $_SESSION['tentativas_login'] = 0;
 
-        // header('Location: ../dashboard_usuario.php');
+        header('Location: ../dashboard_usuario.php');
     } else {
         // Resetar tentativas após login bem-sucedido
         $_SESSION['tentativas_login'] = 0;
 
-        // header('Location: ../primeira_avaliacao.php');
+        header('Location: ../primeira_avaliacao.php');
     }
 
     exit();
 } else {
     $_SESSION['erro_login'] = 'E-mail ou senha incorretos.';
-    // header('Location: ../login.php');
+    header('Location: ../login.php');
     exit();
 }
