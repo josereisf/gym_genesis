@@ -70,27 +70,22 @@ if (isset($idperfil)) {
 </head>
 
 <body>
-    <form action="api/index.php?entidade=professor_unificado" method="post" enctype="multipart/form-data">
-        <!-- Identificadores -->
+    <form action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="idfuncionario" value="<?= $idfuncionario ?>">
         <input type="hidden" name="idperfil" value="<?= $idperfil ?>">
         <input type="hidden" name="usuario_id" value="<?= $usuario_id ?>">
 
         <h2>Dados do Funcionário</h2>
 
-        <!-- Nome -->
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" value="<?= $nome ?>" required><br>
 
-        <!-- Data de Contratação -->
         <label for="data_contratacao">Data de Contratação:</label>
         <input type="date" name="data_contratacao" id="data_contratacao" value="<?= $data_contratacao ?>"><br>
 
-        <!-- Salário -->
         <label for="salario">Salário:</label>
         <input type="number" name="salario" id="salario" value="<?= $salario ?>"><br>
 
-        <!-- Cargo -->
         <label for="cargo_id">Cargo:</label>
         <select name="cargo_id" id="cargo_id">
             <?php
@@ -104,7 +99,6 @@ if (isset($idperfil)) {
 
         <h2>Dados do Professor</h2>
 
-        <!-- Foto Perfil -->
         <label for="foto_perfil">Foto do Professor:</label><br>
         <?php if (!empty($foto_perfil)) : ?>
             <img src="uploads/<?= $foto_perfil ?>" alt="Foto Professor" width="120"><br>
@@ -112,7 +106,6 @@ if (isset($idperfil)) {
         <?php endif; ?>
         <input type="file" name="foto_perfil" id="foto_perfil" accept="image/*"><br><br>
 
-        <!-- Modalidade -->
         <label for="modalidade">Modalidade:</label>
         <select name="modalidade" id="modalidade" required>
             <option value="Presencial" <?= ($modalidade == 'Presencial') ? 'selected' : '' ?>>Presencial</option>
@@ -120,25 +113,25 @@ if (isset($idperfil)) {
             <option value="Híbrido" <?= ($modalidade == 'Híbrido') ? 'selected' : '' ?>>Híbrido</option>
         </select><br><br>
 
-        <!-- Avaliação Média -->
         <label for="avaliacao_media">Avaliação Média:</label>
         <input type="number" step="0.01" min="0" max="5" name="avaliacao_media" id="avaliacao_media" value="<?= $avaliacao_media ?>"><br><br>
 
-        <!-- Descrição -->
+
+        <label for="nome">Experiencia anos</label>
+        <input type="text" name="experiencia" id="experiencia" value="<?= $experiencia ?>" required><br>
+
         <label for="descricao">Descrição:</label><br>
         <textarea name="descricao" id="descricao" rows="4" cols="50"><?= $descricao ?></textarea><br><br>
 
-        <!-- Horários Disponíveis -->
         <label for="horarios_disponiveis">Horários Disponíveis:</label><br>
         <textarea name="horarios_disponiveis" id="horarios_disponiveis" rows="4" cols="50"><?= $horarios_disponiveis ?></textarea><br><br>
 
-        <!-- Telefone -->
         <label for="telefone">Telefone:</label>
         <input type="text" name="telefone" id="telefone" value="<?= $telefone ?>" required><br><br>
 
-        <!-- Botão -->
-        <input type="submit" value="<?= ($acaoFuncionario == 'editar' || $acaoPerfil == 'editar') ? 'Atualizar' : 'Cadastrar' ?> Professor/Funcionário">
+        <input type="submit" name="botao" value="<?= ($acaoFuncionario == 'editar' || $acaoPerfil == 'editar') ? 'Atualizar' : 'Cadastrar' ?> Professor/Funcionário">
     </form>
+    <script src="./js/formularioProfessor.js"></script>
 </body>
 
 </html>

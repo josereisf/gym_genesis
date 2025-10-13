@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist de Melhorias do Projeto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; color: #222; margin: 20px; }
+    h1, h2 { color: #2c3e50; }
+    .section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    label { display: block; margin: 6px 0; cursor: pointer; }
+    input[type="checkbox"] { transform: scale(1.2); margin-right: 8px; }
+    textarea { width: 100%; min-height: 60px; margin-top: 10px; border: 1px solid #ccc; border-radius: 8px; padding: 8px; resize: vertical; }
+    button { background: #2c3e50; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #1a252f; }
+    .progress { width: 100%; background: #e0e0e0; border-radius: 20px; overflow: hidden; margin: 10px 0 20px; }
+    .progress-bar { height: 20px; background: #2ecc71; width: 0%; text-align: center; color: #fff; font-size: 12px; transition: width 0.3s ease; }
+  </style>
+</head>
+<body>
+
+  <h1>🧭 Checklist de Melhorias do Projeto</h1>
+  <div class="progress"><div class="progress-bar" id="progressBar">0%</div></div>
+
+  <div id="checklist"></div>
+  <button onclick="salvarChecklist()">💾 Salvar Progresso</button>
+
+  <script>
+    let checklistData = {};
+
+async function carregarChecklist() {
+  try {
+    const res = await fetch('checklist.json?' + Date.now());
+    const text = await res.text();
+    try {
+      checklistData = JSON.parse(text);
+    } catch {
+      console.error("JSON inválido:", text);
+      checklistData = {};
+      alert("❌ checklist.json vazio ou corrompido!");
+    }
+    renderChecklist();
+    atualizarProgresso();
+  } catch (e) {
+    alert("Erro ao carregar checklist.json: " + e.message);
+  }
+}
+
+
+    function renderChecklist() {
+      const container = document.getElementById('checklist');
+      container.innerHTML = '';
+      for (const secao in checklistData) {
+        const { tarefas, comentario } = checklistData[secao];
+        const div = document.createElement('div');
+        div.className = 'section';
+        div.innerHTML = `<h2>${secao}</h2>`;
+        tarefas.forEach((t, i) => {
+          div.innerHTML += `
+            <label>
+              <input type="checkbox" ${t.feito ? 'checked' : ''} onchange="toggleTarefa('${secao}', ${i})">
+              ${t.texto}
+            </label>`;
+        });
+        div.innerHTML += `
+          <textarea placeholder="Comentários..." onchange="atualizarComentario('${secao}', this.value)">${comentario || ''}</textarea>
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    function toggleTarefa(secao, i) {
+      checklistData[secao].tarefas[i].feito = !checklistData[secao].tarefas[i].feito;
+      atualizarProgresso();
+    }
+
+    function atualizarComentario(secao, texto) {
+      checklistData[secao].comentario = texto;
+    }
+
+    function atualizarProgresso() {
+      let total = 0, feitos = 0;
+      for (const secao in checklistData) {
+        checklistData[secao].tarefas.forEach(t => {
+          total++;
+          if (t.feito) feitos++;
+        });
+      }
+      const pct = total > 0 ? Math.round((feitos / total) * 100) : 0;
+      const bar = document.getElementById('progressBar');
+      bar.style.width = pct + '%';
+      bar.innerText = pct + '%';
+    }
+
+    async function salvarChecklist() {
+      const res = await fetch('salvar.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(checklistData)
+      });
+      const data = await res.json();
+      alert(data.mensagem);
+    }
+
+    carregarChecklist();
+  </script>
+</body>
+</html>
