@@ -4,7 +4,7 @@ require_once __DIR__ . "/../code/funcao.php";
 $email = $_GET['email'] ?? '';
 $usuario = verificarUsuario($email);
 if (!$usuario) {
-    die("Usuário não encontrado.");
+  die("Usuário não encontrado.");
 }
 $tipo = $usuario["idusuario"] ?? '';
 // var_dump($usuario, $email, $tipo);
@@ -111,7 +111,7 @@ $tipo = $usuario["idusuario"] ?? '';
         $('#mensagemForm').removeClass('text-red-600').addClass('text-gray-700').text('Atualizando senha...');
 
         $.ajax({
-          url: '',
+          url: 'http://localhost:83/public/api/index.php?entidade=usuario&acao=editar',
           method: 'POST',
           data: {
             tipo: '<?php echo $tipo; ?>',
