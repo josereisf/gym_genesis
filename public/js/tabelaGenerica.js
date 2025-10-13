@@ -1,13 +1,19 @@
+
 $(document).ready(function () {
-    let tabela = $('#tabela').data(<?= $tabela ?>);
-    let id = $('#dados').data('id');
 
-    console.log("Tabela:", tabela);
-    console.log("ID:", id);
+    let tabela = $('#tabelas').val() || "";
 
-    listarTabela(tabela, id);
+    $('#tabelas').on('change', function () {
+
+        tabela = $(this).val();
+        let id = $('#dados').data('id');
+
+        console.log("Tabela:", tabela);
+        console.log("ID:", id);
+        
+        listarTabela(tabela, id);
+    });
 });
-
 function listarTabela(tabela, id) {
     $.ajax({
         url: 'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
@@ -18,7 +24,7 @@ function listarTabela(tabela, id) {
             if (data.sucesso) {
                 const dados = data.dados;
                 console.table(dados);
-                
+
                 const tbody = $('#tabela-dados tbody');
                 const thead = $('#tabela-dados thead');
                 tbody.empty(); // Limpa as linhas antigas
