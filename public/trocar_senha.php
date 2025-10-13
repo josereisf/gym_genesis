@@ -2,6 +2,12 @@
 require_once __DIR__ . "/../code/funcao.php";
 
 $email = $_GET['email'] ?? '';
+$usuario = verificarUsuario($email);
+if (!$usuario) {
+    die("Usuário não encontrado.");
+}
+$tipo = $usuario["idusuario"] ?? '';
+// var_dump($usuario, $email, $tipo);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -108,13 +114,16 @@ $email = $_GET['email'] ?? '';
           url: '',
           method: 'POST',
           data: {
+            tipo: '<?php echo $tipo; ?>',
             email: '<?php echo $email; ?>',
-            senha: novaSenha
+            senha: novaSenha,
+            idusuario: '<?php echo $usuario["idusuario"] ?? ''; ?>'
           },
           dataType: 'json',
           success: function(res) {
             if (res.status === 'sucesso') {
               $('#mensagemForm').removeClass('text-red-600 text-gray-700').addClass('text-green-600').text(res.mensagem);
+              console.log(res.mensagem);
             } else {
               $('#mensagemForm').removeClass('text-green-600 text-gray-700').addClass('text-red-600').text(res.mensagem);
             }
