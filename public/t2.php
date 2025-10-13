@@ -14,7 +14,7 @@
                 method: 'GET',
                 complete: function() {
                     // Defina a página de redirecionamento
-                    var paginaAnterior = document.referrer || 'dashboard_usuario.php'; 
+                    const paginaAnterior = document.referrer || 'dashboard_usuario.php'; 
                     // Redireciona para a página do usuário
                     window.location.href = paginaAnterior;}});
         });
