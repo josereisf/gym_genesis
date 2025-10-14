@@ -55,6 +55,7 @@ function editarUsuario($senha, $email, $tipo, $idusuario)
   desconectar($conexao);
   return $funcionou;
 }
+
 function deletarUsuario($idusuario)
 {
   $conexao = conectar();
@@ -70,26 +71,37 @@ function deletarUsuario($idusuario)
 function loginUsuario($email, $senha)
 {
   $conexao = conectar();
+
   $sql = "SELECT idusuario, email, senha FROM usuario WHERE email = ?";
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 's', $email);
+  if (!$comando) {
+    error_log("Erro ao preparar statement de login: " . mysqli_error($conexao));
+    return false;
+  }
 
+  mysqli_stmt_bind_param($comando, 's', $email);
   mysqli_stmt_execute($comando);
 
-  mysqli_stmt_bind_result($comando, $id, $emailDb, $senhahash);
+  mysqli_stmt_bind_result($comando, $idusuario, $emailDb, $senhaHash);
+
 
   if (mysqli_stmt_fetch($comando)) {
-    if (password_verify($senha, $senhahash)) {
-      return [
-        'id' => $id,
+    if (password_verify($senha, $senhaHash)) {
+      $usuario = [
+        'id' => $idusuario,
         'email' => $emailDb
       ];
     }
   }
 
-  return false;
+  // Fecha o statement e a conexão
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $usuario;
 }
+
 
 function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo)
 {
@@ -3884,4 +3896,15 @@ function verificarUsuario($email = null, $senha = null, $tipo_usuario = null)
 
   // Retorna o usuário encontrado ou false se não existir
   return $usuario ?: false;
+}
+
+// Função para detectar se a string parece um hash (bcrypt ou argon2)
+function is_password_hash_like(string $s): bool
+{
+  if ($s === '') return false;
+
+  $bcrypt = '/^\$2[ayb]\$(\d{2})\$[\.\/A-Za-z0-9]{53}$/';
+  $argon2 = '/^\$argon2(id|i)\$.+/';
+
+  return preg_match($bcrypt, $s) || preg_match($argon2, $s);
 }

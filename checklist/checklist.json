@@ -116,6 +116,14 @@
             {
                 "texto": "Criar formulário para entregar dieta personalizada",
                 "feito": false
+            },
+            {
+                "texto": "tem que arrumar a logica do trocar senha",
+                "feito": false
+            },
+            {
+                "texto": "tem que arrumar a logica do editar perfil",
+                "feito": false
             }
         ],
         "comentario": ""

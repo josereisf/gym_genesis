@@ -5,8 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_GET['acao'] ?? null;
 
-// Como você está recebendo dados JSON no fetch, não use $_POST direto,
-// leia o raw input e decodifique JSON:
+// Recebendo dados JSON
 $input = json_decode(file_get_contents('php://input'), true);
 
 $idusuario = $input['idusuario'] ?? 0;
@@ -14,27 +13,30 @@ $senha = $input['senha'] ?? null;
 $email = $input['email'] ?? null;
 $tipo = $input['tipo'] ?? null;
 
-
-// Supondo que a imagem vai vir como string base64 no JSON, trate aqui
-$imagem = $input['imagem'] ?? null;
-
-
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
 
 switch ($acao) {
     case 'cadastrar':
+        // Gera hash seguro mesmo que venha em texto
+        if (!is_password_hash_like($senha)) {
+            $senha = password_hash($senha, PASSWORD_DEFAULT);
+        }
         $resultado = cadastrarUsuario($senha, $email, $tipo);
-    
-    if ($resultado['success'] == true) {
-        enviarResposta(true, 'Usuário cadastrado com sucesso', ['id' => $resultado['id']]);
-    } else {
-        enviarResposta(false, 'Erro ao cadastrar usuário');
-    }
-    break;
+        if ($resultado['success'] == true) {
+            enviarResposta(true, 'Usuário cadastrado com sucesso', ['id' => $resultado['id']]);
+        } else {
+            enviarResposta(false, 'Erro ao cadastrar usuário');
+        }
+        break;
 
     case 'editar':
+        // Se a senha não estiver em hash, gera hash seguro
+        if ($senha !== null && !is_password_hash_like($senha)) {
+            $senha = password_hash($senha, PASSWORD_DEFAULT);
+        }
+
         $funcionou = editarUsuario($senha, $email, $tipo, $idusuario);
         if ($funcionou) {
             enviarResposta(true, 'Usuário editado com sucesso');

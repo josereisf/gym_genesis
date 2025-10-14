@@ -163,7 +163,7 @@ if (!empty($avaliacao_fisica) && count($avaliacao_fisica) >= 2) {
 // Cálculo da renovação se não tiver data fim vinda do usuário
 if ($dia_fim === null || $dia_fim === "-") {
   $assinaturasJson = listarAssinaturas(null); // Busca todas
-  $assinaturas = json_decode($assinaturasJson, true);
+  $assinaturas = json_encode($assinaturasJson, true);
 
   // Filtra pelas assinaturas do usuário atual
   if (is_array($assinaturas)) {
@@ -232,7 +232,7 @@ $frasesMotivacao = [
 $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
 
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>

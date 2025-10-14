@@ -7,7 +7,7 @@ if (!$usuario) {
   die("Usuário não encontrado.");
 }
 $tipo = $usuario["idusuario"] ?? '';
-// var_dump($usuario, $email, $tipo);
+//  var_dump($usuario, $email, $tipo);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -121,11 +121,18 @@ $tipo = $usuario["idusuario"] ?? '';
           },
           dataType: 'json',
           success: function(res) {
-            if (res.status === 'sucesso') {
-              $('#mensagemForm').removeClass('text-red-600 text-gray-700').addClass('text-green-600').text(res.mensagem);
+            if (res.sucesso) { // <-- Aqui o ajuste
+              $('#mensagemForm')
+                .removeClass('text-red-600 text-gray-700')
+                .addClass('text-green-600')
+                .text(res.mensagem);
               console.log(res.mensagem);
+              window.location.href = 'login.php'; // Redireciona para a página de login
             } else {
-              $('#mensagemForm').removeClass('text-green-600 text-gray-700').addClass('text-red-600').text(res.mensagem);
+              $('#mensagemForm')
+                .removeClass('text-green-600 text-gray-700')
+                .addClass('text-red-600')
+                .text(res.mensagem);
             }
           },
           error: function() {

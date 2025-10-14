@@ -10,9 +10,9 @@ if (empty($email) || empty($senha)) {
     header('Location: ../login.php');
     exit();
 }
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
+//  echo "<pre>";
+//  print_r($_POST);
+//  echo "</pre>";
 
 $usuario = loginUsuario($email, $senha);
 
@@ -52,18 +52,19 @@ if ($usuario !== null) {
     if ($tipo == 2) {
 
         // Tipo padrão (aluno)
-        $usuarioId = $usuario['id'];
-        $perfil = listarPerfilProfessor($usuarioId);
+        $professorId = $usuario['id'];
+        $perfil = listarPerfilProfessor($professorId);
         $nome = isset($perfil[0]['nome_professor']) ? $perfil[0]['nome_professor'] : '';
-        $_SESSION['id'] = $usuarioId;
+        $_SESSION['id'] = $professorId;
         $_SESSION['email'] = $email;
         $_SESSION['nome'] = $nome;
         $_SESSION['tipo'] = $tipo;
 
-
+        var_dump($usuario);
         header('Location: ../dashboard_professor.php');
         exit();
     }
+    var_dump($email);
 
     // Tipo padrão (aluno)
     $usuarioId = $usuario['id'];
