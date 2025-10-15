@@ -124,8 +124,12 @@
             {
                 "texto": "tem que arrumar a logica do editar perfil",
                 "feito": false
+            },
+            {
+                "texto": "tem que arrumar a logica login",
+                "feito": false
             }
         ],
-        "comentario": ""
+        "comentario": "PARA O JOSE: tem que pegar e fazer a logica do login funcionar de todo o jeito"
     }
 }

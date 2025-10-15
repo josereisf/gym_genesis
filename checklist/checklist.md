@@ -42,5 +42,10 @@
 - [ ] Corrigir o fluxo do administrador na academia
 - [ ] Criar páginas dedicadas (pedido, refeição, treino)
 - [ ] Criar formulário para entregar dieta personalizada
+- [ ] tem que arrumar a logica do trocar senha
+- [ ] tem que arrumar a logica do editar perfil
+- [ ] tem que arrumar a logica login
+
+💬 **Comentário:** PARA O JOSE: tem que pegar e fazer a logica do login funcionar de todo o jeito
 
 ---

@@ -71,35 +71,22 @@ function deletarUsuario($idusuario)
 function loginUsuario($email, $senha)
 {
   $conexao = conectar();
-
-  $sql = "SELECT idusuario, email, senha FROM usuario WHERE email = ?";
+  $sql = 'SELECT * FROM usuario WHERE email = ?';
   $comando = mysqli_prepare($conexao, $sql);
-
-  if (!$comando) {
-    error_log("Erro ao preparar statement de login: " . mysqli_error($conexao));
-    return false;
-  }
-
   mysqli_stmt_bind_param($comando, 's', $email);
   mysqli_stmt_execute($comando);
-
-  mysqli_stmt_bind_result($comando, $idusuario, $emailDb, $senhaHash);
-
-
-  if (mysqli_stmt_fetch($comando)) {
-    if (password_verify($senha, $senhaHash)) {
-      $usuario = [
-        'id' => $idusuario,
-        'email' => $emailDb
-      ];
-    }
+  $resultados = mysqli_stmt_get_result($comando);
+  $usuario = mysqli_fetch_assoc($resultados);
+  // var_dump($usuario);
+  if (password_verify(trim($senha), $usuario['senha'])) {
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return ["status" => true, "msg" => "estao corretos."];
+  } else {
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return ["status" => false, "msg" => "E-mail ou senha incorretos."];
   }
-
-  // Fecha o statement e a conexão
-  mysqli_stmt_close($comando);
-  desconectar($conexao);
-
-  return $usuario;
 }
 
 

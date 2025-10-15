@@ -19,10 +19,6 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        // Gera hash seguro mesmo que venha em texto
-        if (!is_password_hash_like($senha)) {
-            $senha = password_hash($senha, PASSWORD_DEFAULT);
-        }
         $resultado = cadastrarUsuario($senha, $email, $tipo);
         if ($resultado['success'] == true) {
             enviarResposta(true, 'Usuário cadastrado com sucesso', ['id' => $resultado['id']]);
@@ -32,11 +28,6 @@ switch ($acao) {
         break;
 
     case 'editar':
-        // Se a senha não estiver em hash, gera hash seguro
-        if ($senha !== null && !is_password_hash_like($senha)) {
-            $senha = password_hash($senha, PASSWORD_DEFAULT);
-        }
-
         $funcionou = editarUsuario($senha, $email, $tipo, $idusuario);
         if ($funcionou) {
             enviarResposta(true, 'Usuário editado com sucesso');
@@ -44,7 +35,6 @@ switch ($acao) {
             enviarResposta(false, 'Erro ao editar usuário');
         }
         break;
-
     case 'listar':
         $resultado = listarUsuario($idusuario);
         if ($resultado !== false) {
