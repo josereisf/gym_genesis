@@ -22,6 +22,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./js/jquery-3.7.1.min.js"></script>
   <script src="./js/jquery.validate.min.js"></script>
+  <script src="./js/jquery.mask.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
@@ -177,7 +178,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
         <label>Rua</label>
         <input type="text" id="rua" autocomplete="on" class="input" name="rua" placeholder="Digite a rua" required
-          disabled />
+         />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="numero">Número</label>
@@ -192,19 +193,19 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
           <!-- Campo de texto que depende do checkbox -->
           <input type="text" autocomplete="on" class="input flex-1 my-3" id="numero" placeholder="Número da residência"
-            aria-label="Text input with checkbox" disabled />
+            aria-label="Text input with checkbox" />
         </div>
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
 
         <label>Complemento</label>
         <input type="text" id="complemento" autocomplete="on" class="input" name="complemento"
-          placeholder="Ex: Bloco, Apt, etc." required disabled />
+          placeholder="Ex: Bloco, Apt, etc." required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label>Bairro</label>
         <input type="text" id="bairro" autocomplete="on" class="input" name="bairro" placeholder="Digite o bairro"
-          required disabled />
+          required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label>Cidade</label>
@@ -288,6 +289,24 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
       </div>
     </form>
   </div>
+  <script>
+    $(document).ready(function() {
+  // --- Máscaras ---
+  $('#cpf').mask('000.000.000-00');             // CPF
+  $('#telefone').mask('(00) 00000-0000');       // Telefone
+  $('#cep').mask('00000-000');                  // CEP
+  $('#numero').mask('00000', {reverse: false}); // Número da residência (aceita até 5 dígitos)
+  
+  // Caso queira bloquear a máscara quando usar S/N
+  $('#sem_numero').on('change', function() {
+    if ($(this).is(':checked')) {
+      $('#numero').val('S/N').prop('disabled', true);
+    } else {
+      $('#numero').val('').prop('disabled', false);
+    }
+  });
+});
+</script>
   <script src="./js/2-etapa.js"></script>
 </body>
 
