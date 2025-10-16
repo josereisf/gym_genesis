@@ -15,7 +15,6 @@ if (empty($email) || empty($senha)) {
 //  echo "</pre>";
 
 $usuario = loginUsuario($email, $senha);
-
 if ($usuario !== null) {
     $tipo = verificarTipoUsuario($email);
     if ($tipo === null || $tipo === false) {

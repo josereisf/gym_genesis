@@ -46,6 +46,15 @@ function cadastrarUsuario($senha, $email, $tipo)
 function editarUsuario($senha, $email, $tipo, $idusuario)
 {
   $conexao = conectar();
+  $resultados = loginUsuario($email, $senha);
+  $verify = $resultados['senha'];
+  if ($verify == "diferente") {
+    $senha = password_hash($senha, PASSWORD_DEFAULT);
+  } else {
+    $resultado = listarUsuario($idusuario);
+    $senha = $resultado['senha'];
+  }
+
   $sql = 'UPDATE usuario SET senha=?, email=?, tipo_usuario=? WHERE idusuario=?';
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'ssii', $senha, $email, $tipo, $idusuario);
@@ -81,11 +90,11 @@ function loginUsuario($email, $senha)
   if (password_verify(trim($senha), $usuario['senha'])) {
     mysqli_stmt_close($comando);
     desconectar($conexao);
-    return ["status" => true, "msg" => "estao corretos.", "id" => $usuario['idusuario']];
+    return ["status" => true, "msg" => "estao corretos.", "id" => $usuario['idusuario'], "senha" => "igual"];
   } else {
     mysqli_stmt_close($comando);
     desconectar($conexao);
-    return ["status" => false, "msg" => "E-mail ou senha incorretos."];
+    return ["status" => false, "msg" => "E-mail ou senha incorretos.", "senha" => "diferente"];
   }
 }
 
@@ -3793,9 +3802,10 @@ function listarAulaUsuario($idaula)
 
   return $aulas;
 }
-function listarColunasTabela($tabela){
+function listarColunasTabela($tabela)
+{
   $conexao = conectar();
-  $tabela = mysqli_real_escape_string($conexao, $tabela); 
+  $tabela = mysqli_real_escape_string($conexao, $tabela);
   $sql = "SHOW COLUMNS FROM $tabela";
   $comando = mysqli_query($conexao, $sql);
   $colunas = [];
@@ -3808,22 +3818,24 @@ function listarColunasTabela($tabela){
 
   return $colunas;
 }
-function formatarTelefone($numero) {
-    // Remove tudo que não for número
-    $tel = preg_replace('/\D/', '', $numero);
+function formatarTelefone($numero)
+{
+  // Remove tudo que não for número
+  $tel = preg_replace('/\D/', '', $numero);
 
-    if (strlen($tel) === 11) {
-        // Celular com 9 dígitos → (62) 98765-4321
-        return "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 5) . "-" . substr($tel, 7);
-    } elseif (strlen($tel) === 10) {
-        // Telefone fixo com 8 dígitos → (62) 3456-7890
-        return "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 4) . "-" . substr($tel, 6);
-    } else {
-        // Caso não seja 10 ou 11 dígitos, retorna como está
-        return $numero;
-    }
+  if (strlen($tel) === 11) {
+    // Celular com 9 dígitos → (62) 98765-4321
+    return "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 5) . "-" . substr($tel, 7);
+  } elseif (strlen($tel) === 10) {
+    // Telefone fixo com 8 dígitos → (62) 3456-7890
+    return "(" . substr($tel, 0, 2) . ") " . substr($tel, 2, 4) . "-" . substr($tel, 6);
+  } else {
+    // Caso não seja 10 ou 11 dígitos, retorna como está
+    return $numero;
+  }
 }
-function listarTabelas(){
+function listarTabelas()
+{
   $conexao = conectar();
   $sql = "SHOW TABLES;";
   $comando = mysqli_query($conexao, $sql);
