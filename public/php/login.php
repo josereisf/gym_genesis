@@ -59,11 +59,10 @@ if ($usuario !== null) {
         $_SESSION['nome'] = $nome;
         $_SESSION['tipo'] = $tipo;
 
-        var_dump($usuario);
         header('Location: ../dashboard_professor.php');
         exit();
     }
-    var_dump($email);
+
 
     // Tipo padrão (aluno)
     $usuarioId = $usuario['id'];
