@@ -81,7 +81,7 @@ function loginUsuario($email, $senha)
   if (password_verify(trim($senha), $usuario['senha'])) {
     mysqli_stmt_close($comando);
     desconectar($conexao);
-    return ["status" => true, "msg" => "estao corretos."];
+    return ["status" => true, "msg" => "estao corretos.", "id" => $usuario['idusuario']];
   } else {
     mysqli_stmt_close($comando);
     desconectar($conexao);
