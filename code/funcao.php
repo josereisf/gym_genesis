@@ -3042,175 +3042,171 @@ function listarUsuarioCompleto($id)
   }
 
   // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
-  $sql = "
-SELECT
-    -- USUÁRIO
-    u.idusuario,
-    u.email,
-    u.senha,
-    u.tipo_usuario,
+  $sql = "SELECT
+      -- USUÁRIO
+      u.idusuario,
+      u.email,
+      u.senha,
+      u.tipo_usuario,
 
-    -- PERFIL USUÁRIO
-    pf.nome,
-    pf.cpf,
-    pf.data_nascimento,
-    pf.numero_matricula,
-    pf.foto_perfil,
+      -- PERFIL USUÁRIO
+      pf.nome,
+      pf.cpf,
+      pf.data_nascimento,
+      pf.numero_matricula,
+      pf.foto_perfil,
 
-    -- ENDEREÇO
-    e.cep,
-    e.rua,
-    e.numero AS numero_endereco,
-    e.complemento,
-    e.bairro,
-    e.cidade,
-    e.estado,
+      -- ENDEREÇO
+      e.cep,
+      e.rua,
+      e.numero AS numero_endereco,
+      e.complemento,
+      e.bairro,
+      e.cidade,
+      e.estado,
 
-    -- ASSINATURA
-    a.idassinatura,
-    a.data_inicio AS assinatura_inicio,
-    a.data_fim AS assinatura_fim,
+      -- ASSINATURA
+      a.idassinatura,
+      a.data_inicio AS assinatura_inicio,
+      a.data_fim AS assinatura_fim,
 
-    -- PLANO
-    p.idplano,
-    p.tipo AS tipo_plano,
-    p.duracao AS duracao_plano,
+      -- PLANO
+      p.idplano,
+      p.tipo AS tipo_plano,
+      p.duracao AS duracao_plano,
 
-    -- AVALIAÇÃO FÍSICA
-    af.idavaliacao,
-    af.peso,
-    af.altura,
-    af.imc,
-    af.percentual_gordura,
-    af.data_avaliacao AS avaliacao_data,
+      -- AVALIAÇÃO FÍSICA
+      af.idavaliacao,
+      af.peso,
+      af.altura,
+      af.imc,
+      af.percentual_gordura,
+      af.data_avaliacao AS avaliacao_data,
 
-    -- DIETA
-    d.iddieta,
-    d.descricao AS descricao_dieta,
-    d.data_inicio AS dieta_inicio,
-    d.data_fim AS dieta_fim,
+      -- DIETA
+      d.iddieta,
+      d.descricao AS descricao_dieta,
+      d.data_inicio AS dieta_inicio,
+      d.data_fim AS dieta_fim,
 
-    -- REFEIÇÃO
-    r.idrefeicao,
-    r.tipo AS tipo_refeicao,
-    r.horario AS horario_refeicao,
+      -- REFEIÇÃO
+      r.idrefeicao,
+      r.tipo AS tipo_refeicao,
+      r.horario AS horario_refeicao,
 
-    -- ALIMENTO
-    al.idalimento,
-    al.nome AS nome_alimento,
-    al.calorias,
-    al.carboidratos,
-    al.proteinas,
-    al.gorduras,
+      -- ALIMENTO
+      al.idalimento,
+      al.nome AS nome_alimento,
+      al.calorias,
+      al.carboidratos,
+      al.proteinas,
+      al.gorduras,
 
-    -- DIETA_ALIMENTAR
-    da.quantidade AS quantidade_alimento,
-    da.observacao AS observacao_alimento,
+      -- DIETA_ALIMENTAR
+      da.quantidade AS quantidade_alimento,
+      da.observacao AS observacao_alimento,
 
-    -- TREINO
-    t.idtreino,
-    t.tipo AS tipo_treino,
-    t.horario AS horario_treino,
-    t.descricao AS descricao_treino,
+      -- TREINO
+      t.idtreino,
+      t.tipo AS tipo_treino,
+      t.horario AS horario_treino,
+      t.descricao AS descricao_treino,
 
-    -- TREINO_EXERCÍCIO
-    te.idtreino2,
-    te.series,
-    te.repeticoes,
-    te.carga,
-    te.intervalo_segundos,
+      -- TREINO_EXERCÍCIO
+      te.idtreino2,
+      te.series,
+      te.repeticoes,
+      te.carga,
+      te.intervalo_segundos,
 
-    -- EXERCÍCIO
-    ex.idexercicio,
-    ex.nome AS nome_exercicio,
-    ex.grupo_muscular,
+      -- EXERCÍCIO
+      ex.idexercicio,
+      ex.nome AS nome_exercicio,
+      ex.grupo_muscular,
 
-    -- HISTÓRICO DE TREINO
-    ht.idhistorico,
-    ht.data_execucao AS historico_data,
-    ht.observacoes AS historico_observacoes,
+      -- HISTÓRICO DE TREINO
+      ht.idhistorico,
+      ht.data_execucao AS historico_data,
+      ht.observacoes AS historico_observacoes,
 
-    -- METAS DO USUÁRIO
-    mu.idmeta,
-    mu.descricao AS descricao_meta,
-    mu.data_inicio AS meta_inicio,
-    mu.data_limite AS meta_limite,
-    mu.status AS meta_status,
+      -- METAS DO USUÁRIO
+      mu.idmeta,
+      mu.descricao AS descricao_meta,
+      mu.data_inicio AS meta_inicio,
+      mu.data_limite AS meta_limite,
+      mu.status AS meta_status,
 
-    -- FÓRUM
-    f.idtopico,
-    f.titulo AS titulo_topico,
-    f.descricao AS descricao_topico,
-    f.data_criacao AS topico_data,
+      -- FÓRUM
+      f.idtopico,
+      f.titulo AS titulo_topico,
+      f.descricao AS descricao_topico,
+      f.data_criacao AS topico_data,
 
-    -- RESPOSTAS DO FÓRUM
-    rf.idresposta,
-    rf.mensagem,
-    rf.data_resposta AS resposta_data,
+      -- RESPOSTAS DO FÓRUM
+      rf.idresposta,
+      rf.mensagem,
+      rf.data_resposta AS resposta_data,
 
-    -- PEDIDO
-    pd.idpedido,
-    pd.data_pedido AS pedido_data,
-    pd.status AS status_pedido,
+      -- PEDIDO
+      pd.idpedido,
+      pd.data_pedido AS pedido_data,
+      pd.status AS status_pedido,
 
-    -- ITEM DO PEDIDO
-    ip.quantidade AS quantidade_produto,
-    ip.preco_unitario AS preco_unitario_produto,
+      -- ITEM DO PEDIDO
+      ip.quantidade AS quantidade_produto,
+      ip.preco_unitario AS preco_unitario_produto,
 
-    -- PRODUTO
-    pr.idproduto,
-    pr.nome AS nome_produto,
-    pr.descricao AS descricao_produto,
-    pr.preco AS preco_produto,
+      -- PRODUTO
+      pr.idproduto,
+      pr.nome AS nome_produto,
+      pr.descricao AS descricao_produto,
+      pr.preco AS preco_produto,
 
-    -- PAGAMENTO
-    pg.idpagamento,
-    pg.valor AS pagamento_valor,
-    pg.data_pagamento AS pagamento_data,
-    pg.metodo AS pagamento_metodo,
-    pg.status AS status_pagamento,
+      -- PAGAMENTO
+      pg.idpagamento,
+      pg.valor AS pagamento_valor,
+      pg.data_pagamento AS pagamento_data,
+      pg.metodo AS pagamento_metodo,
+      pg.status AS status_pagamento,
 
-    -- DETALHE DE PAGAMENTO
-    pd2.tipo AS tipo_pagamento,
-    pd2.bandeira_cartao,
-    pd2.ultimos_digitos,
+      -- DETALHE DE PAGAMENTO
+      pd2.tipo AS tipo_pagamento,
+      pd2.bandeira_cartao,
+      pd2.ultimos_digitos,
 
-    -- RECUPERAÇÃO DE SENHA
-    rs.idrecuperacao_senha,
-    rs.codigo AS codigo_recuperacao,
-    rs.tempo_expiracao
+      -- RECUPERAÇÃO DE SENHA
+      rs.idrecuperacao_senha,
+      rs.codigo AS codigo_recuperacao,
+      rs.tempo_expiracao
 
-FROM gym_genesis.usuario u
+  FROM usuario AS u
+  LEFT JOIN perfil_usuario AS pf ON u.idusuario = pf.usuario_id
+  LEFT JOIN endereco AS e ON u.idusuario = e.usuario_id
+  LEFT JOIN assinatura AS a ON u.idusuario = a.usuario_id
+  LEFT JOIN plano AS p ON a.plano_id = p.idplano
+  LEFT JOIN avaliacao_fisica AS af ON u.idusuario = af.usuario_id
+  LEFT JOIN dieta AS d ON u.idusuario = d.usuario_id
+  LEFT JOIN refeicao AS r ON d.iddieta = r.dieta_id
+  LEFT JOIN dieta_alimentar AS da ON r.idrefeicao = da.refeicao_id
+  LEFT JOIN alimento AS al ON da.alimento_id = al.idalimento
+  LEFT JOIN treino AS t ON u.idusuario = t.usuario_id
+  LEFT JOIN treino_exercicio AS te ON t.idtreino = te.treino_id
+  LEFT JOIN exercicio AS ex ON te.exercicio_id = ex.idexercicio
+  LEFT JOIN historico_treino AS ht ON u.idusuario = ht.usuario_id
+  LEFT JOIN meta_usuario AS mu ON u.idusuario = mu.usuario_id
+  LEFT JOIN forum AS f ON u.idusuario = f.usuario_id
+  LEFT JOIN resposta_forum AS rf ON f.idtopico = rf.forum_id
+  LEFT JOIN pedido AS pd ON u.idusuario = pd.usuario_id
+  LEFT JOIN item_pedido AS ip ON pd.idpedido = ip.pedido_id
+  LEFT JOIN produto AS pr ON ip.produto_id = pr.idproduto
+  LEFT JOIN pagamento AS pg ON pd.pagamento_id = pg.idpagamento
+  LEFT JOIN pagamento_detalhe AS pd2 ON pg.idpagamento = pd2.pagamento_id
+  LEFT JOIN recuperacao_senha AS rs ON u.idusuario = rs.usuario_id
 
-    LEFT JOIN gym_genesis.perfil_usuario pf ON u.idusuario = pf.usuario_id
-    LEFT JOIN gym_genesis.endereco e ON pf.usuario_id = e.usuario_id
-    LEFT JOIN gym_genesis.assinatura a ON pf.usuario_id = a.usuario_id
-    LEFT JOIN gym_genesis.plano p ON a.plano_id = p.idplano
-    LEFT JOIN gym_genesis.avaliacao_fisica af ON pf.usuario_id = af.usuario_id
-    LEFT JOIN gym_genesis.dieta d ON pf.usuario_id = d.usuario_id
-    LEFT JOIN gym_genesis.refeicao r ON d.iddieta = r.dieta_id
-    LEFT JOIN gym_genesis.dieta_alimentar da ON r.idrefeicao = da.refeicao_id
-    LEFT JOIN gym_genesis.alimento al ON da.alimento_id = al.idalimento
-    LEFT JOIN gym_genesis.treino t ON pf.usuario_id = t.funcionario_id
-    LEFT JOIN gym_genesis.treino_exercicio te ON t.idtreino = te.treino_id
-    LEFT JOIN gym_genesis.exercicio ex ON te.exercicio_id = ex.idexercicio
-    LEFT JOIN gym_genesis.historico_treino ht ON pf.usuario_id = ht.usuario_id
-    LEFT JOIN gym_genesis.meta_usuario mu ON pf.usuario_id = mu.usuario_id
-    LEFT JOIN gym_genesis.forum f ON pf.usuario_id = f.usuario_id
-    LEFT JOIN gym_genesis.resposta_forum rf ON pf.usuario_id = rf.usuario_id
-    LEFT JOIN gym_genesis.pedido pd ON pf.usuario_id = pd.usuario_id
-    LEFT JOIN gym_genesis.item_pedido ip ON pd.idpedido = ip.pedido_id
-    LEFT JOIN gym_genesis.produto pr ON ip.produto_id = pr.idproduto
-    LEFT JOIN gym_genesis.pagamento pg ON pd.pagamento_id = pg.idpagamento
-    LEFT JOIN gym_genesis.pagamento_detalhe pd2 ON pg.idpagamento = pd2.pagamento_id
-    LEFT JOIN gym_genesis.recuperacao_senha rs ON pf.usuario_id = rs.usuario_id
-
-WHERE pf.usuario_id = $id
-LIMIT 1;
-;
-";
-
-
+  WHERE u.idusuario = ?
+  LIMIT 1;
+  ";
+  
   // Executa a query
   $resultado = mysqli_query($conexao, $sql);
 
