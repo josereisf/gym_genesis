@@ -25,22 +25,42 @@ function conectar()
   return mysqli_connect($servidor, $user, $password, $banco);
 }
 /**
- * Undocumented function
+ * Fecha a conexão com o banco de dados.
  *
- * @param [type] $conexao
+ * Observação: apesar de receber um parâmetro $conexao, a implementação atual
+ * ignora esse parâmetro e chama conectar() para obter a conexão a ser fechada.
+ * Isso pode não ser o comportamento desejado; considere remover a chamada a
+ * conectar() e usar a conexão passada em $conexao ou ajustar a assinatura da função.
+ *
+ * @param mysqli|resource|null $conexao Conexão de banco de dados (atualmente não utilizada).
  * @return void
  */
-function desconectar($conexao)
-{
+function desconectar($conexao){
   $conexao = conectar();
 
   mysqli_close($conexao);
 }
+
 /**
- * Undocumented function
+ * Cadastra um novo usuário na base de dados.
  *
- * @param [type] $conexao
- * @return void
+ * Conecta ao banco, gera um hash seguro da senha fornecida e insere um registro
+ * na tabela `usuario` com os campos senha (hash), email e tipo_usuario. Fecha a
+ * conexão ao final e retorna o resultado da operação.
+ *
+ * @param string $senha Senha em texto plano que será hasheada com password_hash().
+ * @param string $email Endereço de e-mail do usuário a ser cadastrado.
+ * @param int    $tipo  Identificador do tipo de usuário (por exemplo: 1 = admin, 2 = cliente).
+ *
+ * @return array {
+ *     Array associativo com o resultado da operação:
+ *     @type bool $success Indica se a execução do statement foi bem-sucedida.
+ *     @type int|null $id  ID do usuário inserido (valor retornado por mysqli_insert_id) ou null em caso de falha.
+ * }
+ *
+ * @note Esta função depende das funções conectar() e desconectar() para gerenciar a conexão com o banco.
+ * @note Comportamento em caso de erro no MySQLi depende da configuração de relatório de erros do MySQLi
+ *       (por exemplo, se MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT estiver ativo, exceções podem ser lançadas).
  */
 function cadastrarUsuario($senha, $email, $tipo)
 {
@@ -61,11 +81,34 @@ function cadastrarUsuario($senha, $email, $tipo)
     'id' => $id_usuario
   ];
 }
+
 /**
- * Undocumented function
+ * Atualiza os dados de um usuário na tabela `usuario`.
  *
- * @param [type] $conexao
- * @return void
+ * Esta função abre uma conexão com o banco, verifica se a senha informada é
+ * diferente da armazenada e, se for, gera um novo hash usando password_hash().
+ * Caso a senha não tenha sido alterada, mantém o hash existente. Em seguida
+ * executa um UPDATE na tabela `usuario` para salvar senha, email e tipo.
+ *
+ * Observações de comportamento:
+ * - Usa as funções auxiliares conectar(), loginUsuario(), listarUsuario() e desconectar().
+ * - Espera que loginUsuario($email, $senha) retorne um array contendo a chave
+ *   'senha' com o valor "diferente" quando a senha fornecida diferir da atual.
+ * - Fecha a conexão antes de retornar.
+ *
+ * @param string $senha      Senha em texto plano (quando for alterada) ou hash existente.
+ * @param string $email      Novo e-mail do usuário.
+ * @param int    $tipo       Tipo do usuário (valor inteiro conforme esquema do sistema).
+ * @param int    $idusuario  Identificador do usuário a ser atualizado.
+ *
+ * @return bool True se a execução do UPDATE foi bem-sucedida; false caso contrário.
+ *
+ * @throws mysqli_sql_exception Pode propagar exceções do MySQLi se a extensão estiver configurada para lançar exceções.
+ *
+ * @see conectar()
+ * @see loginUsuario()
+ * @see listarUsuario()
+ * @see desconectar()
  */
 function editarUsuario($senha, $email, $tipo, $idusuario)
 {
@@ -88,6 +131,7 @@ function editarUsuario($senha, $email, $tipo, $idusuario)
   desconectar($conexao);
   return $funcionou;
 }
+
 /**
  * Undocumented function
  *
