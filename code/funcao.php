@@ -133,10 +133,19 @@ function editarUsuario($senha, $email, $tipo, $idusuario)
 }
 
 /**
- * Undocumented function
+ * Remove um usuário da tabela `usuario` pelo seu identificador.
  *
- * @param [type] $conexao
- * @return void
+ * A função:
+ *  - estabelece uma conexão com o banco de dados chamando conectar();
+ *  - prepara uma instrução DELETE com binding de parâmetro para evitar injeção SQL;
+ *  - executa a instrução e fecha a conexão chamando desconectar().
+ *
+ * @param int $idusuario Identificador do usuário a ser deletado (coluna `idusuario`).
+ * @return bool Retorna true se a execução da instrução DELETE foi bem-sucedida; false caso ocorra erro na preparação ou execução.
+ *
+ * Observações:
+ * - Depende das funções conectar() e desconectar() estarem implementadas corretamente.
+ * - A operação é destrutiva — o registro será removido permanentemente. Considere validações e controles de autorização antes de invocar.
  */
 function deletarUsuario($idusuario)
 {
