@@ -963,3 +963,48 @@ INSERT INTO aula_usuario (idaula, usuario_id) VALUES (9, 10);
 INSERT INTO aula_usuario (idaula, usuario_id) VALUES (9, 6);
 INSERT INTO aula_usuario (idaula, usuario_id) VALUES (10, 7);
 INSERT INTO aula_usuario (idaula, usuario_id) VALUES (10, 8);
+
+
+
+USE gym_genesis;
+
+-- 1️⃣ Inserir o usuário base (login)
+INSERT INTO usuario (senha, email, tipo_usuario)
+VALUES ('$2y$10$P.xi1GdEWGFvpLZ0kBP5YeLjeqE/6lkzo.NdOZMq05HZ82UZvKRyS', 'joao.silva@gymgenesis.com', 2);
+
+-- Salva o ID do usuário recém-criado
+SET @usuario_id = LAST_INSERT_ID();
+
+-- 2️⃣ Inserir o cargo (caso ainda não exista)
+INSERT INTO cargo (nome, descricao)
+VALUES ('Professor de Musculação', 'Responsável por ministrar aulas e treinos de musculação para alunos iniciantes e avançados.');
+
+-- Salva o ID do cargo
+SET @cargo_id = LAST_INSERT_ID();
+
+-- 3️⃣ Inserir o funcionário vinculado ao usuário e cargo
+INSERT INTO funcionario (nome, data_contratacao, salario, cargo_id, usuario_id)
+VALUES ('João Silva', '2025-10-20', 3500.00, @cargo_id, @usuario_id);
+
+-- Salva o ID do funcionário (caso precise usar depois)
+SET @funcionario_id = LAST_INSERT_ID();
+
+-- 4️⃣ Inserir o perfil do professor
+INSERT INTO perfil_professor (
+    usuario_id, 
+    foto_perfil, 
+    modalidade, 
+    avaliacao_media, 
+    descricao, 
+    horarios_disponiveis, 
+    telefone
+)
+VALUES (
+    @usuario_id,
+    'joao_silva.png',
+    'Presencial',
+    4.8,
+    'Personal Trainer com 8 anos de experiência em treinamento funcional e musculação. Foco em resultados reais e saúde.',
+    'Segunda a Sexta: 07h-12h, 14h-18h',
+    '(11) 99999-8888'
+);

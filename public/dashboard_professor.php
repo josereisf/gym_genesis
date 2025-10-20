@@ -7,13 +7,21 @@ if ($_SESSION['tipo'] == 8) {
   header('Location: dashboard_usuario.php');
   exit;
 }
-$idprofessor = 1;
-//var_dump($_SESSION);
+$idprofessor = $_SESSION['id'];
+
+if($_SESSION['nome']) {
+  
+} else {
+  $_SESSION['erro_login'] = "Sessão expirada! Faça login novamente.";
+
+}
 //$idprofessor = $_SESSION['id']; // ID do professor, pode ser dinâmico conforme a sessão do usuário
-$resultado = listarUsuarioCompleto($idprofessor);
+$resultado = listarPerfilProfessor($idprofessor);
+// var_dump($idprofessor);
+
 foreach ($resultado as $r) {
 
-  $nome = $r['nome'];
+  $nome = $r['nome_professor'];
 }
 
 $idaula = null;

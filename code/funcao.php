@@ -3513,8 +3513,8 @@ function listarPerfilProfessor($idusuario)
 
   if ($idusuario != null) {
     $sql = "SELECT
-    aa.funcionario_id,
-    f.usuario_id,  -- 👈 agora você pega também o usuario_id
+    f.idfuncionario,
+    f.usuario_id,
     aa.idaula,
     aa.data_aula,
     aa.dia_semana,
@@ -3533,46 +3533,44 @@ function listarPerfilProfessor($idusuario)
     pf.horarios_disponiveis,
     pf.data_atualizacao,
     f.data_contratacao
-FROM aula_agendada AS aa
-INNER JOIN funcionario AS f ON aa.funcionario_id = f.idfuncionario
-INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
-INNER JOIN usuario AS u ON f.usuario_id = u.idusuario
-INNER JOIN cargo AS c ON f.cargo_id = c.idcargo 
-WHERE f.usuario_id = ?
+FROM usuario AS u
+INNER JOIN funcionario AS f ON f.usuario_id = u.idusuario
+INNER JOIN perfil_professor AS pf ON pf.usuario_id = u.idusuario
+INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
+LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario
+WHERE u.idusuario = ?
 ";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
     $sql = " SELECT
-        f.usuario_id,
-        aa.funcionario_id,
-        aa.idaula,
-        aa.data_aula,
-        aa.dia_semana,
-        aa.hora_inicio,
-        aa.hora_fim,
-        aa.treino_id,
-        f.nome AS nome_professor,
-        pf.foto_perfil,
-        pf.modalidade,
-        pf.telefone AS telefone_professor,
-        u.email AS email_professor,
-        c.idcargo AS cargo_id,
-        c.nome AS cargo_professor,
-        f.salario,
-        pf.avaliacao_media,
-        pf.descricao,
-        pf.horarios_disponiveis,
-        pf.data_atualizacao,
-        f.data_contratacao,
-        GROUP_CONCAT(aa.idaula ORDER BY aa.data_aula) AS aulas_agendadas,
-        GROUP_CONCAT(aa.data_aula ORDER BY aa.data_aula) AS datas_aulas
-    FROM funcionario AS f
-    INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
-    INNER JOIN usuario AS u ON pf.usuario_id = u.idusuario
-    INNER JOIN cargo AS c ON f.cargo_id = c.idcargo
-    LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario
-    GROUP BY f.usuario_id;
+    f.usuario_id,
+    f.idfuncionario AS funcionario_id,
+    aa.idaula,
+    aa.data_aula,
+    aa.dia_semana,
+    aa.hora_inicio,
+    aa.hora_fim,
+    aa.treino_id,
+    f.nome AS nome_professor,
+    pf.foto_perfil,
+    pf.modalidade,
+    pf.telefone AS telefone_professor,
+    u.email AS email_professor,
+    c.idcargo AS cargo_id,
+    c.nome AS cargo_professor,
+    f.salario,
+    pf.avaliacao_media,
+    pf.descricao,
+    pf.horarios_disponiveis,
+    pf.data_atualizacao,
+    f.data_contratacao
+FROM funcionario AS f
+INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
+INNER JOIN usuario AS u ON pf.usuario_id = u.idusuario
+INNER JOIN cargo AS c ON f.cargo_id = c.idcargo
+LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario;
+;
 ";
     $comando = mysqli_prepare($conexao, $sql);
   }
