@@ -1,7 +1,7 @@
 <?php
 session_start();
 $erro = $_SESSION['erro_login'] ?? null;
-unset($_SESSION['erro_login']); // Limpa depois de exibir
+unset($_SESSION['erro_login']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -32,16 +32,16 @@ unset($_SESSION['erro_login']); // Limpa depois de exibir
 </head>
 
 <body class="bg-[#132237] flex items-center justify-center min-h-screen text-white">
-  <?php if ($erro) {
+  <?php
+  if (!empty($erro)) {
     echo '
-  <div
-    id="alertaErro"
-    class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-xl shadow-lg animate-fade-in"
-  >
-    <?= htmlspecialchars($erro) ?>
-  </div>';
+    <div
+      id="alertaErro"
+      class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-xl shadow-lg animate-fade-in"
+    >' . htmlspecialchars($erro) . '</div>';
   }
   ?>
+
 
 
   <div class="w-full max-w-sm bg-[#1e2a3a] p-8 rounded-2xl shadow-lg">

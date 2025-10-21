@@ -164,7 +164,13 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
 
 
         <label for="data_nascimento">Data Nascimento:</label>
-        <input type="date" name="data" id="data" autocomplete="on" class="input">
+        <input
+          type="date"
+          name="data"
+          id="data"
+          autocomplete="on"
+          max="<?= date('Y-m-d'); ?>"
+          class="input">
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
       </div>
@@ -177,8 +183,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         <p class="error-message text-red-500 text-sm mt-1 hidden" id="erro"></p>
 
         <label>Rua</label>
-        <input type="text" id="rua" autocomplete="on" class="input" name="rua" placeholder="Digite a rua" required
-         />
+        <input type="text" id="rua" autocomplete="on" class="input" name="rua" placeholder="Digite a rua" required />
         <p class="error-message text-red-500 text-sm mt-1 hidden"></p>
 
         <label for="numero">Número</label>
@@ -291,22 +296,24 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
   </div>
   <script>
     $(document).ready(function() {
-  // --- Máscaras ---
-  $('#cpf').mask('000.000.000-00');             // CPF
-  $('#telefone').mask('(00) 00000-0000');       // Telefone
-  $('#cep').mask('00000-000');                  // CEP
-  $('#numero').mask('00000', {reverse: false}); // Número da residência (aceita até 5 dígitos)
-  
-  // Caso queira bloquear a máscara quando usar S/N
-  $('#sem_numero').on('change', function() {
-    if ($(this).is(':checked')) {
-      $('#numero').val('S/N').prop('disabled', true);
-    } else {
-      $('#numero').val('').prop('disabled', false);
-    }
-  });
-});
-</script>
+      // --- Máscaras ---
+      $('#cpf').mask('000.000.000-00'); // CPF
+      $('#telefone').mask('(00) 00000-0000'); // Telefone
+      $('#cep').mask('00000-000'); // CEP
+      $('#numero').mask('00000', {
+        reverse: false
+      }); // Número da residência (aceita até 5 dígitos)
+
+      // Caso queira bloquear a máscara quando usar S/N
+      $('#sem_numero').on('change', function() {
+        if ($(this).is(':checked')) {
+          $('#numero').val('S/N').prop('disabled', true);
+        } else {
+          $('#numero').val('').prop('disabled', false);
+        }
+      });
+    });
+  </script>
   <script src="./js/2-etapa.js"></script>
 </body>
 

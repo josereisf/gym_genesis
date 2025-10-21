@@ -160,10 +160,25 @@ function deletarUsuario($idusuario)
   return $funcionou;
 }
 /**
- * Undocumented function
+ * Autentica um usuário pelo email e senha.
  *
- * @param [type] $conexao
- * @return void
+ * Busca na tabela `usuario` um registro cujo email seja igual ao fornecido,
+ * compara a senha em texto plano (após trim) com o hash armazenado usando password_verify()
+ * e retorna um array associativo com o resultado da autenticação.
+ *
+ * @param string $email Email do usuário a ser autenticado.
+ * @param string $senha Senha em texto plano a ser verificada (será passada por trim() antes de verificar).
+ * @return array{
+ *   status: bool,      // true se autenticação bem-sucedida, false caso contrário
+ *   msg: string,       // mensagem descritiva
+ *   id: int|null,      // id do usuário (campo idusuario) quando autenticado; null se não autenticado ou não encontrado
+ *   senha: string      // 'igual' quando a senha confere, 'diferente' caso contrário
+ * }
+ *
+ * Observações:
+ * - A função assume que as funções conectar() e desconectar() gerenciam uma conexão mysqli.
+ * - Usa prepared statement (mysqli_prepare) para evitar SQL injection.
+ * - Se nenhum usuário for encontrado, acessar $usuario['senha'] pode gerar avisos; recomenda-se verificar a existência do usuário antes de chamar password_verify().
  */
 function loginUsuario($email, $senha)
 {
@@ -174,15 +189,34 @@ function loginUsuario($email, $senha)
   mysqli_stmt_execute($comando);
   $resultados = mysqli_stmt_get_result($comando);
   $usuario = mysqli_fetch_assoc($resultados);
-  // var_dump($usuario);
+
+  if (empty($usuario) || !isset($usuario['senha'])) {
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+    return [
+      "status" => false,
+      "msg" => "E-mail não encontrado.",
+      "senha" => "inexistente"
+    ];
+  }
+
   if (password_verify(trim($senha), $usuario['senha'])) {
     mysqli_stmt_close($comando);
     desconectar($conexao);
-    return ["status" => true, "msg" => "estao corretos.", "id" => $usuario['idusuario'], "senha" => "igual"];
+    return [
+      "status" => true,
+      "msg" => "Credenciais corretas.",
+      "id" => $usuario['idusuario'],
+      "senha" => "igual"
+    ];
   } else {
     mysqli_stmt_close($comando);
     desconectar($conexao);
-    return ["status" => false, "msg" => "E-mail ou senha incorretos.", "senha" => "diferente"];
+    return [
+      "status" => false,
+      "msg" => "E-mail ou senha incorretos.",
+      "senha" => "diferente"
+    ];
   }
 }
 
@@ -3820,7 +3854,7 @@ function listarUsuarioCompleto($id)
   LEFT JOIN refeicao AS r ON d.iddieta = r.dieta_id
   LEFT JOIN dieta_alimentar AS da ON r.idrefeicao = da.refeicao_id
   LEFT JOIN alimento AS al ON da.alimento_id = al.idalimento
-  LEFT JOIN treino AS t ON u.idusuario = t.usuario_id
+  LEFT JOIN treino AS t ON u.idusuario = t.funcionario_id
   LEFT JOIN treino_exercicio AS te ON t.idtreino = te.treino_id
   LEFT JOIN exercicio AS ex ON te.exercicio_id = ex.idexercicio
   LEFT JOIN historico_treino AS ht ON u.idusuario = ht.usuario_id
