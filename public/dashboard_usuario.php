@@ -198,7 +198,7 @@ if ($dia_fim === null || $dia_fim === "-") {
 // $idprofessor = null;
 // $relacionamento = listarProfessorAluno($idprofessor, $idaluno);
 // pega todas as dicas
-$dicas = listarDicasNutricionais();
+$dicas = listarDicasNutricionais(null);
 $aula_agendada = listarAulaAgendadaUsuario($idaluno);
 $aula_agendada = array_slice($aula_agendada, 0, 5);
 // echo "<pre>";
@@ -206,26 +206,26 @@ $aula_agendada = array_slice($aula_agendada, 0, 5);
 // echo "</pre>";
 
 $frasesMotivacao = [
-    "A persistência leva ao resultado.",
-    "Cada treino é um passo a mais rumo ao seu objetivo.",
-    "O corpo alcança o que a mente acredita.",
-    "Disciplina é fazer o que precisa ser feito, mesmo quando não tem vontade.",
-    "Não pare quando estiver cansado, pare quando terminar.",
-    "Se fosse fácil, todos fariam.",
-    "Resultados não aparecem da noite para o dia. Continue firme.",
-    "Você é mais forte do que imagina.",
-    "Transformação começa na sua decisão de mudar.",
-    "A consistência vence a motivação.",
-    "Pequenas conquistas diárias levam a grandes resultados.",
-    "Hoje você pode não ver, mas seu corpo já está mudando.",
-    "Suor é só a gordura chorando.",
-    "Corpo saudável, mente saudável.",
-    "O esforço de hoje é o resultado de amanhã.",
-    "Pare de se comparar e comece a evoluir.",
-    "Não existe atalho para um corpo forte.",
-    "O único treino ruim é aquele que você não fez.",
-    "Se desafie todos os dias.",
-    "Nunca desista, o início é sempre o mais difícil."
+  "A persistência leva ao resultado.",
+  "Cada treino é um passo a mais rumo ao seu objetivo.",
+  "O corpo alcança o que a mente acredita.",
+  "Disciplina é fazer o que precisa ser feito, mesmo quando não tem vontade.",
+  "Não pare quando estiver cansado, pare quando terminar.",
+  "Se fosse fácil, todos fariam.",
+  "Resultados não aparecem da noite para o dia. Continue firme.",
+  "Você é mais forte do que imagina.",
+  "Transformação começa na sua decisão de mudar.",
+  "A consistência vence a motivação.",
+  "Pequenas conquistas diárias levam a grandes resultados.",
+  "Hoje você pode não ver, mas seu corpo já está mudando.",
+  "Suor é só a gordura chorando.",
+  "Corpo saudável, mente saudável.",
+  "O esforço de hoje é o resultado de amanhã.",
+  "Pare de se comparar e comece a evoluir.",
+  "Não existe atalho para um corpo forte.",
+  "O único treino ruim é aquele que você não fez.",
+  "Se desafie todos os dias.",
+  "Nunca desista, o início é sempre o mais difícil."
 ];
 
 // Seleciona uma frase aleatória
@@ -476,12 +476,12 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           </div>
         </div>
         <!-- Motivação -->
-<div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg text-center">
-  <p class="text-sm font-medium text-gray-400">Motivação</p>
-  <h3 class="text-lg font-semibold text-indigo-300 mt-2 italic">
-    "<?= $fraseAleatoria ?>"
-  </h3>
-</div>
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg text-center">
+          <p class="text-sm font-medium text-gray-400">Motivação</p>
+          <h3 class="text-lg font-semibold text-indigo-300 mt-2 italic">
+            "<?= $fraseAleatoria ?>"
+          </h3>
+        </div>
 
 
       </div>
@@ -756,29 +756,32 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           </div>
 
 
-          <div class="grid gap-6">
-            <?php foreach ($dicas as $dica): ?>
-              <div class="bg-gray-900 rounded-xl shadow-md p-6">
-                <h2 class="text-lg font-semibold text-white mb-4">Dica Nutricional</h2>
-                <div class="bg-gray-800 p-4 rounded-lg">
-                  <div class="flex items-center mb-3">
-                    <div class="bg-<?php echo $dica['cor']; ?> bg-opacity-20 p-2 rounded-full mr-3">
-                      <i class="<?php echo $dica['icone']; ?> text-<?php echo $dica['cor']; ?> text-lg"></i>
-                    </div>
-                    <h3 class="font-medium text-white"><?php echo $dica['titulos']; ?></h3>
-                  </div>
-                  <p class="text-sm text-gray-300">
-                    <?php echo $dica['descricao']; ?>
-                  </p>
-                  <button
-                    class="mt-3 text-sm text-<?php echo $dica['cor']; ?> font-medium hover:underline flex items-center hover:text-<?php echo str_replace("400", "300", $dica['cor']); ?>">
-                    Ler mais
-                    <i class="fas fa-chevron-right text-xs ml-1"></i>
-                  </button>
-                </div>
-              </div>
-            <?php endforeach; ?>
+          <?php
+          echo '<div class="grid gap-6">';
+          foreach ($dicas as $dica) {
+            echo '
+    <div class="bg-gray-900 rounded-xl shadow-md p-6">
+      <h2 class="text-lg font-semibold text-white mb-4">Dica Nutricional</h2>
+      <div class="bg-gray-800 p-4 rounded-lg">
+        <div class="flex items-center mb-3">
+          <div class="bg-' . $dica['cor'] . ' bg-opacity-20 p-2 rounded-full mr-3">
+            <i class="' . $dica['icone'] . ' text-' . $dica['cor'] . ' text-lg"></i>
           </div>
+          <h3 class="font-medium text-white">' . $dica['titulos'] . '</h3>
+        </div>
+        <p class="text-sm text-gray-300">' . $dica['descricao'] . '</p>
+        <button
+          class="mt-3 text-sm text-' . $dica['cor'] . ' font-medium hover:underline flex items-center hover:text-' . str_replace("400", "300", $dica['cor']) . '">
+          Ler mais
+          <i class="fas fa-chevron-right text-xs ml-1"></i>
+        </button>
+      </div>
+    </div>
+  ';
+          }
+          echo '</div>';
+          ?>
+
 
 
         </div>

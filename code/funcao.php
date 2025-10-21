@@ -417,7 +417,12 @@ function listarFuncionarios($idfuncionario)
   return $lista_funcionarios;
 }
 
-
+/**
+ * Undocumented function
+ *
+ * @param [type] $idfuncionario
+ * @return void
+ */
 function deletarFuncionario($idfuncionario)
 {
   $conexao = conectar();
@@ -1621,7 +1626,6 @@ function aplicarDesconto($idpagamento, $idcupom)
   mysqli_stmt_bind_param($comando3, 'di', $valor_com_desconto, $idpagamento);
   mysqli_stmt_execute($comando3);
   $usos_restantes = (int)$resultado['quantidade_uso'];
-  $usos_restantes--;
   $sql4 = 'UPDATE cupom_desconto SET quantidade_uso=? WHERE idcupom=?';
   $comando4 = mysqli_prepare($conexao, $sql4);
   mysqli_stmt_bind_param($comando4, 'ii', $usos_restantes, $idcupom);
@@ -3693,20 +3697,17 @@ function listarUsuarioCompleto($id)
 
   // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
   $sql = "SELECT
-      -- USUÁRIO
       u.idusuario,
       u.email,
       u.senha,
       u.tipo_usuario,
 
-      -- PERFIL USUÁRIO
       pf.nome,
       pf.cpf,
       pf.data_nascimento,
       pf.numero_matricula,
       pf.foto_perfil,
 
-      -- ENDEREÇO
       e.cep,
       e.rua,
       e.numero AS numero_endereco,
@@ -3715,17 +3716,14 @@ function listarUsuarioCompleto($id)
       e.cidade,
       e.estado,
 
-      -- ASSINATURA
       a.idassinatura,
       a.data_inicio AS assinatura_inicio,
       a.data_fim AS assinatura_fim,
 
-      -- PLANO
       p.idplano,
       p.tipo AS tipo_plano,
       p.duracao AS duracao_plano,
 
-      -- AVALIAÇÃO FÍSICA
       af.idavaliacao,
       af.peso,
       af.altura,
@@ -3733,18 +3731,15 @@ function listarUsuarioCompleto($id)
       af.percentual_gordura,
       af.data_avaliacao AS avaliacao_data,
 
-      -- DIETA
       d.iddieta,
       d.descricao AS descricao_dieta,
       d.data_inicio AS dieta_inicio,
       d.data_fim AS dieta_fim,
 
-      -- REFEIÇÃO
       r.idrefeicao,
       r.tipo AS tipo_refeicao,
       r.horario AS horario_refeicao,
 
-      -- ALIMENTO
       al.idalimento,
       al.nome AS nome_alimento,
       al.calorias,
@@ -3752,79 +3747,65 @@ function listarUsuarioCompleto($id)
       al.proteinas,
       al.gorduras,
 
-      -- DIETA_ALIMENTAR
       da.quantidade AS quantidade_alimento,
       da.observacao AS observacao_alimento,
 
-      -- TREINO
       t.idtreino,
       t.tipo AS tipo_treino,
       t.horario AS horario_treino,
       t.descricao AS descricao_treino,
 
-      -- TREINO_EXERCÍCIO
       te.idtreino2,
       te.series,
       te.repeticoes,
       te.carga,
       te.intervalo_segundos,
 
-      -- EXERCÍCIO
       ex.idexercicio,
       ex.nome AS nome_exercicio,
       ex.grupo_muscular,
 
-      -- HISTÓRICO DE TREINO
       ht.idhistorico,
       ht.data_execucao AS historico_data,
       ht.observacoes AS historico_observacoes,
 
-      -- METAS DO USUÁRIO
       mu.idmeta,
       mu.descricao AS descricao_meta,
       mu.data_inicio AS meta_inicio,
       mu.data_limite AS meta_limite,
       mu.status AS meta_status,
 
-      -- FÓRUM
       f.idtopico,
       f.titulo AS titulo_topico,
       f.descricao AS descricao_topico,
       f.data_criacao AS topico_data,
 
-      -- RESPOSTAS DO FÓRUM
       rf.idresposta,
       rf.mensagem,
       rf.data_resposta AS resposta_data,
 
-      -- PEDIDO
       pd.idpedido,
       pd.data_pedido AS pedido_data,
       pd.status AS status_pedido,
 
-      -- ITEM DO PEDIDO
       ip.quantidade AS quantidade_produto,
       ip.preco_unitario AS preco_unitario_produto,
 
-      -- PRODUTO
       pr.idproduto,
       pr.nome AS nome_produto,
       pr.descricao AS descricao_produto,
       pr.preco AS preco_produto,
 
-      -- PAGAMENTO
       pg.idpagamento,
       pg.valor AS pagamento_valor,
       pg.data_pagamento AS pagamento_data,
       pg.metodo AS pagamento_metodo,
       pg.status AS status_pagamento,
 
-      -- DETALHE DE PAGAMENTO
       pd2.tipo AS tipo_pagamento,
       pd2.bandeira_cartao,
       pd2.ultimos_digitos,
 
-      -- RECUPERAÇÃO DE SENHA
       rs.idrecuperacao_senha,
       rs.codigo AS codigo_recuperacao,
       rs.tempo_expiracao
@@ -3854,7 +3835,7 @@ function listarUsuarioCompleto($id)
   LEFT JOIN recuperacao_senha AS rs ON u.idusuario = rs.usuario_id
 
   WHERE u.idusuario = ?
-  LIMIT 1;
+  ;
   ";
   
   // Executa a query
