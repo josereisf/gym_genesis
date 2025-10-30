@@ -2492,7 +2492,10 @@ function listarRefeicoes($idrefeicao)
 
   if ($idrefeicao !== null) {
     $sql = " SELECT 
-    pf.nome,
+    idrefeicao,
+    usuario_id,
+    pu.nome AS nome_usuario,
+    dieta_id,
     d.descricao,
     d.data_inicio,
     d.data_fim,
@@ -2500,21 +2503,21 @@ function listarRefeicoes($idrefeicao)
     r.horario
     FROM refeicao AS r
     JOIN dieta AS d ON r.dieta_id = d.iddieta
-    JOIN perfil_usuario AS pf ON d.usuario_id = pf.usuario_id
+    JOIN perfil_usuario AS pu ON d.usuario_id = pu.usuario_id
     WHERE idrefeicao = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idrefeicao);
   } else {
     $sql = " SELECT 
-    pf.nome,
+    idrefeicao,
+    dieta_id,
     d.descricao,
     d.data_inicio,
     d.data_fim,
     r.tipo,
     r.horario
     FROM refeicao AS r
-    JOIN dieta AS d ON r.dieta_id = d.iddieta
-    JOIN perfil_usuario AS pf ON d.usuario_id = pf.usuario_id";
+    JOIN dieta AS d ON r.dieta_id = d.iddieta";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
