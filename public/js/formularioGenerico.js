@@ -8,6 +8,7 @@ $(document).ready(function () {
   listarTabela(tabela, id);
 });
 
+// Função que lista os dados da tabela principal
 function listarTabela(tabela, id) {
   $.ajax({
     url: 'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
@@ -18,56 +19,62 @@ function listarTabela(tabela, id) {
       if (data.sucesso) {
         const dados = data.dados;
         console.table(dados);
-
-        if (Array.isArray(dados)) {
-          const selectGenerico = $('#select_generico');
-          selectGenerico.empty();
-
-          dados.forEach(item => {
-            const chaves = Object.keys(item);
-
-            // Identifica a chave que contém '_id' (cargo_id, usuario_id, dieta_id, etc.)
-            const chaveId = chaves.find(k => k.includes('_id'));
-
-            if (chaveId) {
-              let chaveNome;
-
-              // Verifica a chaveId e mapeia para o nome correspondente
-              if (chaveId.includes('cargo')) {
-                chaveNome = 'nome_cargo';   // Se for cargo_id, usa nome_cargo
-              } else if (chaveId.includes('usuario')) {
-                chaveNome = 'nome_usuario'; // Se for usuario_id, usa nome_usuario
-              } else if (chaveId.includes('dieta')) {
-                chaveNome = 'descricao';    // Se for dieta_id, usa descricao
-              } else if (chaveId.includes('treino')) {
-                chaveNome = 'tipo';         // Se for treino_id, usa tipo
-              } else if (chaveId.includes('alimento')) {
-                chaveNome = 'nome';         // Se for alimento_id, usa nome
-              }
-
-              // Verifica se chaveNome existe no item antes de adicionar a opção
-              if (chaveNome && item.hasOwnProperty(chaveNome)) {
-                selectGenerico.append(
-                  $('<option></option>')
-                    .val(item[chaveId])      // valor da opção é o _id
-                    .text(item[chaveNome])    // texto da opção é o nome correspondente
-                );
-              } else {
-                console.log(`Erro: ChaveNome (${chaveNome}) não encontrada para o item com chaveId ${chaveId}`);
-              }
-            } else {
-              console.log('Erro: Dados não estão no formato esperado. Falta chave com _id');
-            }
-          });
-        } else {
-          console.error('Erro: Dados retornados não são um array.');
-        }
-      } else {
-        console.error('Erro: Dados de sucesso não retornados.');
+        
       }
     },
-    error: function (xhr, status, error) {
-      console.error('Erro na requisição:', status, error);
+    error: function() {
+      alert('Erro ao listar os dados.');
     }
-  })
+  });
+}
+
+// Função para preencher os selects de chaves estrangeiras
+function preencherChavesEstrangeiras() {
+  $('select.chaveEstrangeira').each(function() {
+    let select = $(this);
+    let tabela = select.data('tabela');
+    let campo = select.data('campo');
+
+    // Fazendo a requisição AJAX para preencher o select de chaves estrangeiras
+    $.ajax({
+      url: 'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({}),
+      success: function (data) {
+        if (data.sucesso) {
+          const chaveEstrangeira = data.dados;
+          if (campo.includes('treino')){
+            nome_campo = 'tipo';
+          }
+          if (campo.includes('exercicio')){
+            nome_campo = 'nome';
+          }
+          if (campo.includes('cargo')) {
+            chaveNome = 'nome_cargo';   // Se for cargo_id, usa nome_cargo
+          } 
+          if (campo.includes('usuario')) {
+          chaveNome = 'nome_professor'; // Se for usuario_id, usa nome_usuario
+        }
+
+          // Limpar o select antes de adicionar as opções
+          select.empty();
+          select.append('<option value="">Selecione...</option>'); // Adicionar a opção padrão
+
+          // Adiciona as opções para cada chave estrangeira
+          chaveEstrangeira.forEach(function(item) {
+            select.append(
+              $('<option>', {
+                value: item.id, // ID do item
+                text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
+              })
+            );
+          });
+        }
+      },
+      error: function() {
+        alert('Erro ao carregar as chaves estrangeiras.');
+      }
+    });
+  });
 }

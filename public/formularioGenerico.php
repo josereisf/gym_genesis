@@ -20,6 +20,9 @@ $colunas = listarColunasTabela($tabela);
 
   <div id="dados" data-tabela="<?php echo $tabela; ?>" data-id="<?php echo $id; ?>"></div>
 
+  <script src="./js/formularioGenerico.js"></script>
+
+
   <form action="" method="post" enctype="multipart/form-data" id="formGenerico">
     <?php
     foreach ($colunas as $c) {
@@ -39,9 +42,12 @@ $colunas = listarColunasTabela($tabela);
       // Chaves estrangeiras (id de outra tabela)
       if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<select name='$nome_campo' class='select_generico' id='select_$nome_campo'></select><br><br>";
+        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo'></select><br><br>";
+        ?>
+        <script>preencherChavesEstrangeiras()</script>
+        <?php
         continue;
-      }
+    }
 
       // Campo de senha
       if (strpos($nome_campo, "senha") !== false) {
@@ -112,7 +118,7 @@ $colunas = listarColunasTabela($tabela);
     <button type="submit">Salvar</button>
   </form>
 
-  <script src="./js/formularioGenerico.js"></script>
+
 
 </body>
 
