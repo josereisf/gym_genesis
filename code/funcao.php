@@ -3876,8 +3876,10 @@ function listarUsuarioCompleto($id)
   ";
   
   // Executa a query
-  $resultado = mysqli_query($conexao, $sql);
-
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, 'i', $id);
+  mysqli_stmt_execute($comando);
+  $resultado = mysqli_stmt_get_result($comando);
   if (!$resultado) {
     die(json_encode(['error' => 'Erro na query: ' . $conexao->error]));
   }
