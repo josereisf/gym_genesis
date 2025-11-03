@@ -198,6 +198,7 @@ if ($dia_fim === null || $dia_fim === "-") {
 // $idprofessor = null;
 // $relacionamento = listarProfessorAluno($idprofessor, $idaluno);
 // pega todas as dicas
+$v = null;
 $dicas = listarDicasNutricionais(null);
 $aula_agendada = listarAulaAgendadaUsuario($idaluno);
 $aula_agendada = array_slice($aula_agendada, 0, 5);
