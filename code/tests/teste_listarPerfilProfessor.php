@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../funcao.php';
 
-$idusuario = 2;
+$idusuario = null;
 $foto = null;
 $ex = 5;
 $mod = "presencial";

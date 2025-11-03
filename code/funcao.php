@@ -35,7 +35,8 @@ function conectar()
  * @param mysqli|resource|null $conexao Conexão de banco de dados (atualmente não utilizada).
  * @return void
  */
-function desconectar($conexao){
+function desconectar($conexao)
+{
   $conexao = conectar();
 
   mysqli_close($conexao);
@@ -1343,7 +1344,8 @@ function listarHistoricoTreino($idhistorico)
   $conexao = conectar();
   if ($idhistorico != null) {
     $sql = 'SELECT
-    pf.nome,
+    ht.usuario_id,
+    pf.nome AS nome_usuario,
     t.tipo,
     ht.data_execucao,
     ht.observacoes
@@ -1355,7 +1357,8 @@ function listarHistoricoTreino($idhistorico)
     mysqli_stmt_bind_param($comando, 'i', $idhistorico);
   } else {
     $sql = 'SELECT
-    pf.nome,
+    ht.usuario_id,
+    pf.nome AS nome_usuario,
     t.tipo,
     ht.data_execucao,
     ht.observacoes
@@ -2206,10 +2209,10 @@ function listarAulaAgendada($idaula = null)
                 ag.dia_semana,
                 ag.hora_inicio,
                 ag.hora_fim,
-                t.tipo AS treino_tipo,
-                t.descricao AS treino_desc,
+                t.tipo,
+                t.descricao,
                 f.idfuncionario,
-                f.nome AS professor_nome
+                f.nome AS nome_usuario
             FROM aula_agendada AS ag
             LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
             LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario";
@@ -2257,10 +2260,10 @@ function listarAulaAgendadaUsuario($idusuario)
                 ag.hora_fim,
                 ag.treino_id,
                 t.idtreino,
-                t.tipo AS treino_tipo,
-                t.descricao AS treino_desc,
+                t.tipo,
+                t.descricao,
                 f.idfuncionario,
-                f.nome AS professor_nome
+                f.nome AS nome_usuario
             FROM aula_usuario AS au
             JOIN aula_agendada AS ag ON au.idaula = ag.idaula
             LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
@@ -2369,10 +2372,10 @@ function listarMetaUsuario($idmeta = null)
 {
   $conexao = conectar();
 
-  if ($idmeta !== null) {
+  if ($idmeta != null) {
     // Busca apenas a meta específica
     $sql = "SELECT 
-              pf.nome,
+              pf.nome AS nome_usuario,
               m.idmeta,
               m.descricao,
               m.data_inicio,
@@ -2386,7 +2389,8 @@ function listarMetaUsuario($idmeta = null)
   } else {
     // Busca todas as metas
     $sql = "SELECT 
-              pf.nome,
+              m.usuario_id,
+              pf.nome AS nome_usuario,
               m.idmeta,
               m.descricao,
               m.data_inicio,
@@ -3874,7 +3878,7 @@ function listarUsuarioCompleto($id)
   WHERE u.idusuario = ?
   ;
   ";
-  
+
   // Executa a query
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, 'i', $id);
@@ -4123,11 +4127,32 @@ function listarPerfilUsuario($idusuario)
 {
   $conexao = conectar();
   if ($idusuario != null) {
-    $sql = "SELECT * FROM perfil_usuario WHERE usuario_id = ?";
+    $sql = "SELECT
+    idperfil_usuario,
+    usuario_id,
+    nome AS nome_usuario,
+    cpf,
+    data_nascimento,
+    telefone,
+    numero_matricula,
+    foto_perfil
+     FROM perfil_usuario AS pu
+     JOIN usuario  AS u ON pu.usuario_id = u.idusuario
+    WHERE usuario_id = ?";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
-    $sql = "SELECT * FROM perfil_usuario";
+    $sql = "SELECT
+    idperfil_usuario,
+    usuario_id,
+    nome AS nome_usuario,
+    cpf,
+    data_nascimento,
+    telefone,
+    numero_matricula,
+    foto_perfil
+FROM perfil_usuario AS pu
+INNER JOIN usuario AS u ON pu.usuario_id = u.idusuario;";
     $comando = mysqli_prepare($conexao, $sql);
   }
   mysqli_stmt_execute($comando);
@@ -4271,21 +4296,20 @@ WHERE u.idusuario = ?
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
-    $sql = " SELECT
+    $sql = "SELECT
+    f.idfuncionario,
     f.usuario_id,
-    f.idfuncionario AS funcionario_id,
     aa.idaula,
     aa.data_aula,
     aa.dia_semana,
     aa.hora_inicio,
     aa.hora_fim,
     aa.treino_id,
-    f.nome AS nome_professor,
+    f.nome AS nome_usuario,
     pf.foto_perfil,
     pf.modalidade,
     pf.telefone AS telefone_professor,
     u.email AS email_professor,
-    c.idcargo AS cargo_id,
     c.nome AS cargo_professor,
     f.salario,
     pf.avaliacao_media,
@@ -4293,13 +4317,11 @@ WHERE u.idusuario = ?
     pf.horarios_disponiveis,
     pf.data_atualizacao,
     f.data_contratacao
-FROM funcionario AS f
-INNER JOIN perfil_professor AS pf ON f.usuario_id = pf.usuario_id
-INNER JOIN usuario AS u ON pf.usuario_id = u.idusuario
-INNER JOIN cargo AS c ON f.cargo_id = c.idcargo
-LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario;
-;
-";
+FROM usuario AS u
+INNER JOIN funcionario AS f ON f.usuario_id = u.idusuario
+INNER JOIN perfil_professor AS pf ON pf.usuario_id = u.idusuario
+INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
+LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -4690,4 +4712,41 @@ function is_password_hash_like(string $s): bool
   $argon2 = '/^\$argon2(id|i)\$.+/';
 
   return preg_match($bcrypt, $s) || preg_match($argon2, $s);
+}
+function listarDietaAlimentar($iddieta)
+{
+  $conexao = conectar();
+  if ($iddieta != null) {
+    $sql = 'SELECT
+    pf.usuario_id,
+    pf.nome AS nome_usuario,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim
+    FROM dieta AS d
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.usuario_id
+    WHERE d.iddieta=?';
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $iddieta);
+  } else {
+    $sql = ' SELECT
+    pf.usuario_id,
+    pf.nome AS nome_usuario,
+    d.descricao,
+    d.data_inicio,
+    d.data_fim
+    FROM dieta AS d
+    JOIN perfil_usuario AS pf ON d.usuario_id = pf.usuario_id';
+    $comando = mysqli_prepare($conexao, $sql);
+  }
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_dietas = [];
+  while ($dieta = mysqli_fetch_assoc($resultados)) {
+    $lista_dietas[] = $dieta;
+  }
+  mysqli_stmt_close($comando);
+
+  return $lista_dietas;
 }

@@ -1,10 +1,24 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
 
-$id = 1;
+function getDadosParaEdicao($tabela, $id) {
+    global $pdo; // Supondo que você tenha uma variável global para o banco
+    $stmt = $pdo->prepare("SELECT * FROM $tabela WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+$id = isset($_GET['id']) ? $_GET['id'] : null;  // Obter ID para edição (se existir)
 $tabela = $_GET['tabela'];
-// $acao = $_GET['acao'];
+
+// Caso o ID seja fornecido, buscamos os dados
 $colunas = listarColunasTabela($tabela);
+
+// Lógica para preencher os campos do formulário, caso haja um ID
+if ($id) {
+    // Consultar dados do banco para o ID
+    $dados = getDadosParaEdicao($tabela, $id);  // Função que você deve criar para buscar os dados do banco.
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -22,11 +36,10 @@ $colunas = listarColunasTabela($tabela);
 
   <script src="./js/formularioGenerico.js"></script>
 
-
   <form action="" method="post" enctype="multipart/form-data" id="formGenerico">
     <?php
 
-    foreach ($colunas AS $c) {
+    foreach ($colunas as $c) {
       $nome_campo = $c['Field'];
       $tipo_campo = strtolower($c['Type']);
       $chave = $c['Key'];
@@ -36,30 +49,32 @@ $colunas = listarColunasTabela($tabela);
 
       // Campo ID primário → hidden
       if (strpos($nome_campo, "id") !== false && strpos($chave, "PRI") !== false) {
-        echo "<input type='hidden' name='$nome_campo' value=''>";
+        echo "<input type='hidden' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'>";
         continue;
       }
 
       // Chaves estrangeiras (id de outra tabela)
       if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo'></select><br><br>";
+        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo'>";
+        // Aqui você pode preencher as opções dinamicamente, com os valores das chaves estrangeiras.
+        echo "</select><br><br>";
         ?>
         <script>preencherChavesEstrangeiras()</script>
         <?php
         continue;
-    }
+      }
 
       // Campo de senha
       if (strpos($nome_campo, "senha") !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<input type='password' name='$nome_campo'><br><br>";
+        echo "<input type='password' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
         continue;
       }
 
       // Campo de número de matrícula → hidden
       if (strpos($nome_campo, "numero_matricula") !== false) {
-        echo "<input type='hidden' name='$nome_campo' value=''>";
+        echo "<input type='hidden' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'>";
         continue;
       }
 
@@ -67,27 +82,30 @@ $colunas = listarColunasTabela($tabela);
       if (strpos($nome_campo, 'foto') !== false) {
         echo "<label for='$nome_campo'>Foto:</label><br>";
         echo "<input type='file' name='$nome_campo'><br><br>";
+        if ($id && isset($dados[$nome_campo])) {
+          echo "<img src='" . $dados[$nome_campo] . "' alt='Foto' width='100'><br><br>";
+        }
         continue;
       }
 
       // TextArea
       if (strpos($tipo_campo, 'text') !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<textarea name='$nome_campo' rows='4' cols='50'></textarea><br><br>";
+        echo "<textarea name='$nome_campo' rows='4' cols='50'>" . ($id ? $dados[$nome_campo] : '') . "</textarea><br><br>";
         continue;
       }
 
       // Data
       if (strpos($tipo_campo, 'date') !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<input type='date' name='$nome_campo'><br><br>";
+        echo "<input type='date' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
         continue;
       }
 
       // Hora (sem timestamp)
       if (strpos($tipo_campo, 'time') !== false && strpos($tipo_campo, 'stamp') === false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<input type='time' name='$nome_campo'><br><br>";
+        echo "<input type='time' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
         continue;
       }
 
@@ -98,7 +116,8 @@ $colunas = listarColunasTabela($tabela);
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
         echo "<select name='$nome_campo'>";
         foreach ($valores as $val) {
-          echo "<option value='$val'>$val</option>";
+          $selected = ($id && $dados[$nome_campo] == $val) ? 'selected' : '';
+          echo "<option value='$val' $selected>$val</option>";
         }
         echo "</select><br><br>";
         continue;
@@ -107,19 +126,17 @@ $colunas = listarColunasTabela($tabela);
       // Número
       if (strpos($tipo_campo, 'int') !== false || strpos($tipo_campo, 'decimal') !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<input type='number' name='$nome_campo'><br><br>";
+        echo "<input type='number' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
         continue;
       }
 
       // Padrão → texto
       echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-      echo "<input type='text' name='$nome_campo'><br><br>";
+      echo "<input type='text' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
     }
     ?>
-    <button type="submit">Salvar</button>
+    <button type="submit"><?php echo $id ? 'Salvar Alterações' : 'Cadastrar'; ?></button>
   </form>
-
-
 
 </body>
 

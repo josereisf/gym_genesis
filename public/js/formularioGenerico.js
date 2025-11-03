@@ -19,10 +19,10 @@ function listarTabela(tabela, id) {
       if (data.sucesso) {
         const dados = data.dados;
         console.table(dados);
-        
+
       }
     },
-    error: function() {
+    error: function () {
       alert('Erro ao listar os dados.');
     }
   });
@@ -30,7 +30,7 @@ function listarTabela(tabela, id) {
 
 // Função para preencher os selects de chaves estrangeiras
 function preencherChavesEstrangeiras() {
-  $('select.chaveEstrangeira').each(function() {
+  $('select.chaveEstrangeira').each(function () {
     let select = $(this);
     let tabela = select.data('tabela');
     let campo = select.data('campo');
@@ -44,25 +44,31 @@ function preencherChavesEstrangeiras() {
       success: function (data) {
         if (data.sucesso) {
           const chaveEstrangeira = data.dados;
-          if (campo.includes('treino')){
+          if (campo.includes('treino')) {
             nome_campo = 'tipo';
           }
-          if (campo.includes('exercicio')){
+          if (campo.includes('exercicio')) {
             nome_campo = 'nome';
           }
           if (campo.includes('cargo')) {
-            chaveNome = 'nome_cargo';   // Se for cargo_id, usa nome_cargo
-          } 
+            nome_campo = 'nome_cargo';
+          }
           if (campo.includes('usuario')) {
-          chaveNome = 'nome_professor'; // Se for usuario_id, usa nome_usuario
-        }
+            nome_campo = 'nome_usuario';
+          }
+          if (campo.includes('dieta')) {
+            nome_campo = 'descricao';
+          }
+          if (campo.includes('funcionario')) {
+            nome_campo = 'nome_usuario';
+          }
 
           // Limpar o select antes de adicionar as opções
           select.empty();
           select.append('<option value="">Selecione...</option>'); // Adicionar a opção padrão
 
           // Adiciona as opções para cada chave estrangeira
-          chaveEstrangeira.forEach(function(item) {
+          chaveEstrangeira.forEach(function (item) {
             select.append(
               $('<option>', {
                 value: item.id, // ID do item
@@ -72,7 +78,7 @@ function preencherChavesEstrangeiras() {
           });
         }
       },
-      error: function() {
+      error: function () {
         alert('Erro ao carregar as chaves estrangeiras.');
       }
     });
