@@ -1,12 +1,7 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
 
-function getDadosParaEdicao($tabela, $id) {
-    global $pdo; // Supondo que você tenha uma variável global para o banco
-    $stmt = $pdo->prepare("SELECT * FROM $tabela WHERE id = :id");
-    $stmt->execute(['id' => $id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+
 
 $id = isset($_GET['id']) ? $_GET['id'] : null;  // Obter ID para edição (se existir)
 $tabela = $_GET['tabela'];
@@ -17,8 +12,9 @@ $colunas = listarColunasTabela($tabela);
 // Lógica para preencher os campos do formulário, caso haja um ID
 if ($id) {
     // Consultar dados do banco para o ID
-    $dados = getDadosParaEdicao($tabela, $id);  // Função que você deve criar para buscar os dados do banco.
+    $dados = DadosGerais($tabela, $id);  // Função que você deve criar para buscar os dados do banco.
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,7 +52,7 @@ if ($id) {
       // Chaves estrangeiras (id de outra tabela)
       if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo'>";
+        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='$id'>";
         // Aqui você pode preencher as opções dinamicamente, com os valores das chaves estrangeiras.
         echo "</select><br><br>";
         ?>
@@ -83,7 +79,7 @@ if ($id) {
         echo "<label for='$nome_campo'>Foto:</label><br>";
         echo "<input type='file' name='$nome_campo'><br><br>";
         if ($id && isset($dados[$nome_campo])) {
-          echo "<img src='" . $dados[$nome_campo] . "' alt='Foto' width='100'><br><br>";
+          echo "<img src='../uploads/" . $dados[$nome_campo] . "' alt='Foto' width='100'><br><br>";
         }
         continue;
       }

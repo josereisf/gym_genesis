@@ -43,7 +43,7 @@ $colunas = listarColunasTabela($tabela);
       // Chaves estrangeiras (id de outra tabela)
       if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo'></select><br><br>";
+        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='$id'></select><br><br>";
         ?>
         <script>preencherChavesEstrangeiras()</script>
         <?php

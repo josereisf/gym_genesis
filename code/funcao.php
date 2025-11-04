@@ -4750,3 +4750,20 @@ function listarDietaAlimentar($iddieta)
 
   return $lista_dietas;
 }
+function DadosGerais($tabela, $id) {
+  $conexao = conectar();
+  require_once __DIR__ . "/../code/gambiarra.php";
+  $sql = " SELECT * FROM $tabela WHERE $id_tabela = ?";
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $id);
+
+  mysqli_stmt_execute($comando);
+  $resultado = mysqli_stmt_get_result($comando);
+
+  $resposta = mysqli_fetch_assoc($resultado);
+
+  mysqli_stmt_close($comando);
+
+
+  return $resposta;
+}

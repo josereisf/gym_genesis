@@ -34,6 +34,8 @@ function preencherChavesEstrangeiras() {
     let select = $(this);
     let tabela = select.data('tabela');
     let campo = select.data('campo');
+    let ideditar = select.data('ideditar'); 
+    console.log('Id editar:', ideditar);
 
     // Fazendo a requisição AJAX para preencher o select de chaves estrangeiras
     $.ajax({
@@ -65,14 +67,27 @@ function preencherChavesEstrangeiras() {
 
           // Limpar o select antes de adicionar as opções
           select.empty();
-          select.append('<option value="">Selecione...</option>'); // Adicionar a opção padrão
-
+          select.append('<option value="">Selecione...</option>'); 
+          //select.append('<option value="">Selecione...</option>'); // Adicionar a opção padrão
+          console.log(chaveEstrangeira);
           // Adiciona as opções para cada chave estrangeira
           chaveEstrangeira.forEach(function (item) {
+            if (item[campo] == ideditar){
+              selecionado = true;
+            }
+            else {
+              selecionado = false;
+            }
+            console.log('Adicionando opção:', {
+              value: item[campo], // ID do item
+              text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
+              selected: selecionado
+            });
             select.append(
               $('<option>', {
-                value: item.id, // ID do item
+                value: item[campo], // ID do item
                 text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
+                selected: selecionado
               })
             );
           });
