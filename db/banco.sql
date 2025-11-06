@@ -459,7 +459,7 @@ CREATE TABLE IF NOT EXISTS `gym_genesis`.`pagamento` (
   `idpagamento` INT(11) NOT NULL AUTO_INCREMENT,
   `valor` DECIMAL(10,2) NOT NULL,
   `data_pagamento` DATETIME NOT NULL,
-  `metodo` VARCHAR(45) NOT NULL,
+  `metodo` ENUM('pix', 'boleto', 'cartao') NULL DEFAULT 'boleto',
   `status` ENUM('sucesso', 'falha', 'reembolsado') NULL DEFAULT 'sucesso',
   PRIMARY KEY (`idpagamento`))
 ENGINE = InnoDB

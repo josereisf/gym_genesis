@@ -25,6 +25,7 @@ switch($tabela){
         $id_tabela = 'idaula';
         break;
     case 'aula_usuario':
+        // ATENÇÃO: Esta tabela tem chave primária composta (idaula, usuario_id)
         $id_tabela = 'idaula';
         break;
     case 'avaliacao_fisica':
@@ -46,7 +47,8 @@ switch($tabela){
         $id_tabela = 'idrefeicao';
         break;
     case 'dieta_alimentar':
-        $id_tabela = 'iddieta_alimentar';
+        // ATENÇÃO: Esta tabela tem chave primária composta (alimento_id, refeicao_id)
+        $id_tabela = 'alimento_id';
         break;
     case 'endereco':
         $id_tabela = 'idendereco';
@@ -55,13 +57,13 @@ switch($tabela){
         $id_tabela = 'idexercicio';
         break;
     case 'forum':
-        $id_tabela = 'idforum';
+        $id_tabela = 'idtopico'; // CORREÇÃO: era 'idforum' mas na tabela é 'idtopico'
         break;
     case 'historico_peso':
         $id_tabela = 'idhistorico_peso';
         break;
     case 'historico_treino':
-        $id_tabela = 'idhistorico_treino';
+        $id_tabela = 'idhistorico';
         break;
     case 'pagamento':
         $id_tabela = 'idpagamento';
@@ -73,23 +75,29 @@ switch($tabela){
         $id_tabela = 'idproduto';
         break;
     case 'item_pedido':
-        // PK é composta (pedido_id, produto_id) — ignorado conforme solicitado
-        $id_tabela = '';
+        // ATENÇÃO: Esta tabela tem chave primária composta (pedido_id, produto_id)
+        $id_tabela = 'pedido_id';
         break;
     case 'meta_usuario':
         $id_tabela = 'idmeta';
         break;
     case 'pagamento_detalhe':
-        $id_tabela = 'idpagamento_detalhe';
+        $id_tabela = 'idpagamento2'; // CORREÇÃO: era 'idpagamento_detalhe' mas na tabela é 'idpagamento2'
         break;
     case 'perfil_professor':
-        $id_tabela = 'idperfil_professor';
+        $id_tabela = 'idperfil';
         break;
     case 'perfil_usuario':
         $id_tabela = 'idperfil_usuario';
         break;
     case 'recuperacao_senha':
         $id_tabela = 'idrecuperacao_senha';
+        break;
+    case 'resposta_forum':
+        $id_tabela = 'idresposta';
+        break;
+    case 'treino_exercicio':
+        $id_tabela = 'idtreino2'; // CORREÇÃO: era 'idtreino_exercicio' mas na tabela é 'idtreino2'
         break;
     default:
         $id_tabela = '';

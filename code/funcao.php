@@ -405,7 +405,7 @@ function listarFuncionarios($idfuncionario)
   $conexao = conectar();
   if ($idfuncionario != null) {
     $sql = 'SELECT 
-            f.nome,
+            f.nome AS nome_usuario,
             u.email,
             p.telefone,
             f.data_contratacao,
@@ -423,7 +423,7 @@ function listarFuncionarios($idfuncionario)
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
   } else {
     $sql = 'SELECT 
-            f.nome,
+            f.nome AS nome_usuario,
             u.email,
             p.telefone,
             f.data_contratacao,
@@ -1108,8 +1108,11 @@ function listarPedidos($idpedido)
   $conexao = conectar();
   if ($idpedido != null) {
     $sql = ' SELECT
+    pf.usuario_id,
     pf.nome AS nome_usuario,
     p.data_pedido,
+    p.pagamento_id,
+    pa.metodo,
     p.status,
     pa.valor
     FROM pedido AS p
@@ -1120,8 +1123,12 @@ function listarPedidos($idpedido)
     mysqli_stmt_bind_param($comando, 'i', $idpedido);
   } else {
     $sql = ' SELECT
+    pf.usuario_id,
     pf.nome AS nome_usuario,
     p.data_pedido,
+    p.pagamento_id,
+        pa.metodo,
+
     p.status,
     pa.valor
     FROM pedido AS p
@@ -1344,9 +1351,11 @@ function listarHistoricoTreino($idhistorico)
   $conexao = conectar();
   if ($idhistorico != null) {
     $sql = 'SELECT
+    ht.idhistorico,
     ht.usuario_id,
     pf.nome AS nome_usuario,
     t.tipo,
+    ht.treino_id,
     ht.data_execucao,
     ht.observacoes
     FROM historico_treino AS ht
@@ -1357,9 +1366,11 @@ function listarHistoricoTreino($idhistorico)
     mysqli_stmt_bind_param($comando, 'i', $idhistorico);
   } else {
     $sql = 'SELECT
+    ht.idhistorico,
     ht.usuario_id,
     pf.nome AS nome_usuario,
     t.tipo,
+    ht.treino_id,
     ht.data_execucao,
     ht.observacoes
     FROM historico_treino AS ht
@@ -4750,7 +4761,14 @@ function listarDietaAlimentar($iddieta)
 
   return $lista_dietas;
 }
-function DadosGerais($tabela, $id) {
+/**
+ * Undocumented function
+ *
+ * @param [type] $conexao
+ * @return void
+ */
+function DadosGerais($tabela, $id)
+{
   $conexao = conectar();
   require_once __DIR__ . "/../code/gambiarra.php";
   $sql = " SELECT * FROM $tabela WHERE $id_tabela = ?";

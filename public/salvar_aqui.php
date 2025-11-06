@@ -11,8 +11,8 @@ $colunas = listarColunasTabela($tabela);
 
 // Lógica para preencher os campos do formulário, caso haja um ID
 if ($id) {
-    // Consultar dados do banco para o ID
-    $dados = DadosGerais($tabela, $id);  // Função que você deve criar para buscar os dados do banco.
+  // Consultar dados do banco para o ID
+  $dados = DadosGerais($tabela, $id);  // Função que você deve criar para buscar os dados do banco.
 }
 
 ?>
@@ -34,7 +34,6 @@ if ($id) {
 
   <form action="" method="post" enctype="multipart/form-data" id="formGenerico">
     <?php
-
     foreach ($colunas as $c) {
       $nome_campo = $c['Field'];
       $tipo_campo = strtolower($c['Type']);
@@ -51,20 +50,30 @@ if ($id) {
 
       // Chaves estrangeiras (id de outra tabela)
       if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
+        if (strpos($nome_campo, "id") !== false) {
+          $atributo = 'disabled';
+        } else {
+          $atributo = '';
+        }
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='$id'>";
+        echo "<select name='$nome_campo' class='chaveEstrangeira' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='$id' $atributo>";
         // Aqui você pode preencher as opções dinamicamente, com os valores das chaves estrangeiras.
         echo "</select><br><br>";
-        ?>
-        <script>preencherChavesEstrangeiras()</script>
-        <?php
+    ?>
+        <script>
+          preencherChavesEstrangeiras()
+        </script>
+    <?php
         continue;
       }
 
       // Campo de senha
+      // Campo de senha
       if (strpos($nome_campo, "senha") !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<input type='password' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
+        echo "<input type='password' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "' 
+           onfocus=\"this.type='text'\" 
+           onblur=\"this.type='password'\"><br><br>";
         continue;
       }
 
@@ -79,7 +88,7 @@ if ($id) {
         echo "<label for='$nome_campo'>Foto:</label><br>";
         echo "<input type='file' name='$nome_campo'><br><br>";
         if ($id && isset($dados[$nome_campo])) {
-          echo "<img src='../uploads/" . $dados[$nome_campo] . "' alt='Foto' width='100'><br><br>";
+          echo "<img src='./uploads/" . $dados[$nome_campo] . "' alt='Foto' width='100'><br><br>";
         }
         continue;
       }
@@ -122,7 +131,25 @@ if ($id) {
       // Número
       if (strpos($tipo_campo, 'int') !== false || strpos($tipo_campo, 'decimal') !== false) {
         echo "<label for='$nome_campo'>$nome_campo:</label><br>";
-        echo "<input type='number' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'><br><br>";
+
+        $attrs = '';
+
+        if (strpos($nome_campo, 'id') !== false) {
+          $attrs = "min='1'";
+        } elseif ($nome_campo === "tipo_usuario") {
+          $attrs = "min='0' max='2'";
+        } else {
+          $attrs = "min='0'";
+
+          // Se for um INT pequeno, definir max apropriado
+          if (strpos($tipo_campo, 'tinyint') !== false) {
+            $attrs .= " max='255'";
+          } elseif (strpos($tipo_campo, 'smallint') !== false) {
+            $attrs .= " max='32767'";
+          }
+        }
+
+        echo "<input type='number' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "' $attrs><br><br>";
         continue;
       }
 
@@ -133,7 +160,21 @@ if ($id) {
     ?>
     <button type="submit"><?php echo $id ? 'Salvar Alterações' : 'Cadastrar'; ?></button>
   </form>
+  <script>
+    // Definir a tabela globalmente
+    const tabela = '<?php echo $tabela; ?>';
 
+    // Evento de clique no botão
+    $('#btnSalvar').on('click', function() {
+      editarRegistro(tabela);
+    });
+    // Prevenir submit tradicional do formulário
+    $('#formGenerico').on('submit', function(e) {
+      e.preventDefault();
+      editarRegistro(tabela);
+    });
+    
+  </script>
 </body>
 
 </html>
