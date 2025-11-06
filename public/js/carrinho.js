@@ -1,3 +1,19 @@
+$(document).ready(function() {
+    // Objeto para armazenar a contagem dos produtos
+    let contagemProdutos = {};
+
+    // Iterar sobre os itens do carrinho
+    $('.flex.items-center').each(function() {
+        // Pegar o ID do produto a partir do atributo data-id
+        let id = $(this).find('input[data-id]').data('id');
+        let quantidade = parseInt($(this).find('input[data-id]').val(), 10);
+    let preco = $(this).find('.preco_produto').data('preco');
+
+        contagemProdutos[id] = {quantidade, preco};
+    });
+    console.log(contagemProdutos);
+});
+    // Exibir a contagem de produtos no console
 $(document).on('click', '.remover', function() {
     removerItem(this);
 });
@@ -9,13 +25,6 @@ function removerItem(botao) {
         url: 'http://localhost:83/public/php/remover.php',
         method: 'GET',
         data: { id: id },
-        success: function (response) {
-            console.log('Item removido do carrinho com sucesso', response);
-
-        },
-        error: function (xhr, status, error) {
-            console.error('Erro ao remover item ao carrinho', error);
-        }
     });
 };
 function atualizar_total() {
@@ -65,4 +74,6 @@ function somar() {
         .catch(error => console.log('Houve erro:', error));
 }
 $("input[type='number']").change(somar);
-
+$(document).on('click', '#salvar', function() {
+    removerItem(this);
+});

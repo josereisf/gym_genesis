@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../code/funcao.php";
 session_start();
 $carrinho = $_SESSION['carrinho'] ?? [];
+print_r($carrinho);
 
 
 function totalCarrinho($carrinho, $quantidade)
@@ -80,7 +81,7 @@ $subtotalCompra = 0;
                             <div class="ml-4 flex-1">
                                 <h4 class="text-lg font-semibold text-white"><?= $nome ?></h4>
                                 <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-yellow-400 font-bold preco_produto">R$ <?= $preco ?></span>
+                                    <span class="text-yellow-400 font-bold preco_produto" data-preco="<?= $preco ?>">R$ <?= $preco ?></span>
                                     <button class="ml-2 text-sm text-blue-400 hover:underline">Editar preço</button>
                                 </div>
                                 <div class="flex items-center mt-3">
