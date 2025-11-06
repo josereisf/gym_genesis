@@ -25,7 +25,8 @@ $subtotalCompra = 0;
     <title>Carrinho - Loja Fitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="../jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/carrinho.js"></script>
 </head>
 
 <body class="bg-gray-900 text-gray-100">
@@ -90,7 +91,7 @@ $subtotalCompra = 0;
                             </div>
                             <div class="text-right">
                                 <p class="font-bold text-yellow-400 subtotal_produto">R$ <?= $subtotal ?></p>
-                                <button class="mt-2 text-red-400 hover:text-red-600 text-sm">
+                                <button value="<?= $id ?>"class="remover mt-2 text-red-400 hover:text-red-600 text-sm">
                                     <i class="fas fa-trash mr-1"></i> Remover
                                 </button>
                             </div>

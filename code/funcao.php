@@ -2223,10 +2223,12 @@ function listarAulaAgendada($idaula = null)
                 t.tipo,
                 t.descricao,
                 f.idfuncionario,
-                f.nome AS nome_usuario
+                f.nome AS nome_usuario,
+                c.nome AS nome_cargo
             FROM aula_agendada AS ag
             LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
-            LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario";
+            LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario
+            INNER JOIN cargo AS c ON c.idcargo = f.cargo_id";
 
   if ($idaula !== null) {
     $sql .= " WHERE ag.idaula = ?";
@@ -4274,6 +4276,7 @@ function cadastrarPerfilProfessor($foto_perfil, $experiencia_anos, $modalidade, 
 function listarPerfilProfessor($idusuario)
 {
   $conexao = conectar();
+  $idusuario += 20;
 
   if ($idusuario != null) {
     $sql = "SELECT

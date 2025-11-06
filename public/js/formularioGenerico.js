@@ -78,11 +78,14 @@ function preencherChavesEstrangeiras() {
             else {
               selecionado = false;
             }
+<<<<<<< Updated upstream
             //  console.log('Adicionando opção:', {
             //    value: item[campo], // ID do item
             //    text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
             //    selected: selecionado
             //  });
+=======
+>>>>>>> Stashed changes
             select.append(
               $('<option>', {
                 value: item[campo], // ID do item

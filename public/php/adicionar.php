@@ -14,5 +14,4 @@ $_SESSION['carrinho'][$id] += 1;
 else {
     $_SESSION['carrinho'][$id] = 1;
 }
-print_r($_SESSION);
   

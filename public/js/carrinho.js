@@ -1,47 +1,68 @@
-    function atualizar_total() {
-            let total = 0;
+$(document).on('click', '.remover', function() {
+    removerItem(this);
+});
+function removerItem(botao) {
+    let id = $(botao).val();
+    console.log('ID do produto:', id);
 
-            $('span.total_unitario').each(function() {
-                const valor = parseFloat($(this).text());
-                total += valor;
-            });
+    $.ajax({
+        url: 'http://localhost:83/public/php/remover.php',
+        method: 'GET',
+        data: { id: id },
+        success: function (response) {
+            console.log('Item removido do carrinho com sucesso', response);
 
-            $('#total').text(total);
+        },
+        error: function (xhr, status, error) {
+            console.error('Erro ao remover item ao carrinho', error);
         }
+    });
+};
+function atualizar_total() {
+    let total = 0;
 
-        function somar() {
-            const linha = $(this).closest('tr');
-            const preco_unitario = linha.find('span.preco_venda').text();
-            const quantidade = $(this).val();
-            const id = $(this).data('id');
+    $('span.total_unitario').each(function () {
+        const valor = parseFloat($(this).text());
+        total += valor;
+    });
 
-            console.log("id é:", id);
+    $('#total').text(total);
+}
 
-            const total = parseFloat(preco_unitario) * parseInt(quantidade);
+function somar() {
+    const linha = $(this).closest('tr');
+    const preco_unitario = linha.find('span.preco_venda').text();
+    const quantidade = $(this).val();
+    const id = $(this).data('id');
 
-            const total_unitario = linha.find('span.total_unitario');
-            total_unitario.text(total);
+    console.log("id é:", id);
 
-            /* Atualizar o valor total da compra */
-            atualizar_total();
+    const total = parseFloat(preco_unitario) * parseInt(quantidade);
 
-            /* Enviar requição para atualiza_carrinho.php para modificar sessão  */
-            console.log("atualizando...");
+    const total_unitario = linha.find('span.total_unitario');
+    total_unitario.text(total);
 
-            const dados_enviados = new URLSearchParams();
-            dados_enviados.append('id', id);
-            dados_enviados.append('quantidade', quantidade);
+    /* Atualizar o valor total da compra */
+    atualizar_total();
 
-            console.log("dados:", dados_enviados);
+    /* Enviar requição para atualiza_carrinho.php para modificar sessão  */
+    console.log("atualizando...");
 
-            fetch('atualiza_carrinho.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: dados_enviados.toString()
-                })
-                .then(response => response.text())
-                .catch(error => console.log('Houve erro:', error));
-        }
-        $("input[type='number']").change(somar);
+    const dados_enviados = new URLSearchParams();
+    dados_enviados.append('id', id);
+    dados_enviados.append('quantidade', quantidade);
+
+    console.log("dados:", dados_enviados);
+
+    fetch('atualiza_carrinho.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: dados_enviados.toString()
+    })
+        .then(response => response.text())
+        .catch(error => console.log('Houve erro:', error));
+}
+$("input[type='number']").change(somar);
+

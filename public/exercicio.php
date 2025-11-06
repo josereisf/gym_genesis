@@ -1,3 +1,10 @@
+<?php 
+require_once __DIR__ . "/../code/funcao.php";
+$idaula = $_GET['id'];
+$dados = listarAulaAgendada($idaula);
+$datastamp = strtotime($dados[0]['data_aula']);
+$data = gmdate("d-m-Y", $datastamp);
+?>
 <!doctype html>
 <html lang="pt-BR">
 
@@ -10,6 +17,7 @@
     <script src="/_sdk/element_sdk.js"></script>
     <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Tailwind Config -->
     <script>
@@ -95,10 +103,12 @@
             50% { opacity: 0.7; }
         }
     </style>
+    <script src="./js/exercicio.js"></script>
 </head>
 
 
 <body class="min-h-full bg-gradient-to-br from-darkblue via-darkgray to-dark">
+
     <main class="container mx-auto px-6 py-8">
         <!-- Header -->
         <header class="text-center mb-12">
@@ -111,12 +121,12 @@
         <!-- Card Header -->
         <div class="flex justify-between items-start mb-6">
             <div>
-                <h2 class="text-3xl font-bold text-neongreen mb-2">Elíptico</h2>
+                <h2 class="text-3xl font-bold text-neongreen mb-2 nome_treino"><?= $dados[0]['tipo'] ?></h2>
                 <span class="inline-block px-4 py-2 bg-darkblue/50 rounded-full text-neongreen font-semibold text-sm">Cardio</span>
             </div>
             <div class="text-right">
                 <div class="text-white/80 text-sm">ID da Aula</div>
-                <div class="text-white font-bold text-lg">#27</div>
+                <div class="text-white font-bold text-lg">#<?=  $idaula ?></div>
             </div>
         </div>
         <!-- Main Info Grid -->
@@ -127,8 +137,8 @@
                     <div class="w-3 h-3 bg-neonred rounded-full mr-3"></div>
                     <span class="text-white/80 text-sm font-medium">Data</span>
                 </div>
-                <div class="text-white font-bold text-lg">27 de Maio</div>
-                <div class="text-white/90 text-sm">Terça-feira</div>
+                <div class="text-white font-bold text-lg"><?=  $data ?></div>
+                <div class="text-white/90 text-sm"><?= $dados[0]['dia_semana'] ?></div>
             </div>
             <!-- Horário -->
             <div class="info-badge rounded-xl p-4">
@@ -136,7 +146,7 @@
                     <div class="w-3 h-3 bg-neongreen rounded-full mr-3"></div>
                     <span class="text-white/80 text-sm font-medium">Horário</span>
                 </div>
-                <div class="text-white font-bold text-lg">07:30 - 08:30</div>
+                <div class="text-white font-bold text-lg"><?= $dados[0]['hora_inicio'] ?> - <?= $dados[0]['hora_fim'] ?></div>
                 <div class="text-white/90 text-sm">60 minutos</div>
             </div>
             <!-- Professor -->
@@ -145,8 +155,8 @@
                     <div class="w-3 h-3 bg-neonred rounded-full mr-3"></div>
                     <span class="text-white/80 text-sm font-medium">Professor</span>
                 </div>
-                <div class="text-white font-bold text-lg">Carlos Mendes</div>
-                <div class="text-white/90 text-sm">Instrutor Certificado</div>
+                <div class="text-white font-bold text-lg"><?= $dados[0]['nome_usuario']?></div>
+                <div class="text-white/90 text-sm"><?= $dados[0]['nome_cargo']?></div>
             </div>
         </div>
         <!-- Action Buttons -->
@@ -164,7 +174,7 @@
     <div id="selection-status" class="mt-8 text-center hidden">
         <div class="inline-block bg-neongreen/20 border border-neongreen/30 rounded-xl px-6 py-4">
             <div class="text-neongreen font-semibold text-lg">✓ Aula Selecionada!</div>
-            <div class="text-neongreen/80 text-sm mt-1">Elíptico - Terça, 27/05 às 07:30</div>
+            <div class="text-neongreen/80 text-sm mt-1"><?= $dados[0]['tipo'] ?> - <?= $dados[0]['dia_semana'] ?>, <?=  $data ?> às <?= $dados[0]['hora_inicio'] ?></div>
         </div>
     </div>
 
