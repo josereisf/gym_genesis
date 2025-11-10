@@ -2329,7 +2329,7 @@ function listarPagamentosDetalhados($idpagamento = null)
                 ped.data_pedido,
                 ped.status AS pedido_status,
                 pf.usuario_id,
-                pf.nome AS nome_usuario AS usuario_nome,
+                pf.nome AS nome_usuario,
                 u.email AS usuario_email,
                 pf.telefone AS usuario_telefone,
                 prod.idproduto,
@@ -2684,7 +2684,7 @@ function listarItemPedido($usuario_id): array
     $sql = "
         SELECT 
             ped.idpedido, 
-            pf.nome AS nome_usuario AS usuario_nome, 
+            pf.nome AS nome_usuario, 
             p.nome AS produto_nome, 
             ip.quantidade, 
             ip.preco_unitario, 
@@ -2702,7 +2702,7 @@ function listarItemPedido($usuario_id): array
   } else {
     $sql = "    SELECT 
             ped.idpedido, 
-            pf.nome AS nome_usuario AS usuario_nome, 
+            pf.nome AS nome_usuario, 
             p.nome AS produto_nome, 
             ip.quantidade, 
             ip.preco_unitario, 
