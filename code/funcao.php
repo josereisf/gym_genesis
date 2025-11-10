@@ -2080,7 +2080,7 @@ function listarTreino($idtreino)
 
   if ($idtreino != null) {
     $sql = " SELECT 
-    pf.nome,
+    pf.nome AS nome_usuario,
     t.tipo,
     t.horario,
     t.descricao
@@ -2090,8 +2090,8 @@ function listarTreino($idtreino)
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idtreino);
   } else {
-    $sql = " SELECT 
-    pf.nome,
+    $sql = " SELECT
+    pf.nome AS nome_usuario,
     t.tipo,
     t.horario,
     t.descricao
@@ -2159,7 +2159,7 @@ function listarTreinoTipo($tipo)
 {
   $conexao = conectar();
   $sql = "SELECT 
-  pf.nome,
+  pf.nome AS nome_usuario,
   t.tipo,
   t.horario,
   t.descricao
@@ -2329,7 +2329,7 @@ function listarPagamentosDetalhados($idpagamento = null)
                 ped.data_pedido,
                 ped.status AS pedido_status,
                 pf.usuario_id,
-                pf.nome AS usuario_nome,
+                pf.nome AS nome_usuario,
                 u.email AS usuario_email,
                 pf.telefone AS usuario_telefone,
                 prod.idproduto,
@@ -2684,7 +2684,7 @@ function listarItemPedido($usuario_id): array
     $sql = "
         SELECT 
             ped.idpedido, 
-            pf.nome AS usuario_nome, 
+            pf.nome AS nome_usuario, 
             p.nome AS produto_nome, 
             ip.quantidade, 
             ip.preco_unitario, 
@@ -2702,7 +2702,7 @@ function listarItemPedido($usuario_id): array
   } else {
     $sql = "    SELECT 
             ped.idpedido, 
-            pf.nome AS usuario_nome, 
+            pf.nome AS nome_usuario, 
             p.nome AS produto_nome, 
             ip.quantidade, 
             ip.preco_unitario, 
@@ -2736,7 +2736,7 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
   $sql = "
     SELECT 
         ped.idpedido, 
-        pf.nome AS usuario_nome, 
+        pf.nome AS nome_usuario, 
         p.nome AS produto_nome, 
         ip.quantidade, 
         ip.preco_unitario, 
@@ -2877,7 +2877,7 @@ function listarAssinaturas($idassinatura)
 
   if ($idassinatura !== null) {
     $sql = "SELECT 
-      pf.nome,
+      pf.nome AS nome_usuario,
       p.tipo,
       p.duracao,
       a.data_inicio,
@@ -2890,7 +2890,7 @@ function listarAssinaturas($idassinatura)
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
   } else {
     $sql = "SELECT 
-      pf.nome,
+      pf.nome AS nome_usuario,
       p.tipo,
       p.duracao,
       a.data_inicio,
@@ -3761,7 +3761,7 @@ function listarUsuarioCompleto($id)
       u.senha,
       u.tipo_usuario,
 
-      pf.nome,
+      pf.nome AS nome_usuario,
       pf.cpf,
       pf.data_nascimento,
       pf.numero_matricula,
@@ -4576,7 +4576,7 @@ function listarAulaUsuario($idaula)
                     ag.hora_fim,
                     ag.treino_id,
                     ag.funcionario_id,
-                    pf.nome AS nome_aluno,
+                    pf.nome AS nome_usuario AS nome_aluno,
                     f.nome AS nome_professor
                 FROM aula_usuario AS au
                 INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
@@ -4595,7 +4595,7 @@ function listarAulaUsuario($idaula)
                     ag.hora_fim,
                     ag.treino_id,
                     ag.funcionario_id,
-                    pf.nome AS nome_aluno,
+                    pf.nome AS nome_usuario AS nome_aluno,
                     f.nome AS nome_professor
                 FROM aula_usuario AS au
                 INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
@@ -4618,10 +4618,28 @@ function listarAulaUsuario($idaula)
   return $aulas;
 }
 /**
- * Undocumented function
+ * Lista as colunas de uma tabela do banco de dados.
  *
- * @param [type] $conexao
- * @return void
+ * Abre uma conexão chamando conectar(), escapa o nome da tabela com
+ * mysqli_real_escape_string() e executa a consulta "SHOW COLUMNS FROM <tabela>".
+ * Retorna um array com as linhas retornadas pela consulta, cada uma representando
+ * uma coluna da tabela (normalmente com chaves como 'Field', 'Type', 'Null',
+ * 'Key', 'Default' e 'Extra').
+ *
+ * Observações:
+ * - Depende das funções conectar() e desconectar() existentes no projeto.
+ * - O nome da tabela é escapado para reduzir risco de injeção, mas ainda é
+ *   responsabilidade do chamador fornecer um nome de tabela válido.
+ * - Em caso de falha na consulta, a função retorna um array vazio (não lança
+ *   exceções por si só). Erros originados por conectar() podem ser propagados.
+ * - A função libera o resultado com mysqli_free_result() e encerra a conexão
+ *   chamando desconectar().
+ *
+ * @param string $tabela Nome da tabela cujas colunas serão listadas.
+ * @return array<int, array<string, mixed>> Vetor de arrays associativos com os
+ *                                        metadados de cada coluna retornados por
+ *                                        "SHOW COLUMNS". Pode ser vazio em caso
+ *                                        de erro ou se a tabela não possuir colunas.
  */
 function listarColunasTabela($tabela)
 {
