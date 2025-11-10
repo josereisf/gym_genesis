@@ -59,40 +59,61 @@ $subtotalCompra = 0;
             </div>
         <?php else: ?>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
                 <!-- LISTA DE PRODUTOS -->
                 <div class="lg:col-span-2 space-y-6">
-                    <?php foreach ($_SESSION['carrinho'] as $id => $quantidade):
+                    <?php
+                    $subtotalCompra = 0;
+
+                    foreach ($_SESSION['carrinho'] as $id => $quantidade):
                         // Recupera os dados do produto
                         $resultado = listarProdutos($id);
-
 
                         $nome  = $resultado[0]['nome'];
                         $preco = $resultado[0]['preco'];
 
-
                         $subtotal = $preco * $quantidade;
-                        $subtotalFormatado = number_format($subtotal, 2, ',', '.'); 
+                        $subtotalFormatado = number_format($subtotal, 2, ',', '.');
                         $subtotalCompra += $subtotal;
                     ?>
+
+                        <!-- PRODUTO -->
                         <div class="flex items-center bg-gray-800 p-5 rounded-xl shadow-lg hover:shadow-blue-500/30 transition">
                             <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white text-2xl">
                                 <i class="fas"></i>
                             </div>
+
                             <div class="ml-4 flex-1">
-                                <h4 class="text-lg font-semibold text-white"><?= $nome ?></h4>
+                                <h4 class="text-lg font-semibold text-white"><?= htmlspecialchars($nome) ?></h4>
+                                <!-- preco fixo do produto -->
                                 <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-yellow-400 font-bold preco_produto" data-preco="<?= $preco ?>">R$ <?= $preco ?></span>
-                                    <button class="ml-2 text-sm text-blue-400 hover:underline">Editar preço</button>
+                                    <span class="text-yellow-400 font-bold preco_produto" data-preco="<?= $preco ?>">
+                                        R$ <?= number_format($preco, 2, ',', '.') ?>
+                                    </span>
                                 </div>
+                                <!-- aonde a magica acontecer -->
                                 <div class="flex items-center mt-3">
-                                    <button class="bg-gray-700 px-2 py-1 rounded-l hover:bg-blue-500"><i class="fas fa-minus"></i></button>
-                                    <input type="text" name="quantidade[<?= $id ?>]" value="<?= $quantidade ?>" data-id='<?= $id ?>' min='1' class="w-12 text-center border border-gray-600 bg-gray-900">
-                                    <button class="bg-gray-700 px-2 py-1 rounded-r hover:bg-blue-500"><i class="fas fa-plus"></i></button>
+                                    <button class="bg-gray-700 px-2 py-1 rounded-l hover:bg-blue-500 btn-minus">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+
+                                    <input
+                                        type="text"
+                                        name="quantidade[<?= $id ?>]"
+                                        value="<?= $quantidade ?>"
+                                        data-id="<?= $id ?>"
+                                        min="1"
+                                        class="w-12 text-center border border-gray-600 bg-gray-900 quantidade-input">
+
+                                    <button class="bg-gray-700 px-2 py-1 rounded-r hover:bg-blue-500 btn-plus">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
                                 </div>
                             </div>
+                            <!-- aqui eu vou começar a modificar -->
                             <div class="text-right">
-                                <p class="font-bold text-yellow-400 subtotal_produto">R$ <?= $subtotal ?></p>
-                                <button value="<?= $id ?>"class="remover mt-2 text-red-400 hover:text-red-600 text-sm">
+                                <p class="font-bold text-yellow-400 subtotal_produto">R$ <?= $subtotalFormatado ?></p>
+                                <button value="<?= $id ?>" class="remover mt-2 text-red-400 hover:text-red-600 text-sm">
                                     <i class="fas fa-trash mr-1"></i> Remover
                                 </button>
                             </div>
@@ -106,7 +127,9 @@ $subtotalCompra = 0;
 
                     <div class="flex justify-between mb-2">
                         <span>Subtotal</span>
-                        <span class="text-yellow-400 subtotal_compra">R$ <?= $subtotalCompra ?></span>
+                        <span class="text-yellow-400 subtotal_compra">
+                            R$ <?= number_format($subtotalCompra, 2, ',', '.') ?>
+                        </span>
                     </div>
 
                     <div class="flex items-center gap-2 mb-2">
@@ -122,7 +145,7 @@ $subtotalCompra = 0;
                             id="valorDesconto"
                             placeholder="Digite o valor do desconto"
                             class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white 
-                                   focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
+                       focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">
                     </div>
 
                     <div class="flex justify-between mb-2">
@@ -134,7 +157,9 @@ $subtotalCompra = 0;
 
                     <div class="flex justify-between font-bold text-lg">
                         <span>Total</span>
-                        <span id="totalCompra" class="text-yellow-400 transition-all duration-300 tota_compra">R$ <?= $subtotalCompra ?></span>
+                        <span id="totalCompra" class="text-yellow-400 transition-all duration-300">
+                            R$ <?= number_format($subtotalCompra, 2, ',', '.') ?>
+                        </span>
                     </div>
 
                     <button class="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-bold hover:scale-105 transition">
@@ -142,34 +167,114 @@ $subtotalCompra = 0;
                     </button>
                 </div>
             </div>
+
+
         <?php endif; ?>
     </main>
-
     <script>
-        const checkbox = document.getElementById('usarDesconto');
-        const campo = document.getElementById('campoDesconto');
-        const inputDesconto = document.getElementById('valorDesconto');
-        const totalEl = document.getElementById('totalCompra');
-        let subtotal = <?= $subtotal ?>; // valor bruto, número
+        $(document).ready(function() {
 
-        checkbox.addEventListener('change', () => {
-            campo.classList.toggle('hidden', !checkbox.checked);
-            if (!checkbox.checked) {
-                inputDesconto.value = '';
-                totalEl.textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
+            // --- Atualiza o subtotal geral (toda a compra) ---
+            function atualizarSubtotalGeral() {
+                let total = 0;
+                $('.subtotal_produto').each(function() {
+                    let valor = parseFloat($(this).text().replace('R$', '').replace('.', '').replace(',', '.').trim());
+                    total += valor || 0;
+                });
+                $('.subtotal_compra').text('R$ ' + total.toFixed(2).replace('.', ','));
+            }
+
+            // --- Recalcula o subtotal do produto atual ---
+            function atualizarSubtotal(botao) {
+                let container = botao.closest('.bg-gray-800'); // container principal do produto
+                let preco = parseFloat(container.find('.preco_produto').data('preco'));
+                let quantidade = parseInt(container.find('.quantidade-input').val()) || 0;
+                let subtotal = preco * quantidade;
+                container.find('.subtotal_produto').text('R$ ' + subtotal.toFixed(2).replace('.', ','));
+                atualizarSubtotalGeral(); // atualiza o total geral
+            }
+
+            // --- Botão "+" ---
+            $('.btn-plus').on('click', function() {
+                let input = $(this).siblings('.quantidade-input');
+                let valor = parseInt(input.val()) || 0;
+                input.val(valor + 1);
+                atualizarSubtotal($(this));
+            });
+
+            // --- Botão "-" ---
+            $('.btn-minus').on('click', function() {
+                let input = $(this).siblings('.quantidade-input');
+                let valor = parseInt(input.val()) || 0;
+                if (valor > 1) {
+                    input.val(valor - 1);
+                    atualizarSubtotal($(this));
+                }
+            });
+
+            // --- Atualiza também se o usuário digitar manualmente ---
+            $('.quantidade-input').on('input', function() {
+                atualizarSubtotal($(this));
+            });
+
+            // --- Atualiza total geral ao carregar ---
+            atualizarSubtotalGeral();
+        });
+        // Mostrar / ocultar campo de desconto
+        $('#usarDesconto').on('change', function() {
+            $('#campoDesconto').toggleClass('hidden', !this.checked);
+            if (!this.checked) {
+                $('#valorDesconto').val('');
+                atualizarTotalGeral(); // volta ao total normal
             }
         });
 
-        inputDesconto.addEventListener('input', () => {
-            let desconto = parseFloat(inputDesconto.value.replace(',', '.')) || 0;
-            let total = subtotal - desconto;
-            if (total < 0) total = 0;
+        // Quando digitar o código do cupom
+        $('#valorDesconto').on('blur', function() {
+            let codigo = $(this).val().trim();
+            if (codigo === '') return;
 
-            totalEl.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-            totalEl.classList.add('text-green-400');
-            setTimeout(() => totalEl.classList.remove('text-green-400'), 600);
+            // Faz requisição AJAX para validar o cupom
+            $.ajax({
+                url: './php/validar_codigo.php', // cria esse arquivo no PHP
+                type: 'POST',
+                data: {
+                    codigo: codigo
+                },
+                dataType: 'json',
+                success: function(res) {
+                    if (res.valido) {
+                        let totalAtual = 0;
+
+                        $('.subtotal_produto').each(function() {
+                            let valorTexto = $(this).text().replace('R$', '').replace('.', '').replace(',', '.').trim();
+                            totalAtual += parseFloat(valorTexto) || 0;
+                        });
+
+                        let totalComDesconto = totalAtual;
+
+                        if (res.tipo === 'percentual') {
+                            totalComDesconto -= (totalAtual * (res.valor / 100));
+                        } else if (res.tipo === 'fixo') {
+                            totalComDesconto -= res.valor;
+                        }
+
+                        if (totalComDesconto < 0) totalComDesconto = 0;
+
+                        $('#totalCompra').text('R$ ' + totalComDesconto.toFixed(2).replace('.', ','))
+                            .addClass('text-green-400');
+
+                        setTimeout(() => $('#totalCompra').removeClass('text-green-400'), 600);
+                    } else {
+                        alert('Cupom inválido ou expirado!');
+                        $('#valorDesconto').val('');
+                        atualizarTotalGeral();
+                    }
+                }
+            });
         });
     </script>
+
 </body>
 
 </html>
