@@ -405,6 +405,7 @@ function listarFuncionarios($idfuncionario)
   $conexao = conectar();
   if ($idfuncionario != null) {
     $sql = 'SELECT 
+            idfuncionario,
             f.nome AS nome_usuario,
             u.email,
             p.telefone,
@@ -423,6 +424,7 @@ function listarFuncionarios($idfuncionario)
     mysqli_stmt_bind_param($comando, 'i', $idfuncionario);
   } else {
     $sql = 'SELECT 
+            idfuncionario,
             f.nome AS nome_usuario,
             u.email,
             p.telefone,

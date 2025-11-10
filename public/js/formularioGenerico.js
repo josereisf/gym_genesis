@@ -5,16 +5,18 @@ $(document).ready(function () {
   console.log("Tabela:", tabela);
   console.log("ID:", id);
 
-  //listarTabela(tabela, id);
+  listarTabela(tabela, id);
 });
 
 // Função que lista os dados da tabela principal
 function listarTabela(tabela, id) {
+  let idtabela;
+  idtabela = getIdTabela(tabela);
   $.ajax({
     url: 'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
     method: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({ id: id }),
+    data: JSON.stringify({ idtabela: id }),
     success: function (data) {
       if (data.sucesso) {
         const dados = data.dados;
@@ -34,7 +36,7 @@ function preencherChavesEstrangeiras() {
     let campo = select.data('campo');
     let ideditar = select.data('ideditar');
     let tabela = campo.split("_")[0];
-    listarTabela(tabela);
+    listarTabela(tabela, ideditar);
     // Fazendo a requisição AJAX para preencher o select de chaves estrangeiras
     $.ajax({
       url: 'http://localhost:83/public/api/index.php?entidade=' + tabela + '&acao=listar',
@@ -53,11 +55,13 @@ function preencherChavesEstrangeiras() {
           if (campo.includes('cargo')) {
             nome_campo = 'nome_cargo';
           }
-          if (campo.includes('usuario') || campo.includes('funcionario')) {
+          if (campo.includes('funcionario')) {
             if (tabela === 'funcionario' || tabela === 'perfil_professor') {
-              ideditar += 20;
               console.log('Ajustando ideditar para funcionario:', ideditar);
             }
+            nome_campo = 'nome_usuario';
+          }
+          if (campo.includes('usuario')) {
             nome_campo = 'nome_usuario';
           }
           if (campo.includes('dieta')) {
@@ -72,20 +76,24 @@ function preencherChavesEstrangeiras() {
           //select.append('<option value="">Selecione...</option>'); // Adicionar a opção padrão
           // Adiciona as opções para cada chave estrangeira
           chaveEstrangeira.forEach(function (item) {
-            if (item[campo] == ideditar) {
+            let id = Object.keys(item).find(
+              key => key.startsWith("id") && !key.endsWith("_id")
+            );
+            if (item[id] == ideditar) {
               selecionado = true;
             }
             else {
               selecionado = false;
             }
-            //  console.log('Adicionando opção:', {
-            //    value: item[campo], // ID do item
-            //    text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
-            //    selected: selecionado
-            //  });
+            console.log('Adicionando opção:', {
+              item,
+              value: item[id], // ID do item
+              text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
+              selected: selecionado
+            });
             select.append(
               $('<option>', {
-                value: item[campo], // ID do item
+                value: item[id], // ID do item
                 text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
                 selected: selecionado
               })
