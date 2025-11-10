@@ -21,6 +21,7 @@ if ($id) {
 <body class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
 
   <div id="dados" data-tabela="<?php echo $tabela; ?>" data-id="<?php echo $id; ?>"></div>
+    <script src="./js/formularioGenerico.js"></script>
 
   <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-3xl border border-gray-200">
     <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
@@ -158,7 +159,7 @@ if ($id) {
     </form>
   </div>
 
-  <script src="./js/formularioGenerico.js"></script>
+
   <script>
     const tabela = '<?php echo $tabela; ?>';
     $('#formGenerico').on('submit', function(e) {
