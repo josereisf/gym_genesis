@@ -1,0 +1,154 @@
+/* ======== BASE ======== */
+body {
+  background-color: #0d1117;
+  color: #e0e0e0;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 40px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #161b22;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 188, 212, 0.15);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #00bcd4;
+  text-shadow: 0 0 8px rgba(0, 188, 212, 0.3);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* ======== SELECT ======== */
+select {
+  width: 100%;
+  background-color: #1e2630;
+  color: #e0e0e0;
+  border: 1.5px solid #2d3748;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+select:hover,
+select:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.25);
+  outline: none;
+}
+
+/* ======== TABELA ======== */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #1c2129;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.1);
+}
+
+#tabela-dados {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* garante largura mínima */
+  font-size: 0.95rem;
+}
+
+#tabela-dados thead {
+  background-color: #242a34;
+}
+
+#tabela-dados th {
+  color: #00bcd4;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 12px;
+  border-bottom: 2px solid #30363d;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+#tabela-dados td {
+  color: #d1d5db;
+  padding: 10px 12px;
+  border-bottom: 1px solid #2c323c;
+  text-align: left;
+  transition: background-color 0.2s ease;
+}
+
+#tabela-dados tr:hover td {
+  background-color: #212832;
+}
+
+/* ======== STATUS ======== */
+.status {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #8b5cf6;
+  text-shadow: 0 0 6px rgba(139, 92, 246, 0.4);
+}
+
+/* ======== SCROLLBAR ======== */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #00bcd4;
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+/* ======== RESPONSIVIDADE ======== */
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  select {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  #tabela-dados {
+    font-size: 0.85rem;
+    min-width: 500px;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  select {
+    font-size: 0.85rem;
+  }
+
+  #tabela-dados {
+    min-width: 400px;
+  }
+
+  td, th {
+    padding: 8px 10px;
+  }
+}

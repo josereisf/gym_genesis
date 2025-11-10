@@ -3754,8 +3754,8 @@ function listarUsuarioCompleto($id)
       throw new Exception('Erro ao conectar ao banco: ' . $conexao->connect_error);
     }
 
-  // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
-  $sql = "SELECT
+    // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
+    $sql = "SELECT
       u.idusuario,
       u.email,
       u.senha,
@@ -3897,14 +3897,14 @@ function listarUsuarioCompleto($id)
   ;
   ";
 
-  // Executa a query
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, 'i', $id);
-  mysqli_stmt_execute($comando);
-  $resultado = mysqli_stmt_get_result($comando);
-  if (!$resultado) {
-    die(json_encode(['error' => 'Erro na query: ' . $conexao->error]));
-  }
+    // Executa a query
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, 'i', $id);
+    mysqli_stmt_execute($comando);
+    $resultado = mysqli_stmt_get_result($comando);
+    if (!$resultado) {
+      die(json_encode(['error' => 'Erro na query: ' . $conexao->error]));
+    }
 
     // Array para armazenar os resultados
     $dados = [];
@@ -3920,7 +3920,6 @@ function listarUsuarioCompleto($id)
     desconectar($conexao);
 
     return $dados;
-
   } catch (Exception $e) {
     // Log do erro e retorna mensagem amigável
     error_log('Erro em listarUsuarioCompleto: ' . $e->getMessage());
@@ -4289,9 +4288,9 @@ function cadastrarPerfilProfessor($foto_perfil, $experiencia_anos, $modalidade, 
 function listarPerfilProfessor($idusuario)
 {
   $conexao = conectar();
-  $idusuario += 20;
 
   if ($idusuario != null) {
+      $idusuario += 20;
     $sql = "SELECT
     f.idfuncionario,
     f.usuario_id,
@@ -4313,13 +4312,13 @@ function listarPerfilProfessor($idusuario)
     pf.horarios_disponiveis,
     pf.data_atualizacao,
     f.data_contratacao
-FROM usuario AS u
-INNER JOIN funcionario AS f ON f.usuario_id = u.idusuario
-INNER JOIN perfil_professor AS pf ON pf.usuario_id = u.idusuario
-INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
-LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario
-WHERE u.idusuario = ?
-";
+    FROM usuario AS u
+    INNER JOIN funcionario AS f ON f.usuario_id = u.idusuario
+    INNER JOIN perfil_professor AS pf ON pf.usuario_id = u.idusuario
+    INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
+    LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario
+    WHERE u.idusuario = ?
+    ";
     $comando = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($comando, "i", $idusuario);
   } else {
@@ -4332,7 +4331,7 @@ WHERE u.idusuario = ?
     aa.hora_inicio,
     aa.hora_fim,
     aa.treino_id,
-    f.nome AS nome_usuario,
+    f.nome AS nome_professor,
     pf.foto_perfil,
     pf.modalidade,
     pf.telefone AS telefone_professor,
@@ -4344,11 +4343,11 @@ WHERE u.idusuario = ?
     pf.horarios_disponiveis,
     pf.data_atualizacao,
     f.data_contratacao
-FROM usuario AS u
-INNER JOIN funcionario AS f ON f.usuario_id = u.idusuario
-INNER JOIN perfil_professor AS pf ON pf.usuario_id = u.idusuario
-INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
-LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario";
+    FROM usuario AS u
+    INNER JOIN funcionario AS f ON f.usuario_id = u.idusuario
+    INNER JOIN perfil_professor AS pf ON pf.usuario_id = u.idusuario
+    INNER JOIN cargo AS c ON c.idcargo = f.cargo_id
+    LEFT JOIN aula_agendada AS aa ON aa.funcionario_id = f.idfuncionario";
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -4680,23 +4679,43 @@ function formatarTelefone($numero)
   }
 }
 /**
- * Undocumented function
+ * Retorna a lista de tabelas existentes no banco de dados.
  *
- * @param [type] $conexao
- * @return void
+ * Comentários:
+ * - Abre uma conexão chamando conectar().
+ * - Executa a query "SHOW TABLES" para recuperar as tabelas do schema atual.
+ * - Itera sobre o resultado e monta um array com cada linha retornada.
+ * - Libera o resultado e fecha a conexão antes de retornar o array.
+ *
+ * @return array Array de arrays associativos, cada elemento contém a linha retornada pelo SHOW TABLES.
  */
 function listarTabelas()
 {
+  // Abre a conexão com o banco de dados (usa a função conectar() definida no arquivo)
   $conexao = conectar();
+
+  // Query que pede ao MySQL a lista de tabelas do schema atual
   $sql = "SHOW TABLES;";
+
+  // Executa a query. mysqli_query retorna um objeto de resultado ou false em erro.
   $comando = mysqli_query($conexao, $sql);
+
+  // Inicializa o array que receberá as tabelas
   $tabelas = [];
+
+  // Se a execução foi bem-sucedida, percorre o resultado linha a linha
+  // mysqli_fetch_assoc devolve cada linha como array associativo até esgotar (retorna null)
   while ($tabela = mysqli_fetch_assoc($comando)) {
     $tabelas[] = $tabela;
   }
+
+  // Libera a memória associada ao resultado
   mysqli_free_result($comando);
+
+  // Fecha a conexão com o banco (usa a função desconectar() definida no arquivo)
   desconectar($conexao);
 
+  // Retorna o array com as tabelas encontradas
   return $tabelas;
 }
 
