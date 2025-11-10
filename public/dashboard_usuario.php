@@ -363,7 +363,6 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
         </p>
       </div>
 
-
       <!-- Stats Overview -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <!-- Frequência -->
@@ -520,80 +519,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
             <div class="flex justify-between items-center mb-4">
               <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
             </div>
-
-            <div class="space-y-4">
-              <?php
-              if (isset($aula_agendada) && !empty($aula_agendada)) {
-                $temTreino = false; // flag para saber se algum treino foi encontrado
-
-                foreach ($aula_agendada as $aula) {
-                  $idtreino = $aula['idtreino'];
-                  $treino   = listarTreinoUsuario($idtreino);
-
-                  if (!empty($treino)) {
-                    foreach ($treino as $t) {
-                      $exercicios = listarTreinoExercicioTreino($t['idtreino']);
-
-                      if (!empty($exercicios)) {
-                        $temTreino = true;
-
-                        echo '
-                      <div class="p-4 bg-[#111827] rounded-xl shadow-md mb-4">
-                          <h3 class="text-lg font-semibold text-white mb-3">' . htmlspecialchars($t['descricao']) . '</h3>
-                          <div class="space-y-3">';
-
-                        foreach ($exercicios as $ex) {
-                          $serie     = $ex['series'];
-                          $repeticao = $ex['repeticoes'];
-                          $tempo     = $ex['intervalo_segundos'];
-
-                          echo '
-                          <div class="flex items-center p-3 bg-[#1f2937] rounded-lg transition hover:bg-gray-700" id="card-' . $t['idtreino'] . '">
-                              <div class="bg-green-900 p-3 rounded-lg mr-4">
-                                  <i data-lucide="dumbbell" class="h-6 w-6 text-green-400"></i>
-                              </div>
-                              <div class="flex-1">
-                                  <h4 class="font-medium text-white">' . htmlspecialchars($ex['nome']) . '</h4>
-                                  <p class="text-sm text-gray-400">' . $serie . ' séries x ' . $repeticao . ' repetições</p>
-                              </div>
-                              <div class="flex items-center">
-                                  <span class="text-sm font-medium text-gray-300 mr-2">' . $tempo . 's</span>
-                                  <input type="checkbox" class="form-checkbox h-5 w-5 text-green-500 rounded focus:ring-green-500" onchange="concluirTreino(' . $t['idtreino'] . ')" />
-                              </div>
-                          </div>';
-                        }
-
-                        echo '</div></div>'; // fecha lista de exercícios + bloco treino
-                      }
-                    }
-                  }
-                }
-
-                // Botão só aparece uma vez no final, se houver treino
-                if ($temTreino) {
-                  echo '
-          <button onclick="concluirTreinoTodos()" 
-            class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">
-              <i class="fa-regular fa-check-circle h-5 w-5 mr-2"></i>
-              Concluir Treino
-          </button>';
-                } else {
-                  echo '<button id="btnStart"
-            class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">                
-              <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
-              Agende sua aula com Algum Professor
-          </button>';
-                }
-              } else {
-                echo '<p class="text-gray-400 text-center">Nenhum treino agendado para hoje.</p>';
-                echo '<button id="btnStart"
-            class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg flex items-center justify-center">                
-              <i class="fa-regular fa-calendar h-5 w-5 mr-2"></i>
-              Agende sua aula com Algum Professor
-          </button>';
-              }
-              ?>
-            </div>
+ 
 
 
           </div>

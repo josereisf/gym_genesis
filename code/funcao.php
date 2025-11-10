@@ -3733,21 +3733,26 @@ function verificarTipoUsuario($email)
   }
 }
 /**
- * Undocumented function
+ * Recupera informações completas do usuário do banco de dados
  *
- * @param [type] $conexao
- * @return void
+ * Esta função conecta ao banco de dados e busca informações detalhadas do usuário
+ * incluindo dados pessoais, endereço, assinatura, plano, avaliações físicas,
+ * dietas, treinos, metas, histórico, pedidos e pagamentos.
+ *
+ * @param int $id ID do usuário para buscar as informações
+ * @return array Retorna um array associativo com todos os dados do usuário
+ * @throws Exception Se houver erro na conexão ou consulta ao banco
  */
 function listarUsuarioCompleto($id)
 {
+  try {
+    // Estabelece conexão com o banco
+    $conexao = conectar();
 
-  // Cria conexão
-  $conexao = conectar();
-
-  // Checa conexão
-  if ($conexao->connect_error) {
-    die(json_encode(['error' => 'Erro na conexão: ' . $conexao->connect_error]));
-  }
+    // Verifica se a conexão foi estabelecida
+    if ($conexao->connect_error) {
+      throw new Exception('Erro ao conectar ao banco: ' . $conexao->connect_error);
+    }
 
   // Sua query enorme - aqui só exibe 1 campo pra exemplo, substitui pela sua completa depois
   $sql = "SELECT
@@ -3901,18 +3906,26 @@ function listarUsuarioCompleto($id)
     die(json_encode(['error' => 'Erro na query: ' . $conexao->error]));
   }
 
-  // Cria array pra armazenar resultados
-  $dados = [];
+    // Array para armazenar os resultados
+    $dados = [];
 
-  while ($linha = mysqli_fetch_assoc($resultado)) {
-    $dados[] = $linha;
+    // Processa os resultados
+    while ($linha = mysqli_fetch_assoc($resultado)) {
+      $dados[] = $linha;
+    }
+
+    // Libera o resultado e fecha a conexão
+    mysqli_free_result($resultado);
+    mysqli_stmt_close($comando);
+    desconectar($conexao);
+
+    return $dados;
+
+  } catch (Exception $e) {
+    // Log do erro e retorna mensagem amigável
+    error_log('Erro em listarUsuarioCompleto: ' . $e->getMessage());
+    throw new Exception('Erro ao buscar dados do usuário');
   }
-
-  // Fecha conexão
-  $conexao = mysqli_close($conexao);
-
-
-  return $dados;
 }
 /**
  * Undocumented function

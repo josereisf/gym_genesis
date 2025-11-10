@@ -233,7 +233,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
             oninput="verificarForcaSenha('senha')" />
           <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('senha', this)">
-            <i class="fa-regular fa-eye-slash h-10"></i>
+            
           </button>
 
           <p id="message" class="text-center text-sm font-medium text-gray-700"></p>
@@ -246,10 +246,10 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         <label for="confirmarSenha">Confirmar senha</label>
         <div class="relative">
           <input type="password" class="input pr-10" id="confirmarSenha" name="confirmarSenha"
-            oninput="verificarForcaSenha('confirmarSenha')" />
+            oninput="verificarForcaSenha('confirmarSenha')" onclick="this.type = this.type === 'password' ? 'text' : 'password' "/>
           <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('confirmarSenha', this)">
-            <i class="fa-regular fa-eye-slash h-10"></i>
+            
           </button>
 
           <p id="message2" class="text-center text-sm font-medium text-gray-700"></p>
