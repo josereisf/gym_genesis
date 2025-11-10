@@ -11,7 +11,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 $idusuario = $input['idusuario'] ?? 0;
 $senha = $input['senha'] ?? null;
 $email = $input['email'] ?? null;
-$tipo = $input['tipo'] ?? null;
+$tipo = $input['tipo'] ?? $input['tipo_usuario'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
