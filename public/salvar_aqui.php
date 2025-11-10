@@ -11,14 +11,15 @@ if ($id) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulário Genérico</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Genérico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/formularioGenerico.js"></script>
+  </head>
+  <body class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
 
   <div id="dados" data-tabela="<?php echo $tabela; ?>" data-id="<?php echo $id; ?>"></div>
 
@@ -158,7 +159,6 @@ if ($id) {
     </form>
   </div>
 
-  <script src="./js/formularioGenerico.js"></script>
   <script>
     const tabela = '<?php echo $tabela; ?>';
     $('#formGenerico').on('submit', function(e) {
