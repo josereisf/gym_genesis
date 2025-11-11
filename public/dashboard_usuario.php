@@ -519,7 +519,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
             <div class="flex justify-between items-center mb-4">
               <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
             </div>
- 
+
 
 
           </div>
@@ -665,7 +665,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
                 echo '<span class="text-xs text-gray-400">' . $a['dia_semana'] . '</span>';
                 echo '</div>';
                 echo '<div class="flex-1">';
-                echo '<h3 class="font-medium text-white">' . $a['treino_tipo'] . '</h3>';
+                echo '<h3 class="font-medium text-white">' . $a['tipo'] . '</h3>';
                 echo '<p class="text-sm text-gray-400">' . $a['hora_inicio'] . ' - ' . $a['hora_fim'] . '</p>';
                 echo '</div>';
                 echo '<button class="text-green-400 hover:text-green-300">';
@@ -687,24 +687,24 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           echo '<div class="grid gap-6">';
           foreach ($dicas as $dica) {
             echo '
-    <div class="bg-gray-900 rounded-xl shadow-md p-6">
-      <h2 class="text-lg font-semibold text-white mb-4">Dica Nutricional</h2>
-      <div class="bg-gray-800 p-4 rounded-lg">
-        <div class="flex items-center mb-3">
-          <div class="bg-' . $dica['cor'] . ' bg-opacity-20 p-2 rounded-full mr-3">
-            <i class="' . $dica['icone'] . ' text-' . $dica['cor'] . ' text-lg"></i>
-          </div>
-          <h3 class="font-medium text-white">' . $dica['titulos'] . '</h3>
-        </div>
-        <p class="text-sm text-gray-300">' . $dica['descricao'] . '</p>
-        <button
-          class="mt-3 text-sm text-' . $dica['cor'] . ' font-medium hover:underline flex items-center hover:text-' . str_replace("400", "300", $dica['cor']) . '">
-          Ler mais
-          <i class="fas fa-chevron-right text-xs ml-1"></i>
-        </button>
-      </div>
-    </div>
-  ';
+                  <div class="bg-gray-900 rounded-xl shadow-md p-6">
+                    <h2 class="text-lg font-semibold text-white mb-4">Dica Nutricional</h2>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                      <div class="flex items-center mb-3">
+                        <div class="bg-' . $dica['cor'] . ' bg-opacity-20 p-2 rounded-full mr-3">
+                          <i class="' . $dica['icone'] . ' text-' . $dica['cor'] . ' text-lg"></i>
+                        </div>
+                        <h3 class="font-medium text-white">' . $dica['titulos'] . '</h3>
+                      </div>
+                      <p class="text-sm text-gray-300">' . $dica['descricao'] . '</p>
+                      <button
+                        class="mt-3 text-sm text-' . $dica['cor'] . ' font-medium hover:underline flex items-center hover:text-' . str_replace("400", "300", $dica['cor']) . '">
+                        Ler mais
+                        <i class="fas fa-chevron-right text-xs ml-1"></i>
+                      </button>
+                    </div>
+                  </div>
+                ';
           }
           echo '</div>';
           ?>
