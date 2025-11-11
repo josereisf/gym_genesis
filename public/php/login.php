@@ -24,10 +24,9 @@ if (empty($usuario) || empty($usuario['id']) || $usuario['status'] === false) {
 
 
 $tipo = verificarTipoUsuario($email);
-
 if ($tipo === null || $tipo === false) {
     $_SESSION['tentativas_login'] = ($_SESSION['tentativas_login'] ?? 0) + 1;
-
+    
     if ($_SESSION['tentativas_login'] >= 5) {
         $_SESSION['erro_login'] = '⚠️ Detectamos várias tentativas de acesso sem sucesso. 
         Recomendamos que você refaça seu cadastro. 
@@ -35,7 +34,7 @@ if ($tipo === null || $tipo === false) {
         header('Location: ../login.php');
         exit();
     }
-
+    
     $_SESSION['erro_login'] = '❌ Usuário ou senha inválidos. Verifique suas credenciais e tente novamente.';
     header('Location: ../login.php');
     exit();
@@ -51,12 +50,12 @@ if ($tipo == 2) {
     $professorId = $usuario['id'];
     $perfil = listarPerfilProfessor($professorId);
     $nome = $perfil[0]['nome_professor'] ?? '';
-
+    
     $_SESSION['id'] = $professorId;
     $_SESSION['email'] = $email;
     $_SESSION['nome'] = $nome;
     $_SESSION['tipo'] = $tipo;
-
+    
     $_SESSION['tentativas_login'] = 0;
     header('Location: ../dashboard_professor.php');
     exit();
@@ -66,8 +65,9 @@ if ($tipo == 2) {
 $usuarioId = $usuario['id'];
 $resposta = listarAvaliacaoFisica($usuarioId);
 $perfilUsuario = listarPerfilUsuario($usuarioId);
-$nome = $perfilUsuario[0]['nome'] ?? '';
+$nome = $perfilUsuario[0]['nome_usuario'] ?? '';
 
+// var_dump($nome);
 $_SESSION['id'] = $usuarioId;
 $_SESSION['email'] = $email;
 $_SESSION['nome'] = $nome;

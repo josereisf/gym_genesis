@@ -5,7 +5,6 @@ require_once __DIR__ . "/php/verificarLogado.php";
 $id = $_SESSION['id']; // Simulando um ID de usuário para testes, remova em produção
 $nome = $_SESSION['nome']; // Simulando um ID de usuário para testes, remova em produção
 $tipo = $_SESSION['email']; // Simulando um ID de usuário para testes, remova em produção
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
