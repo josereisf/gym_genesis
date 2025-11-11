@@ -846,7 +846,7 @@ function listarDietasUsuario($idusuario)
     $sql = ' SELECT
     pf.nome AS nome_usuario,
     d.descricao,
-    d.data_inicio,
+    d.data_ini,
     d.data_fim
     FROM dieta AS d
     JOIN perfil_usuario AS pf ON d.usuario_id = pf.usuario_id
@@ -2082,6 +2082,7 @@ function listarTreino($idtreino)
 
   if ($idtreino != null) {
     $sql = " SELECT 
+    idtreino,
     pf.nome AS nome_usuario,
     t.tipo,
     t.horario,
@@ -2093,6 +2094,7 @@ function listarTreino($idtreino)
     mysqli_stmt_bind_param($comando, "i", $idtreino);
   } else {
     $sql = " SELECT
+    idtreino,
     pf.nome AS nome_usuario,
     t.tipo,
     t.horario,
@@ -3547,7 +3549,7 @@ function editarRefeicao($idrefeicao, $dieta_id, $tipo, $horario)
   $conexao = conectar();
 
   $sql = "UPDATE refeicao 
-            SET dieta_iddieta = ?, tipo = ?, horario = ?
+            SET dieta_id = ?, tipo = ?, horario = ?
             WHERE idrefeicao = ?";
 
   $comando = mysqli_prepare($conexao, $sql);
@@ -4292,7 +4294,7 @@ function listarPerfilProfessor($idusuario)
   $conexao = conectar();
 
   if ($idusuario != null) {
-      $idusuario += 20;
+    $idusuario += 20;
     $sql = "SELECT
     f.idfuncionario,
     f.usuario_id,
@@ -4825,7 +4827,7 @@ function listarDietaAlimentar($iddieta)
 function DadosGerais($tabela, $id)
 {
   $conexao = conectar();
-  require_once __DIR__ . "/../code/gambiarra.php";
+  $id_tabela = pegaIdTabela($tabela);
   $sql = " SELECT * FROM $tabela WHERE $id_tabela = ?";
   $comando = mysqli_prepare($conexao, $sql);
   mysqli_stmt_bind_param($comando, "i", $id);
@@ -4855,4 +4857,75 @@ function DadosGeraisTabela($tabela)
 
 
   return $resposta;
+}
+function pegaIdTabela($tabela)
+{
+  switch ($tabela) {
+    case 'alimento':
+      return 'idalimento';
+    case 'plano':
+      return 'idplano';
+    case 'usuario':
+      return 'idusuario';
+    case 'assinatura':
+      return 'idassinatura';
+    case 'cargo':
+      return 'idcargo';
+    case 'funcionario':
+      return 'idfuncionario';
+    case 'treino':
+      return 'idtreino';
+    case 'aula_agendada':
+      return 'idaula';
+    case 'aula_usuario':
+      return 'idaula'; // chave composta, aqui usamos um só
+    case 'avaliacao_fisica':
+      return 'idavaliacao';
+    case 'categoria_produto':
+      return 'idcategoria';
+    case 'cupom_desconto':
+      return 'idcupom';
+    case 'dicas_nutricionais':
+      return 'iddicas_nutricionais';
+    case 'dieta':
+      return 'iddieta';
+    case 'refeicao':
+      return 'idrefeicao';
+    case 'dieta_alimentar':
+      return 'alimento_id'; // chave composta
+    case 'endereco':
+      return 'idendereco';
+    case 'exercicio':
+      return 'idexercicio';
+    case 'forum':
+      return 'idtopico';
+    case 'historico_peso':
+      return 'idhistorico_peso';
+    case 'historico_treino':
+      return 'idhistorico';
+    case 'pagamento':
+      return 'idpagamento';
+    case 'pedido':
+      return 'idpedido';
+    case 'produto':
+      return 'idproduto';
+    case 'item_pedido':
+      return 'pedido_id'; // chave composta
+    case 'meta_usuario':
+      return 'idmeta';
+    case 'pagamento_detalhe':
+      return 'idpagamento2';
+    case 'perfil_professor':
+      return 'idperfil';
+    case 'perfil_usuario':
+      return 'idperfil_usuario';
+    case 'recuperacao_senha':
+      return 'idrecuperacao_senha';
+    case 'resposta_forum':
+      return 'idresposta';
+    case 'treino_exercicio':
+      return 'idtreino2';
+    default:
+      return null;
+  }
 }
