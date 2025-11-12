@@ -2674,15 +2674,14 @@ function listarRespostaForum($idresposta)
     mysqli_stmt_bind_param($comando, "i", $idresposta);
   } else {
     // Consulta para pegar todas as respostas com os nomes dos usuários
-    $sql = "
-    SELECT 
+    $sql = " SELECT 
      rf.idresposta, 
      rf.mensagem, 
      rf.data_resposta, 
      pf.nome AS nome_usuario, 
      rf.forum_id, f.descricao
     FROM resposta_forum rf
-    JOIN usuario u ON rf.usuario_id = pf.usuario_id
+    JOIN perfil_usuario AS pf ON rf.usuario_id = pf.usuario_id
     JOIN forum AS f ON rf.forum_id = f.idtopico";
     $comando = mysqli_prepare($conexao, $sql);
   }
