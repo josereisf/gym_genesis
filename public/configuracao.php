@@ -105,23 +105,18 @@
 
                     <form method="POST" class="space-y-4">
 
-                        <?php foreach ($cards as $numero => $nome): ?>
-                            <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                                <span class="text-gray-300"><?= htmlspecialchars($nome) ?></span>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input
-                                        type="checkbox"
-                                        name="card[]"
-                                        value="<?= $numero ?>"
-                                        class="sr-only peer"
-                                        <?= $atributos[$numero] ?>>
-                                    <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
-                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                    after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                                </label>
-                            </div>
-                        <?php endforeach; ?>
+<?php
+foreach ($cards as $numero => $nome) {
+    echo '<div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">';
+    echo '  <span class="text-gray-300">' . htmlspecialchars($nome) . '</span>';
+    echo '  <label class="relative inline-flex items-center cursor-pointer">';
+    echo '    <input type="checkbox" name="card[]" value="' . $numero . '" class="sr-only peer" ' . $atributos[$numero] . '>';
+    echo '    <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 after:content-[\'\'] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>';
+    echo '  </label>';
+    echo '</div>';
+}
+?>
+
 
                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg mt-4">
                             Salvar Preferências

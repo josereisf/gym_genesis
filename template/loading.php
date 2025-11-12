@@ -128,24 +128,29 @@ $usuarios = listarUsuario(null)
   <!-- Conteúdo Principal -->
   <div id="content">
     <h1>Lista de Usuários</h1>
-    <?php if (!empty($usuarios)): ?>
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Nome</th><th>Email</th></tr>
-        </thead>
-        <tbody>
-          <?php foreach ($usuarios as $u): ?>
-            <tr>
-              <td><?= $u['idusuario'] ?></td>
-              <td><?= $u['senha'] ?></td>
-              <td><?= $u['email'] ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    <?php else: ?>
-      <p>Nenhum usuário encontrado.</p>
-    <?php endif; ?>
+<?php
+if (!empty($usuarios)) {
+    echo '<table>';
+    echo '  <thead>';
+    echo '    <tr><th>ID</th><th>Nome</th><th>Email</th></tr>';
+    echo '  </thead>';
+    echo '  <tbody>';
+
+    foreach ($usuarios as $u) {
+        echo '    <tr>';
+        echo '      <td>' . htmlspecialchars($u['idusuario']) . '</td>';
+        echo '      <td>' . htmlspecialchars($u['senha']) . '</td>';
+        echo '      <td>' . htmlspecialchars($u['email']) . '</td>';
+        echo '    </tr>';
+    }
+
+    echo '  </tbody>';
+    echo '</table>';
+} else {
+    echo '<p>Nenhum usuário encontrado.</p>';
+}
+?>
+
   </div>
 
   <script>

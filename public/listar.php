@@ -56,11 +56,13 @@ $tabelas = listarTabelas();
 
     <select id="tabelas">
       <option value="" selected disabled>Selecione uma tabela</option>
-      <?php foreach ($tabelas as $t):
-          $nome_campo = htmlspecialchars($t['Tables_in_gym_genesis']);
-      ?>
-          <option value="<?php echo $nome_campo; ?>"><?php echo $nome_campo; ?></option>
-      <?php endforeach; ?>
+<?php
+foreach ($tabelas as $t) {
+    $nome_campo = htmlspecialchars($t['Tables_in_gym_genesis']);
+    echo '<option value="' . $nome_campo . '">' . $nome_campo . '</option>';
+}
+?>
+
     </select>
 
 <table id="tabela-dados" class="display" style="width:100%">

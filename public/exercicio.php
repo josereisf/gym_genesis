@@ -116,31 +116,34 @@ $data = date("d/m/Y", $datastamp);
         <!-- Lista de Exercícios -->
         <div class="bg-white/5 p-6 rounded-xl mb-8">
           <h3 class="text-2xl font-bold text-green-400 mb-4">🏋️ Exercícios do Treino</h3>
-          <?php foreach ($dados as $ex): ?>
-            <div class="border-b border-white/10 py-3 flex flex-col sm:flex-row sm:items-center justify-between">
-              <div class="flex-1">
-                <div class="text-white font-semibold text-lg"><?= htmlspecialchars($ex['nome_exercicio'], ENT_QUOTES, 'UTF-8') ?></div>
-                <div class="text-sm text-white/60"><?= htmlspecialchars($ex['grupo_muscular'], ENT_QUOTES, 'UTF-8') ?></div>
-                <p class="text-white/70 text-sm"><?= htmlspecialchars($ex['descricao_exercicio'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
-              </div>
+<?php
+foreach ($dados as $ex) {
+    echo '<div class="border-b border-white/10 py-3 flex flex-col sm:flex-row sm:items-center justify-between">';
+    echo '  <div class="flex-1">';
+    echo '    <div class="text-white font-semibold text-lg">' . htmlspecialchars($ex['nome_exercicio'], ENT_QUOTES, 'UTF-8') . '</div>';
+    echo '    <div class="text-sm text-white/60">' . htmlspecialchars($ex['grupo_muscular'], ENT_QUOTES, 'UTF-8') . '</div>';
+    echo '    <p class="text-white/70 text-sm">' . htmlspecialchars($ex['descricao_exercicio'] ?? '', ENT_QUOTES, 'UTF-8') . '</p>';
+    echo '  </div>';
 
-              <div class="text-sm text-white/80 text-right mt-2 sm:mt-0 w-52">
-                <div>🎯 Séries: <?= htmlspecialchars($ex['series'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                <div>🔁 Repetições: <?= htmlspecialchars($ex['repeticoes'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                <div>⚖️ Carga: <?= htmlspecialchars($ex['carga'] ?? '-', ENT_QUOTES, 'UTF-8') ?> kg</div>
-                <div>⏱️ Intervalo: <?= htmlspecialchars($ex['intervalo_segundos'] ?? '-', ENT_QUOTES, 'UTF-8') ?> seg</div>
-              </div>
-            </div>
+    echo '  <div class="text-sm text-white/80 text-right mt-2 sm:mt-0 w-52">';
+    echo '    <div>🎯 Séries: ' . htmlspecialchars($ex['series'] ?? '-', ENT_QUOTES, 'UTF-8') . '</div>';
+    echo '    <div>🔁 Repetições: ' . htmlspecialchars($ex['repeticoes'] ?? '-', ENT_QUOTES, 'UTF-8') . '</div>';
+    echo '    <div>⚖️ Carga: ' . htmlspecialchars($ex['carga'] ?? '-', ENT_QUOTES, 'UTF-8') . ' kg</div>';
+    echo '    <div>⏱️ Intervalo: ' . htmlspecialchars($ex['intervalo_segundos'] ?? '-', ENT_QUOTES, 'UTF-8') . ' seg</div>';
+    echo '  </div>';
+    echo '</div>';
 
-            <?php if (!empty($ex['video_url'])): ?>
-              <div class="mt-3 mb-6">
-                <video class="rounded-lg border border-white/10 w-full max-h-72" controls>
-                  <source src="<?= htmlspecialchars($ex['video_url'], ENT_QUOTES, 'UTF-8') ?>" type="video/mp4">
-                  Seu navegador não suporta vídeos.
-                </video>
-              </div>
-            <?php endif; ?>
-          <?php endforeach; ?>
+    if (!empty($ex['video_url'])) {
+        echo '<div class="mt-3 mb-6">';
+        echo '  <video class="rounded-lg border border-white/10 w-full max-h-72" controls>';
+        echo '    <source src="' . htmlspecialchars($ex['video_url'], ENT_QUOTES, 'UTF-8') . '" type="video/mp4">';
+        echo '    Seu navegador não suporta vídeos.';
+        echo '  </video>';
+        echo '</div>';
+    }
+}
+?>
+
         </div>
 
         <!-- Botões -->

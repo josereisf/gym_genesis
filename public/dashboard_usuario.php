@@ -674,40 +674,36 @@ colors: {
               // ? print_r($metasProcessadas) ?>
               </pre>; -->
               <!-- Metas Dinâmicas -->
-              <?php
-              $metasProcessadas = array_slice($metasProcessadas, 0, 5);
-              foreach ($metasProcessadas as $meta): ?>
-                <div>
-                  <div class="flex justify-between mb-2">
-                    <span class="text-sm font-medium text-gray-300">
-                      <?= htmlspecialchars($meta['descricao']) ?>
-                    </span>
-                    <span class="text-sm font-medium
-            <?= $meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400') ?>">
-                      <?= $meta['progresso'] ?>%
-                    </span>
-                  </div>
+            <?php
+            $metasProcessadas = array_slice($metasProcessadas, 0, 5);
+            foreach ($metasProcessadas as $meta) {
+                echo '<div>';
+                echo '  <div class="flex justify-between mb-2">';
+                echo '    <span class="text-sm font-medium text-gray-300">' . htmlspecialchars($meta['descricao']) . '</span>';
+                echo '    <span class="text-sm font-medium ' . 
+                    ($meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400')) . '">';
+                echo        $meta['progresso'] . '%';
+                echo '    </span>';
+                echo '  </div>';
 
-                  <div class="w-full bg-gray-700 rounded-full h-2.5">
-                    <div class="
-              <?= $meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500') ?>
-              h-2.5 rounded-full"
-                      style="width: <?= $meta['progresso'] ?>%">
-                    </div>
-                  </div>
+                echo '  <div class="w-full bg-gray-700 rounded-full h-2.5">';
+                echo '    <div class="' . 
+                    ($meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500')) . 
+                    ' h-2.5 rounded-full" style="width: ' . $meta['progresso'] . '%"></div>';
+                echo '  </div>';
 
-                  <div class="flex justify-between mt-1 text-xs text-gray-400">
-                    <span>Início: <?= date("d/m/Y", strtotime($meta['inicio'])) ?></span>
-                    <span>Limite: <?= $meta['limite'] ? date("d/m/Y", strtotime($meta['limite'])) : '—' ?></span>
-                  </div>
+                echo '  <div class="flex justify-between mt-1 text-xs text-gray-400">';
+                echo '    <span>Início: ' . date("d/m/Y", strtotime($meta['inicio'])) . '</span>';
+                echo '    <span>Limite: ' . ($meta['limite'] ? date("d/m/Y", strtotime($meta['limite'])) : '—') . '</span>';
+                echo '  </div>';
 
-                  <div class="flex justify-between mt-1 text-xs text-gray-400">
-                    <span>Status: <?= ucfirst($meta['status']) ?></span>
-                    <span>Usuário: <?= htmlspecialchars($meta['usuario']) ?></span>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-
+                echo '  <div class="flex justify-between mt-1 text-xs text-gray-400">';
+                echo '    <span>Status: ' . ucfirst($meta['status']) . '</span>';
+                echo '    <span>Usuário: ' . htmlspecialchars($meta['usuario']) . '</span>';
+                echo '  </div>';
+                echo '</div>';
+            }
+            ?>
               <!-- Botão -->
               <button
                 id="btnAbrirModal"

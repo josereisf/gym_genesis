@@ -663,20 +663,21 @@ $funcionarios = listarPerfilProfessor(null);
 <!-- Carrossel -->
 <div class="swiper mySwiper">
   <div class="swiper-wrapper">
-    <?php foreach ($funcionarios as $f): ?>
-      <div class="swiper-slide">
-        <div class="trainer-card text-center reveal active w-64 mx-auto">
-          <div
-            class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">
-            <i class="fa-solid fa-user text-6xl text-gray-400"></i>
-          </div>
+<?php
+foreach ($funcionarios as $f) {
+    echo '<div class="swiper-slide">';
+    echo '  <div class="trainer-card text-center reveal active w-64 mx-auto">';
+    echo '    <div class="w-40 h-40 rounded-full overflow-hidden mx-auto mb-4 border-4 border-neonred flex items-center justify-center bg-gray-900">';
+    echo '      <i class="fa-solid fa-user text-6xl text-gray-400"></i>';
+    echo '    </div>';
+    echo '    <h3 class="text-xl font-bold">' . htmlspecialchars($f['nome_professor']) . '</h3>';
+    echo '    <p class="text-neonred">' . htmlspecialchars($f['cargo_professor']) . '</p>';
+    echo '    <p class="text-white/70 mt-2">' . htmlspecialchars($f['descricao']) . '</p>';
+    echo '  </div>';
+    echo '</div>';
+}
+?>
 
-          <h3 class="text-xl font-bold"><?= $f['nome_professor'] ?></h3>
-          <p class="text-neonred"><?= $f['cargo_professor'] ?></p>
-          <p class="text-white/70 mt-2"><?= $f['descricao'] ?></p>
-        </div>
-      </div>
-    <?php endforeach; ?>
   </div>
 
   <!-- Botões de navegação -->

@@ -44,58 +44,51 @@ if ($respostas) {
         Novo Tópico
       </a>
     </div>
+<?php
+if ($topicos && count($topicos) > 0) {
+    foreach ($topicos as $t) {
+        echo '<div class="bg-gray-900 border border-gray-800 rounded-2xl shadow-md p-6 hover:shadow-lg transition">';
+        echo '  <div class="mb-3">';
+        echo '    <h2 class="text-2xl font-semibold text-blue-400">' . htmlspecialchars($t['titulo']) . '</h2>';
+        echo '    <p class="text-gray-300 mt-1">' . htmlspecialchars($t['descricao']) . '</p>';
+        echo '  </div>';
 
-    <?php if ($topicos && count($topicos) > 0): ?>
-      <?php foreach ($topicos as $t): ?>
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl shadow-md p-6 hover:shadow-lg transition">
-          <div class="mb-3">
-            <h2 class="text-2xl font-semibold text-blue-400">
-              <?= htmlspecialchars($t['titulo']) ?>
-            </h2>
-            <p class="text-gray-300 mt-1"><?= htmlspecialchars($t['descricao']) ?></p>
-          </div>
+        echo '  <div class="text-sm text-gray-500 mb-4 flex justify-between">';
+        echo '    <span>👤 ' . htmlspecialchars($t['nome_usuario']) . '</span>';
+        echo '    <span>📅 ' . date('d/m/Y H:i', strtotime($t['data_criacao'])) . '</span>';
+        echo '  </div>';
 
-          <div class="text-sm text-gray-500 mb-4 flex justify-between">
-            <span>👤 <?= htmlspecialchars($t['nome_usuario']) ?></span>
-            <span>📅 <?= date('d/m/Y H:i', strtotime($t['data_criacao'])) ?></span>
-          </div>
+        // 🔹 Respostas
+        if (!empty($respostasAgrupadas[$t['idtopico']])) {
+            echo '<div class="bg-gray-800 border border-gray-700 rounded-xl p-4 space-y-3">';
+            foreach ($respostasAgrupadas[$t['idtopico']] as $r) {
+                echo '  <div class="p-3 bg-gray-900 border border-gray-800 rounded-lg">';
+                echo '    <p class="text-gray-200">' . htmlspecialchars($r['mensagem']) . '</p>';
+                echo '    <div class="text-xs text-gray-500 mt-2 flex justify-between">';
+                echo '      <span>👤 ' . htmlspecialchars($r['nome_usuario']) . '</span>';
+                echo '      <span>📅 ' . date('d/m/Y H:i', strtotime($r['data_resposta'])) . '</span>';
+                echo '    </div>';
+                echo '  </div>';
+            }
+            echo '</div>';
+        } else {
+            echo '<p class="text-gray-500 italic">Nenhuma resposta ainda.</p>';
+        }
 
-          <!-- 🔹 Respostas -->
-          <?php if (!empty($respostasAgrupadas[$t['idtopico']])): ?>
-            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 space-y-3">
-              <?php foreach ($respostasAgrupadas[$t['idtopico']] as $r): ?>
-                <div class="p-3 bg-gray-900 border border-gray-800 rounded-lg">
-                  <p class="text-gray-200"><?= htmlspecialchars($r['mensagem']) ?></p>
-                  <div class="text-xs text-gray-500 mt-2 flex justify-between">
-                    <span>👤 <?= htmlspecialchars($r['nome_usuario']) ?></span>
-                    <span>📅 <?= date('d/m/Y H:i', strtotime($r['data_resposta'])) ?></span>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          <?php else: ?>
-            <p class="text-gray-500 italic">Nenhuma resposta ainda.</p>
-          <?php endif; ?>
+        // 🔹 Formulário de nova resposta
+        echo '<form action="nova_resposta.php" method="POST" class="mt-4">';
+        echo '  <input type="hidden" name="forum_id" value="' . $t['idtopico'] . '">';
+        echo '  <textarea name="mensagem" rows="2" placeholder="Deixe sua resposta..." class="w-full bg-gray-800 text-gray-200 rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"></textarea>';
+        echo '  <button type="submit" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">Responder</button>';
+        echo '</form>';
 
-          <!-- 🔹 Formulário para nova resposta -->
-          <form action="nova_resposta.php" method="POST" class="mt-4">
-            <input type="hidden" name="forum_id" value="<?= $t['idtopico'] ?>">
-            <textarea
-              name="mensagem"
-              rows="2"
-              placeholder="Deixe sua resposta..."
-              class="w-full bg-gray-800 text-gray-200 rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"></textarea>
-            <button
-              type="submit"
-              class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
-              Responder
-            </button>
-          </form>
-        </div>
-      <?php endforeach; ?>
-    <?php else: ?>
-      <p class="text-gray-400 text-center text-lg">Nenhum tópico encontrado 😕</p>
-    <?php endif; ?>
+        echo '</div>';
+    }
+} else {
+    echo '<p class="text-gray-400 text-center text-lg">Nenhum tópico encontrado 😕</p>';
+}
+?>
+
   </main>
 
   <!-- FOOTER -->

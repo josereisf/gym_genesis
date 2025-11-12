@@ -232,40 +232,42 @@ if ($temAlgumFiltro) {
         <button type="submit">Filtrar</button>
     </form>
 
-    <?php if (!empty($pedidos)): ?>
-        <h3>Resultados dos Pedidos<?= $usuario_id ? " do Usuário #$usuario_id" : "" ?></h3>
-        <div style="overflow-x:auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID Pedido</th>
-                        <th>Nome do Usuário</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Preço Unitário</th>
-                        <th>Status</th>
-                        <th>Data do Pedido</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($pedidos as $p): ?>
-                        <tr>
-                            <td data-label="ID Pedido"><?= htmlspecialchars($p['idpedido']) ?></td>
-                            <td data-label="Nome do Usuário"><?= htmlspecialchars($p['usuario_nome']) ?></td>
-                            <td data-label="Produto"><?= htmlspecialchars($p['produto_nome']) ?></td>
-                            <td data-label="Quantidade"><?= (int) $p['quantidade'] ?></td>
-                            <td data-label="Preço Unitário">R$ <?= number_format($p['preco_unitario'], 2, ',', '.') ?></td>
-                            <td data-label="Status"><?= ucfirst($p['status']) ?></td>
-                            <td data-label="Data do Pedido"><?= date('d/m/Y H:i', strtotime($p['data_pedido'])) ?></td>
+<?php
+if (!empty($pedidos)) {
+    echo '<h3>Resultados dos Pedidos' . ($usuario_id ? " do Usuário #$usuario_id" : "") . '</h3>';
+    echo '<div style="overflow-x:auto;">';
+    echo '<table>';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>ID Pedido</th>';
+    echo '<th>Nome do Usuário</th>';
+    echo '<th>Produto</th>';
+    echo '<th>Quantidade</th>';
+    echo '<th>Preço Unitário</th>';
+    echo '<th>Status</th>';
+    echo '<th>Data do Pedido</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+    foreach ($pedidos as $p) {
+        echo '<tr>';
+        echo '<td data-label="ID Pedido">' . htmlspecialchars($p['idpedido']) . '</td>';
+        echo '<td data-label="Nome do Usuário">' . htmlspecialchars($p['usuario_nome']) . '</td>';
+        echo '<td data-label="Produto">' . htmlspecialchars($p['produto_nome']) . '</td>';
+        echo '<td data-label="Quantidade">' . (int)$p['quantidade'] . '</td>';
+        echo '<td data-label="Preço Unitário">R$ ' . number_format($p['preco_unitario'], 2, ',', '.') . '</td>';
+        echo '<td data-label="Status">' . ucfirst($p['status']) . '</td>';
+        echo '<td data-label="Data do Pedido">' . date('d/m/Y H:i', strtotime($p['data_pedido'])) . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+} elseif ($temAlgumFiltro) {
+    echo '<p style="color: red;"><strong>Nenhum pedido encontrado com esses filtros.</strong></p>';
+}
+?>
 
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php elseif ($temAlgumFiltro): ?>
-        <p style="color: red;"><strong>Nenhum pedido encontrado com esses filtros.</strong></p>
-    <?php endif; ?>
 
 </body>
 
