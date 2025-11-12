@@ -658,14 +658,14 @@ function listarPlanos($idplano)
  * @param [type] $conexao
  * @return void
  */
-function editarMetaUsuario($idmeta, $descricao, $data_inicio, $data_limite, $status)
+function editarMetaUsuario($idusuario, $descricao, $data_inicio, $data_limite, $status)
 {
   $conexao = conectar();
 
-  $sql = 'UPDATE meta_usuario SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE idmeta=?';
+  $sql = 'UPDATE meta_usuario SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE usuario_id=?';
   $comando = mysqli_prepare($conexao, $sql);
 
-  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idmeta);
+  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);

@@ -359,7 +359,7 @@ foreach ($numeros as $numero) {
               <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-green-500 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
-                  <i data-lucide="user-circle" class="w-5 h-5 text-green-600 group-hover:text-green-700"></i>
+                  <i class="fa-solid fa-circle-user w-5 h-5 text-green-600 group-hover:text-green-700"></i>
                 </div>
                 <span class="font-medium group-hover:text-green-900">Perfil</span>
               </a>
@@ -367,7 +367,7 @@ foreach ($numeros as $numero) {
               <a href="configuracao.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-green-600 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
-                  <i data-lucide="settings" class="h-5 w-5 text-green-600 group-hover:text-green-700"></i>
+                  <i class="fa-solid fa-gear h-5 w-5 text-green-600 group-hover:text-green-700"></i>
                 </div>
                 <span class="font-medium group-hover:text-green-900">Configurações</span>
               </a>
@@ -375,7 +375,7 @@ foreach ($numeros as $numero) {
               <a href="./php/saida.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-red-500 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200">
-                  <i data-lucide="log-out" class="h-5 w-5 text-red-500 group-hover:text-red-600"></i>
+                  <i class="fa-solid fa-right-from-bracket h-5 w-5 text-red-500 group-hover:text-red-600"></i>
                 </div>
                 <span class="font-medium group-hover:text-red-600">Sair</span>
               </a>
@@ -407,14 +407,14 @@ foreach ($numeros as $numero) {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <?php
 
-// Se todos os atributos forem "hidden"
-if (!empty($atributos) && count(array_unique($atributos)) === 1 && current($atributos) === 'hidden') {
-    echo '
+        // Se todos os atributos forem "hidden"
+        if (!empty($atributos) && count(array_unique($atributos)) === 1 && current($atributos) === 'hidden') {
+          echo '
     <div class="max-w-md mx-auto mt-6 p-4 bg-amber-100 border border-amber-300 text-amber-800 rounded-xl shadow-md text-center">
         <p class="text-lg font-semibold">' . htmlspecialchars($msg) . '</p>
     </div>';
-}
-?>
+        }
+        ?>
 
         <!-- Frequência -->
         <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[1] ?> ">
