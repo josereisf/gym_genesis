@@ -8,6 +8,7 @@ function adicionarCarrinho(botao) {
     console.log('ID do produto:', id);
 
 
+
     $.ajax({
         url: 'http://localhost:83/public/php/adicionar.php',
         method: 'GET',
@@ -15,6 +16,9 @@ function adicionarCarrinho(botao) {
         success: function (response) {
             console.log('Item adicionado ao carrinho com sucesso', response);
 
+            $('.notificar').text(function(i, val) {
+                return (parseInt(val) || 0) + 1;
+            });
         },
         error: function (xhr, status, error) {
             console.error('Erro ao adicionar item ao carrinho', error);

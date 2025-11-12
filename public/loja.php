@@ -9,7 +9,7 @@ require_once __DIR__ . '/../code/funcao.php';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Loja Fitness</title>
+  <title>Gym Gênesis</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./js/loja.js"></script>
   <style>
@@ -158,7 +158,7 @@ require_once __DIR__ . '/../code/funcao.php';
       <div class="flex items-center">
         <!-- Logo com marca textual -->
         <h1 class="text-2xl font-bold text-neonred dark:text-neongreen flex items-center">
-          <i class="fas fa-dumbbell mr-2"></i>Loja<span class="font-black">Fitness</span>
+          <i class="fas fa-dumbbell mr-2"></i>Gym<span class="font-black">Gênesis</span>
         </h1>
       </div>
 
@@ -180,7 +180,7 @@ require_once __DIR__ . '/../code/funcao.php';
 <button onclick="window.location.href='carrinho.php'" 
         class="relative bg-neonred text-white w-10 h-10 rounded-full hover:bg-red-700 transition flex items-center justify-center">
   <i class="fas fa-shopping-cart"></i>
-  <span class="absolute -top-1 -right-1 bg-neongreen text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
+  <span class="absolute -top-1 -right-1 bg-neongreen text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center notificar">0</span>
 </button>
 
 

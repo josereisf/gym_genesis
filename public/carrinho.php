@@ -23,7 +23,7 @@ $subtotalCompra = 0;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Carrinho - Loja Fitness</title>
+    <title>Carrinho - Gym Genesis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -35,7 +35,7 @@ $subtotalCompra = 0;
     <header class="bg-gray-800 shadow-md fixed w-full top-0 left-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <a href="loja.php" class="text-2xl font-bold flex items-center text-blue-400 hover:text-blue-300 transition">
-                <i class="fas fa-dumbbell mr-2"></i> Loja<span class="text-purple-400">Fitness</span>
+                <i class="fas fa-dumbbell mr-2"></i> Gym<span class="text-purple-400">Gênesis</span>
             </a>
             <a href="loja.php#produtos" class="bg-blue-500 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-600 transition">
                 <i class="fas fa-arrow-left mr-2"></i>Voltar às compras
@@ -157,7 +157,7 @@ $subtotalCompra = 0;
 
                     <div class="flex justify-between font-bold text-lg">
                         <span>Total</span>
-                        <span id="totalCompra" class="text-yellow-400 transition-all duration-300">
+                        <span id="totalCompra" class="text-yellow-400 transition-all duration-300 subtotal_compra">
                             R$ <?= number_format($subtotalCompra, 2, ',', '.') ?>
                         </span>
                     </div>
