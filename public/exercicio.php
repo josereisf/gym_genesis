@@ -1,177 +1,209 @@
 <?php
+session_start();
 require_once __DIR__ . "/../code/funcao.php";
 
-$idaula = $_GET['id'] ?? null;
+// Pega os parâmetros da URL
+$idaula = $_GET['idaula'] ?? null;
+$idaluno = $_GET['idaluno'] ?? null;
+
+// Armazena na sessão
+$_SESSION['idaula'] = $idaula;
+$_SESSION['idaluno'] = $idaluno;
+
+// Verifica ID
 if (!$idaula) {
-    die("ID da aula não fornecido");
+    die("<p style='color: white; font-family: sans-serif; background:#111; padding:20px;'>❌ ID da aula não fornecido.</p>");
 }
 
+// Busca dados no banco
 $dados = listarAulaAgendada($idaula);
-if (!$dados) {
-    die("Aula não encontrada");
+
+if (!$dados || count($dados) === 0) {
+    die("<p style='color: white; font-family: sans-serif; background:#111; padding:20px;'>⚠️ Nenhuma informação encontrada para esta aula.</p>");
 }
 
+// Converte data
 $datastamp = strtotime($dados[0]['data_aula']);
 $data = date("d/m/Y", $datastamp);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Aula</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .selected-card {
-            border-color: #00ff88;
-            background-color: rgba(0, 255, 136, 0.1);
-        }
-        .pulse-animation {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($dados[0]['tipo_treino'] ?? 'Detalhes da Aula', ENT_QUOTES, 'UTF-8') ?></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #001510, #000);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    .selected-card {
+      border-color: #00ff88;
+      background-color: rgba(0, 255, 136, 0.08);
+    }
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+  </style>
 </head>
-<body class="bg-gray-900">
-    <main class="py-8 px-4">
-        <div class="max-w-4xl mx-auto">
-            <div id="workout-card" class="workout-card bg-transparent rounded-2xl p-8 cursor-pointer border border-white/20">
-                <!-- Card Header -->
-                <div class="flex justify-between items-start mb-6">
-                    <div>
-                        <h2 class="text-3xl font-bold text-green-400 mb-2"><?= htmlspecialchars($dados[0]['tipo'] ?? 'Aula', ENT_QUOTES, 'UTF-8') ?></h2>
-                        <span class="inline-block px-4 py-2 bg-blue-900/50 rounded-full text-green-400 font-semibold text-sm"><?= htmlspecialchars($dados[0]['tipo'] ?? 'Cardio', ENT_QUOTES, 'UTF-8') ?></span>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-white/80 text-sm">ID da Aula</div>
-                        <div class="text-white font-bold text-lg">#<?= htmlspecialchars($idaula, ENT_QUOTES, 'UTF-8') ?></div>
-                    </div>
-                </div>
 
-                <!-- Main Info Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                    <!-- Data e Dia -->
-                    <div class="info-badge rounded-xl p-4 bg-white/5">
-                        <div class="flex items-center mb-2">
-                            <div class="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
-                            <span class="text-white/80 text-sm font-medium">Data</span>
-                        </div>
-                        <div class="text-white font-bold text-lg"><?= htmlspecialchars($data, ENT_QUOTES, 'UTF-8') ?></div>
-                        <div class="text-white/90 text-sm"><?= htmlspecialchars($dados[0]['dia_semana'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                    </div>
+<body class="min-h-screen">
+  <main class="py-10 px-6">
 
-                    <!-- Horário -->
-                    <div class="info-badge rounded-xl p-4 bg-white/5">
-                        <div class="flex items-center mb-2">
-                            <div class="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
-                            <span class="text-white/80 text-sm font-medium">Horário</span>
-                        </div>
-                        <div class="text-white font-bold text-lg">
-                            <?= htmlspecialchars($dados[0]['hora_inicio'] ?? '-', ENT_QUOTES, 'UTF-8') ?> - 
-                            <?= htmlspecialchars($dados[0]['hora_fim'] ?? '-', ENT_QUOTES, 'UTF-8') ?>
-                        </div>
-                        <div class="text-white/90 text-sm">60 minutos</div>
-                    </div>
+    <div class="max-w-5xl mx-auto">
+      <div id="workout-card" class="bg-gray-900/70 backdrop-blur-xl rounded-2xl p-8 border border-green-400/20 shadow-xl transition-all hover:shadow-green-400/10">
 
-                    <!-- Professor -->
-                    <div class="info-badge rounded-xl p-4 bg-white/5 md:col-span-2 lg:col-span-1">
-                        <div class="flex items-center mb-2">
-                            <div class="w-3 h-3 bg-red-500 rounded-full mr-3"></div>
-                            <span class="text-white/80 text-sm font-medium">Professor</span>
-                        </div>
-                        <div class="text-white font-bold text-lg"><?= htmlspecialchars($dados[0]['nome_usuario'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                        <div class="text-white/90 text-sm"><?= htmlspecialchars($dados[0]['nome_cargo'] ?? '', ENT_QUOTES, 'UTF-8') ?></div>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <button id="select-btn" class="flex-1 bg-blue-900/50 hover:bg-blue-900/70 text-green-400 font-semibold py-3 px-6 rounded-xl transition-all duration-300 border border-green-400/40">
-                        ✓ Selecionar Aula
-                    </button>
-                    <button id="details-btn" class="flex-1 bg-red-600/70 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300">
-                        Ver Detalhes
-                    </button>
-                </div>
-
-                <!-- Selection Status -->
-                <div id="selection-status" class="mt-8 text-center hidden">
-                    <div class="inline-block bg-green-400/20 border border-green-400/30 rounded-xl px-6 py-4">
-                        <div class="text-green-400 font-semibold text-lg">✓ Aula Selecionada!</div>
-                        <div class="text-green-400/80 text-sm mt-1">
-                            <?= htmlspecialchars($dados[0]['tipo'] ?? '-', ENT_QUOTES, 'UTF-8') ?> - 
-                            <?= htmlspecialchars($dados[0]['dia_semana'] ?? '-', ENT_QUOTES, 'UTF-8') ?>, 
-                            <?= htmlspecialchars($data, ENT_QUOTES, 'UTF-8') ?> às 
-                            <?= htmlspecialchars($dados[0]['hora_inicio'] ?? '-', ENT_QUOTES, 'UTF-8') ?>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Details Panel -->
-                <div id="details-panel" class="mt-8 bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-white/20 hidden">
-                    <h3 class="text-2xl font-bold text-green-400 mb-6">Detalhes da Aula</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="text-green-400 font-semibold mb-3">Informações Gerais</h4>
-                            <div class="space-y-2 text-white/80">
-                                <div><span class="text-green-400">Modalidade:</span> <?= htmlspecialchars($dados[0]['tipo'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                                <div><span class="text-green-400">Instrutor:</span> <?= htmlspecialchars($dados[0]['nome_usuario'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                                <div><span class="text-green-400">Data:</span> <?= htmlspecialchars($data, ENT_QUOTES, 'UTF-8') ?></div>
-                                <div><span class="text-green-400">Horário:</span> <?= htmlspecialchars($dados[0]['hora_inicio'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="text-green-400 font-semibold mb-3">Ações</h4>
-                            <button id="close-details" class="bg-blue-900/50 hover:bg-blue-900/70 text-green-400 font-semibold py-2 px-6 rounded-lg transition-colors">Fechar Detalhes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Cabeçalho -->
+        <div class="flex justify-between items-start mb-6">
+          <div>
+            <h2 class="text-3xl font-bold text-green-400 mb-1">
+              <?= htmlspecialchars($dados[0]['tipo_treino'] ?? 'Aula', ENT_QUOTES, 'UTF-8') ?>
+            </h2>
+            <p class="text-white/70"><?= htmlspecialchars($dados[0]['descricao_treino'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
+          </div>
+          <div class="text-right">
+            <span class="text-sm text-white/70 block">ID da Aula</span>
+            <span class="text-lg font-bold text-green-400">#<?= htmlspecialchars($idaula, ENT_QUOTES, 'UTF-8') ?></span>
+          </div>
         </div>
-    </main>
 
-    <script>
-        const selectBtn = document.getElementById('select-btn');
-        const detailsBtn = document.getElementById('details-btn');
-        const closeDetailsBtn = document.getElementById('close-details');
-        const selectionStatus = document.getElementById('selection-status');
-        const detailsPanel = document.getElementById('details-panel');
-        const workoutCard = document.getElementById('workout-card');
-        let isSelected = false;
+        <!-- Grade principal -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <!-- Data -->
+          <div class="bg-white/5 p-4 rounded-xl">
+            <div class="text-sm text-white/70 mb-1">📅 Data</div>
+            <div class="text-lg font-semibold text-white"><?= htmlspecialchars($data, ENT_QUOTES, 'UTF-8') ?></div>
+            <div class="text-sm text-green-400"><?= htmlspecialchars($dados[0]['dia_semana'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
+          </div>
 
-        selectBtn.addEventListener('click', toggleSelection);
-        detailsBtn.addEventListener('click', toggleDetails);
-        closeDetailsBtn.addEventListener('click', hideDetails);
+          <!-- Horário -->
+          <div class="bg-white/5 p-4 rounded-xl">
+            <div class="text-sm text-white/70 mb-1">⏰ Horário</div>
+            <div class="text-lg font-semibold text-white">
+              <?= htmlspecialchars($dados[0]['hora_inicio'] ?? '-', ENT_QUOTES, 'UTF-8') ?> - 
+              <?= htmlspecialchars($dados[0]['hora_fim'] ?? '-', ENT_QUOTES, 'UTF-8') ?>
+            </div>
+          </div>
 
-        function toggleSelection() {
-            isSelected = !isSelected;
-            if (isSelected) {
-                workoutCard.classList.add('selected-card', 'pulse-animation');
-                selectBtn.innerHTML = '✓ Selecionada';
-                selectionStatus.classList.remove('hidden');
-            } else {
-                workoutCard.classList.remove('selected-card', 'pulse-animation');
-                selectBtn.innerHTML = '✓ Selecionar Aula';
-                selectionStatus.classList.add('hidden');
-            }
+          <!-- Professor -->
+          <div class="bg-white/5 p-4 rounded-xl flex items-center gap-4">
+            <img src="./uploads/<?= htmlspecialchars($dados[0]['foto_perfil'] ?? 'padrao.png', ENT_QUOTES, 'UTF-8') ?>" 
+                alt="Foto do Professor" class="w-14 h-14 rounded-full object-cover border border-green-400/30">
+            <div>
+              <div class="text-lg font-semibold text-white"><?= htmlspecialchars($dados[0]['nome_usuario'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
+              <div class="text-sm text-green-400"><?= htmlspecialchars($dados[0]['nome_cargo'] ?? '', ENT_QUOTES, 'UTF-8') ?></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Descrição do professor -->
+        <div class="bg-white/5 p-5 rounded-xl mb-8">
+          <h3 class="text-green-400 font-semibold mb-2">👨‍🏫 Sobre o Professor</h3>
+          <p class="text-white/80 leading-relaxed"><?= htmlspecialchars($dados[0]['descricao_professor'] ?? 'Sem descrição.', ENT_QUOTES, 'UTF-8') ?></p>
+          <div class="text-sm text-white/60 mt-2">
+            Avaliação média: ⭐ <?= htmlspecialchars($dados[0]['avaliacao_media'] ?? '0', ENT_QUOTES, 'UTF-8') ?> / 5 • 
+            Modalidade: <?= htmlspecialchars($dados[0]['modalidade'] ?? '-', ENT_QUOTES, 'UTF-8') ?>
+          </div>
+        </div>
+
+        <!-- Lista de Exercícios -->
+        <div class="bg-white/5 p-6 rounded-xl mb-8">
+          <h3 class="text-2xl font-bold text-green-400 mb-4">🏋️ Exercícios do Treino</h3>
+          <?php foreach ($dados as $ex): ?>
+            <div class="border-b border-white/10 py-3 flex flex-col sm:flex-row sm:items-center justify-between">
+              <div class="flex-1">
+                <div class="text-white font-semibold text-lg"><?= htmlspecialchars($ex['nome_exercicio'], ENT_QUOTES, 'UTF-8') ?></div>
+                <div class="text-sm text-white/60"><?= htmlspecialchars($ex['grupo_muscular'], ENT_QUOTES, 'UTF-8') ?></div>
+                <p class="text-white/70 text-sm"><?= htmlspecialchars($ex['descricao_exercicio'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
+              </div>
+
+              <div class="text-sm text-white/80 text-right mt-2 sm:mt-0 w-52">
+                <div>🎯 Séries: <?= htmlspecialchars($ex['series'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
+                <div>🔁 Repetições: <?= htmlspecialchars($ex['repeticoes'] ?? '-', ENT_QUOTES, 'UTF-8') ?></div>
+                <div>⚖️ Carga: <?= htmlspecialchars($ex['carga'] ?? '-', ENT_QUOTES, 'UTF-8') ?> kg</div>
+                <div>⏱️ Intervalo: <?= htmlspecialchars($ex['intervalo_segundos'] ?? '-', ENT_QUOTES, 'UTF-8') ?> seg</div>
+              </div>
+            </div>
+
+            <?php if (!empty($ex['video_url'])): ?>
+              <div class="mt-3 mb-6">
+                <video class="rounded-lg border border-white/10 w-full max-h-72" controls>
+                  <source src="<?= htmlspecialchars($ex['video_url'], ENT_QUOTES, 'UTF-8') ?>" type="video/mp4">
+                  Seu navegador não suporta vídeos.
+                </video>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </div>
+
+        <!-- Botões -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button id="select-btn" class="flex-1 bg-green-500/10 border border-green-400/40 hover:bg-green-500/20 text-green-400 font-semibold py-3 px-6 rounded-xl transition-all duration-300">
+            ✓ Selecionar Aula
+          </button>
+          <button id="back-btn" class="flex-1 bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-semibold py-3 px-6 rounded-xl transition-all duration-300">
+            ⬅ Voltar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  const selectBtn = document.getElementById('select-btn');
+  const backBtn = document.getElementById('back-btn');
+  const card = document.getElementById('workout-card');
+  let selected = false;
+
+  selectBtn.addEventListener('click', () => {
+    selected = !selected;
+    if (selected) {
+      aula_usuario();
+      card.classList.add('selected-card', 'pulse-animation');
+      selectBtn.innerText = '✓ Aula Selecionada';
+    } else {
+      card.classList.remove('selected-card', 'pulse-animation');
+      selectBtn.innerText = '✓ Selecionar Aula';
+    }
+  });
+
+  if (backBtn) {
+    backBtn.addEventListener('click', () => window.history.back());
+  }
+
+  async function aula_usuario() {
+    try {
+      const response = await fetch(
+        'http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            idaula: '<?= htmlspecialchars($idaula, ENT_QUOTES, 'UTF-8') ?>',
+            idaluno: '<?= htmlspecialchars($idaluno, ENT_QUOTES, 'UTF-8') ?>'
+          })
         }
+      );
 
-        function toggleDetails() {
-            detailsPanel.classList.contains('hidden') ? showDetails() : hideDetails();
-        }
+      if (!response.ok) throw new Error('Erro na requisição');
+      const data = await response.json();
 
-        function showDetails() {
-            detailsPanel.classList.remove('hidden');
-            detailsBtn.innerHTML = 'Ocultar Detalhes';
-        }
+      console.log('Aula selecionada com sucesso:', data);
+      window.location.href = 'dashboard_usuario.php';
+    } catch (error) {
+      console.error('Erro ao selecionar aula:', error);
+    }
+  }
+</script>
 
-        function hideDetails() {
-            detailsPanel.classList.add('hidden');
-            detailsBtn.innerHTML = 'Ver Detalhes';
-        }
-    </script>
 </body>
 </html>

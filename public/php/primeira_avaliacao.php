@@ -15,6 +15,12 @@ $dia_semana = $_POST['dias_semana'];
 $horario_preferido = $_POST['horario_preferido'];
 $data_avaliacao = $_POST['data_avaliacao'] ?? date('Y-m-d');
 
+$descricao = $_POST['meta'] ?? '';
+$data_inicio = date('Y-m-d');
+$data_limite = date('Y-m-d', strtotime('+3 months'));
+
+$status = 'ativa';
+
 // Valida formato da data
 if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data_avaliacao)) {
     $data_avaliacao = date('Y-m-d'); // fallback
@@ -47,6 +53,7 @@ if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
     }
 }
 
+cadastrarMetaUsuario($idusuario, $descricao, $data_inicio, $data_limite, $status);
 // Atualiza a foto do usuário
 atualizarFotoUsuario($nomeImagem, $idusuario);
 cadastrarHistoricoPeso($idusuario, $peso, date('Y-m-d H:i:s'));// Agora salva os dados da avaliação física

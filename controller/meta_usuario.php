@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $acao = $_GET['acao'] ?? null;
 
 $idmeta = $_POST['idmeta'] ?? 0;
-$idusuario = $_POST['idusuario'] ?? null;
+$idusuario = $_POST['idusuario'] ?? $input['usuario_id'] ?? null;
 $descricao = $_POST['descricao'] ?? null;
 $data_inicio = $_POST['data_inicio'] ?? null;
 $data_limite = $_POST['data_limite'] ?? null;

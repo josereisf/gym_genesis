@@ -658,14 +658,16 @@ function listarPlanos($idplano)
  * @param [type] $conexao
  * @return void
  */
-function editarMetaUsuario($idmeta, $descricao, $data_inicio, $data_limite, $status)
+function editarMetaUsuario($idmeta, $idusuario, $descricao, $data_inicio, $data_limite, $status)
 {
   $conexao = conectar();
 
-  $sql = 'UPDATE meta_usuario SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE idmeta=?';
+  $sql = 'UPDATE meta_usuario 
+        SET descricao = ?, data_inicio = ?, data_limite = ?, status = ? 
+        WHERE idmeta = ? AND usuario_id = ?';
   $comando = mysqli_prepare($conexao, $sql);
-
-  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idmeta);
+  
+  mysqli_stmt_bind_param($comando, 'ssssii', $descricao, $data_inicio, $data_limite, $status, $idmeta, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2218,38 +2220,63 @@ function listarAulaAgendada($idaula = null)
 {
   $conexao = conectar();
 
-  $sql = "SELECT
-                ag.idaula,
-                ag.data_aula,
-                ag.dia_semana,
-                ag.hora_inicio,
-                ag.hora_fim,
-                t.tipo,
-                t.descricao,
-                f.idfuncionario,
-                f.nome AS nome_usuario,
-                c.nome AS nome_cargo
-            FROM aula_agendada AS ag
-            LEFT JOIN treino AS t ON ag.treino_id = t.idtreino
-            LEFT JOIN funcionario AS f ON ag.funcionario_id = f.idfuncionario
-            INNER JOIN cargo AS c ON c.idcargo = f.cargo_id";
+  $sql = "SELECT      
+      ag.idaula,
+      ag.data_aula,
+      ag.dia_semana,
+      ag.hora_inicio,
+      ag.hora_fim,
+      t.idtreino,
+      t.tipo AS tipo_treino,
+      t.descricao AS descricao_treino,
+      t.horario AS horario_treino,
+      te.idtreino2,
+      te.series,
+      te.repeticoes,
+      te.carga,
+      te.intervalo_segundos,
+      ex.idexercicio,
+      ex.nome AS nome_exercicio,
+      ex.grupo_muscular,
+      ex.video_url,
+      ex.descricao AS descricao_exercicio,
+      f.idfuncionario,
+      f.nome AS nome_usuario,
+      u.email AS email_professor,
+      c.nome AS nome_cargo,
+      pp.foto_perfil,
+      pp.avaliacao_media,
+      pp.modalidade,
+      pp.descricao AS descricao_professor
 
+    FROM aula_agendada AS ag
+    LEFT JOIN treino AS t 
+        ON ag.treino_id = t.idtreino
+    LEFT JOIN treino_exercicio AS te 
+        ON t.idtreino = te.treino_id
+    LEFT JOIN exercicio AS ex 
+        ON te.exercicio_id = ex.idexercicio
+    LEFT JOIN funcionario AS f 
+        ON ag.funcionario_id = f.idfuncionario
+    LEFT JOIN cargo AS c 
+        ON c.idcargo = f.cargo_id
+    LEFT JOIN perfil_professor AS pp 
+        ON f.usuario_id = pp.usuario_id
+    LEFT JOIN usuario AS u 
+        ON f.usuario_id = u.idusuario
+  ";
   if ($idaula !== null) {
-    $sql .= " WHERE ag.idaula = ?";
+    $sql .= " WHERE ag.idaula = ? ";
   }
-
-  $sql .= " GROUP BY ag.idaula, ag.data_aula, ag.hora_inicio, ag.hora_fim, ag.treino_id, t.tipo, t.descricao, f.idfuncionario, f.nome";
-
+  $sql .= " ORDER BY ag.data_aula DESC, ex.nome ASC;";
   $comando = mysqli_prepare($conexao, $sql);
   if (!$comando) {
-    echo "Erro na preparação: " . mysqli_error($conexao);
+    echo "Erro na preparação da consulta: " . mysqli_error($conexao);
     return [];
   }
-
   if ($idaula !== null) {
     mysqli_stmt_bind_param($comando, "i", $idaula);
   }
-
   mysqli_stmt_execute($comando);
   $resultado = mysqli_stmt_get_result($comando);
 
@@ -2257,12 +2284,12 @@ function listarAulaAgendada($idaula = null)
   while ($linha = mysqli_fetch_assoc($resultado)) {
     $lista[] = $linha;
   }
-
   mysqli_stmt_close($comando);
   desconectar($conexao);
 
   return $lista;
 }
+
 
 
 function listarAulaAgendadaUsuario($idusuario)
@@ -2277,7 +2304,7 @@ function listarAulaAgendadaUsuario($idusuario)
                 ag.hora_fim,
                 ag.treino_id,
                 t.idtreino,
-                t.tipo,
+                t.tipo AS tipo_treino,
                 t.descricao,
                 f.idfuncionario,
                 f.nome AS nome_usuario
@@ -2391,7 +2418,8 @@ function listarMetaUsuario($idmeta = null)
 
   if ($idmeta != null) {
     // Busca apenas a meta específica
-    $sql = "SELECT 
+    $sql = "SELECT
+              m.usuario_id,
               pf.nome AS nome_usuario,
               m.idmeta,
               m.descricao,
@@ -4565,45 +4593,53 @@ function deletarAulaUsuario($id)
  * @param [type] $conexao
  * @return void
  */
-function listarAulaUsuario($idaula)
+function listarAulaUsuario($usuario_id = null)
 {
   $conexao = conectar();
 
-  if ($idaula !== null) {
+  if ($usuario_id !== null) {
     $sql = "SELECT 
-                    au.idaula,
-                    au.usuario_id,
-                    ag.data_aula,
-                    ag.dia_semana,
-                    ag.hora_inicio,
-                    ag.hora_fim,
-                    ag.treino_id,
-                    ag.funcionario_id,
-                    pf.nome AS nome_usuario AS nome_aluno,
-                    f.nome AS nome_professor
-                FROM aula_usuario AS au
-                INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
-                INNER JOIN perfil_usuario AS pf ON pf.usuario_id = au.usuario_id
-                INNER JOIN funcionario AS f ON f.idfuncionario = ag.funcionario_id
-                WHERE au.idaula = ?";
+              au.idaula,
+              au.usuario_id,
+              ag.data_aula,
+              ag.dia_semana,
+              ag.hora_inicio,
+              ag.hora_fim,
+              ag.treino_id,
+              ag.funcionario_id,
+              pf.nome AS nome_aluno,
+              f.nome AS nome_professor
+            FROM aula_usuario AS au
+            INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
+            INNER JOIN perfil_usuario AS pf ON pf.usuario_id = au.usuario_id
+            INNER JOIN funcionario AS f ON f.idfuncionario = ag.funcionario_id
+            WHERE au.usuario_id = ?;";
+
     $comando = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($comando, "i", $idaula);
+
+    if (!$comando) {
+      echo "Erro ao preparar SQL: " . mysqli_error($conexao);
+      return [];
+    }
+
+    mysqli_stmt_bind_param($comando, "i",  $usuario_id);
   } else {
     $sql = "SELECT 
-                    au.idaula,
-                    au.usuario_id,
-                    ag.data_aula,
-                    ag.dia_semana,
-                    ag.hora_inicio,
-                    ag.hora_fim,
-                    ag.treino_id,
-                    ag.funcionario_id,
-                    pf.nome AS nome_usuario AS nome_aluno,
-                    f.nome AS nome_professor
-                FROM aula_usuario AS au
-                INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
-                INNER JOIN perfil_usuario AS pf ON pf.usuario_id = au.usuario_id
-                INNER JOIN funcionario AS f ON f.idfuncionario = ag.funcionario_id";
+              au.idaula,
+              au.usuario_id,
+              ag.data_aula,
+              ag.dia_semana,
+              ag.hora_inicio,
+              ag.hora_fim,
+              ag.treino_id,
+              ag.funcionario_id,
+              pf.nome AS nome_aluno,
+              f.nome AS nome_professor
+            FROM aula_usuario AS au
+            INNER JOIN aula_agendada AS ag ON au.idaula = ag.idaula
+            INNER JOIN perfil_usuario AS pf ON pf.usuario_id = au.usuario_id
+            INNER JOIN funcionario AS f ON f.idfuncionario = ag.funcionario_id;";
+
     $comando = mysqli_prepare($conexao, $sql);
   }
 
@@ -4620,6 +4656,7 @@ function listarAulaUsuario($idaula)
 
   return $aulas;
 }
+
 /**
  * Lista as colunas de uma tabela do banco de dados.
  *
@@ -4928,4 +4965,53 @@ function pegaIdTabela($tabela)
     default:
       return null;
   }
+}
+
+function listarAulaDoDia($idusuario)
+{
+  $conexao = conectar();
+
+  $sql = "SELECT 
+    au.usuario_id,
+    ag.idaula,
+    ag.data_aula,
+    ag.hora_inicio,
+    ag.hora_fim,
+    tr.idtreino,
+    tr.tipo AS tipo_treino,
+    tr.descricao AS descricao_treino,
+    tr.horario AS horario_treino,
+    te.series,
+    te.repeticoes,
+    te.carga,
+    te.intervalo_segundos,
+    ex.nome AS nome_exercicio,
+    ex.grupo_muscular,
+    ex.video_url,
+    f.nome AS nome_professor,
+    pp.foto_perfil AS foto_professor
+  FROM aula_usuario au
+  INNER JOIN aula_agendada ag ON au.idaula = ag.idaula
+  INNER JOIN treino tr ON ag.treino_id = tr.idtreino
+  LEFT JOIN treino_exercicio te ON tr.idtreino = te.treino_id
+  LEFT JOIN exercicio ex ON te.exercicio_id = ex.idexercicio
+  LEFT JOIN funcionario f ON ag.funcionario_id = f.idfuncionario
+  LEFT JOIN perfil_professor pp ON f.usuario_id = pp.usuario_id
+  WHERE au.usuario_id = ?
+    AND ag.data_aula = CURDATE()";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idusuario);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_aulas = [];
+  while ($aula = mysqli_fetch_assoc($resultados)) {
+    $lista_aulas[] = $aula;
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $lista_aulas;
 }

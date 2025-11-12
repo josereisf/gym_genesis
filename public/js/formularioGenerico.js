@@ -226,9 +226,8 @@ function editarRegistro(tabela) {
     data: JSON.stringify(dadosParaEnviar), // Enviar os dados do formulário
     success: function (data) {
       if (data.sucesso) {
-        alert("Registro editado com sucesso!");
+        alert("Registro editado com sucesso!" + (data.mensagem || "Erro desconhecido"));
         // Redirecionar ou atualizar a página conforme necessário
-        window.location.href = "listar.php?tabela=" + tabela;
       } else {
         alert("Erro ao editar: " + (data.mensagem || "Erro desconhecido"));
       }

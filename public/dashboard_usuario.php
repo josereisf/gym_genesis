@@ -8,16 +8,26 @@ require_once __DIR__ . "/php/verificarLogado.php";
 
 $idaluno = $_SESSION["id"];
 $nomes = $_SESSION['nome'] ?? "-";
-// var_dump($_SESSION["id"]);
 
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
 $foto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg==';
 
 $resultados = listarUsuarioCompleto($idaluno);
-if ($resultados && count($resultados) > 0) {
-  $r = $resultados[0]; // Assume apenas um resultado
 
-  $nomes = $r['nome_usuario'] ?? $nomes;
+$dadosSemDuplicados = [];
+$idsVistos = [];
+
+foreach ($resultados as $r) {
+  if (!in_array($r['idusuario'], $idsVistos)) {
+    $dadosSemDuplicados[] = $r;
+    $idsVistos[] = $r['idusuario'];
+  }
+}
+
+if (!empty($dadosSemDuplicados)) {
+  $r = $dadosSemDuplicados[0]; // Pega o primeiro resultado único
+
+  $nomes = $r['nome_usuario'] ?? $nomes ?? "-";
   $peso = (float)($r['peso'] ?? 0);
   $altura = $r['altura'] ?? "-";
   $imc = $r['imc'] ?? "-";
@@ -25,10 +35,21 @@ if ($resultados && count($resultados) > 0) {
   $plano = $r['tipo_plano'] ?? "-";
   $dia_inicial = $r['data_inicio'] ?? "-";
   $dia_fim = $r['data_fim'] ?? null;
-  $foto = $r['foto_perfil'] ?? $foto;
+  $foto = $r['foto_perfil'] ?? $foto ?? "default.png";
   $email = $r['email'] ?? "-";
-  $idmeta = $r['idmeta'];
+  $idmeta = $r['idmeta'] ?? null;
 }
+$aulaa = listarAulaUsuario($idaluno);
+
+if (!empty($aulaa) && count($aulaa) > 0) {
+  $treino = listarAulaAgendada($idaluno);
+} else {
+  $treino = [];
+}
+
+//  echo '<pre>';
+//  print_r($treino);
+//  echo '</pre>';
 
 $metas = listarMetaUsuario($idaluno);
 
@@ -233,6 +254,24 @@ $frasesMotivacao = [
 $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
 
 
+// Garante que a sessão tenha os cards selecionados
+if (isset($_POST['card'])) {
+  $_SESSION['card'] = $_POST['card'];
+}
+
+$numeros = [1, 2, 3, 4, 5, 6];
+
+$atributos = [];
+
+foreach ($numeros as $numero) {
+  if (isset($_SESSION['card']) && in_array($numero, $_SESSION['card'])) {
+    $atributos[$numero] = '';
+  } else {
+    $atributos[$numero] = 'hidden';
+    $msg = "vai ate as configuraçoes para mostrar o card";
+  }
+}
+
 // var_dump($_SESSION);
 ?>
 
@@ -286,7 +325,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
         <div class="flex items-center space-x-4">
           <div class="relative">
             <button id="notificationBtn" class="text-green-400 hover:text-green-300">
-              <i data-lucide="bell" class="w-6 h-6"></i>
+              <i class="fas fa-bell w-6 h-6"></i>
               <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">2</span>
             </button>
           </div>
@@ -320,7 +359,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
               <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-green-500 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
-                  <i data-lucide="user-circle" class="w-5 h-5 text-green-600 group-hover:text-green-700"></i>
+                  <i class="fa-solid fa-circle-user w-5 h-5 text-green-600 group-hover:text-green-700"></i>
                 </div>
                 <span class="font-medium group-hover:text-green-900">Perfil</span>
               </a>
@@ -328,7 +367,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
               <a href="configuracao.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-green-600 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
-                  <i data-lucide="settings" class="h-5 w-5 text-green-600 group-hover:text-green-700"></i>
+                  <i class="fa-solid fa-gear h-5 w-5 text-green-600 group-hover:text-green-700"></i>
                 </div>
                 <span class="font-medium group-hover:text-green-900">Configurações</span>
               </a>
@@ -336,7 +375,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
               <a href="./php/saida.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-red-500 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center mr-3 group-hover:bg-red-200">
-                  <i data-lucide="log-out" class="h-5 w-5 text-red-500 group-hover:text-red-600"></i>
+                  <i class="fa-solid fa-right-from-bracket h-5 w-5 text-red-500 group-hover:text-red-600"></i>
                 </div>
                 <span class="font-medium group-hover:text-red-600">Sair</span>
               </a>
@@ -360,13 +399,25 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
         </h1>
         <p class="text-gray-300">
           Bem-vindo ao seu dashboard. Veja seu progresso e próximos treinos.
+
         </p>
       </div>
 
       <!-- Stats Overview -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <?php
+
+        // Se todos os atributos forem "hidden"
+        if (!empty($atributos) && count(array_unique($atributos)) === 1 && current($atributos) === 'hidden') {
+          echo '
+    <div class="max-w-md mx-auto mt-6 p-4 bg-amber-100 border border-amber-300 text-amber-800 rounded-xl shadow-md text-center">
+        <p class="text-lg font-semibold">' . htmlspecialchars($msg) . '</p>
+    </div>';
+        }
+        ?>
+
         <!-- Frequência -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[1] ?> ">
           <div class="flex justify-between items-start">
             <div class="w-full">
               <p class="text-sm font-medium text-gray-400">Consumo de Água</p>
@@ -397,10 +448,8 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           </div>
         </div>
 
-
-
         <!-- Calorias -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[2] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Calorias Queimadas</p>
@@ -417,7 +466,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
         </div>
 
         <!-- Peso -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[3] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Peso Atual</p>
@@ -441,10 +490,8 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           </div>
         </div>
 
-
-
         <!-- Plano -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[4] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Plano</p>
@@ -460,8 +507,9 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
             </div>
           </div>
         </div>
+
         <!-- Fórum -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[5] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Comunidade</p>
@@ -475,15 +523,14 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
             </div>
           </div>
         </div>
+
         <!-- Motivação -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg text-center">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg text-center <?= $atributos[6] ?>">
           <p class="text-sm font-medium text-gray-400">Motivação</p>
           <h3 class="text-lg font-semibold text-indigo-300 mt-2 italic">
             "<?= $fraseAleatoria ?>"
           </h3>
         </div>
-
-
       </div>
 
 
@@ -517,12 +564,102 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           <!-- TREINO DE HOJE -->
           <div class="bg-[#111827] rounded-xl shadow-md p-6">
             <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
             </div>
+            <?php
+            foreach ($treino as $t) {
+              $treino = $t; // Pega o último treino (ou o único)
+            }
+            if (!empty($treino['tipo_treino'])) {
+              // ✅ CARD DE TREINO
+              echo '
+  <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-white">
+    <div class="flex flex-col space-y-4">
+      <!-- Cabeçalho -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold flex items-center gap-2">
+          <i class="fa-solid fa-dumbbell text-neonred"></i>
+          Seu Treino de Hoje
+        </h2>
+        <span class="text-sm text-gray-400">' .
+                (!empty($t['horario_treino']) ? date('H:i', strtotime($t['horario_treino'])) : 'Sem horário definido') .
+                '</span>
+      </div>
 
+      <!-- Tipo de treino -->
+      <div class="bg-gray-800/60 p-4 rounded-xl border border-gray-700">
+        <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($t['tipo_treino']) . '</p>
+        <p class="text-gray-300 text-sm leading-relaxed">' .
+                (!empty($t['descricao_treino']) ? htmlspecialchars($t['descricao_treino']) : 'Sem descrição disponível.') .
+                '</p>
+      </div>
 
+      <!-- Informações adicionais -->
+      <div class="grid grid-cols-2 gap-4 text-center mt-2">
+        <div>
+          <p class="text-sm text-gray-400">Séries</p>
+          <p class="text-lg font-semibold">' . ($t['series'] ?? '-') . '</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Repetições</p>
+          <p class="text-lg font-semibold">' . ($t['repeticoes'] ?? '-') . '</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Carga (kg)</p>
+          <p class="text-lg font-semibold">' . ($t['carga'] ?? '-') . '</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Intervalo (seg)</p>
+          <p class="text-lg font-semibold">' . ($t['intervalo_segundos'] ?? '-') . '</p>
+        </div>
+
+      </div>
+            <a href="treino.php">
+        <button
+          class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i>
+          Executar Treino
+        </button>
+      </a>
+    </div>
+  </div>';
+            } else {
+              // ❌ CARD DE AVISO (sem treino)
+              echo '
+  <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-center text-white">
+    <div class="flex flex-col items-center space-y-4">
+      <!-- Ícone -->
+      <div class="bg-gray-700/40 p-4 rounded-full">
+        <i class="fa-solid fa-dumbbell text-3xl text-neonred"></i>
+      </div>
+
+      <!-- Mensagem -->
+      <h2 class="text-xl font-semibold">Você ainda não tem um treino</h2>
+      <p class="text-gray-300 text-sm">
+        Que tal começar agora? Adicione um treino personalizado e comece sua jornada de evolução!
+      </p>
+
+      <!-- Botão de ação -->
+      <a href="professores.php">
+        <button
+          class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i>
+          Adicionar Treino
+        </button>
+      </a>
+    </div>
+  </div>';
+            }
+            ?>
 
           </div>
+
+          <!-- Tailwind Colors (adicione ao seu tailwind.config.js)
+colors: {
+  neonred: "#ff2e63",
+  dark: "#0a0a0a",
+  darkblue: "#0d1b2a",
+}
+-->
 
         </div>
 
@@ -545,7 +682,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
                     <span class="text-sm font-medium text-gray-300">
                       <?= htmlspecialchars($meta['descricao']) ?>
                     </span>
-                    <span class="text-sm font-medium 
+                    <span class="text-sm font-medium
             <?= $meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400') ?>">
                       <?= $meta['progresso'] ?>%
                     </span>
@@ -575,18 +712,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
               <button
                 id="btnAbrirModal"
                 class="w-full border border-green-500 text-green-400 hover:bg-green-900/20 py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
+                <i class="fas fa-plus mr-2"></i>
                 Adicionar Nova Meta
               </button>
 
@@ -665,7 +791,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
                 echo '<span class="text-xs text-gray-400">' . $a['dia_semana'] . '</span>';
                 echo '</div>';
                 echo '<div class="flex-1">';
-                echo '<h3 class="font-medium text-white">' . $a['tipo'] . '</h3>';
+                echo '<h3 class="font-medium text-white">' . $a['tipo_treino'] . '</h3>';
                 echo '<p class="text-sm text-gray-400">' . $a['hora_inicio'] . ' - ' . $a['hora_fim'] . '</p>';
                 echo '</div>';
                 echo '<button class="text-green-400 hover:text-green-300">';

@@ -1,16 +1,24 @@
 usuario 1──1 perfil_usuario
        │
+       ├──1 perfil_professor
+       ├──N avaliacao_fisica
        ├──N historico_peso
        ├──N meta_usuario
        ├──N historico_treino N──1 treino 1──N treino_exercicio N──1 exercicio
        │                            │
-       │                            └──N aula_agendada
-       │                            └──1 funcionario (professor)
+       │                            └──N aula_agendada N──N usuario (via aula_usuario)
+       │                                  └──1 funcionario (professor)
+       │
        ├──N dieta 1──N refeicao N──N alimento (via dieta_alimentar)
+       │
        ├──N assinatura N──1 plano
-       │            └──N pagamento
-       ├──N pagamento
+       │            └──1 pagamento (via pagamento_detalhe)
+       │
        ├──N forum 1──N resposta_forum
-       └──N pedido N──N produto (via item_pedido)
-                     ├──1 pagamento
-                     └──1 endereco
+       │
+       ├──N pedido N──N produto (via item_pedido)
+       │            ├──1 pagamento
+       │            └──1 endereco
+       │
+       ├──1 endereco
+       └──N recuperacao_senha

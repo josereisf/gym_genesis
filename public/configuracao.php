@@ -1,4 +1,5 @@
-    <?php
+<?php
+    session_start();
     require_once __DIR__ . "/../code/funcao.php";
 
     // Exemplo: dados vindos do banco
@@ -9,7 +10,7 @@
     $objMeta = "Emagrecimento";
     $notifTreino = true;
     $dieta = "Equilibrada";
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -76,80 +77,58 @@
                     <h2 class="text-xl font-semibold text-white mb-4">Configuração de Cards</h2>
                     <p class="text-gray-400 text-sm mb-6">Ative ou desative os cards que você deseja ver no seu painel:</p>
 
-                    <form class="space-y-4">
+                    <?php
 
-                        <!-- Água -->
-                        <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                            <span class="text-gray-300">Consumo de Água</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
+                    // Se o formulário for enviado
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        // Salva os números dos cards selecionados na sessão
+                        $_SESSION['card'] = $_POST['card'] ?? [];
+                    }
+
+                    // Exemplo de array de cards
+                    $cards = [
+                        1 => 'Consumo de Água',
+                        2 => 'Calorias Queimadas',
+                        3 => 'Peso Atual',
+                        4 => 'Plano',
+                        5 => 'Fórum',
+                        6 => 'Motivação'
+                    ];
+
+                    // Inicializa o array de atributos para exibir o estado atual
+                    $atributos = [];
+                    foreach ($cards as $numero => $nome) {
+                        $checked = (isset($_SESSION['card']) && in_array($numero, $_SESSION['card'])) ? 'checked' : '';
+                        $atributos[$numero] = $checked;
+                    }
+                    ?>
+
+                    <form method="POST" class="space-y-4">
+
+                        <?php foreach ($cards as $numero => $nome): ?>
+                            <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
+                                <span class="text-gray-300"><?= htmlspecialchars($nome) ?></span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        name="card[]"
+                                        value="<?= $numero ?>"
+                                        class="sr-only peer"
+                                        <?= $atributos[$numero] ?>>
+                                    <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
                     after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                     after:bg-white after:border-gray-300 after:border after:rounded-full 
                     after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                            </label>
-                        </div>
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
 
-                        <!-- Calorias -->
-                        <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                            <span class="text-gray-300">Calorias Queimadas</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
-                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                    after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                            </label>
-                        </div>
-
-                        <!-- Peso -->
-                        <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                            <span class="text-gray-300">Peso Atual</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
-                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                    after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                            </label>
-                        </div>
-
-                        <!-- Plano -->
-                        <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                            <span class="text-gray-300">Plano</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
-                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                    after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                            </label>
-                        </div>
-
-                        <!-- Fórum -->
-                        <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                            <span class="text-gray-300">Fórum</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
-                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                    after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                            </label>
-                        </div>
-
-                        <!-- Motivação -->
-                        <div class="flex items-center justify-between bg-[#1f2937] p-3 rounded-lg hover:bg-[#2d3748] transition">
-                            <span class="text-gray-300">Motivação</span>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-checked:bg-indigo-500 
-                    after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                    after:bg-white after:border-gray-300 after:border after:rounded-full 
-                    after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                            </label>
-                        </div>
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg mt-4">
+                            Salvar Preferências
+                        </button>
                     </form>
+
+
                 </div>
 
 
