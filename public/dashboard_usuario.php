@@ -42,9 +42,9 @@ if (!empty($dadosSemDuplicados)) {
 $aulaa = listarAulaUsuario($idaluno);
 
 if (!empty($aulaa) && count($aulaa) > 0) {
-     $treino = listarAulaAgendada($idaluno);
+  $treino = listarAulaAgendada($idaluno);
 } else {
-    $treino = [];
+  $treino = [];
 }
 
 //  echo '<pre>';
@@ -266,9 +266,9 @@ $atributos = [];
 foreach ($numeros as $numero) {
   if (isset($_SESSION['card']) && in_array($numero, $_SESSION['card'])) {
     $atributos[$numero] = '';
-    $msg = "vai ate as configuraçoes para mostrar o card";
   } else {
     $atributos[$numero] = 'hidden';
+    $msg = "vai ate as configuraçoes para mostrar o card";
   }
 }
 
@@ -399,11 +399,22 @@ foreach ($numeros as $numero) {
         </h1>
         <p class="text-gray-300">
           Bem-vindo ao seu dashboard. Veja seu progresso e próximos treinos.
+
         </p>
       </div>
 
       <!-- Stats Overview -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <?php
+
+// Se todos os atributos forem "hidden"
+if (!empty($atributos) && count(array_unique($atributos)) === 1 && current($atributos) === 'hidden') {
+    echo '
+    <div class="max-w-md mx-auto mt-6 p-4 bg-amber-100 border border-amber-300 text-amber-800 rounded-xl shadow-md text-center">
+        <p class="text-lg font-semibold">' . htmlspecialchars($msg) . '</p>
+    </div>';
+}
+?>
 
         <!-- Frequência -->
         <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[1] ?> ">
@@ -550,17 +561,17 @@ foreach ($numeros as $numero) {
             </div>
           </div>
 
-<!-- TREINO DE HOJE -->
-<div class="bg-[#111827] rounded-xl shadow-md p-6">
-  <div class="flex justify-between items-center mb-4">
-  </div>
-<?php
-foreach ($treino as $t) {
-  $treino = $t; // Pega o último treino (ou o único)
-}
-if (!empty($treino['tipo_treino'])) {
-  // ✅ CARD DE TREINO
-  echo '
+          <!-- TREINO DE HOJE -->
+          <div class="bg-[#111827] rounded-xl shadow-md p-6">
+            <div class="flex justify-between items-center mb-4">
+            </div>
+            <?php
+            foreach ($treino as $t) {
+              $treino = $t; // Pega o último treino (ou o único)
+            }
+            if (!empty($treino['tipo_treino'])) {
+              // ✅ CARD DE TREINO
+              echo '
   <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-white">
     <div class="flex flex-col space-y-4">
       <!-- Cabeçalho -->
@@ -570,16 +581,16 @@ if (!empty($treino['tipo_treino'])) {
           Seu Treino de Hoje
         </h2>
         <span class="text-sm text-gray-400">' .
-          (!empty($t['horario_treino']) ? date('H:i', strtotime($t['horario_treino'])) : 'Sem horário definido') .
-        '</span>
+                (!empty($t['horario_treino']) ? date('H:i', strtotime($t['horario_treino'])) : 'Sem horário definido') .
+                '</span>
       </div>
 
       <!-- Tipo de treino -->
       <div class="bg-gray-800/60 p-4 rounded-xl border border-gray-700">
         <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($t['tipo_treino']) . '</p>
         <p class="text-gray-300 text-sm leading-relaxed">' .
-          (!empty($t['descricao_treino']) ? htmlspecialchars($t['descricao_treino']) : 'Sem descrição disponível.') .
-        '</p>
+                (!empty($t['descricao_treino']) ? htmlspecialchars($t['descricao_treino']) : 'Sem descrição disponível.') .
+                '</p>
       </div>
 
       <!-- Informações adicionais -->
@@ -611,9 +622,9 @@ if (!empty($treino['tipo_treino'])) {
       </a>
     </div>
   </div>';
-} else {
-  // ❌ CARD DE AVISO (sem treino)
-  echo '
+            } else {
+              // ❌ CARD DE AVISO (sem treino)
+              echo '
   <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-center text-white">
     <div class="flex flex-col items-center space-y-4">
       <!-- Ícone -->
@@ -637,12 +648,12 @@ if (!empty($treino['tipo_treino'])) {
       </a>
     </div>
   </div>';
-}
-?>
+            }
+            ?>
 
-</div>
+          </div>
 
-<!-- Tailwind Colors (adicione ao seu tailwind.config.js)
+          <!-- Tailwind Colors (adicione ao seu tailwind.config.js)
 colors: {
   neonred: "#ff2e63",
   dark: "#0a0a0a",
