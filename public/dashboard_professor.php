@@ -42,7 +42,7 @@ foreach ($alunos as $a) {
       'inicio' => $horarios[0]['hora_inicio'],
       'fim'    => $horarios[0]['hora_fim'],
       'treino' => $treino[0]['tipo'] ?? '',
-      'alunos' => $a['nome_aluno']
+      'alunos' => $a['nome_usuario']
     ];
 
     // chave única para evitar duplicados

@@ -373,65 +373,24 @@ $professores = listarPerfilProfessor(null);
             document.getElementById("modal").classList.add("hidden");
         }
 
-        document.addEventListener("click", async (e) => {
-            const botao = e.target.closest("button[data-idprofessor]");
-            if (!botao) return;
+</script>
+<script>
+document.addEventListener("click", (e) => {
+    const botao = e.target.closest("button[data-idprofessor]");
+    if (!botao) return;
 
-            const idprofessor = botao.dataset.idprofessor;
-            const idaluno = <?= $usuario ?>;
+    const idprofessor = botao.dataset.idprofessor;
+    const idaluno = <?= $usuario ?>;
 
-            console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
+    console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
 
-            try {
-                const resposta = await aula_usuario(idprofessor, idaluno);
-                console.log("Resposta tratada:", resposta);
+    // Monta a URL com os parâmetros que você precisa passar
+    const url = `exercicio.php?idaula=${encodeURIComponent(idprofessor)}&idaluno=${encodeURIComponent(idaluno)}`;
 
-                if (resposta.sucesso) {
-                    // Se deu certo, redireciona
-                    window.location.href = "http://localhost:83/public/dashboard_usuario.php";
-                } else {
-                    // Se não deu certo, mostra mensagem
-                    alert(resposta.mensagem || "Não foi possível agendar a aula.");
-                }
-            } catch (error) {
-                console.error("Erro geral ao agendar aula:", error);
-                alert("Erro de comunicação com o servidor.");
-            }
-        });
-
-        async function aula_usuario(idprofessor, idaluno) {
-            try {
-                const response = await fetch(
-                    'http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=cadastrar', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            idaula: idprofessor,
-                            idaluno
-                        }),
-                    }
-                );
-
-                if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
-
-                const textoBruto = await response.text();
-                console.log('Resposta bruta da API:', textoBruto);
-
-                try {
-                    const json = JSON.parse(textoBruto);
-                    return json;
-                } catch (erroDeParse) {
-                    console.error('Erro ao fazer JSON.parse. A resposta não é um JSON válido.');
-                    throw erroDeParse;
-                }
-            } catch (error) {
-                console.error('Erro ao cadastrar Aula para Usuario:', error);
-                throw error;
-            }
-        }
-    </script>
+    // Redireciona o usuário para a página de exercícios
+    window.location.href = url;
+});
+</script>
 
     <script src="./js/loader.js"></script>
 

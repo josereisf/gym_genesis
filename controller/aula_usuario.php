@@ -32,7 +32,7 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$idaula_usuario || !$idaula || !$idusuario || !$status || !$data_aula) {
+        if (!$idusuario || !$idaula || !$idusuario || !$status || !$data_aula) {
             enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
         }
         $ok = editarAulaUsuario($idaula, $idusuario);
@@ -53,10 +53,10 @@ switch ($acao) {
         break;
 
     case 'deletar':
-        if (!$idaula_usuario) {
+        if (!$idusuario) {
             enviarResposta(false, 'ID da aula de usuário não informado');
         }
-        $ok = deletarAulaUsuario($idaula_usuario);
+        $ok = deletarAulaUsuario($idusuario);
         if ($ok) {
             enviarResposta(true, 'Aula de usuário deletada com sucesso');
         } else {

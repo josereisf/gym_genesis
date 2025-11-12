@@ -39,10 +39,17 @@ if (!empty($dadosSemDuplicados)) {
   $email = $r['email'] ?? "-";
   $idmeta = $r['idmeta'] ?? null;
 }
-$treino = listarAulaDoDia($idaluno);
-echo '<pre>';
-print_r($dadosSemDuplicados);
-echo '</pre>';
+$aulaa = listarAulaUsuario($idaluno);
+
+if (!empty($aulaa) && count($aulaa) > 0) {
+     $treino = listarAulaAgendada($idaluno);
+} else {
+    $treino = [];
+}
+
+//  echo '<pre>';
+//  print_r($treino);
+//  echo '</pre>';
 
 $metas = listarMetaUsuario($idaluno);
 
@@ -546,9 +553,11 @@ foreach ($numeros as $numero) {
 <!-- TREINO DE HOJE -->
 <div class="bg-[#111827] rounded-xl shadow-md p-6">
   <div class="flex justify-between items-center mb-4">
-    <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
   </div>
 <?php
+foreach ($treino as $t) {
+  $treino = $t; // Pega o último treino (ou o único)
+}
 if (!empty($treino['tipo_treino'])) {
   // ✅ CARD DE TREINO
   echo '
@@ -560,16 +569,16 @@ if (!empty($treino['tipo_treino'])) {
           <i class="fa-solid fa-dumbbell text-neonred"></i>
           Seu Treino de Hoje
         </h2>
-        <span class="text-sm text-gray-400">' . 
-          (!empty($r['horario_treino']) ? date('H:i', strtotime($r['horario_treino'])) : 'Sem horário definido') . 
+        <span class="text-sm text-gray-400">' .
+          (!empty($t['horario_treino']) ? date('H:i', strtotime($t['horario_treino'])) : 'Sem horário definido') .
         '</span>
       </div>
 
       <!-- Tipo de treino -->
       <div class="bg-gray-800/60 p-4 rounded-xl border border-gray-700">
-        <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($r['tipo_treino']) . '</p>
-        <p class="text-gray-300 text-sm leading-relaxed">' . 
-          (!empty($r['descricao_treino']) ? htmlspecialchars($r['descricao_treino']) : 'Sem descrição disponível.') . 
+        <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($t['tipo_treino']) . '</p>
+        <p class="text-gray-300 text-sm leading-relaxed">' .
+          (!empty($t['descricao_treino']) ? htmlspecialchars($t['descricao_treino']) : 'Sem descrição disponível.') .
         '</p>
       </div>
 
@@ -577,21 +586,29 @@ if (!empty($treino['tipo_treino'])) {
       <div class="grid grid-cols-2 gap-4 text-center mt-2">
         <div>
           <p class="text-sm text-gray-400">Séries</p>
-          <p class="text-lg font-semibold">' . ($r['series'] ?? '-') . '</p>
+          <p class="text-lg font-semibold">' . ($t['series'] ?? '-') . '</p>
         </div>
         <div>
           <p class="text-sm text-gray-400">Repetições</p>
-          <p class="text-lg font-semibold">' . ($r['repeticoes'] ?? '-') . '</p>
+          <p class="text-lg font-semibold">' . ($t['repeticoes'] ?? '-') . '</p>
         </div>
         <div>
           <p class="text-sm text-gray-400">Carga (kg)</p>
-          <p class="text-lg font-semibold">' . ($r['carga'] ?? '-') . '</p>
+          <p class="text-lg font-semibold">' . ($t['carga'] ?? '-') . '</p>
         </div>
         <div>
           <p class="text-sm text-gray-400">Intervalo (seg)</p>
-          <p class="text-lg font-semibold">' . ($r['intervalo_segundos'] ?? '-') . '</p>
+          <p class="text-lg font-semibold">' . ($t['intervalo_segundos'] ?? '-') . '</p>
         </div>
+
       </div>
+            <a href="treino.php">
+        <button
+          class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i>
+          Executar Treino
+        </button>
+      </a>
     </div>
   </div>';
 } else {
@@ -654,7 +671,7 @@ colors: {
                     <span class="text-sm font-medium text-gray-300">
                       <?= htmlspecialchars($meta['descricao']) ?>
                     </span>
-                    <span class="text-sm font-medium 
+                    <span class="text-sm font-medium
             <?= $meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400') ?>">
                       <?= $meta['progresso'] ?>%
                     </span>
@@ -763,7 +780,7 @@ colors: {
                 echo '<span class="text-xs text-gray-400">' . $a['dia_semana'] . '</span>';
                 echo '</div>';
                 echo '<div class="flex-1">';
-                echo '<h3 class="font-medium text-white">' . $a['tipo'] . '</h3>';
+                echo '<h3 class="font-medium text-white">' . $a['tipo_treino'] . '</h3>';
                 echo '<p class="text-sm text-gray-400">' . $a['hora_inicio'] . ' - ' . $a['hora_fim'] . '</p>';
                 echo '</div>';
                 echo '<button class="text-green-400 hover:text-green-300">';
