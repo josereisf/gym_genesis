@@ -92,7 +92,8 @@
                         3 => 'Peso Atual',
                         4 => 'Plano',
                         5 => 'Fórum',
-                        6 => 'Motivação'
+                        6 => 'Motivação',
+                        7 => 'Produtos Disponíveis'
                     ];
 
                     // Inicializa o array de atributos para exibir o estado atual

@@ -259,7 +259,7 @@ if (isset($_POST['card'])) {
   $_SESSION['card'] = $_POST['card'];
 }
 
-$numeros = [1, 2, 3, 4, 5, 6];
+$numeros = [1, 2, 3, 4, 5, 6, 7];
 
 $atributos = [];
 
@@ -272,6 +272,9 @@ foreach ($numeros as $numero) {
   }
 }
 
+$n = rand(1, 20);
+$produto = listarProdutos($n);
+var_dump($n, $produto);
 // var_dump($_SESSION);
 ?>
 
@@ -531,6 +534,32 @@ foreach ($numeros as $numero) {
             "<?= $fraseAleatoria ?>"
           </h3>
         </div>
+
+        <?php
+        foreach($produto as $p) {
+          echo '<div onclick="window.location.href=\'loja.php\'" class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer '.$atributos[7].'">';
+          echo '  <div class="flex justify-between items-start">';
+          echo '    <div>';
+          echo '      <p class="text-sm font-medium text-gray-400">Produto Disponível</p>';
+          echo '      <h3 class="text-2xl font-bold text-white mt-1">' . htmlspecialchars($p['nome']) . '</h3>';
+          echo '      <p class="text-sm text-gray-400 mt-1">' . htmlspecialchars($p['descricao']) . '</p>';
+          echo '      <p class="text-sm text-green-400 mt-2 flex items-center">';
+          echo '        <i class="fas fa-box text-green-400 w-4 h-4 mr-1"></i>';
+          echo '        Em estoque: ' . intval($p['quantidade_estoque']) . ' unidades';
+          echo '      </p>';
+          echo '      <p class="text-lg font-semibold text-yellow-400 mt-3">';
+          echo '        R$ ' . number_format($p['preco'], 2, ',', '.') . '';
+          echo '      </p>';
+          echo '    </div>';
+          echo '    <div class="bg-[#1f2937] p-3 rounded-lg">';
+          echo '      <i class="fas fa-shopping-bag text-blue-400 text-xl"></i>';
+          echo '    </div>';
+          echo '  </div>';
+          echo '</div>';
+        }
+        ?>
+
+
       </div>
 
 
@@ -674,22 +703,22 @@ colors: {
               // ? print_r($metasProcessadas) ?>
               </pre>; -->
               <!-- Metas Dinâmicas -->
-            <?php
-            $metasProcessadas = array_slice($metasProcessadas, 0, 5);
-            foreach ($metasProcessadas as $meta) {
+              <?php
+              $metasProcessadas = array_slice($metasProcessadas, 0, 5);
+              foreach ($metasProcessadas as $meta) {
                 echo '<div>';
                 echo '  <div class="flex justify-between mb-2">';
                 echo '    <span class="text-sm font-medium text-gray-300">' . htmlspecialchars($meta['descricao']) . '</span>';
-                echo '    <span class="text-sm font-medium ' . 
-                    ($meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400')) . '">';
+                echo '    <span class="text-sm font-medium ' .
+                  ($meta['progresso'] >= 80 ? 'text-green-400' : ($meta['progresso'] >= 50 ? 'text-yellow-400' : 'text-red-400')) . '">';
                 echo        $meta['progresso'] . '%';
                 echo '    </span>';
                 echo '  </div>';
 
                 echo '  <div class="w-full bg-gray-700 rounded-full h-2.5">';
-                echo '    <div class="' . 
-                    ($meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500')) . 
-                    ' h-2.5 rounded-full" style="width: ' . $meta['progresso'] . '%"></div>';
+                echo '    <div class="' .
+                  ($meta['progresso'] >= 80 ? 'bg-green-500' : ($meta['progresso'] >= 50 ? 'bg-yellow-400' : 'bg-red-500')) .
+                  ' h-2.5 rounded-full" style="width: ' . $meta['progresso'] . '%"></div>';
                 echo '  </div>';
 
                 echo '  <div class="flex justify-between mt-1 text-xs text-gray-400">';
@@ -702,8 +731,8 @@ colors: {
                 echo '    <span>Usuário: ' . htmlspecialchars($meta['usuario']) . '</span>';
                 echo '  </div>';
                 echo '</div>';
-            }
-            ?>
+              }
+              ?>
               <!-- Botão -->
               <button
                 id="btnAbrirModal"

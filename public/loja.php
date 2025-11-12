@@ -283,7 +283,7 @@ foreach ($listar as $l) {
     echo '<div class="bg-white dark:bg-darkgray text-gray-900 dark:text-white shadow-lg rounded-xl overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 group relative">';
     echo '  <div class="overflow-hidden relative">';
     echo      $badge;
-    echo '    <img src="./uploads/' . htmlspecialchars($l['imagem']) . '" alt="Imagem de ' . htmlspecialchars($l['nome']) . '" class="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500 -z-20">';
+    echo '    <img src="./uploads/' . $l['imagem'] . '" alt="Imagem de ' . $l['nome']. '" class="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500 -z-20">';
     echo '    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>';
     echo '  </div>';
 
