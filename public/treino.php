@@ -1,3 +1,10 @@
+<?php
+require_once '../code/funcao.php';
+$idaula = $_GET['idaula'] ?? null;
+$idaluno = $_GET['idaluno'] ?? null;
+$aula_agendada = listarAulaAgendada($idaula);
+//print_r($aula_agendada);
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -49,123 +56,119 @@
     // 🔹 Dados simulados (substituir com PHP depois)
     // -----------------------------
     const idaluno = <?= json_encode($_GET['idaluno'] ?? 21) ?>;
-    const idaula = <?= json_encode($_GET['idaula'] ?? 9) ?>;
+    const idaula = <?= json_encode($_GET['idaula'] ?? 9) ?>; // começa vazio
 
-    const exercises = [
-      {
-        id: 1,
-        nome: "Supino Reto",
-        grupo: "Peitoral",
-        video: "https://www.w3schools.com/html/mov_bbb.mp4",
-        descricao: "Exercício focado em peitoral e tríceps.",
-        series: 4,
-        repeticoes: 10,
-        carga: "60kg",
-        intervalo: 90
-      },
-      {
-        id: 2,
-        nome: "Agachamento Livre",
-        grupo: "Pernas",
-        video: "https://www.w3schools.com/html/movie.mp4",
-        descricao: "Excelente para quadríceps e glúteos.",
-        series: 5,
-        repeticoes: 12,
-        carga: "80kg",
-        intervalo: 120
-      }
-    ];
+let exercises = <?= json_encode($aula_agendada) ?>;
+console.log(exercises);
 
-    const exerciseList = document.getElementById('exercise-list');
-    const content = document.getElementById('exercise-content');
-    const finishBtn = document.getElementById('finish-btn');
+    // -----------------------------
+    // 🔹 Lógica de Exibição dos Exercícios
+    // -----------------------------
 
-    // Gera lista
-    exercises.forEach(ex => {
-      const li = document.createElement('li');
-      li.className = "cursor-pointer px-4 py-3 rounded-lg hover:bg-white/10 transition flex justify-between items-center";
-      li.innerHTML = `
-        <div>
-          <div class="font-semibold">${ex.nome}</div>
-          <div class="text-sm text-white/50">${ex.grupo}</div>
-        </div>
-        <span class="text-green-400 text-xs uppercase">Ver</span>
-      `;
-      li.addEventListener('click', () => showExercise(ex, li));
-      exerciseList.appendChild(li);
-    });
+ const exerciseList = document.getElementById('exercise-list');
+  const content = document.getElementById('exercise-content');
+  const finishBtn = document.getElementById('finish-btn');
 
-    // Mostra o exercício selecionado
-    function showExercise(ex, li) {
-      document.querySelectorAll('#exercise-list li').forEach(el => el.classList.remove('active-item'));
-      li.classList.add('active-item');
+  // Gera lista de exercícios
+  exercises.forEach(ex => {
+    const li = document.createElement('li');
+    li.className = "cursor-pointer px-4 py-3 rounded-lg hover:bg-white/10 transition flex justify-between items-center";
+    li.innerHTML = `
+      <div>
+        <div class="font-semibold">${ex.nome_exercicio}</div>
+        <div class="text-sm text-white/50">${ex.grupo_muscular}</div>
+      </div>
+      <span class="text-green-400 text-xs uppercase">Ver</span>
+    `;
+    li.addEventListener('click', () => showExercise(ex, li));
+    exerciseList.appendChild(li);
+  });
 
-      content.innerHTML = `
-        <div class="max-w-3xl mx-auto">
-          <h2 class="text-4xl font-bold text-green-400 mb-4">${ex.nome}</h2>
-          <p class="text-white/70 mb-6">${ex.descricao}</p>
-          <video controls class="w-full rounded-2xl mb-6 shadow-lg">
-            <source src="${ex.video}" type="video/mp4">
-            Seu navegador não suporta vídeos.
-          </video>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div class="bg-white/5 p-4 rounded-xl">
-              <div class="text-sm text-white/60">Séries</div>
-              <div class="text-xl font-bold">${ex.series}</div>
-            </div>
-            <div class="bg-white/5 p-4 rounded-xl">
-              <div class="text-sm text-white/60">Repetições</div>
-              <div class="text-xl font-bold">${ex.repeticoes}</div>
-            </div>
-            <div class="bg-white/5 p-4 rounded-xl">
-              <div class="text-sm text-white/60">Carga</div>
-              <div class="text-xl font-bold">${ex.carga}</div>
-            </div>
-            <div class="bg-white/5 p-4 rounded-xl">
-              <div class="text-sm text-white/60">Intervalo</div>
-              <div class="text-xl font-bold">${ex.intervalo}s</div>
-            </div>
+  // Mostra detalhes do exercício selecionado
+  function showExercise(ex, li) {
+    document.querySelectorAll('#exercise-list li').forEach(el => el.classList.remove('active-item'));
+    li.classList.add('active-item');
+
+    content.innerHTML = `
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-4xl font-bold text-green-400 mb-4">${ex.nome_exercicio}</h2>
+        <p class="text-white/70 mb-6">${ex.descricao_exercicio}</p>
+        <video controls class="w-full rounded-2xl mb-6 shadow-lg">
+          <source src="${ex.video_url || ''}" type="video/mp4">
+          Seu navegador não suporta vídeos.
+        </video>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div class="bg-white/5 p-4 rounded-xl">
+            <div class="text-sm text-white/60">Séries</div>
+            <div class="text-xl font-bold">${ex.series}</div>
+          </div>
+          <div class="bg-white/5 p-4 rounded-xl">
+            <div class="text-sm text-white/60">Repetições</div>
+            <div class="text-xl font-bold">${ex.repeticoes}</div>
+          </div>
+          <div class="bg-white/5 p-4 rounded-xl">
+            <div class="text-sm text-white/60">Carga</div>
+            <div class="text-xl font-bold">${ex.carga} kg</div>
+          </div>
+          <div class="bg-white/5 p-4 rounded-xl">
+            <div class="text-sm text-white/60">Intervalo</div>
+            <div class="text-xl font-bold">${ex.intervalo_segundos}s</div>
           </div>
         </div>
-      `;
-    }
 
+        <div class="mt-6 text-center">
+          <h3 class="text-lg font-semibold text-green-300 mb-2">Professor: ${ex.nome_usuario}</h3>
+          <p class="text-white/60">${ex.descricao_professor}</p>
+          <p class="text-white/40 text-sm mt-1">Modalidade: ${ex.modalidade}</p>
+        </div>
+      </div>
+    `;
+  }
     // -----------------------------
     // 🔹 Botão de Concluir Treino
     // -----------------------------
     finishBtn.addEventListener('click', concluirTreino);
 
-    function concluirTreino() {
-      finishBtn.disabled = true;
-      finishBtn.innerText = '⏳ Enviando...';
+function concluirTreino() {
+  const agora = new Date();
+  const dataHora = agora.toISOString().slice(0, 19).replace('T', ' ');
 
-      fetch('http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=deletar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          idaula: idaula,
-          idaluno: idaluno
-        })
+  fetch('http://localhost:83/public/api/index.php?entidade=historico_treino&acao=cadastrar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      idtreino: exercises[0].idtreino,
+      idusuario: idaluno,
+      data_execucao: dataHora,
+      observacoes: exercises[0].descricao_exercicio
+    })
+  })
+  .then(response => response.json())
+  .then(dataHist => {
+    console.log('Histórico salvo:', dataHist);
+    return fetch('http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=deletar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        idaula: idaula,
+        idaluno: idaluno
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Treino concluído com sucesso:', data);
-        finishBtn.innerText = '✅ Treino Concluído!';
-        finishBtn.classList.add('bg-green-500/40');
-
-        // Redireciona após 1.5s
-        setTimeout(() => {
-          window.location.href = 'dashboard_usuario.php';
-        }, 1500);
-      })
-      .catch(error => {
-        console.error('Erro ao concluir treino:', error);
-        finishBtn.disabled = false;
-        finishBtn.innerText = '❌ Tente novamente';
-      });
-    }
+    });
+  })
+  .then(response => response.json())
+  .then(dataDel => {
+    console.log('Treino concluído:', dataDel);
+    finishBtn.innerText = '✅ Treino Concluído!';
+    finishBtn.classList.add('bg-green-500/40');
+    setTimeout(() => window.location.href = 'dashboard_usuario.php', 1500);
+  })
+  .catch(error => {
+    console.error('Erro:', error);
+    finishBtn.innerText = '❌ Tente novamente';
+    finishBtn.disabled = false;
+  });
+}
   </script>
 
 </body>
