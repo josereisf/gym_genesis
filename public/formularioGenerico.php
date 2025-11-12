@@ -46,7 +46,7 @@ if ($id) {
 
         // Chaves estrangeiras
         if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
-          $ignorar = ["pagamento_detalhe", "perfil_usuario","pagamento_detalhe"];
+          $ignorar = ["", "perfil_usuario","pagamento_detalhe"];
           if ($tipo === 0){
             $ignorar = [];
           }

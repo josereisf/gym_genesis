@@ -42,8 +42,6 @@ function preencherChavesEstrangeiras() {
       tabela = "usuario";
     } else if (tabela == "usuario" && tabela_principal !== "perfil_professor") {
       tabela = "perfil_usuario";
-    } else if (tabela == "usuario" && tabela_principal === "perfil_professor") {
-      tabela = "funcionario";
     } else if (tabela == "dieta") {
       tabela = "refeicao";
     }
@@ -73,7 +71,7 @@ function preencherChavesEstrangeiras() {
           }
           if (
             campo.includes("usuario") &&
-            (tabela_principal == "perfil_usuario" || tabela_principal == "funcionario")
+            (tabela_principal == "perfil_usuario" || tabela_principal == "funcionario" || tabela_principal == "perfil_professor")
           ) {
             nome_campo = "idusuario";
           }
@@ -97,8 +95,8 @@ function preencherChavesEstrangeiras() {
             let id = Object.keys(item).find(
               (key) => key.startsWith("id") && !key.endsWith("_id")
             );
-            if (tabela === "funcionario") {
-              id = "usuario_id";
+            if (tabela_principal === "funcionario" && campo.includes("usuario")) {
+              id = "idusuario";
             }
 
             console.log("ID da tabela:", id);
