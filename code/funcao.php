@@ -4929,3 +4929,52 @@ function pegaIdTabela($tabela)
       return null;
   }
 }
+
+function listarAulaDoDia($idusuario)
+{
+  $conexao = conectar();
+
+  $sql = "SELECT 
+    au.usuario_id,
+    ag.idaula,
+    ag.data_aula,
+    ag.hora_inicio,
+    ag.hora_fim,
+    tr.idtreino,
+    tr.tipo AS tipo_treino,
+    tr.descricao AS descricao_treino,
+    tr.horario AS horario_treino,
+    te.series,
+    te.repeticoes,
+    te.carga,
+    te.intervalo_segundos,
+    ex.nome AS nome_exercicio,
+    ex.grupo_muscular,
+    ex.video_url,
+    f.nome AS nome_professor,
+    pp.foto_perfil AS foto_professor
+  FROM aula_usuario au
+  INNER JOIN aula_agendada ag ON au.idaula = ag.idaula
+  INNER JOIN treino tr ON ag.treino_id = tr.idtreino
+  LEFT JOIN treino_exercicio te ON tr.idtreino = te.treino_id
+  LEFT JOIN exercicio ex ON te.exercicio_id = ex.idexercicio
+  LEFT JOIN funcionario f ON ag.funcionario_id = f.idfuncionario
+  LEFT JOIN perfil_professor pp ON f.usuario_id = pp.usuario_id
+  WHERE au.usuario_id = ?
+    AND ag.data_aula = CURDATE()";
+
+  $comando = mysqli_prepare($conexao, $sql);
+  mysqli_stmt_bind_param($comando, "i", $idusuario);
+  mysqli_stmt_execute($comando);
+  $resultados = mysqli_stmt_get_result($comando);
+
+  $lista_aulas = [];
+  while ($aula = mysqli_fetch_assoc($resultados)) {
+    $lista_aulas[] = $aula;
+  }
+
+  mysqli_stmt_close($comando);
+  desconectar($conexao);
+
+  return $lista_aulas;
+}

@@ -8,16 +8,26 @@ require_once __DIR__ . "/php/verificarLogado.php";
 
 $idaluno = $_SESSION["id"];
 $nomes = $_SESSION['nome'] ?? "-";
-// var_dump($_SESSION["id"]);
 
 $peso = $altura = $imc = $perc_gord = $plano = $dia_inicial = $dia_fim = $dia_renovacao = "-";
 $foto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS11c2VyLWNpcmNsZSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEwIiByPSIzIi8+PHBhdGggZD0iTTcgMjAuNjZWMTlhMiAyIDAgMCAxIDItMmg2YTIgMiAwIDAgMSAyIDJ2MS42NiIvPjwvc3ZnPg==';
 
 $resultados = listarUsuarioCompleto($idaluno);
-if ($resultados && count($resultados) > 0) {
-  $r = $resultados[0]; // Assume apenas um resultado
 
-  $nomes = $r['nome_usuario'] ?? $nomes;
+$dadosSemDuplicados = [];
+$idsVistos = [];
+
+foreach ($resultados as $r) {
+  if (!in_array($r['idusuario'], $idsVistos)) {
+    $dadosSemDuplicados[] = $r;
+    $idsVistos[] = $r['idusuario'];
+  }
+}
+
+if (!empty($dadosSemDuplicados)) {
+  $r = $dadosSemDuplicados[0]; // Pega o primeiro resultado único
+
+  $nomes = $r['nome_usuario'] ?? $nomes ?? "-";
   $peso = (float)($r['peso'] ?? 0);
   $altura = $r['altura'] ?? "-";
   $imc = $r['imc'] ?? "-";
@@ -25,10 +35,14 @@ if ($resultados && count($resultados) > 0) {
   $plano = $r['tipo_plano'] ?? "-";
   $dia_inicial = $r['data_inicio'] ?? "-";
   $dia_fim = $r['data_fim'] ?? null;
-  $foto = $r['foto_perfil'] ?? $foto;
+  $foto = $r['foto_perfil'] ?? $foto ?? "default.png";
   $email = $r['email'] ?? "-";
-  $idmeta = $r['idmeta'];
+  $idmeta = $r['idmeta'] ?? null;
 }
+$treino = listarAulaDoDia($idaluno);
+echo '<pre>';
+print_r($dadosSemDuplicados);
+echo '</pre>';
 
 $metas = listarMetaUsuario($idaluno);
 
@@ -235,7 +249,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
 
 // Garante que a sessão tenha os cards selecionados
 if (isset($_POST['card'])) {
-    $_SESSION['card'] = $_POST['card'];
+  $_SESSION['card'] = $_POST['card'];
 }
 
 $numeros = [1, 2, 3, 4, 5, 6];
@@ -243,11 +257,12 @@ $numeros = [1, 2, 3, 4, 5, 6];
 $atributos = [];
 
 foreach ($numeros as $numero) {
-    if (isset($_SESSION['card']) && in_array($numero, $_SESSION['card'])) {
-        $atributos[$numero] = '';
-    } else {
-        $atributos[$numero] = 'hidden';
-    }
+  if (isset($_SESSION['card']) && in_array($numero, $_SESSION['card'])) {
+    $atributos[$numero] = '';
+    $msg = "vai ate as configuraçoes para mostrar o card";
+  } else {
+    $atributos[$numero] = 'hidden';
+  }
 }
 
 // var_dump($_SESSION);
@@ -528,15 +543,95 @@ foreach ($numeros as $numero) {
             </div>
           </div>
 
-          <!-- TREINO DE HOJE -->
-          <div class="bg-[#111827] rounded-xl shadow-md p-6">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
-            </div>
+<!-- TREINO DE HOJE -->
+<div class="bg-[#111827] rounded-xl shadow-md p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-lg font-semibold text-white">Treino de Hoje</h2>
+  </div>
+<?php
+if (!empty($treino['tipo_treino'])) {
+  // ✅ CARD DE TREINO
+  echo '
+  <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-white">
+    <div class="flex flex-col space-y-4">
+      <!-- Cabeçalho -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold flex items-center gap-2">
+          <i class="fa-solid fa-dumbbell text-neonred"></i>
+          Seu Treino de Hoje
+        </h2>
+        <span class="text-sm text-gray-400">' . 
+          (!empty($r['horario_treino']) ? date('H:i', strtotime($r['horario_treino'])) : 'Sem horário definido') . 
+        '</span>
+      </div>
 
+      <!-- Tipo de treino -->
+      <div class="bg-gray-800/60 p-4 rounded-xl border border-gray-700">
+        <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($r['tipo_treino']) . '</p>
+        <p class="text-gray-300 text-sm leading-relaxed">' . 
+          (!empty($r['descricao_treino']) ? htmlspecialchars($r['descricao_treino']) : 'Sem descrição disponível.') . 
+        '</p>
+      </div>
 
+      <!-- Informações adicionais -->
+      <div class="grid grid-cols-2 gap-4 text-center mt-2">
+        <div>
+          <p class="text-sm text-gray-400">Séries</p>
+          <p class="text-lg font-semibold">' . ($r['series'] ?? '-') . '</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Repetições</p>
+          <p class="text-lg font-semibold">' . ($r['repeticoes'] ?? '-') . '</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Carga (kg)</p>
+          <p class="text-lg font-semibold">' . ($r['carga'] ?? '-') . '</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-400">Intervalo (seg)</p>
+          <p class="text-lg font-semibold">' . ($r['intervalo_segundos'] ?? '-') . '</p>
+        </div>
+      </div>
+    </div>
+  </div>';
+} else {
+  // ❌ CARD DE AVISO (sem treino)
+  echo '
+  <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-center text-white">
+    <div class="flex flex-col items-center space-y-4">
+      <!-- Ícone -->
+      <div class="bg-gray-700/40 p-4 rounded-full">
+        <i class="fa-solid fa-dumbbell text-3xl text-neonred"></i>
+      </div>
 
-          </div>
+      <!-- Mensagem -->
+      <h2 class="text-xl font-semibold">Você ainda não tem um treino</h2>
+      <p class="text-gray-300 text-sm">
+        Que tal começar agora? Adicione um treino personalizado e comece sua jornada de evolução!
+      </p>
+
+      <!-- Botão de ação -->
+      <a href="professores.php">
+        <button
+          class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i>
+          Adicionar Treino
+        </button>
+      </a>
+    </div>
+  </div>';
+}
+?>
+
+</div>
+
+<!-- Tailwind Colors (adicione ao seu tailwind.config.js)
+colors: {
+  neonred: "#ff2e63",
+  dark: "#0a0a0a",
+  darkblue: "#0d1b2a",
+}
+-->
 
         </div>
 
@@ -589,18 +684,7 @@ foreach ($numeros as $numero) {
               <button
                 id="btnAbrirModal"
                 class="w-full border border-green-500 text-green-400 hover:bg-green-900/20 py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
+                <i class="fas fa-plus mr-2"></i>
                 Adicionar Nova Meta
               </button>
 
