@@ -22,6 +22,11 @@ if (!$acao) {
 switch ($acao) {
     case 'cadastrar':
         $ok = cadastrarRespostaForum($mensagem, $usuario_id, $forum_id);
+        if ($input === $_POST) {
+                header('Location: ../forum.php');
+            exit;
+
+        }
         if ($ok) {
             enviarResposta(true, 'Resposta do fórum cadastrada com sucesso');
         } else {

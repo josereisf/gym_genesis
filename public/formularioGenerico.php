@@ -46,7 +46,7 @@ if ($id) {
 
         // Chaves estrangeiras
         if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
-          $ignorar = ["", "perfil_usuario","pagamento_detalhe"];
+        $ignorar = ["forum", "perfil_usuario","pagamento_detalhe", "perfil_professor","meta_usuario", "treino", "pedido"];
           if ($tipo === 0){
             $ignorar = [];
           }
@@ -55,7 +55,7 @@ if ($id) {
             echo "
               <div>
               <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
-              <select name='$nome_campo' class='chaveEstrangeira w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='".$dados[$nome_campo]."'>
+              <select name='$nome_campo' class='chaveEstrangeira w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='". ($id ? $dados[$nome_campo] : '')."'>
               </select>
               </div>
             <script>preencherChavesEstrangeiras()</script>";

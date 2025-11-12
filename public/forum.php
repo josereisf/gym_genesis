@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
+$idusuario = $_SESSION['idusuario'] ?? 21;
 $topicos = listarForum(null);
 $respostas = listarRespostaForum(null);
 
@@ -40,7 +41,7 @@ if ($respostas) {
   <main class="max-w-5xl mx-auto py-10 px-6 space-y-8">
     <div class="flex justify-between items-center mb-10">
       <h1 class="text-4xl font-bold text-blue-400">💬 Comunidade de Treino</h1>
-      <a href="novo_topico.php" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition">
+      <a href="./formularioGenerico.php?tabela=forum" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition">
         Novo Tópico
       </a>
     </div>
@@ -76,8 +77,9 @@ if ($topicos && count($topicos) > 0) {
         }
 
         // 🔹 Formulário de nova resposta
-        echo '<form action="nova_resposta.php" method="POST" class="mt-4">';
+        echo '<form action="http://localhost:83/public/api/index.php?entidade=resposta_forum&acao=cadastrar" method="POST" class="mt-4">';
         echo '  <input type="hidden" name="forum_id" value="' . $t['idtopico'] . '">';
+        echo '  <input type="hidden" name="usuario_id" value="'.$idusuario.'">'; // Substituir pelo ID do usuário logado
         echo '  <textarea name="mensagem" rows="2" placeholder="Deixe sua resposta..." class="w-full bg-gray-800 text-gray-200 rounded-lg p-3 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"></textarea>';
         echo '  <button type="submit" class="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">Responder</button>';
         echo '</form>';
