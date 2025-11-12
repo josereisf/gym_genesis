@@ -658,14 +658,16 @@ function listarPlanos($idplano)
  * @param [type] $conexao
  * @return void
  */
-function editarMetaUsuario($idusuario, $descricao, $data_inicio, $data_limite, $status)
+function editarMetaUsuario($idmeta, $idusuario, $descricao, $data_inicio, $data_limite, $status)
 {
   $conexao = conectar();
 
-  $sql = 'UPDATE meta_usuario SET descricao=?, data_inicio=?, data_limite=?, status=? WHERE usuario_id=?';
+  $sql = 'UPDATE meta_usuario 
+        SET descricao = ?, data_inicio = ?, data_limite = ?, status = ? 
+        WHERE idmeta = ? AND usuario_id = ?';
   $comando = mysqli_prepare($conexao, $sql);
-
-  mysqli_stmt_bind_param($comando, 'ssssi', $descricao, $data_inicio, $data_limite, $status, $idusuario);
+  
+  mysqli_stmt_bind_param($comando, 'ssssii', $descricao, $data_inicio, $data_limite, $status, $idmeta, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -2416,7 +2418,8 @@ function listarMetaUsuario($idmeta = null)
 
   if ($idmeta != null) {
     // Busca apenas a meta específica
-    $sql = "SELECT 
+    $sql = "SELECT
+              m.usuario_id,
               pf.nome AS nome_usuario,
               m.idmeta,
               m.descricao,
