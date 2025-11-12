@@ -233,6 +233,23 @@ $frasesMotivacao = [
 $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
 
 
+// Garante que a sessão tenha os cards selecionados
+if (isset($_POST['card'])) {
+    $_SESSION['card'] = $_POST['card'];
+}
+
+$numeros = [1, 2, 3, 4, 5, 6];
+
+$atributos = [];
+
+foreach ($numeros as $numero) {
+    if (isset($_SESSION['card']) && in_array($numero, $_SESSION['card'])) {
+        $atributos[$numero] = '';
+    } else {
+        $atributos[$numero] = 'hidden';
+    }
+}
+
 // var_dump($_SESSION);
 ?>
 
@@ -286,7 +303,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
         <div class="flex items-center space-x-4">
           <div class="relative">
             <button id="notificationBtn" class="text-green-400 hover:text-green-300">
-              <i data-lucide="bell" class="w-6 h-6"></i>
+              <i class="fas fa-bell w-6 h-6"></i>
               <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full h-4 w-4 flex items-center justify-center">2</span>
             </button>
           </div>
@@ -365,8 +382,9 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
 
       <!-- Stats Overview -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
         <!-- Frequência -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[1] ?> ">
           <div class="flex justify-between items-start">
             <div class="w-full">
               <p class="text-sm font-medium text-gray-400">Consumo de Água</p>
@@ -397,10 +415,8 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           </div>
         </div>
 
-
-
         <!-- Calorias -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[2] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Calorias Queimadas</p>
@@ -417,7 +433,7 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
         </div>
 
         <!-- Peso -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[3] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Peso Atual</p>
@@ -441,10 +457,8 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
           </div>
         </div>
 
-
-
         <!-- Plano -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[4] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Plano</p>
@@ -460,8 +474,9 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
             </div>
           </div>
         </div>
+
         <!-- Fórum -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg <?= $atributos[5] ?>">
           <div class="flex justify-between items-start">
             <div>
               <p class="text-sm font-medium text-gray-400">Comunidade</p>
@@ -475,15 +490,14 @@ $fraseAleatoria = $frasesMotivacao[array_rand($frasesMotivacao)];
             </div>
           </div>
         </div>
+
         <!-- Motivação -->
-        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg text-center">
+        <div class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg text-center <?= $atributos[6] ?>">
           <p class="text-sm font-medium text-gray-400">Motivação</p>
           <h3 class="text-lg font-semibold text-indigo-300 mt-2 italic">
             "<?= $fraseAleatoria ?>"
           </h3>
         </div>
-
-
       </div>
 
 
