@@ -1713,38 +1713,23 @@ function uploadImagem($foto)
   $uploadOk = 1;
   $target_dir = __DIR__ . '/../public/uploads/';
 
-  // Verifica se o arquivo foi enviado
   if (!isset($foto) || !isset($foto["tmp_name"]) || empty($foto["tmp_name"])) {
     return ['erro' => "Nenhum arquivo foi enviado."];
   }
 
-  // Verifica se é uma imagem
   $check = getimagesize($foto["tmp_name"]);
   if ($check === false) {
-    $resposta .= "O arquivo não é uma imagem. ";
-    $uploadOk = 0;
+    return ['erro' => "O arquivo não é uma imagem."];
   }
 
-  // Gera nome único para o arquivo
-  $tipo = strtolower(pathinfo($foto["name"], PATHINFO_EXTENSION));
-  $nomeUnico = uniqid("img_", true) . "." . $tipo;
-  $target_file = rtrim($target_dir, "/") . "/" . $nomeUnico;
+  $extensao = strtolower(pathinfo($foto["name"], PATHINFO_EXTENSION));
+  $novoNome = uniqid('img_') . '.' . $extensao;
+  $caminho = $target_dir . $novoNome;
 
-  // Verifica o tipo de arquivo
-  if (!in_array($tipo, ['jpg', 'jpeg', 'png'])) {
-    $resposta .= "Apenas arquivos JPG, PNG ou JPEG são permitidos. ";
-    $uploadOk = 0;
-  }
-
-  // Tentativa final de upload
-  if ($uploadOk == 0) {
-    return ['erro' => trim($resposta)];
+  if (move_uploaded_file($foto["tmp_name"], $caminho)) {
+    return $novoNome;
   } else {
-    if (move_uploaded_file($foto["tmp_name"], $target_file)) {
-      return $nomeUnico;
-    } else {
-      return ['erro' => "Erro ao mover o arquivo para o diretório de destino."];
-    }
+    return ['erro' => "Falha ao mover o arquivo."];
   }
 }
 

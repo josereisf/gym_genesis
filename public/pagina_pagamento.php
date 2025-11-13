@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . "/./php/verificarLogado.php";
 // Gerar código PIX
 function gerarCodigoPix($tamanho = 32)
@@ -106,10 +107,7 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
 
         <!-- Botão -->
         <div class="text-center pt-4">
-          <input type="submit"
-            class="bg-blue-700 hover:bg-blue-800 text-white text-lg font-semibold px-8 py-3 rounded-xl transition duration-300 shadow-md">
-            Confirmar Pagamento
-          </input>
+          <input value="Confirmar Pagamento" type="submit" class="bg-blue-700 hover:bg-blue-800 text-white text-lg font-semibold px-8 py-3 rounded-xl transition duration-300 shadow-md">
         </div>
       </form>
 

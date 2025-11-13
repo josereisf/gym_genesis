@@ -17,20 +17,94 @@ if ($id) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulário Genérico</title>
+  <title>Formulário - Gym Genesis</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./js/formularioGenerico.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0a, #121212);
+      font-family: 'Inter', sans-serif;
+      color: #e5e7eb;
+    }
+
+    .card {
+      background: #181818;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 0 25px rgba(0, 224, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 35px rgba(0, 224, 255, 0.15);
+    }
+
+    label {
+      color: #cbd5e1;
+    }
+
+    input,
+    select,
+    textarea {
+      background-color: #1f1f1f;
+      border: 1px solid #333;
+      color: #f3f4f6;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #00e0ff;
+      box-shadow: 0 0 6px #00e0ff;
+      outline: none;
+    }
+
+    .btn-neon {
+      background: linear-gradient(90deg, #00e0ff, #0099ff);
+      color: #fff;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+    }
+
+    .btn-neon:hover {
+      background: linear-gradient(90deg, #00c0ff, #0077ff);
+      box-shadow: 0 0 25px rgba(0, 224, 255, 0.6);
+    }
+
+    .form-title {
+      background: linear-gradient(90deg, #00e0ff, #0077ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+    }
+
+    img {
+      border: 2px solid #00e0ff;
+      box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00e0ff, transparent);
+      margin: 1.5rem 0;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 
-<body class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+<body class="min-h-screen flex items-center justify-center p-6">
 
   <div id="dados" data-tabela="<?php echo $tabela; ?>" data-id="<?php echo $id; ?>"></div>
 
-  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-3xl border border-gray-200">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+  <div class="card rounded-2xl p-8 w-full max-w-3xl">
+    <h1 class="text-3xl font-bold text-center form-title mb-6 uppercase tracking-wider">
       <?php echo $id ? 'Editar Registro' : 'Cadastrar Novo Registro'; ?>
     </h1>
+
+    <div class="divider"></div>
 
     <form action="" method="post" enctype="multipart/form-data" id="formGenerico" class="space-y-6">
       <?php
@@ -57,9 +131,10 @@ if ($id) {
           else {
             echo "
               <div>
-              <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
-              <select name='$nome_campo' class='chaveEstrangeira w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500' data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='" . ($id ? $dados[$nome_campo] : '') . "'>
-              </select>
+                <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
+                <select name='$nome_campo' class='chaveEstrangeira w-full rounded-lg p-2' 
+                  data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='" . ($id ? $dados[$nome_campo] : '') . "'>
+                </select>
               </div>
             <script>preencherChavesEstrangeiras()</script>";
           }
@@ -70,20 +145,20 @@ if ($id) {
         if (strpos($nome_campo, "senha") !== false) {
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
             <input type='password' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'
               onfocus=\"this.type='text'\" onblur=\"this.type='password'\"
-              class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>
+              class='w-full rounded-lg p-2' readonly>
           </div>";
           continue;
         }
 
-        // Foto
+        // Foto / imagem
         if (strpos($nome_campo, 'foto') !== false || strpos($nome_campo, 'imagem') !== false) {
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>Foto</label>
-            <input type='file' name='$nome_campo' class='w-full text-gray-700'>
+            <label for='$nome_campo' class='block font-semibold mb-1'>Foto</label>
+            <input type='file' name='$nome_campo' class='w-full text-gray-200'>
             ";
           if ($id && isset($dados[$nome_campo])) {
             echo "<img src='./uploads/" . $dados[$nome_campo] . "' alt='Foto' class='mt-3 rounded-lg shadow-md w-24 h-24 object-cover'>";
@@ -96,8 +171,8 @@ if ($id) {
         if (strpos($tipo_campo, 'text') !== false) {
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
-            <textarea name='$nome_campo' rows='4' class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>" . ($id ? $dados[$nome_campo] : '') . "</textarea>
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
+            <textarea name='$nome_campo' rows='4' class='w-full rounded-lg p-2'>" . ($id ? $dados[$nome_campo] : '') . "</textarea>
           </div>";
           continue;
         }
@@ -106,9 +181,9 @@ if ($id) {
         if (strpos($tipo_campo, 'date') !== false && strpos($tipo_campo, 'time') === false) {
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
             <input type='date' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'
-              class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>
+              class='w-full rounded-lg p-2'>
           </div>";
           continue;
         }
@@ -117,29 +192,21 @@ if ($id) {
         if (strpos($tipo_campo, 'time') !== false && strpos($tipo_campo, 'stamp') === false && strpos($tipo_campo, 'date') === false) {
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
             <input type='time' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'
-              class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>
+              class='w-full rounded-lg p-2'>
           </div>";
           continue;
         }
-        if (strpos($tipo_campo, 'datetime') !== false || strpos($tipo_campo, 'timestamp') !== false) {
-          echo "
-          <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
-            <input type='datetime' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'
-              class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>
-          </div>";
-          continue;
-        }
+
         // Enum
         if (strpos($tipo_campo, 'enum') !== false) {
           preg_match("/enum\((.*)\)/", $tipo_campo, $matches);
           $valores = str_getcsv(str_replace("'", "", $matches[1]));
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
-            <select name='$nome_campo' class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>";
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
+            <select name='$nome_campo' class='w-full rounded-lg p-2'>";
           foreach ($valores as $val) {
             $selected = ($id && $dados[$nome_campo] == $val) ? 'selected' : '';
             echo "<option value='$val' $selected>$val</option>";
@@ -152,9 +219,9 @@ if ($id) {
         if (strpos($tipo_campo, 'int') !== false || strpos($tipo_campo, 'decimal') !== false) {
           echo "
           <div>
-            <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
             <input type='number' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'
-              class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>
+              class='w-full rounded-lg p-2'>
           </div>";
           continue;
         }
@@ -162,22 +229,21 @@ if ($id) {
         // Texto padrão
         echo "
         <div>
-          <label for='$nome_campo' class='block text-gray-700 font-semibold mb-1'>$nome_campo</label>
+          <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
           <input type='text' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : '') . "'
-            class='w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2'>
+            class='w-full rounded-lg p-2'>
         </div>";
       }
       ?>
 
-      <div class="text-center pt-4">
+      <div class="text-center pt-6">
         <button type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+          class="btn-neon text-white font-semibold px-8 py-2 rounded-lg shadow-md uppercase tracking-wider">
           <?php echo $id ? 'Salvar Alterações' : 'Cadastrar'; ?>
         </button>
       </div>
     </form>
   </div>
-
 
   <script>
     const tabela = '<?php echo $tabela; ?>';
@@ -187,5 +253,4 @@ if ($id) {
     });
   </script>
 </body>
-
 </html>

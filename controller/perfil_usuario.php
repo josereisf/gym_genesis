@@ -5,28 +5,55 @@ header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_GET['acao'] ?? null;
 
-// Como você está recebendo dados JSON no fetch, não use $_POST direto,
-// leia o raw input e decodifique JSON:
+// 🔹 Lê JSON do corpo da requisição
 $input = json_decode(file_get_contents('php://input'), true);
 
-$idusuario       = $input['idusuario'] ?? 0;
-$nome            = $input['nome'] ?? null;
-$cpf             = $input['cpf'] ?? null;
-$data_nasc       = $input['data_nascimento'] ?? null;
-$telefone        = $input['telefone'] ?? null;
-$tipo            = $input['tipo'] ?? 1; // adicionado
+$idusuario        = $input['idusuario'] ?? 0;
+$nome             = $input['nome'] ?? null;
+$cpf              = $input['cpf'] ?? null;
+$data_nasc        = $input['data_nascimento'] ?? null;
+$telefone         = $input['telefone'] ?? null;
+$tipo             = $input['tipo'] ?? 1; 
+$imagem = $_FILES['imagem'] ?? null; // <- aqui vem o arquivo de verdade
+
+// 🔹 Processamento da imagem
+if (!$imagem || $imagem['error'] != 0) {
+    $nomeImagem = 'padrao.png';
+} else {
+    $resultadoUpload = uploadImagem($imagem);
+
+    if (is_array($resultadoUpload)) {
+        if (isset($resultadoUpload['erro'])) {
+            die(json_encode(['error' => "Erro ao salvar imagem: {$resultadoUpload['erro']}"]));
+        } elseif (isset($resultadoUpload['warning'])) {
+            $nomeImagem = $resultadoUpload['nome_arquivo'] ?? 'padrao.png';
+        } else {
+            die(json_encode(['error' => 'Retorno inesperado da função uploadImagem']));
+        }
+    } else {
+        $nomeImagem = $resultadoUpload;
+    }
+}
+
 $numero_matricula = $tipo ? gerarNumeroMatriculaPorTipo($tipo) : null;
 
-// Supondo que a imagem vai vir como string base64 no JSON
-$imagem = $input['imagem'] ?? null;
-
+// 🔹 Verifica ação
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
 
 switch ($acao) {
     case 'cadastrar':
-        $funcionou = cadastrarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone,$numero_matricula, $imagem);
+        $funcionou = cadastrarPerfilUsuario(
+            $idusuario,
+            $nome,
+            $cpf,
+            $data_nasc,
+            $telefone,
+            $numero_matricula,
+            $nomeImagem // aqui vai o nome da imagem, não o base64
+        );
+
         if ($funcionou) {
             enviarResposta(true, 'Usuário cadastrado com sucesso');
         } else {
@@ -35,7 +62,15 @@ switch ($acao) {
         break;
 
     case 'editar':
-        $funcionou = editarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, $imagem);
+        $funcionou = editarPerfilUsuario(
+            $idusuario,
+            $nome,
+            $cpf,
+            $data_nasc,
+            $telefone,
+            $nomeImagem // idem aqui
+        );
+
         if ($funcionou) {
             enviarResposta(true, 'Usuário editado com sucesso');
         } else {

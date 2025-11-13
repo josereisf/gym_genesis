@@ -25,7 +25,7 @@ switch ($acao) {
         break;
 
     case 'editar':
-        $resultado = editarMetaUsuario($idmeta, $descricao, $data_inicio, $data_limite, $status);
+        $resultado = editarMetaUsuario($idmeta, $idusuario, $descricao, $data_inicio, $data_limite, $status);
         if ($resultado) {
             $response = ['sucesso' => true, 'mensagem' => 'Meta editada com sucesso'];
         } else {

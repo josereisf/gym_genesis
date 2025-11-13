@@ -199,41 +199,30 @@ function getIdTabela(tabela) {
 }
 function editarRegistro(tabela) {
   let id = "2";
-  let dadosFormulario = $("#formGenerico").serializeArray();
-  let dadosParaEnviar = {};
-  //console.log('Dados para enviar:', dadosParaEnviar);
+  let formElement = document.getElementById("formGenerico");
+  let formData = new FormData(formElement);
 
-  dadosFormulario.forEach(function (item) {
-    dadosParaEnviar[item.name] = item.value;
-  });
+  // Adiciona ID manualmente
+  formData.append("id", id);
+  formData.append("acao", "editar");
 
-  // Adicionar o ID aos dados que serão enviados
-  dadosParaEnviar.id = id;
-  //console.log('Dados para enviar:', dadosParaEnviar);
-
-  const teste = JSON.stringify(dadosParaEnviar);
-  //console.log('Dados JSON:', teste);
-
-  $.ajax({
-    url:
-      "http://localhost:83/public/api/index.php?entidade=" +
-      tabela +
-      "&acao=editar",
+  // Envia tudo com o arquivo incluso
+  fetch("http://localhost:83/public/api/index.php?entidade=" + tabela + "&acao=editar", {
     method: "POST",
-    contentType: "application/json",
-    data: JSON.stringify(dadosParaEnviar), // Enviar os dados do formulário
-    success: function (data) {
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Resposta do servidor:", data);
       if (data.sucesso) {
-        alert("Registro editado com sucesso!" + (data.mensagem || "Erro desconhecido"));
-        // Redirecionar ou atualizar a página conforme necessário
+        alert("Registro editado com sucesso!");
       } else {
         alert("Erro ao editar: " + (data.mensagem || "Erro desconhecido"));
       }
-    },
-    error: function (xhr, status, error) {
-      // console.error('Erro na requisição:', error);
-      // alert('Erro na comunicação com o servidor');
-      console.error(error);
-    },
-  });
+    })
+    .catch((error) => {
+      console.error("Erro na requisição:", error);
+      alert("Erro na comunicação com o servidor");
+    });
 }
+
