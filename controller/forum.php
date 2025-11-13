@@ -18,7 +18,6 @@ $usuario_idusuario = $input['usuario_idusuario'] ?? $input['usuario_id'] ?? null
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
- <input type="datetime" name="" id="">
 switch ($acao) {
     case 'cadastrar':
         if (!$titulo || !$descricao || !$usuario_idusuario) {
