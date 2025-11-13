@@ -10,12 +10,11 @@ if (empty($input)) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
 
-$idhistorico = $input['idhistoricotreino'] ?? null;
+$idhistorico = $input['idhistorico'] ?? null;
 $data_execucao = $input['data_execucao'] ?? null;
 $observacoes = $input['observacoes'] ?? null;
 $idusuario = $input['usuario_id'] ?? null;
 $idtreino = $input['treino_id'] ?? null;
-
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
