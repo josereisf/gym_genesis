@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../code/funcao.php';
+require_once "../php/verificarLogado.php";
 
 ?>
 <!DOCTYPE html>

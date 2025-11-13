@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . "/../code/funcao.php";
+require_once "../php/verificarLogado.php";
 
 // Pega os parâmetros da URL
 $idaula = $_GET['idaula'] ?? null;

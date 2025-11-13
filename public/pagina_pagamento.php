@@ -1,4 +1,5 @@
 <?php
+require_once "../php/verificarLogado.php";
 // Gerar código PIX
 function gerarCodigoPix($tamanho = 32) {
   $caracteres = array_merge(range('a', 'z'), range('0', '9'));

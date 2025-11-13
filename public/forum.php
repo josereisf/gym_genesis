@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
+require_once "../php/verificarLogado.php";
 $idusuario = $_SESSION['idusuario'] ?? 21;
 $topicos = listarForum(null);
 $respostas = listarRespostaForum(null);

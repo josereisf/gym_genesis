@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $erro = $_SESSION['erro_login'] ?? null;
 unset($_SESSION['erro_login']);

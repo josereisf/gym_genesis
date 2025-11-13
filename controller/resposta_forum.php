@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../code/funcao.php";
 
+
 header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_REQUEST['acao'] ?? null;

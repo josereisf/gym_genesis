@@ -2,8 +2,8 @@
 require_once __DIR__ . "/../code/funcao.php";
 require_once "../php/verificarLogado.php";
 
-$id = isset($_GET['id']) ? $_GET['id'] : null;
-$tipo = isset($_GET['tipo']) ? $_GET['tipo'] : null;
+$id = $_SESSION['id'];
+$tipo = $_SESSION['tipo'];
 $tabela = $_GET['tabela'];
 $colunas = listarColunasTabela($tabela);
 

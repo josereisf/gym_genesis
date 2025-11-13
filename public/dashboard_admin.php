@@ -2,6 +2,7 @@
 // Código PHP no início do arquivo
 
 require_once __DIR__ . '/../code/funcao.php';
+require_once "../php/verificarLogado.php";
 
 
 // Função para listar dados da tabela
