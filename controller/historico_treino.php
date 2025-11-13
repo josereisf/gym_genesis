@@ -13,8 +13,8 @@ if (empty($input)) {
 $idhistorico = $input['idhistoricotreino'] ?? null;
 $data_execucao = $input['data_execucao'] ?? null;
 $observacoes = $input['observacoes'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
-$idtreino = $input['idtreino'] ?? null;
+$idusuario = $input['usuario_id'] ?? null;
+$idtreino = $input['treino_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

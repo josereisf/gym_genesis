@@ -8,7 +8,7 @@ $tipo = $_SESSION['tipo'];
 $tabela = $_GET['tabela'];
 
 $colunas = listarColunasTabela($tabela);
-
+$voltar = [];
 if ($id) {
   $acao = 'editar';
   $dados = DadosGerais($tabela, $id);
@@ -240,7 +240,7 @@ if (in_array($tabela, $voltar)) {
           echo "
           <div>
             <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
-            <input type='text' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : 'date("Y-m-d H:i:s")') . "'
+            <input type='datetime' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : 'Y-m-d H:i:s') . "'
               '>
           </div>";
           continue;
