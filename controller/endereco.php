@@ -4,10 +4,13 @@ require_once __DIR__ . '/../code/funcao.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_GET['acao'] ?? null;
-$input = json_decode(file_get_contents('php://input'), true);
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
 
 // Pegando corretamente os dados esperados pela função
-$id = $input['id'] ?? null; // esse é o id do usuário ou funcionário
+$id = $input['id'] ?? $input['usuario_id'] ?? null; // esse é o id do usuário ou funcionário
 $tipo = $input['tipo'] ?? null;
 
 $cep = $input['cep'] ?? null;

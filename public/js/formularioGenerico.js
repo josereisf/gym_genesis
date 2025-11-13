@@ -84,6 +84,9 @@ function preencherChavesEstrangeiras() {
           if (campo.includes("forum")) {
             nome_campo = "titulo";
           }
+          if (campo.includes("plano")) {
+            nome_campo = "tipo";
+          }
           console.log("Nome do campo para exibição:", tabela_principal);
           // Limpar o select antes de adicionar as opções
           select.empty();

@@ -18,11 +18,12 @@ $proteinas = $input['proteinas'] ?? null;
 $gorduras = $input['gorduras'] ?? null;
 $porcao = $input['porcao'] ?? null;
 $categoria = $input['categoria'] ?? null;
+$imagem = $_FILES['foto_de_perfil'] ?? null;
 
-if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-    $imagem = uploadImagem($_FILES['imagem']);
-} elseif (isset($input['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
-    $imagem = $input['imagem'];
+if (isset($_FILES['foto_de_perfil']) && $_FILES['foto_de_perfil']['error'] === UPLOAD_ERR_OK) {
+    $imagem = uploadImagem($_FILES['foto_de_perfil']);
+} elseif (isset($input['foto_de_perfil']) && (!isset($_FILES['foto_de_perfil']) || $_FILES['foto_de_perfil']['error'] !== UPLOAD_ERR_OK)) {
+    $imagem = $input['foto_de_perfil'];
 } else {
     $imagem = null;
 }
@@ -33,9 +34,36 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        if (!$nome || !$calorias || !$carboidratos || !$proteinas || !$gorduras || !$porcao || !$categoria) {
-            enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
+        if (
+            !$nome || !$calorias || !$carboidratos ||
+            !$proteinas || !$gorduras || !$porcao || !$categoria
+        ) {
+            // Cria um array com todos os campos e seus valores
+            $campos = [
+                'Nome' => $nome,
+                'Calorias' => $calorias,
+                'Carboidratos' => $carboidratos,
+                'Proteínas' => $proteinas,
+                'Gorduras' => $gorduras,
+                'Porção' => $porcao,
+                'Categoria' => $categoria
+            ];
+
+            // Filtra os que estão vazios
+            $vazios = [];
+            foreach ($campos as $campo => $valor) {
+                if (empty($valor) && $valor !== '0') { // '0' é válido
+                    $vazios[] = $campo;
+                }
+            }
+
+            // Monta a mensagem de erro
+            $msgErro = 'Os seguintes campos estão vazios: ' . implode(', ', $vazios);
+
+            enviarResposta(false, $msgErro);
+            exit;
         }
+
         $ok = cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
         if ($ok) {
             enviarResposta(true, 'Alimento cadastrado com sucesso');
@@ -45,8 +73,35 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$idalimento || !$nome || !$calorias || !$carboidratos || !$proteinas || !$gorduras || !$porcao || !$categoria) {
-            enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
+        if (
+            !$idalimento || !$nome || !$calorias || !$carboidratos ||
+            !$proteinas || !$gorduras || !$porcao || !$categoria
+        ) {
+            // Cria um array com todos os campos e seus valores
+            $campos = [
+                'ID do alimento' => $idalimento,
+                'Nome' => $nome,
+                'Calorias' => $calorias,
+                'Carboidratos' => $carboidratos,
+                'Proteínas' => $proteinas,
+                'Gorduras' => $gorduras,
+                'Porção' => $porcao,
+                'Categoria' => $categoria
+            ];
+
+            // Filtra os que estão vazios
+            $vazios = [];
+            foreach ($campos as $campo => $valor) {
+                if (empty($valor) && $valor !== '0') { // '0' é válido
+                    $vazios[] = $campo;
+                }
+            }
+
+            // Monta a mensagem de erro
+            $msgErro = 'Os seguintes campos estão vazios: ' . implode(', ', $vazios);
+
+            enviarResposta(false, $msgErro);
+            exit;
         }
         $ok = editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
         if ($ok) {

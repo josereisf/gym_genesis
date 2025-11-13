@@ -5012,3 +5012,34 @@ function listarAulaDoDia($idusuario)
 
   return $lista_aulas;
 }
+
+function listarDados($nomeTabela)
+{
+    $conexao = conectar();
+
+    if ($nomeTabela !== null) {
+        // Por segurança, escapar o nome da tabela
+        $nomeTabela = mysqli_real_escape_string($conexao, $nomeTabela);
+
+        $sql = "SELECT * FROM $nomeTabela";
+        $comando = mysqli_prepare($conexao, $sql);
+
+        if (!$comando) {
+            die('Erro na preparação: ' . mysqli_error($conexao));
+        }
+    } else {
+        return [];
+    }
+
+    mysqli_stmt_execute($comando);
+    $resultados = mysqli_stmt_get_result($comando);
+
+    $lista = [];
+    while ($linha = mysqli_fetch_assoc($resultados)) {
+        $lista[] = $linha;
+    }
+
+    mysqli_stmt_close($comando);
+
+    return $lista;
+}

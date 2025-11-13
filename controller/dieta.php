@@ -14,7 +14,7 @@ $iddieta = $input['iddieta'] ?? null;
 $descricao = $input['descricao'] ?? null;
 $data_inicio = $input['data_inicio'] ?? null;
 $data_fim = $input['data_fim'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
+$idusuario = $input['idusuario'] ?? $input['usuario_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

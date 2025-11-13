@@ -4,15 +4,16 @@ require_once __DIR__ . '/../code/funcao.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_REQUEST['acao'] ?? null;
-$input = json_decode(file_get_contents('php://input'), true);
-
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
 $idassinatura = $input['idassinatura'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
+$idusuario = $input['idusuario'] ?? $input['usuario_id'] ?? null;
 $data_inicio = $input['data_inicio'] ?? date('Y-m-d');
-$idplano = $input['plano_id'] ?? null;
+$idplano =$input['idplano'] ?? $input['plano_id'] ?? null;
 // Recupera o plano do banco
 $plano = $idplano ? (listarPlanos($idplano)[0] ?? null) : null;
-
 // Calcula a data_fim apenas se for cadastrar e tiver plano
 $data_fim = null;
 if ($acao === 'cadastrar' && $plano) {
@@ -37,7 +38,6 @@ switch ($acao) {
     case 'cadastrar':
         $erros = [];
 
-        if (!$idusuario) $erros[] = 'ID do usuário não informado';
         if (!$idplano) $erros[] = 'ID do plano não informado';
         if (!$data_fim) $erros[] = 'Data de término não informada';
         if (!$data_inicio) $erros[] = 'Data de início não informada';

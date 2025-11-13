@@ -1,12 +1,6 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
 require_once __DIR__ . "/./php/verificarLogado.php";
-$voltar = ["item_pedido"];
-if (in_array($tabela, $voltar)){
-  $_SESSION['erro_login'] = "Não possui para essa tabela.";
-  header('Location: login.php');
-  exit;
-}
 
 $idprincipal = $_SESSION['id'];
 $id = $_GET['id'] ?? null;
@@ -15,7 +9,18 @@ $tabela = $_GET['tabela'];
 $colunas = listarColunasTabela($tabela);
 
 if ($id) {
+  $acao = 'editar';
   $dados = DadosGerais($tabela, $id);
+} else {
+  $acao = 'cadastrar';
+  $dados = [];
+  $voltar = ["item_pedido", "aula_usuario", "dieta_alimentar"];
+}
+
+if (in_array($tabela, $voltar)) {
+  $_SESSION['erro_login'] = "Não possui para essa tabela.";
+  header('Location: login.php');
+  exit;
 }
 ?>
 <!DOCTYPE html>
@@ -113,7 +118,7 @@ if ($id) {
 
     <div class="divider"></div>
 
-    <form action="" method="post" enctype="multipart/form-data" id="formGenerico" class="space-y-6">
+    <form action="./api/index.php?entidade=<?= $tabela ?>&acao=<?= $acao ?>" method="post" enctype="multipart/form-data" id="formGenerico" class="space-y-6">
       <?php
       foreach ($colunas as $c) {
         $nome_campo = $c['Field'];
@@ -131,6 +136,33 @@ if ($id) {
         // Chaves estrangeiras
         if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
           $ignorar = ["forum", "perfil_usuario", "pagamento_detalhe", "perfil_professor", "meta_usuario", "treino", "pedido"];
+          if ($tabela === "endereco" && $nome_campo === "funcionario_id") {
+            echo '           <div>
+          
+               <input type="hidden" name="funcionario_id" value="' . null . '">
+              </div>';
+            echo '           <div>
+          
+               <input type="hidden" name="tipo" value="1">
+              </div>';
+            continue;
+          }
+          if ($tabela === "forum" && $nome_campo === "usuario_id") {
+            echo '           <div>
+          
+               <input type="hidden" name="usuario_id" value="' . $idprincipal . '">
+              </div>';
+
+            continue;
+          }
+          if ($tabela === "funcionario" && $nome_campo === "usuario_id") {
+            echo '           <div>
+           <label for="' . $nome_campo . '" class="block font-semibold mb-1">' . $nome_campo . '</label>
+               <input type="text" name="usuario_id" value="' . $idprincipal . '" class="w-full rounded-lg p-2" readonly>
+              </div>';
+
+            continue;
+          }
           if ($tipo === 0) {
             $ignorar = [];
           }
@@ -138,7 +170,9 @@ if ($id) {
           else {
             echo "
               <div>
-                <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
+              <input type='hidden' name='tipo' value='1'>  
+              <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
+
                 <select name='$nome_campo' class='chaveEstrangeira w-full rounded-lg p-2' 
                   data-tabela='$tabela' data-campo='$nome_campo' data-ideditar='" . ($id ? $dados[$nome_campo] : '') . "'>
                 </select>
@@ -185,7 +219,10 @@ if ($id) {
         }
 
         // Data
-        if (strpos($tipo_campo, 'date') !== false && strpos($tipo_campo, 'time') === false) {
+        if (
+          strpos($tipo_campo, 'date') !== false
+          && strpos($tipo_campo, 'time') === false
+        ) {
           echo "
           <div>
             <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
@@ -194,7 +231,19 @@ if ($id) {
           </div>";
           continue;
         }
-
+        // datetime
+        if (
+          strpos($tipo_campo, 'datetime') !== false
+          
+        ) {
+          echo "
+          <div>
+            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
+            <input type='text' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : 'date("Y-m-d H:i:s")') . "'
+              '>
+          </div>";
+          continue;
+        }
         // Hora
         if (strpos($tipo_campo, 'time') !== false && strpos($tipo_campo, 'stamp') === false && strpos($tipo_campo, 'date') === false) {
           echo "
@@ -251,13 +300,14 @@ if ($id) {
       </div>
     </form>
   </div>
-
+  <!-- 
   <script>
     const tabela = '<?php echo $tabela; ?>';
     $('#formGenerico').on('submit', function(e) {
       e.preventDefault();
       editarRegistro(tabela);
     });
-  </script>
+  </script> -->
 </body>
+
 </html>
