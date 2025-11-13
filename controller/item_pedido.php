@@ -12,7 +12,7 @@ if (empty($input)) {
 
 $iditem = $input['iditem'] ?? null;
 $pedido_id = $input['pedido_id'] ?? null;
-$produto_idproduto = $input['produto_idproduto'] ?? null;
+$produto_idproduto = $input['produto_id'] ?? null;
 $quantidade = $input['quantidade'] ?? null;
 $preco_unitario = $input['preco_unitario'] ?? null;
 

@@ -11,7 +11,7 @@ if (empty($input)) {
 }
 
 $idhistorico_peso = $input['idhistorico_peso'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
+$idusuario = $input['usuario_id'] ?? null;
 $peso = $input['peso'] ?? null;
 $data_registro = $input['data_registro'] ?? null;
 if ($data_registro === null) {
