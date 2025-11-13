@@ -1,6 +1,12 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
 require_once __DIR__ . "/./php/verificarLogado.php";
+$voltar = ["item_pedido"];
+if (in_array($tabela, $voltar)){
+  $_SESSION['erro_login'] = "Não possui para essa tabela.";
+  header('Location: login.php');
+  exit;
+}
 
 $idprincipal = $_SESSION['id'];
 $id = $_GET['id'] ?? null;
