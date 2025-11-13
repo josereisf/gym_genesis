@@ -4413,12 +4413,11 @@ function listarPerfilProfessor($idusuario)
  * @param [type] $conexao
  * @return void
  */
-function editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool
+function editarPerfilProfessor($idperfil, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool
 {
   $conexao = conectar();
   $sql = "UPDATE perfil_professor SET
             foto_perfil = ?, 
-            experiencia_anos = ?, 
             modalidade = ?, 
             avaliacao_media = ?, 
             descricao = ?, 

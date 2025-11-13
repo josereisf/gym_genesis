@@ -94,7 +94,6 @@ function preencherChavesEstrangeiras() {
           //select.append('<option value="">Selecione...</option>'); // Adicionar a opção padrão
           // Adiciona as opções para cada chave estrangeira
           chaveEstrangeira.forEach(function (item) {
-            console.log("Item da chave estrangeira:", item);
             let id = Object.keys(item).find(
               (key) => key.startsWith("id") && !key.endsWith("_id")
             );

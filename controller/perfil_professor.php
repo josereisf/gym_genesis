@@ -9,7 +9,7 @@ if (empty($input)) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
 
-$foto_perfil = $input['foto_perfil'] ?? null;
+$foto_perfil = $_FILES['foto_perfil'] ?? null;
 $modalidade = $input['modalidade'] ?? null;
 $avaliacao_media = $input['avaliacao_media'] ?? null;
 $descricao = $input['descricao'] ?? null;
@@ -30,7 +30,6 @@ switch ($acao) {
         } else {
             $ok = cadastrarPerfilProfessor(
     $foto_perfil,
-    $experiencia_anos,
     $modalidade,
     $avaliacao_media,
     $descricao,
@@ -47,16 +46,11 @@ switch ($acao) {
         break;
 
     case 'editar':
-        $erros = [];
-        if (!$idprofessor) $erros[] = 'ID do professor não informado';
-        if (!$nome) $erros[] = 'Nome não informado';
-        if (!$email) $erros[] = 'Email não informado';
-        if (!$especialidade) $erros[] = 'Especialidade não informada';
 
         if (!empty($erros)) {
             enviarResposta(false, 'Erro na edição do perfil: ' . implode(', ', $erros));
         } else {
-            $ok = editarPerfilProfessor($idperfil, $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone);
+            $ok = editarPerfilProfessor($idperfil, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone);
             if ($ok) {
                 enviarResposta(true, 'Perfil do professor editado com sucesso');
             } else {
