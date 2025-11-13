@@ -2,7 +2,8 @@
 require_once __DIR__ . "/../code/funcao.php";
 require_once __DIR__ . "/./php/verificarLogado.php";
 
-$id = $_SESSION['id'];
+$idprincipal = $_SESSION['id'];
+$id = $_GET['id'] ?? null;
 $tipo = $_SESSION['tipo'];
 $tabela = $_GET['tabela'];
 $colunas = listarColunasTabela($tabela);
