@@ -150,6 +150,7 @@ $subtotalCompra = 0;
             echo '</div>';
         }
         $_SESSION['compra'] = $subtotalCompra;
+        
         ?>
 
     </main>

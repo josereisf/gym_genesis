@@ -2463,7 +2463,7 @@ function listarAvaliacaoFisica($usuarioId)
   // Se não passou usuário, já retorna falso
   if ($usuarioId == null) {
     $sql = "SELECT
-                idavaliacao,
+                a.idavaliacao,
                 pf.nome AS nome_usuario,
                 a.peso,
                 a.altura,
@@ -2475,7 +2475,7 @@ function listarAvaliacaoFisica($usuarioId)
     $comando = mysqli_prepare($conexao, $sql);
   } else {
     $sql = "SELECT
-                idavalicao,
+                a.idavaliacao,
                 pf.nome AS nome_usuario,
                 a.peso,
                 a.altura,
