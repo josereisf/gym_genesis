@@ -4,7 +4,10 @@ require_once __DIR__ . '/../code/funcao.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_REQUEST['acao'] ?? null;
-$input = json_decode(file_get_contents('php://input'), true);
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
 
 $foto_perfil = $input['foto_perfil'] ?? null;
 $experiencia_anos = $input['experiencia_anos'] ?? null;
@@ -17,8 +20,8 @@ $usuario_id = $input['usuario_id'] ?? null;
 $nome = $input['nome'] ?? null;
 $email = $input['email'] ?? null;
 $especialidade = $input['especialidade'] ?? null;
-$idprofessor = $input['idprofessor'] ?? null;
-$idperfil = $input['idperfil'] ?? null;
+$idprofessor = $input['funcionario_id'] ?? null;
+$idperfil = $input['perfil_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

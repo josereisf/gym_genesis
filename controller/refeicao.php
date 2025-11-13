@@ -13,7 +13,7 @@ if (empty($input)) {
 $idrefeicao = $input['idrefeicao'] ?? null;
 $tipo = $input['tipo'] ?? null;
 $horario = $input['horario'] ?? null;
-$iddieta = $input['iddieta'] ?? null;
+$iddieta = $input['dieta_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

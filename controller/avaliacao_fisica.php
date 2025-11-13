@@ -16,7 +16,7 @@ $altura = $input['altura'] ?? null;
 $imc = $input['imc'] ?? null;
 $percentual_gordura = $input['percentual_gordura'] ?? null;
 $data_avaliacao = $input['data_avaliacao'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
+$idusuario = $input['usuario_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

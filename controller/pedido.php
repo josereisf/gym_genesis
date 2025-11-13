@@ -11,7 +11,7 @@ if (empty($input)) {
 }
 
 $idpedido = $input['idpedido'] ?? null;
-$usuario_idusuario = $input['usuario_idusuario'] ?? null;
+$usuario_idusuario = $input['usuario_id'] ?? null;
 $data_pedido = $input['data_pedido'] ?? null;
 $status = $input['status'] ?? null;
 $pagamento_id = $input['pagamento_id'] ?? null;

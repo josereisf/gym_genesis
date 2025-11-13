@@ -5,7 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 $acao = $_REQUEST['acao'] ?? null;
 
-$input = $_REQUEST;
+$input = $_POST;
 if (empty($input)) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
@@ -15,8 +15,8 @@ $data_aula = $input['data_aula'] ?? null;
 $dia_semana = $input['dia_semana'] ?? null;
 $hora_inicio = $input['hora_inicio'] ?? null;
 $hora_fim = $input['hora_fim'] ?? null;
-$idfuncionario = $input['idfuncionario'] ?? null;
-$idtreino = $input['idtreino'] ?? null;
+$idfuncionario = $input['funcionario_id'] ?? null;
+$idtreino = $input['treino_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

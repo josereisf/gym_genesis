@@ -11,10 +11,10 @@ if (empty($input)) {
 }
 
 $idrefeicao = $input['idrefeicao'] ?? null;
-$idalimento = $input['idalimento'] ?? null;
+$idalimento = $input['alimento_id'] ?? null;
 $quantidade = $input['quantidade'] ?? null;
 $observacao = $input['observacao'] ?? null;
-$iddieta = $input['iddieta'] ?? null;
+$iddieta = $input['dieta_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

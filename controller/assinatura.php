@@ -9,7 +9,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 $idassinatura = $input['idassinatura'] ?? null;
 $idusuario = $input['idusuario'] ?? null;
 $data_inicio = $input['data_inicio'] ?? date('Y-m-d');
-$idplano = $input['idplano'] ?? null;
+$idplano = $input['plano_id'] ?? null;
 // Recupera o plano do banco
 $plano = $idplano ? (listarPlanos($idplano)[0] ?? null) : null;
 

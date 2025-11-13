@@ -14,7 +14,7 @@ $idtreino = $input['idtreino'] ?? null;
 $tipo = $input['tipo'] ?? null;
 $horario = $input['horario'] ?? null;
 $descricao = $input['descricao'] ?? null;
-$idusuario = $input['idusuario'] ?? null;
+$idusuario = $input['usuario_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');

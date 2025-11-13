@@ -6,7 +6,10 @@ header('Content-Type: application/json; charset=utf-8');
 $acao = $_GET['acao'] ?? null;
 
 // 🔹 Lê JSON do corpo da requisição
-$input = json_decode(file_get_contents('php://input'), true);
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
 
 $idusuario        = $input['idusuario'] ?? 0;
 $nome             = $input['nome'] ?? null;
@@ -14,7 +17,7 @@ $cpf              = $input['cpf'] ?? null;
 $data_nasc        = $input['data_nascimento'] ?? null;
 $telefone         = $input['telefone'] ?? null;
 $tipo             = $input['tipo'] ?? 1; 
-$imagem = $_FILES['imagem'] ?? null; // <- aqui vem o arquivo de verdade
+$imagem = $_FILES['imagem'] ?? $_FILES['foto_perfil'] ?? null; // <- aqui vem o arquivo de verdade
 
 // 🔹 Processamento da imagem
 if (!$imagem || $imagem['error'] != 0) {

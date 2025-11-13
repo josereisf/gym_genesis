@@ -6,7 +6,10 @@ header('Content-Type: application/json; charset=utf-8');
 $acao = $_GET['acao'] ?? null;
 
 // Recebendo dados JSON
-$input = json_decode(file_get_contents('php://input'), true);
+$input = $_POST;
+if (empty($input)) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+}
 
 $idusuario = $input['idusuario'] ?? 0;
 $senha = $input['senha'] ?? null;

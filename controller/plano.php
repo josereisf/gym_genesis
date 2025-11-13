@@ -13,7 +13,7 @@ if (empty($input)) {
 $idplano = $input['idplano'] ?? null;
 $tipo = $input['tipo'] ?? null;
 $duracao = $input['duracao'] ?? null;
-$idassinatura = $input['idassinatura'] ?? null;
+$idassinatura = $input['assinatura_id'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
