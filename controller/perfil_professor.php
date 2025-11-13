@@ -10,17 +10,12 @@ if (empty($input)) {
 }
 
 $foto_perfil = $input['foto_perfil'] ?? null;
-$experiencia_anos = $input['experiencia_anos'] ?? null;
 $modalidade = $input['modalidade'] ?? null;
 $avaliacao_media = $input['avaliacao_media'] ?? null;
 $descricao = $input['descricao'] ?? null;
 $horarios_disponiveis = $input['horarios_disponiveis'] ?? null;
 $telefone = $input['telefone'] ?? null;
 $usuario_id = $input['usuario_id'] ?? null;
-$nome = $input['nome'] ?? null;
-$email = $input['email'] ?? null;
-$especialidade = $input['especialidade'] ?? null;
-$idprofessor = $input['funcionario_id'] ?? null;
 $idperfil = $input['perfil_id'] ?? null;
 
 if (!$acao) {
@@ -29,10 +24,6 @@ if (!$acao) {
 
 switch ($acao) {
     case 'cadastrar':
-        $erros = [];
-        if (!$nome) $erros[] = 'Nome não informado';
-        if (!$email) $erros[] = 'Email não informado';
-        if (!$especialidade) $erros[] = 'Especialidade não informada';
 
         if (!empty($erros)) {
             enviarResposta(false, 'Erro no cadastro do professor: ' . implode(', ', $erros));

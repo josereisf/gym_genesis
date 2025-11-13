@@ -11,7 +11,6 @@ if (empty($input)) {
 }
 
 $idpagamento = $input['idpagamento'] ?? null;
-$usuario_idusuario = $input['usuario_id'] ?? null;
 $valor = $input['valor'] ?? null;
 $data_pagamento = $input['data_pagamento'] ?? null;
 $metodo = $input['metodo'] ?? null;
@@ -20,13 +19,12 @@ $status = $input['status'] ?? null;
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
-
 switch ($acao) {
     case 'cadastrar':
-        if (!$usuario_idusuario || !$valor || !$data_pagamento || !$metodo || !$status) {
+        if (!$valor || !$data_pagamento || !$metodo || !$status) {
             enviarResposta(false, 'Todos os campos obrigatórios devem ser preenchidos');
         }
-        $ok = cadastrarPagamento($usuario_idusuario, $valor, $data_pagamento, $metodo, $status);
+        $ok = cadastrarPagamento($valor, $data_pagamento, $metodo, $status);
         if ($ok) {
             enviarResposta(true, 'Pagamento cadastrado com sucesso');
         } else {

@@ -87,7 +87,7 @@ function preencherChavesEstrangeiras() {
           if (campo.includes("plano")) {
             nome_campo = "tipo";
           }
-          console.log("Nome do campo para exibição:", tabela_principal);
+
           // Limpar o select antes de adicionar as opções
           select.empty();
           select.append('<option value="">Selecione...</option>');
@@ -102,18 +102,12 @@ function preencherChavesEstrangeiras() {
               id = "idusuario";
             }
 
-            console.log("ID da tabela:", id);
+
             if (item[id] == ideditar) {
               selecionado = true;
             } else {
               selecionado = false;
             }
-            console.log("Adicionando opção:", {
-              item,
-              value: item[id], // ID do item
-              text: item[nome_campo], // Texto do campo (ex: 'nome', 'descricao', etc.)
-              selected: selecionado,
-            });
             select.append(
               $("<option>", {
                 value: item[id], // ID do item

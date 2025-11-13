@@ -20,7 +20,6 @@ if ($data_registro === null) {
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
-
 switch ($acao) {
     case 'cadastrar':
         $ok = cadastrarHistoricoPeso($idusuario, $peso, $data_registro);

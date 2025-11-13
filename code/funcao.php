@@ -4284,14 +4284,14 @@ function listarHistoricoPesoUltimo($idusuario)
  * @param [type] $conexao
  * @return void
  */
-function cadastrarPerfilProfessor($foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id)
+function cadastrarPerfilProfessor($foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id)
 {
   $conexao = conectar();
   $sql = "INSERT INTO perfil_professor 
-            (foto_perfil, experiencia_anos, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone, usuario_id, data_atualizacao) 
+            (foto_perfil, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone, usuario_id, data_atualizacao) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "sissssss", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
+  mysqli_stmt_bind_param($comando, "sissssss", $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);

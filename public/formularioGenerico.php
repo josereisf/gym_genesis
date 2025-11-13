@@ -136,7 +136,7 @@ if (in_array($tabela, $voltar)) {
 
         // Chaves estrangeiras
         if (strpos($nome_campo, "id") !== false && strpos($chave, "MUL") !== false) {
-          $ignorar = ["forum", "perfil_usuario", "pagamento_detalhe", "perfil_professor", "meta_usuario", "treino", "pedido"];
+          $ignorar = ["forum", "perfil_usuario", "", "perfil_professor", "meta_usuario", "treino", "pedido"];
           if ($tabela === "endereco" && $nome_campo === "funcionario_id") {
             echo '           <div>
           
