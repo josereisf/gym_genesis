@@ -10,8 +10,12 @@ function gerarCodigoPix($tamanho = 32)
   }
   return $codigo;
 }
+print_r($_SESSION);
 
+$idusuario = $_SESSION['id'];
+$preco = $_SESSION['compra'];
 $codigoPix = gerarCodigoPix();
+
 $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=200x200";
 ?>
 
@@ -37,20 +41,21 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
     <div class="bg-gray-900 bg-opacity-80 rounded-2xl shadow-2xl p-8">
       <h2 class="text-3xl font-bold text-center text-gray-100 mb-8">Pagamento - Gym Genesis</h2>
 
-      <form id="pagamentoForm" action="processar_pagamento.php" method="POST" class="space-y-6">
+      <form id="pagamentoForm" action="'http://localhost:83/public/api/index.php?entidade=processo_pagamento&acao=cadastrar'" method="POST" class="space-y-6">
 
         <!-- Valor -->
         <div>
           <label class="block text-sm font-semibold text-gray-300 mb-1">Valor (R$)</label>
-          <input
-            type="number"
-            name="valor"
-            step="0.01"
-            min="0.01"
-            required
-            oninvalid="this.setCustomValidity('Digite um valor maior que R$ 0,00')"
-            oninput="this.setCustomValidity('')"
-            class="w-full p-3 bg-gray-800 text-gray-100 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" />
+        <input  value="<?= number_format($preco, 2, '.', ''); ?>"
+                type="number"
+                name="valor"
+                step="0.01"
+                min="0.01"
+                required
+                disabled
+                oninvalid="this.setCustomValidity('Digite um valor maior que R$ 0,00')"
+                oninput="this.setCustomValidity('')"            
+                class="w-full p-3 bg-gray-800 text-gray-100 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" />
         </div>
 
         <!-- Tipo de Pagamento -->

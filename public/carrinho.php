@@ -1,9 +1,7 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
-require_once __DIR__ . "/./php/verificarLogado.php";
-session_start();
+require_once __DIR__ . '/./php/verificarLogado.php';
 $carrinho = $_SESSION['carrinho'] ?? [];
-print_r($carrinho);
 
 
 function totalCarrinho($carrinho, $quantidade)
@@ -144,13 +142,14 @@ $subtotalCompra = 0;
             echo '    </span>';
             echo '  </div>';
 
-            echo '  <button class="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-bold hover:scale-105 transition">';
-            echo '    <i class="fas fa-credit-card mr-2"></i> Finalizar Compra';
-            echo '  </button>';
+            echo '<button onclick="window.location.href=\'./pagina_pagamento.php\'" class="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-bold hover:scale-105 transition">';
+            echo '  <i class="fas fa-credit-card mr-2"></i> Finalizar Compra';
+            echo '</button>';
             echo '</div>';
 
             echo '</div>';
         }
+        $_SESSION['compra'] = $subtotalCompra;
         ?>
 
     </main>

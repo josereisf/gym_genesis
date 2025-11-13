@@ -3268,7 +3268,7 @@ function cadastrarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitar
  * @param [type] $conexao
  * @return void
  */
-function cadastrarPagamento($usuario_id, $valor, $data_pagamento, $metodo, $status = 'sucesso')
+function cadastrarPagamento($valor, $data_pagamento, $metodo, $status = 'sucesso')
 {
   $conexao = conectar();
 
@@ -3279,10 +3279,15 @@ function cadastrarPagamento($usuario_id, $valor, $data_pagamento, $metodo, $stat
   mysqli_stmt_bind_param($comando, "dsss", $valor, $data_pagamento, $metodo, $status);
 
   $funcionou = mysqli_stmt_execute($comando);
+  $idpagamento = 0;
+  if ($funcionou) {
+    $idpagamento = mysqli_insert_id($conexao);
+  }
+
   mysqli_stmt_close($comando);
   desconectar($conexao);
 
-  return $funcionou;
+  return $idpagamento;
 }
 /**
  * Undocumented function
