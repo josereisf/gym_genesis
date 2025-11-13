@@ -230,7 +230,7 @@ if (isset($_GET['tipo_usuario']) && $_GET['tipo_usuario'] == 0) {
         <label for="senha">Senha</label>
         <div class="relative">
           <input type="password" class="input pr-10" id="senha" name="senha"
-            oninput="verificarForcaSenha('senha')" />
+            oninput="verificarForcaSenha('senha')"  onclick="this.type = this.type === 'password' ? 'text' : 'password' "/>
           <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             onclick="toggleSenha('senha', this)">
             

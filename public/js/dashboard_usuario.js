@@ -34,7 +34,7 @@ formMeta.addEventListener('submit', async (e) => {
 
   try {
     const res = await fetch(
-      'http://localhost:83/public/api/index.php?entidade=meta&acao=cadastrar',
+      'http://localhost:83/public/api/index.php?entidade=meta_usuario&acao=cadastrar',
       {
         method: 'POST',
         body: formData,

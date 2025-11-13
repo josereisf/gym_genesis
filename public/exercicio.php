@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . "/../code/funcao.php";
 require_once __DIR__ . "/./php/verificarLogado.php";
 

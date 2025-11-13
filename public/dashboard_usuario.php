@@ -41,15 +41,16 @@ if (!empty($dadosSemDuplicados)) {
 }
 $aulaa = listarAulaUsuario($idaluno);
 
-if (!empty($aulaa) && count($aulaa) > 0) {
-  $treino = listarAulaAgendada($idaluno);
+
+if (isset($aulaa)) {
+  $treino = listarAulaAgendada($aulaa[0]['idaula'] ?? null);
 } else {
-  $treino = [];
+  $treino = listarAulaAgendada($idaluno);
 }
 
-//  echo '<pre>';
-//  print_r($treino);
-//  echo '</pre>';
+  // echo '<pre>';
+  // print_r($treino);
+  // echo '</pre>';
 
 $metas = listarMetaUsuario($idaluno);
 
@@ -359,7 +360,7 @@ $produto = listarProdutos($n);
 
             <!-- Opções -->
             <div class="py-1.5">
-              <a href="#" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
+              <a href="perfil.php" class="group relative flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-green-50">
                 <div class="absolute left-0 top-0 h-full w-1 bg-green-500 rounded-r opacity-0 group-hover:opacity-100"></div>
                 <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center mr-3 group-hover:bg-green-200">
                   <i class="fa-solid fa-circle-user w-5 h-5 text-green-600 group-hover:text-green-700"></i>
@@ -682,13 +683,6 @@ $produto = listarProdutos($n);
 
           </div>
 
-          <!-- Tailwind Colors (adicione ao seu tailwind.config.js)
-colors: {
-  neonred: "#ff2e63",
-  dark: "#0a0a0a",
-  darkblue: "#0d1b2a",
-}
--->
 
         </div>
 

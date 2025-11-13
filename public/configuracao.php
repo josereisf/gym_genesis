@@ -1,16 +1,19 @@
 <?php
-    session_start();
     require_once __DIR__ . "/../code/funcao.php";
     require_once __DIR__ ."/./php/verificarLogado.php";
 
-    // Exemplo: dados vindos do banco
-    $nome = "Carlos Almeida";
-    $email = "carlos@email.com";
-    $pesoAtual = 78;
-    $pesoMeta = 72;
-    $objMeta = "Emagrecimento";
+$lista = listarUsuarioCompleto($_SESSION["id"]);
+
+foreach ($lista as $usuario) {
+    $nome = $usuario['nome_usuario'];
+    $email = $usuario['email'];
+    $pesoAtual = $usuario['peso'];
+    $pesoMeta = $usuario['peso'];
+    $objMeta = $usuario['descricao_meta'];
     $notifTreino = true;
-    $dieta = "Equilibrada";
+}
+
+// var_dump($lista);
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -152,62 +155,7 @@ foreach ($cards as $numero => $nome) {
                         <button type="submit" class="col-span-2 bg-green-600 hover:bg-green-700 px-6 py-2 rounded-md text-white font-semibold">Salvar Metas</button>
                     </form>
                 </div>
-
-                <!-- Preferências de Treino -->
-                <div class="bg-[#111827] rounded-xl shadow-md p-6 mb-8">
-                    <h2 class="text-xl font-semibold text-white mb-4">Preferências de Treino</h2>
-                    <form action="api/salvar_preferencias.php" method="POST" class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-gray-300">Receber notificações de treino</span>
-                            <label class="inline-flex items-center cursor-pointer">
-                                <input type="checkbox" name="notif_treino" class="sr-only" <?= $notifTreino ? "checked" : "" ?>>
-                                <span class="w-10 h-6 bg-gray-600 rounded-full relative transition">
-                                    <span class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition <?= $notifTreino ? 'translate-x-4' : '' ?>"></span>
-                                </span>
-                            </label>
-                        </div>
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-md text-white font-semibold">Salvar Preferências</button>
-                    </form>
-                </div>
-
-                <!-- Configuração de Dieta -->
-                <div class="bg-[#111827] rounded-xl shadow-md p-6 mb-8">
-                    <h2 class="text-xl font-semibold text-white mb-4">Configurações de Dieta</h2>
-                    <form action="api/salvar_dieta.php" method="POST" class="space-y-4">
-                        <div>
-                            <label class="block text-gray-400 text-sm mb-1">Tipo de Dieta</label>
-                            <select name="dieta" class="w-full p-3 rounded-md bg-[#1f2937] text-white border border-gray-600">
-                                <option <?= $dieta == "Equilibrada" ? "selected" : "" ?>>Equilibrada</option>
-                                <option <?= $dieta == "Low Carb" ? "selected" : "" ?>>Low Carb</option>
-                                <option <?= $dieta == "Cetogênica" ? "selected" : "" ?>>Cetogênica</option>
-                                <option <?= $dieta == "Vegetariana" ? "selected" : "" ?>>Vegetariana</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-md text-white font-semibold">Salvar Dieta</button>
-                    </form>
-                </div>
-
-                <!-- Segurança -->
-                <div class="bg-[#111827] rounded-xl shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-white mb-4">Segurança</h2>
-                    <form action="api/alterar_senha.php" method="POST" class="space-y-4">
-                        <div>
-                            <label class="block text-gray-400 text-sm mb-1">Senha Atual</label>
-                            <input type="password" name="senha_atual" class="w-full p-3 rounded-md bg-[#1f2937] text-white border border-gray-600">
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 text-sm mb-1">Nova Senha</label>
-                            <input type="password" name="nova_senha" class="w-full p-3 rounded-md bg-[#1f2937] text-white border border-gray-600">
-                        </div>
-                        <div>
-                            <label class="block text-gray-400 text-sm mb-1">Confirmar Nova Senha</label>
-                            <input type="password" name="confirmar_senha" class="w-full p-3 rounded-md bg-[#1f2937] text-white border border-gray-600">
-                        </div>
-                        <button type="submit" class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-md text-white font-semibold">Alterar Senha</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!--  -->
 
     </body>
 
