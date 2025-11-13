@@ -6,6 +6,7 @@ $idprincipal = $_SESSION['id'];
 $id = $_GET['id'] ?? null;
 $tipo = $_SESSION['tipo'];
 $tabela = $_GET['tabela'];
+
 $colunas = listarColunasTabela($tabela);
 
 if ($id) {

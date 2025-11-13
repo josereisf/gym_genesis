@@ -52,6 +52,10 @@ function listarTabela(tabela, id) {
 
         // 🧩 Cria linhas com dados
         dados.forEach((item) => {
+          console.log(item);
+            let iditem = Object.keys(item).find(
+              (key) => key.startsWith("id") && !key.endsWith("_id")
+            );
           const linha = $('<tr></tr>')
           Object.keys(item).forEach((key) => {
             linha.append(`<td>${item[key] ?? '—'}</td>`)
@@ -62,12 +66,12 @@ function listarTabela(tabela, id) {
             <td class="text-center space-x-2">
               <button
                 class="editar px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition"
-                data-id="${item.id}">
+                data-id="${item[iditem]}">
                 ✏️ Editar
               </button>
               <button
                 class="excluir px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition"
-                data-id="${item.id}">
+                data-id="${item[iditem]}">
                 🗑️ Excluir
               </button>
             </td>
@@ -91,7 +95,7 @@ function listarTabela(tabela, id) {
         $('#tabela-dados').on('click', '.editar', function () {
           const id = $(this).data('id')
           alert(`Editar registro ID: ${id}`)
-          // ex: abrir modal
+          window.location.href = "http://localhost:83/public/formularioGenerico.php?tabela=" + tabela + "&id=" + id;
         })
 
         $('#tabela-dados').on('click', '.excluir', function () {
@@ -111,13 +115,85 @@ function listarTabela(tabela, id) {
     },
   })
 }
-
+function getIdTabela(tabela) {
+  switch (tabela) {
+    case "alimento":
+      return "idalimento";
+    case "plano":
+      return "idplano";
+    case "usuario":
+      return "idusuario";
+    case "assinatura":
+      return "idassinatura";
+    case "cargo":
+      return "idcargo";
+    case "funcionario":
+      return "idfuncionario";
+    case "treino":
+      return "idtreino";
+    case "aula_agendada":
+      return "idaula";
+    case "aula_usuario":
+      return "idaula"; // chave composta
+    case "avaliacao_fisica":
+      return "idavaliacao";
+    case "categoria_produto":
+      return "idcategoria";
+    case "cupom_desconto":
+      return "idcupom";
+    case "dicas_nutricionais":
+      return "iddicas_nutricionais";
+    case "dieta":
+      return "iddieta";
+    case "refeicao":
+      return "idrefeicao";
+    case "dieta_alimentar":
+      return "alimento_id"; // chave composta
+    case "endereco":
+      return "idendereco";
+    case "exercicio":
+      return "idexercicio";
+    case "forum":
+      return "idtopico"; // corrigido
+    case "historico_peso":
+      return "idhistorico_peso";
+    case "historico_treino":
+      return "idhistorico";
+    case "pagamento":
+      return "idpagamento";
+    case "pedido":
+      return "idpedido";
+    case "produto":
+      return "idproduto";
+    case "item_pedido":
+      return "pedido_id"; // chave composta
+    case "meta_usuario":
+      return "idmeta";
+    case "pagamento_detalhe":
+      return "idpagamento2"; // corrigido
+    case "perfil_professor":
+      return "idperfil";
+    case "perfil_usuario":
+      return "idperfil_usuario";
+    case "recuperacao_senha":
+      return "idrecuperacao_senha";
+    case "resposta_forum":
+      return "idresposta";
+    case "treino_exercicio":
+      return "idtreino2"; // corrigido
+    default:
+      return "";
+  }
+}
 function excluirRegistro(tabela, id) {
+  let idtabela = getIdTabela(tabela);
+  let dadoParaEnviar = {};
+  dadoParaEnviar[idtabela] = id; 
   $.ajax({
-    url: `http://localhost:83/public/api/index.php?entidade=${tabela}&acao=excluir`,
+    url: `http://localhost:83/public/api/index.php?entidade=${tabela}&acao=deletar`,
     method: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({ id: id }),
+    data: JSON.stringify(dadoParaEnviar),
     success: function () {
       alert('Registro excluído com sucesso!')
       listarTabela(tabela)

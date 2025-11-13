@@ -299,6 +299,7 @@ function listarEnderecos($tipo)
   $conexao = conectar();
   if ($tipo == null) {
     $sql = ' SELECT
+    idendereco,
     pf.nome AS nome_usuario,
     f.nome AS nome_funcionario,
     e.cep,
@@ -314,6 +315,7 @@ function listarEnderecos($tipo)
     $comando = mysqli_prepare($conexao, $sql);
   } elseif ($tipo == 1) {
     $sql = ' SELECT
+    idendereco,
     pf.nome AS nome_usuario,
     e.cep, e.rua, e.numero,
     e.complemento, e.bairro,
@@ -803,6 +805,7 @@ function listarDietas($iddieta)
   $conexao = conectar();
   if ($iddieta != null) {
     $sql = 'SELECT
+    iddieta,
     pf.usuario_id,
     pf.nome AS nome_usuario,
     d.descricao,
@@ -815,6 +818,7 @@ function listarDietas($iddieta)
     mysqli_stmt_bind_param($comando, 'i', $iddieta);
   } else {
     $sql = ' SELECT
+    iddieta,
     pf.usuario_id,
     pf.nome AS nome_usuario,
     d.descricao,
@@ -906,6 +910,7 @@ function listarTreinoExercicio($idtreino2)
   $conexao = conectar();
   if ($idtreino2 != null) {
     $sql = ' SELECT
+    idtreino2,
     e.nome,
     t.tipo,
     te.series,
@@ -920,6 +925,7 @@ function listarTreinoExercicio($idtreino2)
     mysqli_stmt_bind_param($comando, 'i', $idtreino2);
   } else {
     $sql = ' SELECT
+    idtreino2,
     e.nome,
     t.tipo,
     te.series,
@@ -952,6 +958,7 @@ function listarTreinoExercicioTreino($idtreino)
 {
   $conexao = conectar();
   $sql = ' SELECT
+  idtreino,
   e.nome,
   t.tipo,
   te.series,
@@ -1112,6 +1119,7 @@ function listarPedidos($idpedido)
   $conexao = conectar();
   if ($idpedido != null) {
     $sql = ' SELECT
+    idpedido,
     pf.usuario_id,
     pf.nome AS nome_usuario,
     p.data_pedido,
@@ -1127,6 +1135,7 @@ function listarPedidos($idpedido)
     mysqli_stmt_bind_param($comando, 'i', $idpedido);
   } else {
     $sql = ' SELECT
+    idpedido,
     pf.usuario_id,
     pf.nome AS nome_usuario,
     p.data_pedido,
@@ -2404,6 +2413,7 @@ function listarMetaUsuario($idmeta = null)
   if ($idmeta != null) {
     // Busca apenas a meta específica
     $sql = "SELECT
+              idmeta,
               m.usuario_id,
               pf.nome AS nome_usuario,
               m.idmeta,
@@ -2419,6 +2429,7 @@ function listarMetaUsuario($idmeta = null)
   } else {
     // Busca todas as metas
     $sql = "SELECT 
+              idmeta,
               m.usuario_id,
               pf.nome AS nome_usuario,
               m.idmeta,
@@ -2452,6 +2463,7 @@ function listarAvaliacaoFisica($usuarioId)
   // Se não passou usuário, já retorna falso
   if ($usuarioId == null) {
     $sql = "SELECT
+                idavaliacao,
                 pf.nome AS nome_usuario,
                 a.peso,
                 a.altura,
@@ -2463,6 +2475,7 @@ function listarAvaliacaoFisica($usuarioId)
     $comando = mysqli_prepare($conexao, $sql);
   } else {
     $sql = "SELECT
+                idavalicao,
                 pf.nome AS nome_usuario,
                 a.peso,
                 a.altura,
@@ -2901,6 +2914,7 @@ function listarAssinaturas($idassinatura)
 
   if ($idassinatura !== null) {
     $sql = "SELECT 
+    idassinatura,
       pf.nome AS nome_usuario,
       p.tipo,
       p.duracao,
@@ -2914,6 +2928,7 @@ function listarAssinaturas($idassinatura)
     mysqli_stmt_bind_param($comando, "i", $idassinatura);
   } else {
     $sql = "SELECT 
+    idassinatura,
       pf.nome AS nome_usuario,
       p.tipo,
       p.duracao,
