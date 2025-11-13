@@ -150,12 +150,28 @@ $subtotalCompra = 0;
             echo '</div>';
         }
         $_SESSION['compra'] = $subtotalCompra;
-        
+
         ?>
 
     </main>
     <script>
         $(document).ready(function() {
+            function enviarAtualizacaoSessao(id, quantidade) {
+                $.ajax({
+                    url: './php/atualizar_sessao_carrinho.php',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        quantidade: quantidade
+                    },
+                    success: function(res) {
+                        // opcional: console.log("Sessão atualizada:", res);
+                    },
+                    error: function() {
+                        console.error("Erro ao atualizar a sessão do carrinho.");
+                    }
+                });
+            }
 
             // --- Atualiza o subtotal geral (toda a compra) ---
             function atualizarSubtotalGeral() {
@@ -177,28 +193,32 @@ $subtotalCompra = 0;
                 atualizarSubtotalGeral(); // atualiza o total geral
             }
 
-            // --- Botão "+" ---
+            // Botão "+"
             $('.btn-plus').on('click', function() {
                 let input = $(this).siblings('.quantidade-input');
                 let valor = parseInt(input.val()) || 0;
                 input.val(valor + 1);
                 atualizarSubtotal($(this));
+                enviarAtualizacaoSessao(input.data('id'), valor + 1);
             });
 
-            // --- Botão "-" ---
+            // Botão "-"
             $('.btn-minus').on('click', function() {
                 let input = $(this).siblings('.quantidade-input');
                 let valor = parseInt(input.val()) || 0;
                 if (valor > 1) {
                     input.val(valor - 1);
                     atualizarSubtotal($(this));
+                    enviarAtualizacaoSessao(input.data('id'), valor - 1);
                 }
             });
 
-            // --- Atualiza também se o usuário digitar manualmente ---
+            // Quando o usuário digita manualmente
             $('.quantidade-input').on('input', function() {
                 atualizarSubtotal($(this));
+                enviarAtualizacaoSessao($(this).data('id'), $(this).val());
             });
+
 
             // --- Atualiza total geral ao carregar ---
             atualizarSubtotalGeral();

@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . "/./php/verificarLogado.php";
 // Gerar código PIX
 function gerarCodigoPix($tamanho = 32)
@@ -11,7 +10,7 @@ function gerarCodigoPix($tamanho = 32)
   }
   return $codigo;
 }
-print_r($_SESSION);
+// print_r($_SESSION);
 
 $idusuario = $_SESSION['id'];
 $preco = $_SESSION['compra'];
