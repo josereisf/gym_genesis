@@ -1,3 +1,17 @@
+$(document).ready(function () {
+  let tabela = $('#tabelas').val() || ''
+  let id = $('#dados').data('id')
+
+  if (tabela) {
+    listarTabela(tabela, id) // Carrega a tabela ao abrir a página
+  }
+  $('#tabelas').on('change', function () {
+    tabela = $(this).val()
+    console.log('Tabela:', tabela)
+    console.log('ID:', id)
+    listarTabela(tabela, id)
+  })
+})
 let dataTableInstance = null
 
 function listarTabela(tabela, id) {
@@ -67,7 +81,7 @@ function listarTabela(tabela, id) {
           pageLength: 10,
           destroy: true, // garante destruição anterior
           language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
           },
         })
 

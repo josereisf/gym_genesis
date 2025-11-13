@@ -666,7 +666,7 @@ function editarMetaUsuario($idmeta, $idusuario, $descricao, $data_inicio, $data_
         SET descricao = ?, data_inicio = ?, data_limite = ?, status = ? 
         WHERE idmeta = ? AND usuario_id = ?';
   $comando = mysqli_prepare($conexao, $sql);
-  
+
   mysqli_stmt_bind_param($comando, 'ssssii', $descricao, $data_inicio, $data_limite, $status, $idmeta, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
@@ -2451,10 +2451,18 @@ function listarAvaliacaoFisica($usuarioId)
 
   // Se não passou usuário, já retorna falso
   if ($usuarioId == null) {
-    return false;
-  }
-
-  $sql = "SELECT
+    $sql = "SELECT
+                pf.nome AS nome_usuario,
+                a.peso,
+                a.altura,
+                a.imc,
+                a.percentual_gordura,
+                a.data_avaliacao
+            FROM avaliacao_fisica AS a
+            JOIN perfil_usuario AS pf ON a.usuario_id = pf.usuario_id";
+    $comando = mysqli_prepare($conexao, $sql);
+  } else {
+    $sql = "SELECT
                 pf.nome AS nome_usuario,
                 a.peso,
                 a.altura,
@@ -2465,9 +2473,9 @@ function listarAvaliacaoFisica($usuarioId)
             JOIN perfil_usuario AS pf ON a.usuario_id = pf.usuario_id
             WHERE a.usuario_id = ?
             ORDER BY a.data_avaliacao DESC";  // só pega a avaliação mais recente
-
-  $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "i", $usuarioId);
+    $comando = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($comando, "i", $usuarioId);
+  }
   if (!$comando) {
     // Erro na preparação, pode tratar ou retornar false
     return false;

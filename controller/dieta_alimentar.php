@@ -46,12 +46,12 @@ switch ($acao) {
         break;
 
     case 'listar':
-        // $dados = listarDietaAlimentar($iddieta, $idalimento);
-        // if ($dados) {
-        //     enviarResposta(true, 'Dietas alimentares listadas com sucesso', $dados);
-        // } else {
-        //     enviarResposta(false, 'Erro ao listar dietas alimentares');
-        // }
+         $dados = listarDietaAlimentar($iddieta, $idalimento);
+         if ($dados) {
+             enviarResposta(true, 'Dietas alimentares listadas com sucesso', $dados);
+         } else {
+             enviarResposta(false, 'Erro ao listar dietas alimentares');
+         }
         break;
 
     case 'deletar':

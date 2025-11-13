@@ -73,13 +73,3 @@ switch ($acao) {
         break;
 }
 
-function enviarResposta($sucesso, $mensagem, $dados = null)
-{
-    $resposta = [
-        'sucesso' => $sucesso,
-        'mensagem' => $mensagem,
-        'dados' => $dados
-    ];
-    echo json_encode($resposta, JSON_UNESCAPED_UNICODE);
-    exit;
-}
