@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/./php/verificarLogado.php";
 session_start();
 $usuario = $_SESSION['id'];
 if (isset($_GET['tipo']) and $GET['tipo'] = 0) {
@@ -373,25 +373,24 @@ $professores = listarPerfilProfessor(null);
             document.getElementById("modal").classList.remove("flex");
             document.getElementById("modal").classList.add("hidden");
         }
+    </script>
+    <script>
+        document.addEventListener("click", (e) => {
+            const botao = e.target.closest("button[data-idprofessor]");
+            if (!botao) return;
 
-</script>
-<script>
-document.addEventListener("click", (e) => {
-    const botao = e.target.closest("button[data-idprofessor]");
-    if (!botao) return;
+            const idprofessor = botao.dataset.idprofessor;
+            const idaluno = <?= $usuario ?>;
 
-    const idprofessor = botao.dataset.idprofessor;
-    const idaluno = <?= $usuario ?>;
+            console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
 
-    console.log("Aula selecionada:", idprofessor, "Aluno:", idaluno);
+            // Monta a URL com os parâmetros que você precisa passar
+            const url = `exercicio.php?idaula=${encodeURIComponent(idprofessor)}&idaluno=${encodeURIComponent(idaluno)}`;
 
-    // Monta a URL com os parâmetros que você precisa passar
-    const url = `exercicio.php?idaula=${encodeURIComponent(idprofessor)}&idaluno=${encodeURIComponent(idaluno)}`;
-
-    // Redireciona o usuário para a página de exercícios
-    window.location.href = url;
-});
-</script>
+            // Redireciona o usuário para a página de exercícios
+            window.location.href = url;
+        });
+    </script>
 
     <script src="./js/loader.js"></script>
 

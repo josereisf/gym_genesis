@@ -1,7 +1,8 @@
 <?php
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/./php/verificarLogado.php";
 // Gerar código PIX
-function gerarCodigoPix($tamanho = 32) {
+function gerarCodigoPix($tamanho = 32)
+{
   $caracteres = array_merge(range('a', 'z'), range('0', '9'));
   $codigo = '';
   for ($i = 0; $i < $tamanho; $i++) {
@@ -16,6 +17,7 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,9 +25,12 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
   </style>
 </head>
+
 <body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-gray-300 snap-y snap-mandatory overflow-y-scroll h-screen">
 
   <div class="max-w-3xl mx-auto p-8">
@@ -37,15 +42,15 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
         <!-- Valor -->
         <div>
           <label class="block text-sm font-semibold text-gray-300 mb-1">Valor (R$)</label>
-          <input 
-                type="number"
-                name="valor"
-                step="0.01"
-                min="0.01"
-                required
-                oninvalid="this.setCustomValidity('Digite um valor maior que R$ 0,00')"
-                oninput="this.setCustomValidity('')"            
-                class="w-full p-3 bg-gray-800 text-gray-100 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" />
+          <input
+            type="number"
+            name="valor"
+            step="0.01"
+            min="0.01"
+            required
+            oninvalid="this.setCustomValidity('Digite um valor maior que R$ 0,00')"
+            oninput="this.setCustomValidity('')"
+            class="w-full p-3 bg-gray-800 text-gray-100 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" />
         </div>
 
         <!-- Tipo de Pagamento -->
@@ -155,14 +160,14 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
       }
     }
     document.getElementById("pagamentoForm").addEventListener("submit", function(e) {
-  const valor = parseFloat(document.querySelector('input[name="valor"]').value);
-  if (isNaN(valor) || valor <= 0) {
-    alert("Por favor, digite um valor maior que R$ 0,00.");
-    e.preventDefault();
-  }
-});
-
+      const valor = parseFloat(document.querySelector('input[name="valor"]').value);
+      if (isNaN(valor) || valor <= 0) {
+        alert("Por favor, digite um valor maior que R$ 0,00.");
+        e.preventDefault();
+      }
+    });
   </script>
 
 </body>
+
 </html>

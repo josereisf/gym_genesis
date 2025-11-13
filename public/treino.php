@@ -1,6 +1,6 @@
 <?php
 require_once '../code/funcao.php';
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/./php/verificarLogado.php";
 $idaula = $_GET['idaula'] ?? null;
 $idaluno = $_GET['idaluno'] ?? null;
 $aula_agendada = listarAulaAgendada($idaula);
@@ -8,6 +8,7 @@ $aula_agendada = listarAulaAgendada($idaula);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,17 @@ $aula_agendada = listarAulaAgendada($idaula);
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Poppins', sans-serif; }
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
     .active-item {
       background-color: rgba(34, 197, 94, 0.15);
       border-left: 3px solid #22c55e;
     }
   </style>
 </head>
+
 <body class="bg-gray-900 text-white flex h-screen">
 
   <!-- Sidebar -->
@@ -59,38 +64,38 @@ $aula_agendada = listarAulaAgendada($idaula);
     const idaluno = <?= json_encode($_GET['idaluno'] ?? 21) ?>;
     const idaula = <?= json_encode($_GET['idaula'] ?? 9) ?>; // começa vazio
 
-let exercises = <?= json_encode($aula_agendada) ?>;
-console.log(exercises);
+    let exercises = <?= json_encode($aula_agendada) ?>;
+    console.log(exercises);
 
     // -----------------------------
     // 🔹 Lógica de Exibição dos Exercícios
     // -----------------------------
 
- const exerciseList = document.getElementById('exercise-list');
-  const content = document.getElementById('exercise-content');
-  const finishBtn = document.getElementById('finish-btn');
+    const exerciseList = document.getElementById('exercise-list');
+    const content = document.getElementById('exercise-content');
+    const finishBtn = document.getElementById('finish-btn');
 
-  // Gera lista de exercícios
-  exercises.forEach(ex => {
-    const li = document.createElement('li');
-    li.className = "cursor-pointer px-4 py-3 rounded-lg hover:bg-white/10 transition flex justify-between items-center";
-    li.innerHTML = `
+    // Gera lista de exercícios
+    exercises.forEach(ex => {
+      const li = document.createElement('li');
+      li.className = "cursor-pointer px-4 py-3 rounded-lg hover:bg-white/10 transition flex justify-between items-center";
+      li.innerHTML = `
       <div>
         <div class="font-semibold">${ex.nome_exercicio}</div>
         <div class="text-sm text-white/50">${ex.grupo_muscular}</div>
       </div>
       <span class="text-green-400 text-xs uppercase">Ver</span>
     `;
-    li.addEventListener('click', () => showExercise(ex, li));
-    exerciseList.appendChild(li);
-  });
+      li.addEventListener('click', () => showExercise(ex, li));
+      exerciseList.appendChild(li);
+    });
 
-  // Mostra detalhes do exercício selecionado
-  function showExercise(ex, li) {
-    document.querySelectorAll('#exercise-list li').forEach(el => el.classList.remove('active-item'));
-    li.classList.add('active-item');
+    // Mostra detalhes do exercício selecionado
+    function showExercise(ex, li) {
+      document.querySelectorAll('#exercise-list li').forEach(el => el.classList.remove('active-item'));
+      li.classList.add('active-item');
 
-    content.innerHTML = `
+      content.innerHTML = `
       <div class="max-w-3xl mx-auto">
         <h2 class="text-4xl font-bold text-green-400 mb-4">${ex.nome_exercicio}</h2>
         <p class="text-white/70 mb-6">${ex.descricao_exercicio}</p>
@@ -125,52 +130,57 @@ console.log(exercises);
         </div>
       </div>
     `;
-  }
+    }
     // -----------------------------
     // 🔹 Botão de Concluir Treino
     // -----------------------------
     finishBtn.addEventListener('click', concluirTreino);
 
-function concluirTreino() {
-  const agora = new Date();
-  const dataHora = agora.toISOString().slice(0, 19).replace('T', ' ');
+    function concluirTreino() {
+      const agora = new Date();
+      const dataHora = agora.toISOString().slice(0, 19).replace('T', ' ');
 
-  fetch('http://localhost:83/public/api/index.php?entidade=historico_treino&acao=cadastrar', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      idtreino: exercises[0].idtreino,
-      idusuario: idaluno,
-      data_execucao: dataHora,
-      observacoes: exercises[0].descricao_exercicio
-    })
-  })
-  .then(response => response.json())
-  .then(dataHist => {
-    console.log('Histórico salvo:', dataHist);
-    return fetch('http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=deletar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        idaula: idaula,
-        idaluno: idaluno
-      })
-    });
-  })
-  .then(response => response.json())
-  .then(dataDel => {
-    console.log('Treino concluído:', dataDel);
-    finishBtn.innerText = '✅ Treino Concluído!';
-    finishBtn.classList.add('bg-green-500/40');
-    setTimeout(() => window.location.href = 'dashboard_usuario.php', 1500);
-  })
-  .catch(error => {
-    console.error('Erro:', error);
-    finishBtn.innerText = '❌ Tente novamente';
-    finishBtn.disabled = false;
-  });
-}
+      fetch('http://localhost:83/public/api/index.php?entidade=historico_treino&acao=cadastrar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            idtreino: exercises[0].idtreino,
+            idusuario: idaluno,
+            data_execucao: dataHora,
+            observacoes: exercises[0].descricao_exercicio
+          })
+        })
+        .then(response => response.json())
+        .then(dataHist => {
+          console.log('Histórico salvo:', dataHist);
+          return fetch('http://localhost:83/public/api/index.php?entidade=aula_usuario&acao=deletar', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idaula: idaula,
+              idaluno: idaluno
+            })
+          });
+        })
+        .then(response => response.json())
+        .then(dataDel => {
+          console.log('Treino concluído:', dataDel);
+          finishBtn.innerText = '✅ Treino Concluído!';
+          finishBtn.classList.add('bg-green-500/40');
+          setTimeout(() => window.location.href = 'dashboard_usuario.php', 1500);
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          finishBtn.innerText = '❌ Tente novamente';
+          finishBtn.disabled = false;
+        });
+    }
   </script>
 
 </body>
+
 </html>

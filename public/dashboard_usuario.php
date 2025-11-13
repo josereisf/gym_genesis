@@ -274,7 +274,7 @@ foreach ($numeros as $numero) {
 
 $n = rand(1, 20);
 $produto = listarProdutos($n);
-var_dump($n, $produto);
+// var_dump($n, $produto);
 // var_dump($_SESSION);
 ?>
 

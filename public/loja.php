@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../code/funcao.php';
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/./php/verificarLogado.php";
 
 ?>
 <!DOCTYPE html>
@@ -176,13 +176,13 @@ require_once "../php/verificarLogado.php";
         <button id="themeToggle" class="text-lg text-white bg-neonred w-10 h-10 rounded-full transition hover:bg-red-600 flex items-center justify-center">
           <i id="themeIcon" class="fas fa-moon"></i>
         </button>
-          
-        
-<button onclick="window.location.href='carrinho.php'" 
-        class="relative bg-neonred text-white w-10 h-10 rounded-full hover:bg-red-700 transition flex items-center justify-center">
-  <i class="fas fa-shopping-cart"></i>
-  <span class="absolute -top-1 -right-1 bg-neongreen text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center notificar">0</span>
-</button>
+
+
+        <button onclick="window.location.href='carrinho.php'"
+          class="relative bg-neonred text-white w-10 h-10 rounded-full hover:bg-red-700 transition flex items-center justify-center">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="absolute -top-1 -right-1 bg-neongreen text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center notificar">0</span>
+        </button>
 
 
         <!-- Menu mobile -->
@@ -268,42 +268,42 @@ require_once "../php/verificarLogado.php";
     <h3 class="text-3xl font-bold mb-2 text-gray-800 dark:text-white">Nossos Produtos</h3>
     <p class="text-gray-600 dark:text-gray-400 mb-8">Encontre os melhores produtos para potencializar seus resultados</p>
 
-<?php
-echo '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
+    <?php
+    echo '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
 
-$listar = listarProdutos(null);
+    $listar = listarProdutos(null);
 
-foreach ($listar as $l) {
-    $badge = '';
-    if ($l['preco'] < 50) {
+    foreach ($listar as $l) {
+      $badge = '';
+      if ($l['preco'] < 50) {
         $badge = '<span class="absolute top-2 left-2 bg-neongreen text-black text-xs font-bold px-2 py-1 rounded z-20">PROMO</span>';
-    } elseif ($l['idproduto'] % 5 == 0) {
+      } elseif ($l['idproduto'] % 5 == 0) {
         $badge = '<span class="absolute top-2 left-2 bg-neonred text-white text-xs font-bold px-2 py-1 rounded z-20">NOVO</span>';
+      }
+
+      echo '<div class="bg-white dark:bg-darkgray text-gray-900 dark:text-white shadow-lg rounded-xl overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 group relative">';
+      echo '  <div class="overflow-hidden relative">';
+      echo      $badge;
+      echo '    <img src="./uploads/' . $l['imagem'] . '" alt="Imagem de ' . $l['nome'] . '" class="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500 -z-20">';
+      echo '    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>';
+      echo '  </div>';
+
+      echo '  <div class="p-5 flex flex-col flex-grow">';
+      echo '    <h4 class="text-xl font-semibold mb-1">' . htmlspecialchars($l['nome']) . '</h4>';
+      echo '    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">' . mb_strimwidth(htmlspecialchars($l['descricao']), 0, 60, '...') . '</p>';
+
+      echo '    <div class="mt-auto flex items-center justify-between">';
+      echo '      <p class="text-lg text-neonred dark:text-neongreen font-bold">R$ ' . number_format($l['preco'], 2, ',', '.') . '</p>';
+      echo '      <button value="' . $l['idproduto'] . '" class="adicionar bg-neonred hover:bg-red-700 text-white font-medium w-10 h-10 rounded-full flex items-center justify-center transition-all group-hover:scale-110">';
+      echo '        <i class="fas fa-cart-shopping"></i>';
+      echo '      </button>';
+      echo '    </div>';
+      echo '  </div>';
+      echo '</div>';
     }
 
-    echo '<div class="bg-white dark:bg-darkgray text-gray-900 dark:text-white shadow-lg rounded-xl overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 group relative">';
-    echo '  <div class="overflow-hidden relative">';
-    echo      $badge;
-    echo '    <img src="./uploads/' . $l['imagem'] . '" alt="Imagem de ' . $l['nome']. '" class="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500 -z-20">';
-    echo '    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>';
-    echo '  </div>';
-
-    echo '  <div class="p-5 flex flex-col flex-grow">';
-    echo '    <h4 class="text-xl font-semibold mb-1">' . htmlspecialchars($l['nome']) . '</h4>';
-    echo '    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">' . mb_strimwidth(htmlspecialchars($l['descricao']), 0, 60, '...') . '</p>';
-
-    echo '    <div class="mt-auto flex items-center justify-between">';
-    echo '      <p class="text-lg text-neonred dark:text-neongreen font-bold">R$ ' . number_format($l['preco'], 2, ',', '.') . '</p>';
-    echo '      <button value="' . $l['idproduto'] . '" class="adicionar bg-neonred hover:bg-red-700 text-white font-medium w-10 h-10 rounded-full flex items-center justify-center transition-all group-hover:scale-110">';
-    echo '        <i class="fas fa-cart-shopping"></i>';
-    echo '      </button>';
-    echo '    </div>';
-    echo '  </div>';
     echo '</div>';
-}
-
-echo '</div>';
-?>
+    ?>
 
   </main>
 

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/./php/verificarLogado.php";
 session_start();
 $carrinho = $_SESSION['carrinho'] ?? [];
 print_r($carrinho);
@@ -50,108 +50,108 @@ $subtotalCompra = 0;
             <i class="fas fa-shopping-cart"></i> Meu Carrinho
         </h2>
 
-<?php
-if (empty($_SESSION['carrinho'])) {
-    echo '<div class="text-center py-20">';
-    echo '  <i class="fas fa-box-open text-6xl text-gray-600 mb-4"></i>';
-    echo '  <p class="text-lg text-gray-400">Seu carrinho está vazio.</p>';
-    echo '  <a href="loja.php#produtos" class="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition">';
-    echo '    <i class="fas fa-store mr-2"></i>Ver Produtos';
-    echo '  </a>';
-    echo '</div>';
-} else {
-    echo '<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">';
+        <?php
+        if (empty($_SESSION['carrinho'])) {
+            echo '<div class="text-center py-20">';
+            echo '  <i class="fas fa-box-open text-6xl text-gray-600 mb-4"></i>';
+            echo '  <p class="text-lg text-gray-400">Seu carrinho está vazio.</p>';
+            echo '  <a href="loja.php#produtos" class="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition">';
+            echo '    <i class="fas fa-store mr-2"></i>Ver Produtos';
+            echo '  </a>';
+            echo '</div>';
+        } else {
+            echo '<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">';
 
-    // LISTA DE PRODUTOS
-    echo '<div class="lg:col-span-2 space-y-6">';
-    $subtotalCompra = 0;
+            // LISTA DE PRODUTOS
+            echo '<div class="lg:col-span-2 space-y-6">';
+            $subtotalCompra = 0;
 
-    foreach ($_SESSION['carrinho'] as $id => $quantidade) {
-        $resultado = listarProdutos($id);
-        $nome  = $resultado[0]['nome'];
-        $preco = $resultado[0]['preco'];
-        $subtotal = $preco * $quantidade;
-        $subtotalFormatado = number_format($subtotal, 2, ',', '.');
-        $subtotalCompra += $subtotal;
+            foreach ($_SESSION['carrinho'] as $id => $quantidade) {
+                $resultado = listarProdutos($id);
+                $nome  = $resultado[0]['nome'];
+                $preco = $resultado[0]['preco'];
+                $subtotal = $preco * $quantidade;
+                $subtotalFormatado = number_format($subtotal, 2, ',', '.');
+                $subtotalCompra += $subtotal;
 
-        echo '<div class="flex items-center bg-gray-800 p-5 rounded-xl shadow-lg hover:shadow-blue-500/30 transition">';
-        echo '  <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white text-2xl">';
-        echo '    <i class="fas"></i>';
-        echo '  </div>';
+                echo '<div class="flex items-center bg-gray-800 p-5 rounded-xl shadow-lg hover:shadow-blue-500/30 transition">';
+                echo '  <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white text-2xl">';
+                echo '    <i class="fas"></i>';
+                echo '  </div>';
 
-        echo '  <div class="ml-4 flex-1">';
-        echo '    <h4 class="text-lg font-semibold text-white">' . htmlspecialchars($nome) . '</h4>';
-        echo '    <div class="flex items-center gap-2 mt-1">';
-        echo '      <span class="text-yellow-400 font-bold preco_produto" data-preco="' . $preco . '">';
-        echo '        R$ ' . number_format($preco, 2, ',', '.') . '';
-        echo '      </span>';
-        echo '    </div>';
+                echo '  <div class="ml-4 flex-1">';
+                echo '    <h4 class="text-lg font-semibold text-white">' . htmlspecialchars($nome) . '</h4>';
+                echo '    <div class="flex items-center gap-2 mt-1">';
+                echo '      <span class="text-yellow-400 font-bold preco_produto" data-preco="' . $preco . '">';
+                echo '        R$ ' . number_format($preco, 2, ',', '.') . '';
+                echo '      </span>';
+                echo '    </div>';
 
-        echo '    <div class="flex items-center mt-3">';
-        echo '      <button class="bg-gray-700 px-2 py-1 rounded-l hover:bg-blue-500 btn-minus">';
-        echo '        <i class="fas fa-minus"></i>';
-        echo '      </button>';
-        echo '      <input type="text" name="quantidade[' . $id . ']" value="' . $quantidade . '" data-id="' . $id . '" min="1" class="w-12 text-center border border-gray-600 bg-gray-900 quantidade-input">';
-        echo '      <button class="bg-gray-700 px-2 py-1 rounded-r hover:bg-blue-500 btn-plus">';
-        echo '        <i class="fas fa-plus"></i>';
-        echo '      </button>';
-        echo '    </div>';
-        echo '  </div>';
+                echo '    <div class="flex items-center mt-3">';
+                echo '      <button class="bg-gray-700 px-2 py-1 rounded-l hover:bg-blue-500 btn-minus">';
+                echo '        <i class="fas fa-minus"></i>';
+                echo '      </button>';
+                echo '      <input type="text" name="quantidade[' . $id . ']" value="' . $quantidade . '" data-id="' . $id . '" min="1" class="w-12 text-center border border-gray-600 bg-gray-900 quantidade-input">';
+                echo '      <button class="bg-gray-700 px-2 py-1 rounded-r hover:bg-blue-500 btn-plus">';
+                echo '        <i class="fas fa-plus"></i>';
+                echo '      </button>';
+                echo '    </div>';
+                echo '  </div>';
 
-        echo '  <div class="text-right">';
-        echo '    <p class="font-bold text-yellow-400 subtotal_produto">R$ ' . $subtotalFormatado . '</p>';
-        echo '    <button value="' . $id . '" class="remover mt-2 text-red-400 hover:text-red-600 text-sm">';
-        echo '      <i class="fas fa-trash mr-1"></i> Remover';
-        echo '    </button>';
-        echo '  </div>';
-        echo '</div>';
-    }
-    echo '</div>';
+                echo '  <div class="text-right">';
+                echo '    <p class="font-bold text-yellow-400 subtotal_produto">R$ ' . $subtotalFormatado . '</p>';
+                echo '    <button value="' . $id . '" class="remover mt-2 text-red-400 hover:text-red-600 text-sm">';
+                echo '      <i class="fas fa-trash mr-1"></i> Remover';
+                echo '    </button>';
+                echo '  </div>';
+                echo '</div>';
+            }
+            echo '</div>';
 
-    // RESUMO
-    echo '<div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-blue-500/30">';
-    echo '  <h3 class="text-xl font-bold mb-4 text-white">Resumo da Compra</h3>';
+            // RESUMO
+            echo '<div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-blue-500/30">';
+            echo '  <h3 class="text-xl font-bold mb-4 text-white">Resumo da Compra</h3>';
 
-    echo '  <div class="flex justify-between mb-2">';
-    echo '    <span>Subtotal</span>';
-    echo '    <span class="text-yellow-400 subtotal_compra">';
-    echo '      R$ ' . number_format($subtotalCompra, 2, ',', '.') . '';
-    echo '    </span>';
-    echo '  </div>';
+            echo '  <div class="flex justify-between mb-2">';
+            echo '    <span>Subtotal</span>';
+            echo '    <span class="text-yellow-400 subtotal_compra">';
+            echo '      R$ ' . number_format($subtotalCompra, 2, ',', '.') . '';
+            echo '    </span>';
+            echo '  </div>';
 
-    echo '  <div class="flex items-center gap-2 mb-2">';
-    echo '    <input type="checkbox" id="usarDesconto" class="w-4 h-4 accent-blue-500 cursor-pointer">';
-    echo '    <label for="usarDesconto" class="text-gray-300 cursor-pointer hover:text-blue-400 transition">';
-    echo '      Usar cupom de desconto';
-    echo '    </label>';
-    echo '  </div>';
+            echo '  <div class="flex items-center gap-2 mb-2">';
+            echo '    <input type="checkbox" id="usarDesconto" class="w-4 h-4 accent-blue-500 cursor-pointer">';
+            echo '    <label for="usarDesconto" class="text-gray-300 cursor-pointer hover:text-blue-400 transition">';
+            echo '      Usar cupom de desconto';
+            echo '    </label>';
+            echo '  </div>';
 
-    echo '  <div id="campoDesconto" class="hidden mb-2">';
-    echo '    <input type="text" id="valorDesconto" placeholder="Digite o valor do desconto" class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">';
-    echo '  </div>';
+            echo '  <div id="campoDesconto" class="hidden mb-2">';
+            echo '    <input type="text" id="valorDesconto" placeholder="Digite o valor do desconto" class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400">';
+            echo '  </div>';
 
-    echo '  <div class="flex justify-between mb-2">';
-    echo '    <span>Frete</span>';
-    echo '    <span class="text-green-400">Grátis</span>';
-    echo '  </div>';
+            echo '  <div class="flex justify-between mb-2">';
+            echo '    <span>Frete</span>';
+            echo '    <span class="text-green-400">Grátis</span>';
+            echo '  </div>';
 
-    echo '  <hr class="my-4 border-gray-600">';
+            echo '  <hr class="my-4 border-gray-600">';
 
-    echo '  <div class="flex justify-between font-bold text-lg">';
-    echo '    <span>Total</span>';
-    echo '    <span id="totalCompra" class="text-yellow-400 transition-all duration-300 subtotal_compra">';
-    echo '      R$ ' . number_format($subtotalCompra, 2, ',', '.') . '';
-    echo '    </span>';
-    echo '  </div>';
+            echo '  <div class="flex justify-between font-bold text-lg">';
+            echo '    <span>Total</span>';
+            echo '    <span id="totalCompra" class="text-yellow-400 transition-all duration-300 subtotal_compra">';
+            echo '      R$ ' . number_format($subtotalCompra, 2, ',', '.') . '';
+            echo '    </span>';
+            echo '  </div>';
 
-    echo '  <button class="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-bold hover:scale-105 transition">';
-    echo '    <i class="fas fa-credit-card mr-2"></i> Finalizar Compra';
-    echo '  </button>';
-    echo '</div>';
+            echo '  <button class="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-bold hover:scale-105 transition">';
+            echo '    <i class="fas fa-credit-card mr-2"></i> Finalizar Compra';
+            echo '  </button>';
+            echo '</div>';
 
-    echo '</div>';
-}
-?>
+            echo '</div>';
+        }
+        ?>
 
     </main>
     <script>

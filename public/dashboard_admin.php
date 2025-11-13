@@ -2,7 +2,7 @@
 // Código PHP no início do arquivo
 
 require_once __DIR__ . '/../code/funcao.php';
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . "/./php/verificarLogado.php";
 
 
 // Função para listar dados da tabela
@@ -38,9 +38,10 @@ function listarDados($nomeTabela)
 }
 
 
-function listarTabelasMySQL() {
+function listarTabelasMySQL()
+{
     // Conectar ao banco de dados
-    $conexao = conectar();    
+    $conexao = conectar();
     // Verificar se a conexão foi bem-sucedida
     if (!$conexao) {
         die("Erro de conexão: " . mysqli_connect_error());
@@ -56,7 +57,7 @@ function listarTabelasMySQL() {
 
     // Criar um array para armazenar os nomes das tabelas
     $tabelas = [];
-    
+
     // Percorrer os resultados e adicionar os nomes das tabelas ao array
     while ($linha = mysqli_fetch_row($resultado)) {
         $tabelas[] = $linha[0]; // O nome da tabela está na primeira posição da linha
