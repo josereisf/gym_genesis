@@ -41,7 +41,7 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
     <div class="bg-gray-900 bg-opacity-80 rounded-2xl shadow-2xl p-8">
       <h2 class="text-3xl font-bold text-center text-gray-100 mb-8">Pagamento - Gym Genesis</h2>
 
-      <form id="pagamentoForm" action="'http://localhost:83/public/api/index.php?entidade=processo_pagamento&acao=cadastrar'" method="POST" class="space-y-6">
+      <form id="pagamentoForm" action="./api/index.php?entidade=processar_pagamento&acao=cadastrar'" method="POST" class="space-y-6">
 
         <!-- Valor -->
         <div>
@@ -106,10 +106,10 @@ $qrcodeUrl = "https://api.qrserver.com/v1/create-qr-code/?data=$codigoPix&size=2
 
         <!-- Botão -->
         <div class="text-center pt-4">
-          <button type="submit"
+          <input type="submit"
             class="bg-blue-700 hover:bg-blue-800 text-white text-lg font-semibold px-8 py-3 rounded-xl transition duration-300 shadow-md">
             Confirmar Pagamento
-          </button>
+          </input>
         </div>
       </form>
 
