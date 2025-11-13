@@ -1,6 +1,6 @@
 <?php
 require_once '../code/funcao.php';
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . '/./php/verificarLogado.php';
 $id = 0;
 $tabelas = listarTabelas();
 ?>

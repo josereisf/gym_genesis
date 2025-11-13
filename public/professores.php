@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../code/funcao.php";
-require_once "../php/verificarLogado.php";
+require_once __DIR__ . '/./php/verificarLogado.php';
 session_start();
 $usuario = $_SESSION['id'];
 if (isset($_GET['tipo']) and $GET['tipo'] = 0) {
