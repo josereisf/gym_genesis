@@ -15,9 +15,10 @@ if ($id) {
 } else {
   $acao = 'cadastrar';
   $dados = [];
-  $voltar = ["item_pedido", "aula_usuario", "dieta_alimentar"];
 }
-
+if ($tipo === 1) {
+  $voltar = ["usuario", "assinatura", "plano", "treino", "treino_exercicio", "exercicio", "aula_agendada", "funcionario", "produto", ];
+}
 if (in_array($tabela, $voltar)) {
   $_SESSION['erro_login'] = "Não possui para essa tabela.";
   header('Location: login.php');
