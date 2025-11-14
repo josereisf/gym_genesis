@@ -26,7 +26,6 @@ switch ($acao) {
         if ($input === $_POST) {
                 header('Location: ../forum.php');
             exit;
-
         }
         if ($ok) {
             enviarResposta(true, 'Resposta do fórum cadastrada com sucesso');

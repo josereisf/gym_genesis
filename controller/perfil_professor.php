@@ -9,17 +9,23 @@ if (empty($input)) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
 
-$foto_perfil = $_FILES['foto_perfil'] ?? null;
+$imagem = $_FILES['foto_perfil'] ?? null;
 $modalidade = $input['modalidade'] ?? null;
 $avaliacao_media = $input['avaliacao_media'] ?? null;
 $descricao = $input['descricao'] ?? null;
 $horarios_disponiveis = $input['horarios_disponiveis'] ?? null;
 $telefone = $input['telefone'] ?? null;
 $usuario_id = $input['usuario_id'] ?? null;
-$idperfil = $input['perfil_id'] ?? null;
+$idperfil = $input['idperfil'] ?? null;
 
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
+}
+
+if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
+    $imagem = uploadImagem($_FILES['foto_perfil']);
+} else {
+    $imagem = $input['foto_perfil'] ?? "padrao.png";
 }
 
 switch ($acao) {
@@ -29,14 +35,14 @@ switch ($acao) {
             enviarResposta(false, 'Erro no cadastro do professor: ' . implode(', ', $erros));
         } else {
             $ok = cadastrarPerfilProfessor(
-    $foto_perfil,
-    $modalidade,
-    $avaliacao_media,
-    $descricao,
-    $horarios_disponiveis,
-    $telefone,
-    $usuario_id
-);
+                $imagem,
+                $modalidade,
+                $avaliacao_media,
+                $descricao,
+                $horarios_disponiveis,
+                $telefone,
+                $usuario_id
+            );
             if ($ok) {
                 enviarResposta(true, 'Perfil do professor cadastrado com sucesso');
             } else {
@@ -50,7 +56,7 @@ switch ($acao) {
         if (!empty($erros)) {
             enviarResposta(false, 'Erro na edição do perfil: ' . implode(', ', $erros));
         } else {
-            $ok = editarPerfilProfessor($idperfil, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone);
+            $ok = editarPerfilProfessor($idperfil, $usuario_id, $imagem, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone);
             if ($ok) {
                 enviarResposta(true, 'Perfil do professor editado com sucesso');
             } else {

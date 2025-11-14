@@ -67,6 +67,10 @@ switch ($acao) {
         $ok = cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
         if ($ok) {
             enviarResposta(true, 'Alimento cadastrado com sucesso');
+                    if ($input === $_POST) {
+                header('Location: ../listar.php');
+            exit;
+        }
         } else {
             enviarResposta(false, 'Erro ao cadastrar alimento');
         }
@@ -106,6 +110,10 @@ switch ($acao) {
         $ok = editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
         if ($ok) {
             enviarResposta(true, 'Alimento editado com sucesso');
+                if ($input === $_POST) {
+                header('Location: ../listar.php');
+            exit;
+                }
         } else {
             enviarResposta(false, 'Erro ao editar alimento');
         }

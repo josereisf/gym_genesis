@@ -11,7 +11,7 @@ if (empty($input)) {
 $idassinatura = $input['idassinatura'] ?? null;
 $idusuario = $input['idusuario'] ?? $input['usuario_id'] ?? null;
 $data_inicio = $input['data_inicio'] ?? date('Y-m-d');
-$idplano =$input['idplano'] ?? $input['plano_id'] ?? null;
+$idplano = $input['idplano'] ?? $input['plano_id'] ?? null;
 // Recupera o plano do banco
 $plano = $idplano ? (listarPlanos($idplano)[0] ?? null) : null;
 // Calcula a data_fim apenas se for cadastrar e tiver plano
@@ -48,6 +48,10 @@ switch ($acao) {
             $ok = cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario);
             if ($ok) {
                 enviarResposta(true, 'Assinatura cadastrada com sucesso');
+                if ($input === $_POST) {
+                    header('Location: ../listar.php');
+                    exit;
+                }
             } else {
                 enviarResposta(false, 'Erro ao cadastrar assinatura no banco de dados');
             }
@@ -68,6 +72,10 @@ switch ($acao) {
             $ok = editarAssinatura($data_inicio, $data_fim, $idplano, $idusuario);
             if ($ok) {
                 enviarResposta(true, 'Assinatura editada com sucesso');
+                if ($input === $_POST) {
+                    header('Location: ../listar.php');
+                    exit;
+                }
             } else {
                 enviarResposta(false, 'Erro ao editar assinatura no banco de dados');
             }
@@ -78,6 +86,7 @@ switch ($acao) {
         $dados = listarAssinaturas($idassinatura);
         if ($dados) {
             enviarResposta(true, 'Assinaturas listadas com sucesso', $dados);
+            
         } else {
             enviarResposta(false, 'Erro ao listar assinaturas');
         }

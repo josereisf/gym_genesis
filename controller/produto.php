@@ -14,14 +14,12 @@ $idproduto = $input['idproduto'] ?? null;
 $nome = $input['nome'] ?? null;
 $descricao = $input['descricao'] ?? null;
 $preco = $input['preco'] ?? null;
-$quantidade_estoque = $input['qtd'] ?? null;
+$quantidade_estoque = $input['quantidade_estoque'] ?? null;
 
 if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
     $imagem = uploadImagem($_FILES['imagem']);
-} elseif (isset($input['imagem']) && (!isset($_FILES['imagem']) || $_FILES['imagem']['error'] !== UPLOAD_ERR_OK)) {
-    $imagem = $input['imagem'];
 } else {
-    $imagem = null;
+    $imagem = $input['imagem'];
 }
 
 if (!$acao) {

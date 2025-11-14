@@ -4174,12 +4174,12 @@ function cadastrarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, 
  * @param [type] $conexao
  * @return void
  */
-function editarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, $imagem)
+function editarPerfilUsuario($idusuario, $nome, $data_nasc, $telefone, $imagem)
 {
   $conexao = conectar();
-  $sql = "UPDATE perfil_usuario SET nome=?, cpf=?, data_nascimento=?, telefone=?, foto_perfil=?, numero_matricula=? WHERE usuario_id=?";
+  $sql = "UPDATE perfil_usuario SET nome=?, data_nascimento=?, telefone=?, foto_perfil=? WHERE usuario_id=?";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "ssssssi", $nome, $cpf, $data_nasc, $telefone, $imagem, $numero_matricula, $idusuario);
+  mysqli_stmt_bind_param($comando, "ssssi", $nome, $data_nasc, $telefone, $imagem, $idusuario);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -4288,10 +4288,10 @@ function cadastrarPerfilProfessor($foto_perfil, $modalidade, $avaliacao_media, $
 {
   $conexao = conectar();
   $sql = "INSERT INTO perfil_professor 
-            (foto_perfil, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone, usuario_id, data_atualizacao) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+            (foto_perfil, modalidade, avaliacao_media, descricao, horarios_disponiveis, telefone, usuario_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "sissssss", $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
+  mysqli_stmt_bind_param($comando, "ssissis", $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);
@@ -4413,20 +4413,20 @@ function listarPerfilProfessor($idusuario)
  * @param [type] $conexao
  * @return void
  */
-function editarPerfilProfessor($idperfil, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool
+function editarPerfilProfessor($idperfil, $usuario_id, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool
 {
   $conexao = conectar();
   $sql = "UPDATE perfil_professor SET
+            usuario_id = ?,
             foto_perfil = ?, 
             modalidade = ?, 
             avaliacao_media = ?, 
             descricao = ?, 
             horarios_disponiveis = ?, 
-            telefone = ?, 
-            data_atualizacao = NOW()
+            telefone = ?
             WHERE idperfil = ?";
   $comando = mysqli_prepare($conexao, $sql);
-  mysqli_stmt_bind_param($comando, "sisssssi", $foto_perfil, $experiencia_anos, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $idperfil);
+  mysqli_stmt_bind_param($comando, "ssissssi", $usuario_id, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $idperfil);
 
   $funcionou = mysqli_stmt_execute($comando);
   mysqli_stmt_close($comando);

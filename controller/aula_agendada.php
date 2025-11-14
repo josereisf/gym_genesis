@@ -50,6 +50,7 @@ switch ($acao) {
     case 'listar':
         $idprofessor = $input['idprofessor'] ?? null; // pega o id do professor
         $dados = listarAulaAgendada($idprofessor);
+        
         if ($dados !== false) {
             enviarResposta(true, 'Aulas agendadas listadas com sucesso', $dados);
         } else {

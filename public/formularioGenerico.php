@@ -197,11 +197,14 @@ if (in_array($tabela, $voltar)) {
 
         // Foto / imagem
         if (strpos($nome_campo, 'foto') !== false || strpos($nome_campo, 'imagem') !== false) {
-          echo "
+      ?>
           <div>
-            <label for='$nome_campo' class='block font-semibold mb-1'>Foto</label>
-            <input type='file' name='$nome_campo' class='w-full text-gray-200'>
-            ";
+            <label for='<?= $nome_campo  ?>' class='block font-semibold mb-1'>Foto</label>
+            <?php if ($id) { ?>
+              <input type='hidden' name='<?= $nome_campo  ?>' value="<?= $dados[$nome_campo] ?>">
+            <?php } ?>
+            <input type='file' name='<?= $nome_campo  ?>' class='w-full text-gray-200'>
+        <?php
           if ($id && isset($dados[$nome_campo])) {
             echo "<img src='./uploads/" . $dados[$nome_campo] . "' alt='Foto' class='mt-3 rounded-lg shadow-md w-24 h-24 object-cover'>";
           }
@@ -235,7 +238,7 @@ if (in_array($tabela, $voltar)) {
         // datetime
         if (
           strpos($tipo_campo, 'datetime') !== false
-          
+
         ) {
           echo "
           <div>
@@ -291,14 +294,14 @@ if (in_array($tabela, $voltar)) {
             class='w-full rounded-lg p-2'>
         </div>";
       }
-      ?>
+        ?>
 
-      <div class="text-center pt-6">
-        <button type="submit"
-          class="btn-neon text-white font-semibold px-8 py-2 rounded-lg shadow-md uppercase tracking-wider">
-          <?php echo $id ? 'Salvar Alterações' : 'Cadastrar'; ?>
-        </button>
-      </div>
+        <div class="text-center pt-6">
+          <button type="submit"
+            class="btn-neon text-white font-semibold px-8 py-2 rounded-lg shadow-md uppercase tracking-wider">
+            <?php echo $id ? 'Salvar Alterações' : 'Cadastrar'; ?>
+          </button>
+        </div>
     </form>
   </div>
   <!-- 

@@ -10,9 +10,9 @@ if (empty($input)) {
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
 
-$idtreino_exercicio = $input['idtreino_exercicio'] ?? null;
-$treino_id = $input['treino_id'] ?? $input['idtreino'] ?? null;
-$exercicio_id = $input['exercicio_id'] ?? $input['idexercicio'] ?? null;
+$idtreino_exercicio = $input['idtreino2'] ?? null;
+$treino_id = $input['treino_id'] ?? null;
+$exercicio_id = $input['exercicio_id'] ?? null;
 $series = $input['series'] ?? null;
 $repeticoes = $input['repeticoes'] ?? null;
 $carga = $input['carga'] ?? null;
@@ -36,9 +36,7 @@ switch ($acao) {
         break;
 
     case 'editar':
-        if (!$idtreino_exercicio || !$treino_id || !$exercicio_id || !$series || !$repeticoes || $carga === null || $intervalo_segundos === null) {
-            enviarResposta(false, 'ID e todos os campos obrigatórios devem ser preenchidos');
-        }
+        print_r($input);
         $ok = editarTreinoExercicio($idtreino_exercicio, $treino_id, $exercicio_id, $series, $repeticoes, $carga, $intervalo_segundos);
         if ($ok) {
             enviarResposta(true, 'Treino-exercício editado com sucesso');
