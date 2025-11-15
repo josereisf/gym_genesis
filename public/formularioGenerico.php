@@ -241,12 +241,19 @@ if (in_array($tabela, $voltar)) {
           strpos($tipo_campo, 'datetime') !== false
 
         ) {
-          echo "
+          echo '
           <div>
-            <label for='$nome_campo' class='block font-semibold mb-1'>$nome_campo</label>
-            <input type='datetime' name='$nome_campo' value='" . ($id ? $dados[$nome_campo] : 'Y-m-d H:i:s') . "'
-              '>
-          </div>";
+            <label for="$nome_campo" class="block font-semibold mb-1">$nome_campo</label>
+<input 
+    type="datetime-local" 
+    name="data_pagamento" 
+    class="w-full rounded-lg p-2"
+    readonly
+    value="<?php echo date("Y-m-d\TH:i"); ?>
+    
+
+
+          </div>';
           continue;
         }
         // Hora
@@ -305,14 +312,14 @@ if (in_array($tabela, $voltar)) {
         </div>
     </form>
   </div>
-  <!-- 
+   
   <script>
-    const tabela = '<?php echo $tabela; ?>';
-    $('#formGenerico').on('submit', function(e) {
-      e.preventDefault();
-      editarRegistro(tabela);
-    });
-  </script> -->
+    // const tabela = '<?php echo $tabela; ?>';
+    // $('#formGenerico').on('submit', function(e) {
+    //   e.preventDefault();
+    //   editarRegistro(tabela);
+    // });
+  </script>
 </body>
 
 </html>
