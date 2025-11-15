@@ -1,13 +1,19 @@
 <?php
 require_once __DIR__ . '/../code/funcao.php';
-
-header('Content-Type: application/json; charset=utf-8');
-
+$tabela = $_REQUEST['entidade'] ?? null;
 $acao = $_REQUEST['acao'] ?? null;
 
-$input = $_POST;
-if (empty($input)) {
+// Detectar se é AJAX/fetch enviando JSON
+$isJson = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
+
+// Ler inputs
+if ($isJson) {
+    header('Content-Type: application/json; charset=utf-8');
     $input = json_decode(file_get_contents('php://input'), true) ?? [];
+} else {
+    $input = $_POST;
+
+    $redir = header("Location: /public/sucesso.php?tabela=$tabela");
 }
 
 $idalimento = $input['idalimento'] ?? null;
@@ -61,7 +67,6 @@ switch ($acao) {
             $msgErro = 'Os seguintes campos estão vazios: ' . implode(', ', $vazios);
 
             enviarResposta(false, $msgErro);
-            exit;
         }
 
         $ok = cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
@@ -69,11 +74,11 @@ switch ($acao) {
             enviarResposta(true, 'Alimento cadastrado com sucesso');
                     if ($input === $_POST) {
                 header('Location: ../listar.php');
-            exit;
         }
         } else {
             enviarResposta(false, 'Erro ao cadastrar alimento');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -105,18 +110,17 @@ switch ($acao) {
             $msgErro = 'Os seguintes campos estão vazios: ' . implode(', ', $vazios);
 
             enviarResposta(false, $msgErro);
-            exit;
         }
         $ok = editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem);
         if ($ok) {
             enviarResposta(true, 'Alimento editado com sucesso');
                 if ($input === $_POST) {
                 header('Location: ../listar.php');
-            exit;
                 }
         } else {
             enviarResposta(false, 'Erro ao editar alimento');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -126,6 +130,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar alimentos');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -138,9 +143,11 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar alimento');
         }
+        $redir;
         break;
 
     default:
-        enviarResposta(false, 'Ação inválida');
+        enviarResposta(false, 'Ação i
+        $redir;nválida');
         break;
 }
