@@ -1,6 +1,6 @@
 <?php
-// Redireciona após 2 segundos
-header("refresh:2;url=/public/listar.php?tabela=forum");
+$tabela = $_GET['tabela'];
+header("refresh:2;url=/public/listar.php?tabela=$tabela");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
