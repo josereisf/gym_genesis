@@ -3,6 +3,8 @@ require_once '../code/funcao.php';
 require_once __DIR__ . "/./php/verificarLogado.php";
 $id = 0;
 $tabelas = listarTabelas();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,15 +58,21 @@ $tabelas = listarTabelas();
     <div id="dados" data-id="<?php echo $id; ?>"></div>
 
     <select id="tabelas">
-      <option value="" selected disabled>Selecione uma tabela</option>
+      <option value="" disabled <?= empty($_GET['tabela']) ? 'selected' : '' ?>>Selecione uma tabela</option>
+
       <?php
+      $tabelaSelecionada = $_GET['tabela'] ?? '';
+
       foreach ($tabelas as $t) {
-        $nome_campo = htmlspecialchars($t['Tables_in_gym_genesis']);
-        echo '<option value="' . $nome_campo . '">' . $nome_campo . '</option>';
+          $nome_campo = htmlspecialchars($t['Tables_in_gym_genesis']);
+
+          $selected = ($nome_campo === $tabelaSelecionada) ? 'selected' : '';
+
+          echo "<option value='$nome_campo' $selected>$nome_campo</option>";
       }
       ?>
-
     </select>
+
 
     <table id="tabela-dados" class="display" style="width:100%">
       <thead></thead>

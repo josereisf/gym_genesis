@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  let tabela = $('#tabelas').val() || ''
+  let tabela = $('#tabelas').val() ||''
   let id = $('#dados').data('id')
 
   if (tabela) {
