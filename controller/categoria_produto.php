@@ -34,6 +34,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar categoria');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -46,6 +47,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar categoria');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -55,6 +57,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar categorias');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -67,6 +70,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar categoria');
         }
+        $redir;
         break;
 
     default:

@@ -41,6 +41,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar endereço');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -50,6 +51,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar endereço');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -59,6 +61,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar endereços');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -68,6 +71,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar endereço');
         }
+        $redir;
         break;
 
     default:

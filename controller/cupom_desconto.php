@@ -38,6 +38,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar cupom');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -50,6 +51,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar cupom');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -59,6 +61,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar cupons');
         }
+        $redir;
         break;
 
     case 'deletar':

@@ -35,6 +35,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar refeição');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -47,6 +48,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar refeição');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -56,6 +58,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar refeições');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -68,6 +71,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar refeição');
         }
+        $redir;
         break;
 
     default:

@@ -20,7 +20,7 @@ $nome             = $input['nome'] ?? null;
 $cpf              = $input['cpf'] ?? null;
 $data_nasc        = $input['data_nascimento'] ?? null;
 $telefone         = $input['telefone'] ?? null;
-$tipo             = $input['tipo'] ?? 1; 
+$tipo             = $input['tipo'] ?? 1;
 $imagem = $_FILES['imagem'] ?? $_FILES['foto_perfil'];
 $usuario_id = $input['usuario_id'] ?? null;
 
@@ -55,6 +55,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar usuário');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -71,6 +72,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar usuário');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -80,6 +82,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar usuário');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -89,6 +92,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar usuário');
         }
+        $redir;
         break;
 
     default:

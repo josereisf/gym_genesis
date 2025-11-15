@@ -33,6 +33,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar treino');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -45,6 +46,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar treino');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -54,6 +56,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar treinos');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -66,6 +69,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar treino');
         }
+        $redir;
         break;
 
     default:
@@ -83,6 +87,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar aula agendada');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -95,6 +100,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar aula agendada');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -105,6 +111,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar aulas agendadas');
         }
+        $redir;
         break;
 
 
@@ -118,6 +125,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar aula agendada');
         }
+        $redir;
         break;
 
     default:

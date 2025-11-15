@@ -38,6 +38,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar treino-exercício');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -48,6 +49,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar treino-exercício');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -57,6 +59,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar treino-exercícios');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -69,6 +72,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar treino-exercício');
         }
+        $redir;
         break;
 
     default:

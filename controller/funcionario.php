@@ -42,6 +42,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar funcionário');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -54,6 +55,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar funcionário');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -63,6 +65,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar funcionários');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -75,6 +78,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar funcionário');
         }
+        $redir;
         break;
 
     default:

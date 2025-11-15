@@ -28,7 +28,7 @@ switch ($acao) {
     case 'cadastrar':
         $ok = cadastrarRespostaForum($mensagem, $usuario_id, $forum_id);
         if ($input === $_POST) {
-                header('Location: ../forum.php');
+            header('Location: ../forum.php');
             exit;
         }
         if ($ok) {
@@ -36,6 +36,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar resposta do fórum');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -48,6 +49,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar resposta do fórum');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -57,6 +59,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar respostas do fórum');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -69,11 +72,10 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar resposta do fórum');
         }
+        $redir;
         break;
 
     default:
         enviarResposta(false, 'Ação inválida');
         break;
 }
-
-?>

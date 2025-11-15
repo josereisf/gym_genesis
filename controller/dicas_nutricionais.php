@@ -37,6 +37,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar dica.');
         }
+        $redir;
         break;
 
 
@@ -50,6 +51,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar dica.');
         }
+        $redir;
         break;
 
 
@@ -60,6 +62,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Nenhuma dica encontrada.');
         }
+        $redir;
         break;
 
 
@@ -73,6 +76,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar dica.');
         }
+        $redir;
         break;
 
 

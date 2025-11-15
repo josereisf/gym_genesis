@@ -33,6 +33,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar histórico de peso');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -45,6 +46,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar histórico de peso');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -54,6 +56,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar histórico(s) de peso');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -66,6 +69,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar histórico de peso');
         }
+        $redir;
         break;
 
     default:

@@ -32,6 +32,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar usuário');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -41,6 +42,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar usuário');
         }
+        $redir;
         break;
     case 'listar':
         $resultado = listarUsuario($idusuario);
@@ -49,6 +51,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar usuário');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -58,6 +61,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar usuário');
         }
+        $redir;
         break;
 
     default:

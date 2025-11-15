@@ -56,6 +56,7 @@ switch ($acao) {
                 enviarResposta(false, 'Erro ao cadastrar perfil do professor');
             }
         }
+        $redir;
         break;
 
     case 'editar':
@@ -70,6 +71,7 @@ switch ($acao) {
                 enviarResposta(false, 'Erro ao editar perfil do professor');
             }
         }
+        $redir;
         break;
 
     case 'listar':
@@ -79,6 +81,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar perfis de professores');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -92,6 +95,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'ID do professor não fornecido');
         }
+        $redir;
         break;
 
     default:

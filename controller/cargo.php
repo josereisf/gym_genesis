@@ -34,6 +34,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar cargo');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -46,6 +47,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar cargo');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -55,6 +57,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar cargos');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -67,6 +70,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar cargo');
         }
+        $redir;
         break;
 
     default:

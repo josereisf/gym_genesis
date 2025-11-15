@@ -40,6 +40,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar aula agendada');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -52,17 +53,19 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar aula agendada');
         }
+        $redir;
         break;
 
     case 'listar':
         $idprofessor = $input['idprofessor'] ?? null; // pega o id do professor
         $dados = listarAulaAgendada($idprofessor);
-        
+
         if ($dados !== false) {
             enviarResposta(true, 'Aulas agendadas listadas com sucesso', $dados);
         } else {
             enviarResposta(false, 'Erro ao listar aulas agendadas');
         }
+        $redir;
         break;
 
 
@@ -76,6 +79,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar aula agendada');
         }
+        $redir;
         break;
 
     default:

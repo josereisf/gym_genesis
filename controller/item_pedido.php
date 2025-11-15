@@ -36,6 +36,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar item do pedido');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -48,6 +49,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar item do pedido');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -57,6 +59,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar itens do pedido');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -69,6 +72,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar item do pedido');
         }
+        $redir;
         break;
 
     default:

@@ -32,6 +32,7 @@ switch ($acao) {
         } else {
             $response = ['sucesso' => false, 'mensagem' => 'Erro ao cadastrar meta'];
         }
+        $redir;
         break;
 
     case 'editar':
@@ -41,6 +42,7 @@ switch ($acao) {
         } else {
             $response = ['sucesso' => false, 'mensagem' => 'Erro ao editar meta'];
         }
+        $redir;
         break;
 
     case 'listar':
@@ -50,6 +52,7 @@ switch ($acao) {
         } else {
             $response = ['sucesso' => false, 'mensagem' => 'Erro ao listar meta'];
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -59,6 +62,7 @@ switch ($acao) {
         } else {
             $response = ['sucesso' => false, 'mensagem' => 'Erro ao deletar meta'];
         }
+        $redir;
         break;
 
     default:

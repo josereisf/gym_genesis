@@ -35,6 +35,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar plano');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -47,6 +48,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar plano');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -56,6 +58,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar planos');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -68,6 +71,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar plano');
         }
+        $redir;
         break;
 
     default:

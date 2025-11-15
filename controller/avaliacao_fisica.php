@@ -38,6 +38,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar avaliação física');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -50,6 +51,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar avaliação física');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -59,6 +61,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar avaliações físicas');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -71,5 +74,6 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar avaliação física');
         }
+        $redir;
         break;
 }

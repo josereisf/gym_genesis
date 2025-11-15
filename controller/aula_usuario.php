@@ -34,6 +34,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar aula de usuário');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -46,6 +47,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar aula de usuário');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -55,6 +57,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar aulas de usuário');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -67,5 +70,6 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar aula de usuário');
         }
+        $redir;
         break;
 }

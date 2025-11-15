@@ -36,6 +36,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao cadastrar exercício');
         }
+        $redir;
         break;
 
     case 'editar':
@@ -48,6 +49,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao editar exercício');
         }
+        $redir;
         break;
 
     case 'listar':
@@ -57,6 +59,7 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao listar exercícios');
         }
+        $redir;
         break;
 
     case 'deletar':
@@ -69,5 +72,6 @@ switch ($acao) {
         } else {
             enviarResposta(false, 'Erro ao deletar exercício');
         }
+        $redir;
         break;
 }
