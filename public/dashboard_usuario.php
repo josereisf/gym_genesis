@@ -42,15 +42,12 @@ if (!empty($dadosSemDuplicados)) {
 $aulaa = listarAulaUsuario($idaluno);
 
 
-if (isset($aulaa)) {
-  $treino = listarAulaAgendada($aulaa[0]['idaula'] ?? null);
+if (empty($aulaa)) {
+  $treino = "nao a treino";
 } else {
-  $treino = listarAulaAgendada($idaluno);
+  $treino = listarAulaAgendada($aulaa[0]['idaula'] ?? null);
 }
 
-  // echo '<pre>';
-  // print_r($treino);
-  // echo '</pre>';
 
 $metas = listarMetaUsuario($idaluno);
 
@@ -222,10 +219,10 @@ if ($dia_fim === null || $dia_fim === "-") {
 // pega todas as dicas
 $v = null;
 $dicas = listarDicasNutricionais(null);
-$aula_agendada = listarAulaAgendadaUsuario($idaluno);
+$aula_agendada = listarAulaAgendadaUsuario(21);
 $aula_agendada = array_slice($aula_agendada, 0, 5);
 // echo "<pre>";
-// var_dump($aula_agendada);
+// var_dump($aula_agendada, $idaluno);
 // echo "</pre>";
 
 $frasesMotivacao = [
@@ -537,8 +534,8 @@ $produto = listarProdutos($n);
         </div>
 
         <?php
-        foreach($produto as $p) {
-          echo '<div onclick="window.location.href=\'loja.php\'" class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer '.$atributos[7].'">';
+        foreach ($produto as $p) {
+          echo '<div onclick="window.location.href=\'loja.php\'" class="bg-[#111827] rounded-xl shadow-md p-6 transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer ' . $atributos[7] . '">';
           echo '  <div class="flex justify-between items-start">';
           echo '    <div>';
           echo '      <p class="text-sm font-medium text-gray-400">Produto Disponível</p>';
@@ -596,91 +593,86 @@ $produto = listarProdutos($n);
             <div class="flex justify-between items-center mb-4">
             </div>
             <?php
-            foreach ($treino as $t) {
-              $treino = $t; // Pega o último treino (ou o único)
+
+            if (is_array($treino) && !empty($treino)) {
+
+              foreach ($treino as $t) {
+                $treino = $t;
+              }
             }
-            if (!empty($treino['tipo_treino'])) {
-              // ✅ CARD DE TREINO
+            if (!empty($t['tipo_treino'])) {
               echo '
-  <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-white">
-    <div class="flex flex-col space-y-4">
-      <!-- Cabeçalho -->
-      <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-          <i class="fa-solid fa-dumbbell text-neonred"></i>
-          Seu Treino de Hoje
-        </h2>
-        <span class="text-sm text-gray-400">' .
-                (!empty($t['horario_treino']) ? date('H:i', strtotime($t['horario_treino'])) : 'Sem horário definido') .
-                '</span>
-      </div>
+            <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-white">
+              <div class="flex flex-col space-y-4">
 
-      <!-- Tipo de treino -->
-      <div class="bg-gray-800/60 p-4 rounded-xl border border-gray-700">
-        <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($t['tipo_treino']) . '</p>
-        <p class="text-gray-300 text-sm leading-relaxed">' .
-                (!empty($t['descricao_treino']) ? htmlspecialchars($t['descricao_treino']) : 'Sem descrição disponível.') .
-                '</p>
-      </div>
+                <!-- Cabeçalho -->
+                <div class="flex items-center justify-between">
+                  <h2 class="text-2xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-dumbbell text-neonred"></i>
+                    Seu Treino de Hoje
+                  </h2>
+                  <span class="text-sm text-gray-400">' . (!empty($treino['horario_treino']) ? date('H:i', strtotime($treino['horario_treino'])) : 'Sem horário definido') . '</span>
+                </div>
 
-      <!-- Informações adicionais -->
-      <div class="grid grid-cols-2 gap-4 text-center mt-2">
-        <div>
-          <p class="text-sm text-gray-400">Séries</p>
-          <p class="text-lg font-semibold">' . ($t['series'] ?? '-') . '</p>
-        </div>
-        <div>
-          <p class="text-sm text-gray-400">Repetições</p>
-          <p class="text-lg font-semibold">' . ($t['repeticoes'] ?? '-') . '</p>
-        </div>
-        <div>
-          <p class="text-sm text-gray-400">Carga (kg)</p>
-          <p class="text-lg font-semibold">' . ($t['carga'] ?? '-') . '</p>
-        </div>
-        <div>
-          <p class="text-sm text-gray-400">Intervalo (seg)</p>
-          <p class="text-lg font-semibold">' . ($t['intervalo_segundos'] ?? '-') . '</p>
-        </div>
+                <!-- Tipo de treino -->
+                <div class="bg-gray-800/60 p-4 rounded-xl border border-gray-700">
+                  <p class="text-lg font-semibold mb-2 text-neonred">' . htmlspecialchars($treino['tipo_treino']) . '</p>
+                  <p class="text-gray-300 text-sm leading-relaxed">' . (!empty($treino['descricao_treino']) ? htmlspecialchars($treino['descricao_treino']) : 'Sem descrição disponível.') . '</p>
+                </div>
 
-      </div>
-            <a href="treino.php">
-        <button
-          class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
-          <i class="fa-solid fa-plus"></i>
-          Executar Treino
-        </button>
-      </a>
-    </div>
-  </div>';
+                <!-- Informações adicionais -->
+                <div class="grid grid-cols-2 gap-4 text-center mt-2">
+                  <div>
+                    <p class="text-sm text-gray-400">Séries</p>
+                    <p class="text-lg font-semibold">' . ($treino['series'] ?? '-') . '</p>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-400">Repetições</p>
+                    <p class="text-lg font-semibold">' . ($treino['repeticoes'] ?? '-') . '</p>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-400">Carga (kg)</p>
+                    <p class="text-lg font-semibold">' . ($treino['carga'] ?? '-') . '</p>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-400">Intervalo (seg)</p>
+                    <p class="text-lg font-semibold">' . ($treino['intervalo_segundos'] ?? '-') . '</p>
+                  </div>
+                </div>
+
+                <a href="treino.php">
+                  <button class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    Executar Treino
+                  </button>
+                </a>
+
+              </div>
+            </div>';
             } else {
-              // ❌ CARD DE AVISO (sem treino)
+              // Aviso caso não exista treino
               echo '
-  <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-center text-white">
-    <div class="flex flex-col items-center space-y-4">
-      <!-- Ícone -->
-      <div class="bg-gray-700/40 p-4 rounded-full">
-        <i class="fa-solid fa-dumbbell text-3xl text-neonred"></i>
-      </div>
+            <div class="max-w-md mx-auto mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl border border-gray-700 text-center text-white">
+              <div class="flex flex-col items-center space-y-4">
 
-      <!-- Mensagem -->
-      <h2 class="text-xl font-semibold">Você ainda não tem um treino</h2>
-      <p class="text-gray-300 text-sm">
-        Que tal começar agora? Adicione um treino personalizado e comece sua jornada de evolução!
-      </p>
+                <div class="bg-gray-700/40 p-4 rounded-full">
+                  <i class="fa-solid fa-dumbbell text-3xl text-neonred"></i>
+                </div>
 
-      <!-- Botão de ação -->
-      <a href="professores.php">
-        <button
-          class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
-          <i class="fa-solid fa-plus"></i>
-          Adicionar Treino
-        </button>
-      </a>
-    </div>
-  </div>';
+                <h2 class="text-xl font-semibold">Você ainda não tem um treino</h2>
+                <p class="text-gray-300 text-sm">Que tal começar agora? Adicione um treino personalizado e comece sua jornada de evolução!</p>
+
+                <a href="professores.php">
+                  <button class="mt-4 px-6 py-2 bg-neonred hover:bg-red-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    Adicionar Treino
+                  </button>
+                </a>
+
+              </div>
+            </div>';
             }
             ?>
-
           </div>
 
 
