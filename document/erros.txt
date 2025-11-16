@@ -1,29 +1,75 @@
-os excluir que nao estao funcionando e o :
-alimento'excluir tudo que tem na tabela literalmente todos os id's,
-assinatura'na hora de editar ta dando erro na chave estrangeira',
-aula_agendada'ta dando erro no editar funcionario_id, esta apagando toda a tabela',
-avaliacao_fisica'esta dando erro na hora de carregar a chave estrangeira, nao esta funcionando o editar, noa esta apagando nada',
-cargo'esta dando erro no excluir',
-categoria_produto'nao esta editando, esta excluindo todos os registros da tabela',
-cupom_desconto'esta dando erro na hora de excluir',
-dicas_nuntricionais'esta com erro para listar, nao esta editando'
-dieta'esta dando erro na hora de carregar a chave estrangeira, nao esta editando, nao esta apagando nada',
-exercicio'erro na hora de excluir',
-funcionando'editar nao esta funcionando, erro no excluir',
-historico_peso'erro na hora de puxar as chaves estrangeira',
-historico_treino'erro ao carregar a chave estrangeira, excluindo toda tabela',
-meta_usuario'erro na hora de carregar a chave estrangeira', 
-pedido'erro ao carregar a chave estrangeira, esta apagando toda a tabela',
-perfil_professor'erro no listar, 
-perfil_usuario'erro no listar,
-plano'esta apagando toda a tabela,
-produto'nao esta funcionando,
-resposta_forum'erro no carregar a chave estrangeira,
-treino'erro no excluir,
+❌ EXCLUIR — Tabelas com problemas
 
+alimento – exclui todos os registros da tabela
 
-  os editas que nao estao funcionando e o:
+assinatura – erro de chave estrangeira ao editar
 
-  os listar que nao estao funcionando e o:
+aula_agendada – erro ao editar funcionario_id, apaga toda a tabela
 
-  os cadastrar que nao estao funcionando eo :
+avaliacao_fisica – erro ao carregar chave estrangeira; editar não funciona; não apaga nada
+
+cargo – erro ao excluir
+
+categoria_produto – ao editar, exclui todos os registros
+
+cupom_desconto – erro ao excluir
+
+dicas_nutricionais – erro ao listar; não edita
+
+dieta – erro ao carregar chave estrangeira; não edita; não apaga nada
+
+exercicio – erro ao excluir
+
+funcionario – editar não funciona; erro ao excluir
+
+historico_peso – erro ao puxar chave estrangeira
+
+historico_treino – erro ao carregar chave estrangeira; exclui toda a tabela
+
+meta_usuario – erro ao carregar chave estrangeira
+
+pedido – erro ao carregar chave estrangeira; exclui toda a tabela
+
+perfil_professor – erro ao listar
+
+perfil_usuario – erro ao listar
+
+plano – exclui toda a tabela
+
+produto – não está funcionando
+
+resposta_forum – erro ao carregar chave estrangeira
+
+treino – erro ao excluir
+
+✏️ EDITAR — Funções que não estão funcionando
+
+assinatura
+
+aula_agendada
+
+avaliacao_fisica
+
+categoria_produto
+
+dieta
+
+funcionario
+
+historico_treino
+
+meta_usuario
+
+pedido
+
+produto
+
+resposta_forum
+
+📄 LISTAR — Funções que não estão funcionando
+
+dicas_nutricionais
+
+perfil_professor
+
+perfil_usuario
