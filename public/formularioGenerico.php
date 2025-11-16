@@ -237,25 +237,22 @@ if (in_array($tabela, $voltar)) {
           continue;
         }
         // datetime
-        if (
-          strpos($tipo_campo, 'datetime') !== false
+        if (strpos($tipo_campo, 'datetime') !== false) {
 
-        ) {
-          echo '
-          <div>
-            <label for="$nome_campo" class="block font-semibold mb-1">$nome_campo</label>
-<input 
-    type="datetime-local" 
-    name="data_pagamento" 
-    class="w-full rounded-lg p-2"
-    readonly
-    value="<?php echo date("Y-m-d\TH:i"); ?>
-    
+            echo '
+            <div>
+                <label for="'.$nome_campo.'" class="block font-semibold mb-1">'.$nome_campo.'</label>
+                <input 
+                    type="datetime-local" 
+                    name="'.$nome_campo.'" 
+                    class="w-full rounded-lg p-2"
+                    value="'.date('Y-m-d\TH:i').'"
+                >
+            </div>';
 
-
-          </div>';
-          continue;
+            continue;
         }
+
         // Hora
         if (strpos($tipo_campo, 'time') !== false && strpos($tipo_campo, 'stamp') === false && strpos($tipo_campo, 'date') === false) {
           echo "
