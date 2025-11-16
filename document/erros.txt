@@ -1,0 +1,29 @@
+os excluir que nao estao funcionando e o :
+alimento'excluir tudo que tem na tabela literalmente todos os id's,
+assinatura'na hora de editar ta dando erro na chave estrangeira',
+aula_agendada'ta dando erro no editar funcionario_id, esta apagando toda a tabela',
+avaliacao_fisica'esta dando erro na hora de carregar a chave estrangeira, nao esta funcionando o editar, noa esta apagando nada',
+cargo'esta dando erro no excluir',
+categoria_produto'nao esta editando, esta excluindo todos os registros da tabela',
+cupom_desconto'esta dando erro na hora de excluir',
+dicas_nuntricionais'esta com erro para listar, nao esta editando'
+dieta'esta dando erro na hora de carregar a chave estrangeira, nao esta editando, nao esta apagando nada',
+exercicio'erro na hora de excluir',
+funcionando'editar nao esta funcionando, erro no excluir',
+historico_peso'erro na hora de puxar as chaves estrangeira',
+historico_treino'erro ao carregar a chave estrangeira, excluindo toda tabela',
+meta_usuario'erro na hora de carregar a chave estrangeira', 
+pedido'erro ao carregar a chave estrangeira, esta apagando toda a tabela',
+perfil_professor'erro no listar, 
+perfil_usuario'erro no listar,
+plano'esta apagando toda a tabela,
+produto'nao esta funcionando,
+resposta_forum'erro no carregar a chave estrangeira,
+treino'erro no excluir,
+
+
+  os editas que nao estao funcionando e o:
+
+  os listar que nao estao funcionando e o:
+
+  os cadastrar que nao estao funcionando eo :
