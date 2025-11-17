@@ -5,6 +5,7 @@
 $lista = listarUsuarioCompleto($_SESSION["id"]);
 
 foreach ($lista as $usuario) {
+    $foto = $usuario['foto_perfil'];
     $nome = $usuario['nome_usuario'];
     $email = $usuario['email'];
     $pesoAtual = $usuario['peso'];
@@ -13,7 +14,7 @@ foreach ($lista as $usuario) {
     $notifTreino = true;
 }
 
-// var_dump($lista);
+//  var_dump($lista);
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -60,7 +61,7 @@ foreach ($lista as $usuario) {
             <!-- Sidebar -->
             <aside class="w-72 bg-gradient-to-b from-gray-900 to-gray-800 p-6 flex flex-col shadow-xl border-r border-gray-700">
                 <div class="flex flex-col items-center mb-8">
-                    <img src="./uploads/img_68cf722bb32c55.55282809.jpeg" alt="Avatar" class="mb-4 w-24 h-24 rounded-full border-4 border-indigo-500">
+                    <img src="./uploads/<?= $foto ?>" alt="Avatar" class="mb-4 w-24 h-24 rounded-full border-4 border-indigo-500">
                     <h2 class="text-xl font-extrabold text-indigo-400">Configurações do Aluno</h2>
                 </div>
                 <nav class="flex-1 space-y-2">

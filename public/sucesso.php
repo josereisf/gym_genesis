@@ -35,7 +35,7 @@ header("refresh:2;url=/public/listar.php?tabela=$tabela");
         </p>
 
         <a 
-            href="/public/listar.php?tabela=<?= $tabela ?> ?>"
+            href="/public/listar.php?tabela=<?= $tabela ?>"
             class="block mt-6 text-blue-600 hover:underline text-sm"
         >
             Não foi redirecionado? Clique aqui

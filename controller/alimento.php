@@ -37,7 +37,7 @@ if (isset($_FILES['foto_de_perfil']) && $_FILES['foto_de_perfil']['error'] === U
 if (!$acao) {
     enviarResposta(false, 'Ação não informada');
 }
-
+print_r($imagem);
 switch ($acao) {
     case 'cadastrar':
         if (
