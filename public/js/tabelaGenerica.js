@@ -1,65 +1,86 @@
 $(document).ready(function () {
-  let tabela = $('#tabelas').val() ||''
-  let id = $('#dados').data('id')
+  let tabela = $("#tabelas").val() || "";
+  let id = $("#dados").data("id");
 
   if (tabela) {
-    listarTabela(tabela, id) // Carrega a tabela ao abrir a página
+    listarTabela(tabela, id); // Carrega a tabela ao abrir a página
   }
-  $('#tabelas').on('change', function () {
-    tabela = $(this).val()
-    console.log('Tabela:', tabela)
-    console.log('ID:', id)
-    listarTabela(tabela, id)
-  })
-})
-let dataTableInstance = null
+  $("#tabelas").on("change", function () {
+    tabela = $(this).val();
+    console.log("Tabela:", tabela);
+    console.log("ID:", id);
+    listarTabela(tabela, id);
+  });
+});
+let dataTableInstance = null;
 
 function listarTabela(tabela, id) {
-  $('#status').text('🔄 Carregando dados...')
+  $("#status").text("🔄 Carregando dados...");
+  let tipo = $("#dados").data("tipo");
 
   // 🔁 Limpa listeners antigos e DataTable antes de começar
   if (dataTableInstance) {
-    dataTableInstance.clear().destroy()
-    $('#tabela-dados thead').empty()
-    $('#tabela-dados tbody').empty()
-    dataTableInstance = null
+    dataTableInstance.clear().destroy();
+    $("#tabela-dados thead").empty();
+    $("#tabela-dados tbody").empty();
+    dataTableInstance = null;
   }
-  $('#tabela-dados').off('click', '.editar')
-  $('#tabela-dados').off('click', '.excluir')
+  $("#tabela-dados").off("click", ".editar");
+  $("#tabela-dados").off("click", ".excluir");
 
   $.ajax({
     url: `http://localhost:83/public/api/index.php?entidade=${tabela}&acao=listar`,
-    method: 'POST',
-    contentType: 'application/json',
-    dataType: 'json',
+    method: "POST",
+    contentType: "application/json",
+    dataType: "json",
     data: JSON.stringify({ id: id }),
     success: function (data) {
-      const tbody = $('#tabela-dados tbody')
-      const thead = $('#tabela-dados thead')
-      tbody.empty()
-      thead.empty()
+      const tbody = $("#tabela-dados tbody");
+      const thead = $("#tabela-dados thead");
+      tbody.empty();
+      thead.empty();
 
-      if (data && data.sucesso && Array.isArray(data.dados) && data.dados.length > 0) {
-        const dados = data.dados
+      if (
+        data &&
+        data.sucesso &&
+        Array.isArray(data.dados) &&
+        data.dados.length > 0
+      ) {
+        const dados = data.dados;
 
         // 🧠 Cria cabeçalho
-        const headerRow = $('<tr></tr>')
+        const headerRow = $("<tr></tr>");
         Object.keys(dados[0]).forEach((key) => {
-          headerRow.append(`<th>${key.charAt(0).toUpperCase() + key.slice(1)}</th>`)
-        })
-        headerRow.append('<th>Ações</th>')
-        thead.append(headerRow)
+          headerRow.append(
+            `<th>${key.charAt(0).toUpperCase() + key.slice(1)}</th>`
+          );
+        });
+        headerRow.append("<th>Ações</th>");
+        thead.append(headerRow);
 
         // 🧩 Cria linhas com dados
         dados.forEach((item) => {
           console.log(item);
-            let iditem = Object.keys(item).find(
-              (key) => key.startsWith("id") && !key.endsWith("_id")
-            );
-          const linha = $('<tr></tr>')
+          if (tipo === 1) {
+            if (!item["idusuario"] && !item["usuario_id"]) {
+              return;
+            }
+
+            if (item["idusuario"] && item["idusuario"] != id) {
+              return;
+            }
+
+            if (item["usuario_id"] && item["usuario_id"] != id) {
+              return;
+            }
+          }
+          let iditem = Object.keys(item).find(
+            (key) => key.startsWith("id") && !key.endsWith("_id")
+          );
+          const linha = $("<tr></tr>");
           Object.keys(item).forEach((key) => {
-            linha.append(`<td>${item[key] ?? '—'}</td>`)
-          })
+            linha.append(`<td>${item[key] ?? "—"}</td>`);
+          });
 
           // Botões de ação
           const botoes = `
@@ -75,45 +96,51 @@ function listarTabela(tabela, id) {
                 🗑️ Excluir
               </button>
             </td>
-          `
-          linha.append(botoes)
-          tbody.append(linha)
-        })
+          `;
+          linha.append(botoes);
+          tbody.append(linha);
+        });
 
         // ⚙️ Inicializa DataTable do zero
-        dataTableInstance = $('#tabela-dados').DataTable({
+        dataTableInstance = $("#tabela-dados").DataTable({
           pageLength: 10,
           destroy: true, // garante destruição anterior
           language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+            url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json",
           },
-        })
+        });
 
-        $('#status').text('✅ Dados carregados com sucesso.')
+        $("#status").text("✅ Dados carregados com sucesso.");
 
         // 🧠 Reanexa eventos limpos
-        $('#tabela-dados').on('click', '.editar', function () {
-          const id = $(this).data('id')
-          alert(`Editar registro ID: ${id}`)
-          window.location.href = "http://localhost:83/public/formularioGenerico.php?tabela=" + tabela + "&id=" + id;
-        })
+        $("#tabela-dados").on("click", ".editar", function () {
+          const id = $(this).data("id");
+          alert(`Editar registro ID: ${id}`);
+          window.location.href =
+            "http://localhost:83/public/formularioGenerico.php?tabela=" +
+            tabela +
+            "&id=" +
+            id;
+        });
 
-        $('#tabela-dados').on('click', '.excluir', function () {
-          const id = $(this).data('id')
+        $("#tabela-dados").on("click", ".excluir", function () {
+          const id = $(this).data("id");
           if (confirm(`Tem certeza que deseja excluir o registro ID ${id}?`)) {
-            excluirRegistro(tabela, id)
+            excluirRegistro(tabela, id);
           }
-        })
+        });
       } else {
-        tbody.append('<tr><td colspan="100%">Nenhum dado encontrado.</td></tr>')
-        $('#status').text('⚠️ Nenhum registro encontrado.')
+        tbody.append(
+          '<tr><td colspan="100%">Nenhum dado encontrado.</td></tr>'
+        );
+        $("#status").text("⚠️ Nenhum registro encontrado.");
       }
     },
     error: function (xhr, status, error) {
-      console.error('❌ Erro ao buscar dados:', xhr.responseText)
-      $('#status').text('❌ Erro ao buscar dados: ' + xhr.status)
+      console.error("❌ Erro ao buscar dados:", xhr.responseText);
+      $("#status").text("❌ Erro ao buscar dados: " + xhr.status);
     },
-  })
+  });
 }
 function getIdTabela(tabela) {
   switch (tabela) {
@@ -188,18 +215,18 @@ function getIdTabela(tabela) {
 function excluirRegistro(tabela, id) {
   let idtabela = getIdTabela(tabela);
   let dadoParaEnviar = {};
-  dadoParaEnviar[idtabela] = id; 
+  dadoParaEnviar[idtabela] = id;
   $.ajax({
     url: `http://localhost:83/public/api/index.php?entidade=${tabela}&acao=deletar`,
-    method: 'POST',
-    contentType: 'application/json',
+    method: "POST",
+    contentType: "application/json",
     data: JSON.stringify(dadoParaEnviar),
     success: function () {
-      alert('Registro excluído com sucesso!')
-      listarTabela(tabela)
+      alert("Registro excluído com sucesso!");
+      listarTabela(tabela);
     },
     error: function () {
-      alert('Erro ao excluir registro.')
+      alert("Erro ao excluir registro.");
     },
-  })
+  });
 }

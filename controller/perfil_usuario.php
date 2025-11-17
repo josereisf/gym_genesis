@@ -21,7 +21,7 @@ $cpf              = $input['cpf'] ?? null;
 $data_nasc        = $input['data_nascimento'] ?? null;
 $telefone         = $input['telefone'] ?? null;
 $tipo             = $input['tipo'] ?? 1;
-$imagem = $_FILES['imagem'] ?? $_FILES['foto_perfil'];
+$imagem = $_FILES['imagem'] ?? $_FILES['foto_perfil'] ?? null;
 $usuario_id = $input['usuario_id'] ?? null;
 
 

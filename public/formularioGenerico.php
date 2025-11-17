@@ -8,7 +8,7 @@ $tipo = $_SESSION['tipo'];
 $tabela = $_GET['tabela'];
 
 $colunas = listarColunasTabela($tabela);
-$voltar = [];
+$bloqueados = [];
 if ($id) {
   $acao = 'editar';
   $dados = DadosGerais($tabela, $id);
@@ -17,11 +17,54 @@ if ($id) {
   $dados = [];
 }
 if ($tipo === 1) {
-  $voltar = ["usuario", "assinatura", "plano", "treino", "treino_exercicio", "exercicio", "aula_agendada", "funcionario", "produto", ];
+  $bloqueados = [
+    "assiantura",
+    "usuario",
+    "funcionario",
+    "cargo",
+    "perfil_professor",
+    "pagamento",
+    "pagamento_detalhe",
+    "pedido",
+    "item_pedido",
+    "cupom_desconto",
+    "produto",
+    "categoria_produto",
+    "treino",
+    "treino_exercicio",
+    "aula_agendada",
+    "avaliacao_fisica",
+    "dieta",
+    "refeicao",
+    "dieta_alimentar",
+    "dicas_nutricionais",
+    "recuperacao_senha"
+  ];
 }
-if (in_array($tabela, $voltar)) {
-  $_SESSION['erro_login'] = "Não possui para essa tabela.";
-  header('Location: login.php');
+if ($tipo === 2) {
+  $bloqueados = [
+    "usuario",
+    "cargo",
+    "pagamento",
+    "pagamento_detalhe",
+    "pedido",
+    "item_pedido",
+    "cupom_desconto",
+    "produto",
+    "categoria_produto",
+    "plano",
+    "assinatura",
+    "perfil_usuario",
+    "alimento",
+    "dieta",
+    "refeicao",
+    "dieta_alimentar",
+    "dicas_nutricionais"
+  ];
+}
+if (in_array($tabela, $bloqueados)) {
+  $_SESSION['erro_login'] = "Acesso negado para esta operação.";
+  header('Location: dashboard_usuario.php');
   exit;
 }
 ?>
@@ -239,18 +282,18 @@ if (in_array($tabela, $voltar)) {
         // datetime
         if (strpos($tipo_campo, 'datetime') !== false) {
 
-            echo '
+          echo '
             <div>
-                <label for="'.$nome_campo.'" class="block font-semibold mb-1">'.$nome_campo.'</label>
+                <label for="' . $nome_campo . '" class="block font-semibold mb-1">' . $nome_campo . '</label>
                 <input 
                     type="datetime-local" 
-                    name="'.$nome_campo.'" 
+                    name="' . $nome_campo . '" 
                     class="w-full rounded-lg p-2"
-                    value="'.date('Y-m-d\TH:i').'"
+                    value="' . date('Y-m-d\TH:i') . '"
                 >
             </div>';
 
-            continue;
+          continue;
         }
 
         // Hora
@@ -309,7 +352,7 @@ if (in_array($tabela, $voltar)) {
         </div>
     </form>
   </div>
-   
+
   <script>
     // const tabela = '<?php echo $tabela; ?>';
     // $('#formGenerico').on('submit', function(e) {

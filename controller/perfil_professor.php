@@ -75,7 +75,7 @@ switch ($acao) {
         break;
 
     case 'listar':
-        $dados = listarPerfilProfessor($idprofessor);
+        $dados = listarPerfilProfessor($idperfil);
         if ($dados) {
             enviarResposta(true, 'Perfis de professores listados com sucesso', $dados);
         } else {
@@ -86,7 +86,7 @@ switch ($acao) {
 
     case 'deletar':
         if ($idprofessor) {
-            $ok = deletarPerfilProfessor($idprofessor);
+            $ok = deletarPerfilProfessor($idperfil);
             if ($ok) {
                 enviarResposta(true, 'Perfil do professor deletado com sucesso');
             } else {

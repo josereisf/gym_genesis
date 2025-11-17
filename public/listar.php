@@ -1,9 +1,9 @@
 <?php
 require_once '../code/funcao.php';
 require_once __DIR__ . "/./php/verificarLogado.php";
-$id = 0;
+$id = $_SESSION['id'];
 $tabelas = listarTabelas();
-
+$tipo = $_SESSION['tipo'];
 
 ?>
 <!DOCTYPE html>
@@ -55,20 +55,58 @@ $tabelas = listarTabelas();
   <div class="container">
     <h1>Consulta de Tabelas</h1>
 
-    <div id="dados" data-id="<?php echo $id; ?>"></div>
+    <div id="dados" data-id="<?php echo $id; ?>" data-tipo="<?= $tipo ?>"></div>
 
     <select id="tabelas">
       <option value="" disabled <?= empty($_GET['tabela']) ? 'selected' : '' ?>>Selecione uma tabela</option>
 
       <?php
       $tabelaSelecionada = $_GET['tabela'] ?? '';
-
       foreach ($tabelas as $t) {
-          $nome_campo = htmlspecialchars($t['Tables_in_gym_genesis']);
+        if ($tipo === 1) {
+          $bloqueados = [
+            "assinatura",
+            "usuario",
+            "funcionario",
+            "cargo",
+            "perfil_professor",
+            "pagamento",
+            "pagamento_detalhe",
+            "pedido",
+            "item_pedido",
+            "cupom_desconto",
+            "produto",
+            "categoria_produto",
+            "treino",
+            "treino_exercicio",
+            "aula_agendada",
+            "avaliacao_fisica",
+            "dieta",
+            "refeicao",
+            "dieta_alimentar",
+            "dicas_nutricionais",
+            "recuperacao_senha"
+          ];
+          $colunas = listarColunasTabela($t['Tables_in_gym_genesis']);
+          $camposUsuario = ["idusuario", "usuario_id"];
 
-          $selected = ($nome_campo === $tabelaSelecionada) ? 'selected' : '';
+          $temVinculoUsuario = false;
 
-          echo "<option value='$nome_campo' $selected>$nome_campo</option>";
+          foreach ($colunas as $col) {
+            if (in_array($col['Field'], $camposUsuario)) {
+              $temVinculoUsuario = true;
+              break;
+            }
+          }
+
+          if (!$temVinculoUsuario || in_array($t['Tables_in_gym_genesis'], $bloqueados)) {
+            continue;
+          }
+        }
+        $nome_campo = htmlspecialchars($t['Tables_in_gym_genesis']);
+        $selected = ($nome_campo === $tabelaSelecionada) ? 'selected' : '';
+
+        echo "<option value='$nome_campo' $selected>$nome_campo</option>";
       }
       ?>
     </select>

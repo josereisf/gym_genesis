@@ -1313,6 +1313,7 @@ function listarForum($idtopico)
   } else {
     $sql = 'SELECT
     f.idtopico,
+    f.usuario_id,
     pf.nome AS nome_usuario,
     f.titulo,
     f.descricao,
@@ -2682,6 +2683,7 @@ function listarRespostaForum($idresposta)
     // Consulta para pegar todas as respostas com os nomes dos usuários
     $sql = " SELECT 
      rf.idresposta, 
+     rf.usuario_id,
      rf.mensagem, 
      rf.data_resposta, 
      pf.nome AS nome_usuario, 
