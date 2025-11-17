@@ -32,7 +32,7 @@ $data = [];
 foreach ($alunos as $a) {
   $idaluno = $a['usuario_id'];
   $horarios = listarAulaAgendadaUsuario($idaluno);
-
+// var_dump($horarios);
   if (!empty($horarios)) {
     $idtreino = $horarios[0]["treino_id"];
     $treino = listarTreino($idtreino);
@@ -42,7 +42,7 @@ foreach ($alunos as $a) {
       'inicio' => $horarios[0]['hora_inicio'],
       'fim'    => $horarios[0]['hora_fim'],
       'treino' => $treino[0]['tipo'] ?? '',
-      'alunos' => $a['nome_usuario']
+      'alunos' => $horarios[0]['nome_usuario']
     ];
 
     // chave única para evitar duplicados
@@ -57,35 +57,33 @@ $data = array_values($data);
 
 $menus = [
   "Acompanhamento" => [
-    ["icon" => "monitor_weight", "label" => "Consultar Metas e Peso", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "note_add", "label" => "Registrar Peso", "href" => "#", "roles" => [2, 0]],
+    ["icon" => "monitor_weight", "label" => "Consultar Metas e Peso", "href" => "listar.php?tabela=meta_usuario", "roles" => [2, 0]],
+    ["icon" => "note_add", "label" => "Registrar Peso", "href" => "formularioGenerico.php?tabela=avaliacao_fisica", "roles" => [2, 0]],
   ],
 
   "Aulas" => [
-    ["icon" => "calendar_today", "label" => "Ver Aulas Agendadas", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "event_available", "label" => "Agendar Aula", "href" => "#", "roles" => [2, 0]],
+    ["icon" => "calendar_today", "label" => "Ver Aulas Agendadas", "href" => "listar.php?tabela=aula_agendada", "roles" => [2, 0]],
+    ["icon" => "event_available", "label" => "Agendar Aula", "href" => "formularioGenerico.php?tabela=aula_usuario", "roles" => [2, 0]],
   ],
 
   "Avaliação Física" => [
-    ["icon" => "analytics", "label" => "Consultar Avaliações", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "add_chart", "label" => "Registrar Avaliação", "href" => "#", "roles" => [2, 0]],
+    ["icon" => "analytics", "label" => "Consultar Avaliações", "href" => "listar.php?tabela=avaliacao_fisica", "roles" => [2, 0]],
+    ["icon" => "add_chart", "label" => "Registrar Avaliação", "href" => "formularioGenerico.php?tabela=avaliacao_fisica", "roles" => [2, 0]],
   ],
 
   "Treinos" => [
-    ["icon" => "fitness_center", "label" => "Criar/Editar Treino", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "check_circle", "label" => "Registrar Execução", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "list_alt", "label" => "Visualizar Treinos", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "library_books", "label" => "Biblioteca de Exercícios", "href" => "#", "roles" => [2, 0]],
+    ["icon" => "fitness_center", "label" => "Criar/Editar Treino", "href" => "formularioGenerico.php?tabela=treino", "roles" => [2, 0]],
+    ["icon" => "list_alt", "label" => "Visualizar Treinos", "href" => "listar.php?tabela=treino", "roles" => [2, 0]],
+    ["icon" => "library_books", "label" => "Biblioteca de Exercícios", "href" => "listar.php?tabela=historico_treino", "roles" => [2, 0]],
   ],
 
   "Nutrição" => [
-    ["icon" => "restaurant", "label" => "Consultar Dieta", "href" => "#", "roles" => [2, 0]],
-    ["icon" => "note_add", "label" => "Criar/Editar Dieta", "href" => "#", "roles" => [2, 0]],
+    ["icon" => "restaurant", "label" => "Consultar Dieta", "href" => "listar.php?tabela=dieta", "roles" => [2, 0]],
+    ["icon" => "note_add", "label" => "Criar/Editar Dieta", "href" => "formularioGenerico.php?tabela=dieta", "roles" => [2, 0]],
   ],
 
   "Conta / Administração" => [
-    ["icon" => "admin_panel_settings", "label" => "Gerenciar Funcionários", "href" => "#", "roles" => [0]],
-    ["icon" => "link", "label" => "Vincular Professor e Aluno", "href" => "#", "roles" => [0]],
+    ["icon" => "admin_panel_settings", "label" => "Gerenciar Funcionários", "href" => "listar.php?tabela=funcionario", "roles" => [0]],
   ],
 
   "Loja" => [

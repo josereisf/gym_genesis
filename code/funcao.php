@@ -240,12 +240,7 @@ function cadastrarEndereco($id, $cep, $rua, $numero, $complemento, $bairro, $cid
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado, $tipo, $id)
 {
   $conexao = conectar();
@@ -264,12 +259,7 @@ function editarEndereco($cep, $rua, $numero, $complemento, $bairro, $cidade, $es
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarEndereco($id, $tipo)
 {
   $conexao = conectar();
@@ -288,12 +278,7 @@ function deletarEndereco($id, $tipo)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarEnderecos($tipo)
 {
   $conexao = conectar();
@@ -350,12 +335,7 @@ function listarEnderecos($tipo)
 
   return $lista_enderecos; // agora retorna array puro
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarEnderecosID($id, $tipo)
 {
   $conexao = conectar();
@@ -396,12 +376,7 @@ function listarEnderecosID($id, $tipo)
 
   return $lista_enderecos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarFuncionarios($idfuncionario)
 {
   $conexao = conectar();
@@ -475,12 +450,7 @@ function deletarFuncionario($idfuncionario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarCargo($idcargo, $nome, $descricao)
 {
   $conexao = conectar();
@@ -495,12 +465,7 @@ function editarCargo($idcargo, $nome, $descricao)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarCargo($idcargo): bool
 {
   $conexao = conectar();
@@ -522,12 +487,7 @@ function deletarCargo($idcargo): bool
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
 {
   $conexao = conectar();
@@ -543,12 +503,7 @@ function cadastrarAssinatura($data_inicio, $data_fim, $idplano, $idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function renovarAssinatura($idusuario, $data_inicio, $data_fim)
 {
   $conexao = conectar();
@@ -563,12 +518,7 @@ function renovarAssinatura($idusuario, $data_inicio, $data_fim)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarAssinatura($idusuario)
 {
   $conexao = conectar();
@@ -582,12 +532,7 @@ function deletarAssinatura($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarPlano($tipo, $duracao)
 {
   $conexao = conectar();
@@ -602,12 +547,7 @@ function cadastrarPlano($tipo, $duracao)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarPlano($idplano, $tipo, $duracao)
 {
   $conexao = conectar();
@@ -622,12 +562,7 @@ function editarPlano($idplano, $tipo, $duracao)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarPlanos($idplano)
 {
   $conexao = conectar();
@@ -654,12 +589,7 @@ function listarPlanos($idplano)
   return $lista_planos; // agora retorna array puro
 
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarMetaUsuario($idmeta, $idusuario, $descricao, $data_inicio, $data_limite, $status)
 {
   $conexao = conectar();
@@ -676,12 +606,7 @@ function editarMetaUsuario($idmeta, $idusuario, $descricao, $data_inicio, $data_
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarMetaUsuario($idmeta)
 {
   $conexao = conectar();
@@ -696,12 +621,7 @@ function deletarMetaUsuario($idmeta)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarTreino($tipo, $horario, $descricao, $idfuncionario)
 {
   $conexao = conectar();
@@ -716,12 +636,7 @@ function cadastrarTreino($tipo, $horario, $descricao, $idfuncionario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarTreino($tipo, $horario, $descricao, $idtreino)
 {
   $conexao = conectar();
@@ -736,12 +651,7 @@ function editarTreino($tipo, $horario, $descricao, $idtreino)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarAvaliacaoFisica($idusuario)
 {
   $conexao = conectar();
@@ -755,12 +665,7 @@ function deletarAvaliacaoFisica($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta)
 {
   $conexao = conectar();
@@ -775,12 +680,7 @@ function editarDieta($descricao, $data_inicio, $data_fim, $idusuario, $iddieta)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarDieta($idusuario)
 {
   $conexao = conectar();
@@ -794,12 +694,7 @@ function deletarDieta($idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarDietas($iddieta)
 {
   $conexao = conectar();
@@ -839,12 +734,7 @@ function listarDietas($iddieta)
 
   return $lista_dietas;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarDietasUsuario($idusuario)
 {
   $conexao = conectar();
@@ -880,12 +770,7 @@ function listarDietasUsuario($idusuario)
 
   return $lista_dietas;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarTreinoExercicio($idtreino2)
 {
   $conexao = conectar();
@@ -899,12 +784,7 @@ function deletarTreinoExercicio($idtreino2)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarTreinoExercicio($idtreino2)
 {
   $conexao = conectar();
@@ -948,12 +828,7 @@ function listarTreinoExercicio($idtreino2)
 
   return $lista_treinos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarTreinoExercicioTreino($idtreino)
 {
   $conexao = conectar();
@@ -982,12 +857,7 @@ function listarTreinoExercicioTreino($idtreino)
 
   return $lista_treinos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $video_url)
 {
   $conexao = conectar();
@@ -1002,12 +872,7 @@ function editarExercicio($idexercicio, $nome, $grupo_muscular, $descricao, $vide
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarRefeicao($idrefeicao)
 {
   $conexao = conectar();
@@ -1021,12 +886,7 @@ function deletarRefeicao($idrefeicao)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarProduto($idproduto)
 {
   $conexao = conectar();
@@ -1040,12 +900,7 @@ function deletarProduto($idproduto)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function gerenciarVencimento($idusuario, $data_fim)
 {
   $conexao = conectar();
@@ -1060,12 +915,7 @@ function gerenciarVencimento($idusuario, $data_fim)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarCupomDesconto($idcupom)
 {
   $conexao = conectar();
@@ -1088,12 +938,7 @@ function listarCupomDesconto($idcupom)
 
   return $lista_cupons;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarCategoriaProduto($idcategoria, $nome, $descricao)
 {
   $conexao = conectar();
@@ -1108,12 +953,7 @@ function editarCategoriaProduto($idcategoria, $nome, $descricao)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarPedidos($idpedido)
 {
   $conexao = conectar();
@@ -1160,12 +1000,7 @@ function listarPedidos($idpedido)
 
   return $lista_pedidos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarProdutos($idproduto)
 {
   $conexao = conectar();
@@ -1188,12 +1023,7 @@ function listarProdutos($idproduto)
   $lista_produtoss = array_values($lista_produtos);
   return $lista_produtoss;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $funcionario_id, $idaula)
 {
   $conexao = conectar();
@@ -1208,12 +1038,7 @@ function editarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $i
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarRefeicao($iddieta, $tipo, $horario)
 {
   $conexao = conectar();
@@ -1228,12 +1053,7 @@ function cadastrarRefeicao($iddieta, $tipo, $horario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarCupomDesconto($codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
 {
   $conexao = conectar();
@@ -1248,12 +1068,7 @@ function cadastrarCupomDesconto($codigo, $percentual_desconto, $valor_desconto, 
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarPedido($idusuario, $data_pedido, $status, $idpagamento)
 {
   $conexao = conectar();
@@ -1268,12 +1083,7 @@ function cadastrarPedido($idusuario, $data_pedido, $status, $idpagamento)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarRespostaForum($mensagem, $idusuario, $idtopico)
 {
   $conexao = conectar();
@@ -1288,12 +1098,7 @@ function cadastrarRespostaForum($mensagem, $idusuario, $idtopico)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarForum($idtopico)
 {
   $conexao = conectar();
@@ -1334,12 +1139,7 @@ function listarForum($idtopico)
 
   return $lista_foruns;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarForum($titulo, $descricao, $usuario_id)
 {
   $conexao = conectar();
@@ -1354,12 +1154,7 @@ function cadastrarForum($titulo, $descricao, $usuario_id)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarHistoricoTreino($idhistorico)
 {
   $conexao = conectar();
@@ -1403,12 +1198,7 @@ function listarHistoricoTreino($idhistorico)
 
   return $lista_historicos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarHistoricoTreino($idhistorico, $data_execucao, $observacoes)
 {
   $conexao = conectar();
@@ -1423,12 +1213,7 @@ function editarHistoricoTreino($idhistorico, $data_execucao, $observacoes)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarForum($idtopico, $titulo, $descricao)
 {
   $conexao = conectar();
@@ -1443,12 +1228,7 @@ function editarForum($idtopico, $titulo, $descricao)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_desconto, $data_validade, $quantidade_uso, $tipo)
 {
   $conexao = conectar();
@@ -1463,12 +1243,7 @@ function editarCupomDesconto($idcupom, $codigo, $percentual_desconto, $valor_des
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarPagamentos($idpagamento)
 {
   $conexao = conectar();
@@ -1491,12 +1266,7 @@ function listarPagamentos($idpagamento)
 
   return $lista_pagamentos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status)
 {
   $conexao = conectar();
@@ -1511,12 +1281,7 @@ function editarPagamento($idpagamento, $valor, $data_pagamento, $metodo, $status
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarDietaAlimentar($idalimento, $idrefeicao, $quantidade, $observacao)
 {
   $conexao = conectar();
@@ -1531,12 +1296,7 @@ function editarDietaAlimentar($idalimento, $idrefeicao, $quantidade, $observacao
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function enviarCodigoSeguranca($emails, $idusuario)
 {
   // Garante que $emails seja sempre um array
@@ -1697,12 +1457,7 @@ function aplicarDesconto($idpagamento, $idcupom)
   mysqli_stmt_close($comando3);
   mysqli_stmt_close($comando4);
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function ajustarDataHora($DataeHora)
 {
 
@@ -1711,12 +1466,7 @@ function ajustarDataHora($DataeHora)
   $DataeHoraConvertido = gmdate('d-m-Y H:i:s', $DataeHoraLocal);
   return $DataeHoraConvertido;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function uploadImagem($foto)
 {
   $resposta = "";
@@ -1757,12 +1507,7 @@ function mostrarImagem($caminhoImagem)
   readfile($caminhoImagem);
   exit;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarPagamento($idpagamento)
 {
   $conexao = conectar();
@@ -1845,12 +1590,7 @@ function cadastrarPagamentoDetalhe($pagamento_id, $tipo, $bandeira_cartao, $ulti
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarTreinoExercicio($idtreino2, $treino_id, $exercicio_id, $series, $repeticoes, $carga, $intervalo_segundos)
 {
   $conexao = conectar();
@@ -1868,12 +1608,7 @@ function editarTreinoExercicio($idtreino2, $treino_id, $exercicio_id, $series, $
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarForum($idtopico)
 {
   $conexao = conectar();
@@ -1887,12 +1622,7 @@ function deletarForum($idtopico)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarExercicio($idexercicio)
 {
   $conexao = conectar();
@@ -1918,12 +1648,7 @@ function listarExercicio($idexercicio)
 
   return $lista_exercicios;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarTreinoExercicio($treino_id, $exercicio_id, $series, $repeticoes, $carga, $intervalo_segundos)
 {
   $conexao = conectar();
@@ -1943,12 +1668,7 @@ function cadastrarTreinoExercicio($treino_id, $exercicio_id, $series, $repeticoe
 
   return $idInserido; // retorna o ID inserido, ou null se não funcionou
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarRespostaForum($idresposta)
 {
   $conexao = conectar();
@@ -1962,12 +1682,7 @@ function deletarRespostaForum($idresposta)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_gordura, $data_avaliacao, $usuario_id)
 {
   $conexao = conectar();
@@ -1997,12 +1712,7 @@ function editarAvaliacaoFisica($idavaliacao, $peso, $altura, $imc, $percentual_g
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario): bool
 {
   $conexao = conectar();
@@ -2032,12 +1742,7 @@ function editarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarFuncionario($idfuncionario, $nome, $data_contratacao, $salario, $cargo_id, $usuario_id)
 {
   $conexao = conectar();
@@ -2067,12 +1772,7 @@ function editarFuncionario($idfuncionario, $nome, $data_contratacao, $salario, $
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarTreino($idtreino)
 {
   $conexao = conectar();
@@ -2115,12 +1815,7 @@ function listarTreino($idtreino)
   mysqli_stmt_close($comando);
   return $lista_treinos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarTreinoUsuario($idusuario)
 {
   $conexao = conectar();
@@ -2150,12 +1845,7 @@ WHERE t.idtreino = ?
   mysqli_stmt_close($comando);
   return $lista_treinos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarTreinoTipo($tipo)
 {
   $conexao = conectar();
@@ -2180,12 +1870,7 @@ function listarTreinoTipo($tipo)
   mysqli_stmt_close($comando);
   return $lista_treinos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarHistoricoTreino($idusuario, $idtreino, $data_execucao, $observacoes)
 {
   $conexao = conectar();
@@ -2205,12 +1890,7 @@ function cadastrarHistoricoTreino($idusuario, $idtreino, $data_execucao, $observ
 
   return $idInserido; // retorna o ID inserido, ou null se não funcionou
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarAulaAgendada($idaula = null)
 {
   $conexao = conectar();
@@ -2330,12 +2010,7 @@ function listarAulaAgendadaUsuario($idusuario)
 
   return $lista_aula_agendadas;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarPagamentosDetalhados($idpagamento = null)
 {
   $conexao = conectar();
@@ -2401,12 +2076,7 @@ function listarPagamentosDetalhados($idpagamento = null)
 
   return $lista_pagamento_detalhados;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarMetaUsuario($idmeta = null)
 {
   $conexao = conectar();
@@ -2536,12 +2206,7 @@ function listarCargo($idcargo)
 
   return $lista_cargos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarRefeicoes($idrefeicao)
 {
   $conexao = conectar();
@@ -2589,12 +2254,7 @@ function listarRefeicoes($idrefeicao)
 
   return $lista_refeicaos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarAlimentos($idalimento = null)
 {
   $conexao = conectar();
@@ -2709,12 +2369,7 @@ function listarRespostaForum($idresposta)
 
   return $lista_resposta_forums;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarItemPedido($usuario_id): array
 {
   $conexao = conectar();
@@ -2846,12 +2501,7 @@ function listarItemPedidosComFiltros($usuario_id, $status = null, $data_inicio =
   mysqli_stmt_close($comando);
   return $pedidos;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarUsuario($idusuario)
 {
   $conexao = conectar();
@@ -2877,12 +2527,7 @@ function listarUsuario($idusuario)
 
   return $lista_usuarios;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarUsuarioTipo($tipo)
 {
   $conexao = conectar();
@@ -2904,12 +2549,7 @@ function listarUsuarioTipo($tipo)
 
   return $lista_usuarios;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarAssinaturas($idassinatura)
 {
   $conexao = conectar();
@@ -2966,12 +2606,7 @@ function deletarDietaAlimentar($iddieta, $idalimento)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarPlano($idplano)
 {
   $conexao = conectar();
@@ -2982,12 +2617,7 @@ function deletarPlano($idplano)
   mysqli_stmt_close($comando);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarAlimento($idalimento)
 {
   $conexao = conectar();
@@ -2998,12 +2628,7 @@ function deletarAlimento($idalimento)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarCategoriaProduto($idcategoria)
 {
   $conexao = conectar();
@@ -3014,12 +2639,7 @@ function deletarCategoriaProduto($idcategoria)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarPagamentoDetalhe($idpagaemento2)
 {
   $conexao = conectar();
@@ -3030,12 +2650,7 @@ function deletarPagamentoDetalhe($idpagaemento2)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarItemPedido($iditem)
 {
   $conexao = conectar();
@@ -3046,12 +2661,7 @@ function deletarItemPedido($iditem)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarAulaAgendada($idaula)
 {
   $conexao = conectar();
@@ -3062,12 +2672,7 @@ function deletarAulaAgendada($idaula)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarTreino($idtreino)
 {
   $conexao = conectar();
@@ -3078,12 +2683,7 @@ function deletarTreino($idtreino)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarHistoricoTreino($idhistorico)
 {
   $conexao = conectar();
@@ -3094,12 +2694,7 @@ function deletarHistoricoTreino($idhistorico)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarPedido($idpedido)
 {
   $conexao = conectar();
@@ -3110,12 +2705,7 @@ function deletarPedido($idpedido)
   mysqli_stmt_close($comando);
   return $funcionou; // Retorna true se a exclusão foi bem-sucedida, false caso contrário
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarExercicio($idexercicio): bool
 {
   $conexao = conectar();
@@ -3160,12 +2750,7 @@ function cadastrarCategoriaProduto($nome, $descricao)
 
   return $idInserido; // retorna o ID inserido, ou null se não funcionou
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoque, $imagem)
 {
   $conexao = conectar();
@@ -3195,12 +2780,7 @@ function editarProduto($idproduto, $nome, $descricao, $preco, $quantidade_estoqu
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarRespostaForum($idresposta, $mensagem, $usuario_id, $forum_id)
 {
   $conexao = conectar();
@@ -3230,12 +2810,7 @@ function editarRespostaForum($idresposta, $mensagem, $usuario_id, $forum_id)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $imagem)
 {
   $conexao = conectar();
@@ -3251,12 +2826,7 @@ function cadastrarProduto($nome, $descricao, $preco, $quantidade_estoque, $image
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitario): bool
 {
   $conexao = conectar();
@@ -3272,12 +2842,7 @@ function cadastrarItemPedido($pedido_id, $produto_id, $quantidade, $preco_unitar
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarPagamento($valor, $data_pagamento, $metodo, $status = 'sucesso')
 {
   $conexao = conectar();
@@ -3299,12 +2864,7 @@ function cadastrarPagamento($valor, $data_pagamento, $metodo, $status = 'sucesso
 
   return $idpagamento;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarPedido($idpedido, $usuario_id, $data_pedido, $status)
 {
   $conexao = conectar();
@@ -3334,12 +2894,7 @@ function editarPedido($idpedido, $usuario_id, $data_pedido, $status)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem)
 {
   $conexao = conectar();
@@ -3356,12 +2911,7 @@ function cadastrarAlimento($nome, $calorias, $carboidratos, $proteinas, $gordura
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarCargo($nome, $descricao)
 {
   $conexao = conectar();
@@ -3377,12 +2927,7 @@ function cadastrarCargo($nome, $descricao)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarExercicio($nome, $grupo_muscular, $descricao, $video_url)
 {
   $conexao = conectar();
@@ -3398,12 +2943,7 @@ function cadastrarExercicio($nome, $grupo_muscular, $descricao, $video_url)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_id)
 {
   $conexao = conectar();
@@ -3433,12 +2973,7 @@ function editarAssinatura($idassinatura, $data_inicio, $data_fim, $usuario_id)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_cartao, $ultimos_digitos, $codigo_pix, $linha_digitavel_boleto): bool
 {
   $conexao = conectar();
@@ -3483,12 +3018,7 @@ function editarPagamentoDetalhe($idpagamento2, $pagamento_id, $tipo, $bandeira_c
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_id)
 {
   $conexao = conectar();
@@ -3517,12 +3047,7 @@ function cadastrarDieta($descricao, $data_inicio, $data_fim, $usuario_id)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarDietaAlimentar($idrefeicao, $idalimento, $quantidade, $observacao): bool
 {
   $conexao = conectar();
@@ -3580,12 +3105,7 @@ function cadastrarFuncionario($nome, $data_contratacao, $salario, $cargo_id, $us
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarRefeicao($idrefeicao, $dieta_id, $tipo, $horario)
 {
   $conexao = conectar();
@@ -3614,12 +3134,7 @@ function editarRefeicao($idrefeicao, $dieta_id, $tipo, $horario)
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas, $gorduras, $porcao, $categoria, $imagem)
 {
   $conexao = conectar();
@@ -3648,12 +3163,7 @@ function editarAlimento($idalimento, $nome, $calorias, $carboidratos, $proteinas
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limite, $status)
 {
   $conexao = conectar();
@@ -3680,12 +3190,7 @@ function cadastrarMetaUsuario($usuario_id, $descricao, $data_inicio, $data_limit
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim, $idtreino, $funcionario_id)
 {
   $conexao = conectar();
@@ -3711,12 +3216,7 @@ function cadastrarAulaAgendada($data_aula, $dia_semana, $hora_inicio, $hora_fim,
 
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function gerarCodigoPix($tamanho = 32)
 {
   $caracteres = array_merge(range('a', 'z'), range('0', '9'));
@@ -3752,12 +3252,7 @@ function gerarNumeroMatriculaPorTipo($tipo)
 
   return strval(rand($min, $max));
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function verificarTipoUsuario($email)
 {
   $conexao = conectar(); // usa sua função de conexão
@@ -3972,12 +3467,7 @@ function listarUsuarioCompleto($id)
     throw new Exception('Erro ao buscar dados do usuário');
   }
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function atualizarFotoUsuario($imagem, $idusuario)
 {
   $conexao = conectar();
@@ -3990,12 +3480,7 @@ function atualizarFotoUsuario($imagem, $idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function calcularDataFinal($tipoPlano, $dataInicio = null): string
 {
   if (!$dataInicio) {
@@ -4036,12 +3521,7 @@ function enviarResposta($sucesso, $mensagem, $dados = []): never
   ], JSON_UNESCAPED_UNICODE);
   exit;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function calcularIMC($pesoKg, $alturaCm): string
 {
   $alturaMetros = $alturaCm / 100;
@@ -4071,12 +3551,7 @@ function cadastrarHistoricoPeso($idusuario, $peso, $data_registro): bool
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarHistoricoPeso($idusuario)
 {
   $conexao = conectar();
@@ -4098,12 +3573,7 @@ function listarHistoricoPeso($idusuario)
   desconectar($conexao);
   return $dados;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarHistoricoPeso($idhistorico_peso, $peso)
 {
   $conexao = conectar();
@@ -4116,12 +3586,7 @@ function editarHistoricoPeso($idhistorico_peso, $peso)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarHistoricoPeso($idhistorico_peso)
 {
   $conexao = conectar();
@@ -4134,12 +3599,7 @@ function deletarHistoricoPeso($idhistorico_peso)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarCupomDesconto($idcupom)
 {
   $conexao = conectar();
@@ -4152,12 +3612,7 @@ function deletarCupomDesconto($idcupom)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, $numero_matricula, $imagem)
 {
   $conexao = conectar();
@@ -4170,12 +3625,7 @@ function cadastrarPerfilUsuario($idusuario, $nome, $cpf, $data_nasc, $telefone, 
   desconectar($conexao);
   return json_encode($funcionou, JSON_UNESCAPED_UNICODE);
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarPerfilUsuario($idusuario, $nome, $data_nasc, $telefone, $imagem)
 {
   $conexao = conectar();
@@ -4188,12 +3638,7 @@ function editarPerfilUsuario($idusuario, $nome, $data_nasc, $telefone, $imagem)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarPerfilUsuario($idusuario)
 {
   $conexao = conectar();
@@ -4238,12 +3683,7 @@ INNER JOIN usuario AS u ON pu.usuario_id = u.idusuario;";
   desconectar($conexao);
   return $dados;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarPerfilUsuario($idusuario)
 {
   $conexao = conectar();
@@ -4280,12 +3720,7 @@ function listarHistoricoPesoUltimo($idusuario)
   desconectar($conexao);
   return $dados;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function cadastrarPerfilProfessor($foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone, $usuario_id)
 {
   $conexao = conectar();
@@ -4409,12 +3844,7 @@ function listarPerfilProfessor($idusuario)
   desconectar($conexao);
   return $perfis;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarPerfilProfessor($idperfil, $usuario_id, $foto_perfil, $modalidade, $avaliacao_media, $descricao, $horarios_disponiveis, $telefone): bool
 {
   $conexao = conectar();
@@ -4435,12 +3865,7 @@ function editarPerfilProfessor($idperfil, $usuario_id, $foto_perfil, $modalidade
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarPerfilProfessor($idperfil)
 {
   $conexao = conectar();
@@ -4468,12 +3893,7 @@ function cadastrarDicaNutricional($titulos, $descricao, $icone, $cor)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarDicasNutricionais($id = null)
 {
   $conexao = conectar();
@@ -4503,12 +3923,7 @@ LIMIT 1;
   desconectar($conexao);
   return $dicas;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarDicaNutricional($id, $titulos, $descricao, $icone, $cor)
 {
   $conexao = conectar();
@@ -4526,12 +3941,7 @@ function editarDicaNutricional($id, $titulos, $descricao, $icone, $cor)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarDicaNutricional($id)
 {
   $conexao = conectar();
@@ -4560,12 +3970,7 @@ function cadastrarAulaUsuario($idaula, $idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function editarAulaUsuario($idaula, $idusuario)
 {
 
@@ -4580,12 +3985,7 @@ function editarAulaUsuario($idaula, $idusuario)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function deletarAulaUsuario($id)
 {
   $conexao = conectar();
@@ -4600,12 +4000,7 @@ function deletarAulaUsuario($id)
   desconectar($conexao);
   return $funcionou;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function listarAulaUsuario($usuario_id = null)
 {
   $conexao = conectar();
@@ -4710,12 +4105,7 @@ function listarColunasTabela($tabela)
 
   return $colunas;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function formatarTelefone($numero)
 {
   // Remove tudo que não for número
@@ -4868,12 +4258,7 @@ function listarDietaAlimentar($iddieta)
 
   return $lista_dietas;
 }
-/**
- * Undocumented function
- *
- * @param [type] $conexao
- * @return void
- */
+
 function DadosGerais($tabela, $id)
 {
   $conexao = conectar();
