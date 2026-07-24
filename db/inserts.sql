@@ -255,3 +255,6 @@ VALUES
   (2, 1),  -- Professor 2 ensina o Aluno 5
   (2, 2),  -- Professor 2 também ensina o Aluno 6
   (3, 3);  -- Professor 3 ensina o Aluno 7
+  INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (1, 79.50);
+INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (1, 77.80);
+INSERT INTO gym_genesis.historico_peso (idusuario, peso) VALUES (2, 85.00);

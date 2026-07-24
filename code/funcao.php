@@ -3311,7 +3311,7 @@ function atualizarFotoUsuario($imagem, $idusuario) {
     return $funcionou;
 }
 
-function calcularDataFinal($tipoPlano, $dataInicio = null) {
+function calcularDataFinal($tipoPlano, $dataInicio = null): string {
     if (!$dataInicio) {
         $dataInicio = date('Y-m-d'); // se não for passado, pega a data atual
     }
@@ -3340,7 +3340,7 @@ function calcularDataFinal($tipoPlano, $dataInicio = null) {
 
 
 
-function enviarResposta($sucesso, $mensagem, $dados = []) {
+function enviarResposta($sucesso, $mensagem, $dados = []): never {
     echo json_encode([
         'sucesso' => $sucesso,
         'mensagem' => $mensagem,
@@ -3350,7 +3350,7 @@ function enviarResposta($sucesso, $mensagem, $dados = []) {
     exit;
 }
 
-function calcularIMC($pesoKg, $alturaCm) {
+function calcularIMC($pesoKg, $alturaCm): string {
     $alturaMetros = $alturaCm / 100;
 
     // Validação básica
